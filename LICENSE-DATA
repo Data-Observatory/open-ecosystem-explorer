@@ -1,0 +1,19 @@
+Creative Commons Attribution 4.0 International (CC BY 4.0)
+
+This licence applies to the curated content of this project only — the
+entity records under `src/content/entities/`, their translated prose under
+`src/content/i18n/`, the saved views under `src/content/views/`, and the
+controlled vocabularies under `src/content/vocab/` (collectively, "the
+data"). The site's code is licensed separately under MIT; see LICENSE.
+
+The data is licensed under the Creative Commons Attribution 4.0
+International licence. You are free to share and adapt the data for any
+purpose, including commercially, provided you give appropriate credit,
+provide a link to the licence, and indicate if changes were made.
+
+Full legal text: https://creativecommons.org/licenses/by/4.0/legalcode
+
+When citing the data, attribute it to the openscience-ecosystem project.
+Where an individual entity record cites third-party sources (see its
+`sources` field), those sources may carry their own licensing terms —
+consult the cited source directly before reusing its content verbatim.

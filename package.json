@@ -1,0 +1,46 @@
+{
+  "name": "openscience-ecosystem",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "npm run validate && astro build",
+    "preview": "astro preview",
+    "validate": "tsx scripts/validate.ts",
+    "schema:generate": "tsx scripts/generate-schema.ts",
+    "review": "tsx scripts/review.ts",
+    "watch:validate": "tsx scripts/watch-validate.ts",
+    "typecheck": "astro check && tsc --noEmit",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "astro": "^5.18.2",
+    "cytoscape": "^3.34.2",
+    "cytoscape-fcose": "^2.2.0",
+    "gray-matter": "^4.0.3",
+    "mermaid": "^11.17.2",
+    "rehype-mermaid": "^3.0.0",
+    "rehype-parse": "^9.0.1",
+    "rehype-stringify": "^10.0.1",
+    "spdx-license-ids": "^3.0.23",
+    "svg-pan-zoom": "^3.6.2",
+    "unified": "^11.0.5",
+    "yaml": "^2.9.0",
+    "zod": "^3.25.76"
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "@axe-core/playwright": "^4.13.0",
+    "@playwright/test": "^1.62.1",
+    "@types/node": "^22.20.1",
+    "@vitest/coverage-v8": "^5.0.0",
+    "tsx": "^4.23.13",
+    "typescript": "^6.0.3",
+    "vitest": "^5.0.0",
+    "zod-to-json-schema": "^3.25.2"
+  }
+}
