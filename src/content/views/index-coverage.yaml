@@ -1,0 +1,13 @@
+query:
+  kind: entities
+  where:
+    - type: index
+      indexKind:
+        - bibliographic
+        - citation
+render: table
+lastReviewed: 2026-09-04
+sources:
+  - url: https://openalex.org/about
+    title: OpenAlex — about (coverage vs. cleanliness trade-off)
+    accessed: 2026-09-04

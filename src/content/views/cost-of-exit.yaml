@@ -1,0 +1,18 @@
+query:
+  kind: explicit
+  entities:
+    - doi
+    - orcid
+    - ror
+    - scopus
+    - symplectic-elements
+    - figshare
+render: table
+lastReviewed: 2026-09-04
+sources:
+  - url: https://ror.org/about/
+    title: ROR — about (persistent identifiers as portability)
+    accessed: 2026-09-04
+  - url: https://www.digital-science.com/portfolio/figshare/
+    title: Digital Science — Figshare
+    accessed: 2026-09-04

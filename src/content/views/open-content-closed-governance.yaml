@@ -1,0 +1,11 @@
+query:
+  kind: entities
+  where:
+    - outputLicence: open
+      governance: commercial
+render: both
+lastReviewed: 2026-09-03
+sources:
+  - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
+    title: Manual breve del ecosistema de información de investigación
+    accessed: 2026-09-03
