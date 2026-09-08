@@ -1,0 +1,6 @@
+summary: Esquema de identificador persistente libre de costo, con registro de
+  NAAN y resolutor N2T estewardado por la ARK Alliance.
+relationNotes:
+  governed-by@ark-alliance: El registro de NAAN y el resolutor N2T son gestionados por la ARK Alliance.
+body: |-
+  ARK es una alternativa al DOI sin costo de emisión, popular en bibliotecas, archivos y algunos repositorios de datos.

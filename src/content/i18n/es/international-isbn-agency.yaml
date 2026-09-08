@@ -1,0 +1,6 @@
+summary: Organización sin fines de lucro que coordina las agencias nacionales de ISBN.
+relationNotes:
+  issues@isbn: Coordina la asignación de rangos de numeración a las agencias
+    nacionales de ISBN.
+body: |-
+  La Agencia Internacional de ISBN asigna los rangos de numeración a las agencias nacionales, que a su vez asignan los ISBN a los editores.

@@ -1,0 +1,7 @@
+summary: Infraestructura sin fines de lucro que publica datos abiertos de citas
+  como datos enlazados.
+relationNotes:
+  depends-on@doi: Los registros de citas se identifican mediante los DOI de los
+    artículos citante y citado.
+body: |-
+  OpenCitations publica datos de citas académicas como datos abiertos y enlazados, permitiendo su descarga y reutilización sin restricciones.

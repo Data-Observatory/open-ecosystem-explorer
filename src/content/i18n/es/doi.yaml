@@ -1,0 +1,6 @@
+summary: Identificador persistente de un objeto — artículo, dataset, informe,
+  plataforma o software — que resuelve a su ubicación actual.
+relationNotes:
+  depends-on@handle-system: Los nombres DOI son Handles; la resolución corre sobre el Handle System.
+body: |-
+  El DOI es el identificador persistente más conocido y el que Data Observatory ya acuña a través de una agencia de registro como DataCite.

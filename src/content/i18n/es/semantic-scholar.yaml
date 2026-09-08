@@ -1,0 +1,6 @@
+summary: Índice del Allen Institute for AI, fuerte en procesamiento de texto y
+  enlaces semánticos entre publicaciones.
+relationNotes:
+  operated-by@allen-institute-for-ai: Desarrollado y operado por el Allen Institute for AI.
+body: |-
+  Semantic Scholar aplica procesamiento de lenguaje natural para conectar publicaciones semánticamente, no solo por citas explícitas.

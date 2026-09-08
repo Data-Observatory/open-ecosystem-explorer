@@ -1,0 +1,8 @@
+summary: Registro curado de estándares, bases de datos y políticas de datos, y
+  sus interrelaciones.
+relationNotes:
+  complies-with@fair: Construido explícitamente para ayudar a alinear recursos con
+    los principios FAIR.
+  interoperates-with@re3data: Ambos curan registros de repositorios/estándares y cruzan sus entradas.
+body: |-
+  FAIRsharing cataloga estándares, bases de datos y políticas de datos, mostrando cómo se relacionan entre sí, con foco explícito en apoyar la adopción de FAIR.

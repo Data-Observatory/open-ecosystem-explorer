@@ -1,0 +1,6 @@
+summary: Registro de repositorios de datos de investigación, usado ampliamente
+  como lista de referencia para elegir dónde depositar.
+relationNotes:
+  depends-on@datacite: Integrado como servicio de DataCite desde 2022.
+body: |-
+  re3data es el registro de referencia de repositorios de datos de investigación, ampliamente citado por financiadores y editoriales como fuente para verificar dónde depositar datos.

@@ -1,0 +1,3 @@
+summary: Reemplazo moderno de OAI-PMH basado en notificaciones entre repositorios.
+body: |-
+  COAR Notify propone un mecanismo de notificaciones descentralizado para conectar repositorios con servicios externos, como reemplazo del modelo clásico de cosecha OAI-PMH.

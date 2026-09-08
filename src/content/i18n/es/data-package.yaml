@@ -1,0 +1,3 @@
+summary: Contenedor JSON de Frictionless Data para describir datasets de forma portable.
+body: |-
+  Data Package especifica cómo empaquetar un dataset junto con su descripción en un contenedor JSON simple y portable.

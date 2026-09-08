@@ -1,0 +1,8 @@
+summary: De la fundación Cambia; cruza literatura científica con patentes, útil
+  para innovación y transferencia tecnológica.
+relationNotes:
+  operated-by@cambia: Operado por la fundación Cambia.
+  depends-on@crossref: Los registros de Lens se construyen sobre metadatos de
+    Crossref, complementados con DOI de DataCite e iD de ORCID.
+body: |-
+  The Lens combina literatura científica y datos de patentes en un mismo índice, lo que lo hace particularmente útil para análisis de innovación y transferencia tecnológica.

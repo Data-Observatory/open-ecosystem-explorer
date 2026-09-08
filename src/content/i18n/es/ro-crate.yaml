@@ -1,0 +1,4 @@
+summary: Especificación para empaquetar un objeto de investigación junto con su
+  contexto y procedencia.
+body: |-
+  RO-Crate empaqueta un objeto con su contexto y procedencia usando JSON-LD, facilitando compartir datos de forma autocontenida y reutilizable.

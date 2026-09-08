@@ -1,0 +1,4 @@
+summary: Suite de etiquetado XML para artículos de revista; la capa de marcado
+  sobre la que construyen SciELO y Redalyc.
+body: |-
+  JATS define cómo marcar en XML el contenido de un artículo de revista; SciELO y Redalyc lo usan, cada una en su propio dialecto.

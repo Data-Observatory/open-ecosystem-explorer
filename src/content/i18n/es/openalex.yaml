@@ -1,0 +1,12 @@
+summary: Alternativa abierta a los índices propietarios, gratuita y descargable
+  completa; construida por OurResearch.
+relationNotes:
+  operated-by@ourresearch: Construida y mantenida por OurResearch, organización sin fines de lucro.
+  interoperates-with@opencitations: OpenAlex incorpora los datos abiertos de citas
+    de OpenCitations como una de sus fuentes.
+  interoperates-with@wikidata: Se cruzan referencias vía WikiCite; OpenAlex
+    reconcilia entidades contra los QID de Wikidata.
+  indexes@zenodo: OpenAlex cosecha e indexa trabajos depositados en Zenodo.
+  indexes@arxiv: OpenAlex cosecha e indexa preprints de arXiv.
+body: |-
+  OpenAlex es la alternativa abierta a los índices cerrados: gratuita, descargable en su totalidad y auditable. Cubre más objetos que los índices propietarios, aunque con menos limpieza editorial.
