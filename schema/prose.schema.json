@@ -1,0 +1,43 @@
+{
+  "$ref": "#/definitions/Prose",
+  "definitions": {
+    "Prose": {
+      "type": "object",
+      "properties": {
+        "summary": {
+          "type": "string",
+          "minLength": 40,
+          "maxLength": 200
+        },
+        "name": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 80
+        },
+        "aka": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 8
+        },
+        "relationNotes": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "maxLength": 280
+          }
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "summary",
+        "body"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
