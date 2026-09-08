@@ -1,0 +1,75 @@
+# The 12 entity types (Appendix A.1) and the type -> layer map (§5.1).
+# This is the ONLY place `layer` is stated. An entity file must never author
+# `layer` directly (I23) — it is derived from `type` via this file.
+identifier:
+  layer: identifier
+  label: { es: Identificador, en: Identifier }
+  definition:
+    es: Un código permanente que apunta a una cosa, y el compromiso de no borrarla.
+    en: A permanent code pointing at a thing, and the commitment not to delete it.
+agency:
+  layer: agency
+  label: { es: Agencia de registro, en: Registration agency }
+  definition:
+    es: Una organización que acuña identificadores y guarda sus metadatos.
+    en: A body that mints identifiers and holds their metadata.
+index:
+  layer: index
+  label: { es: Índice, en: Index }
+  definition:
+    es: Una base que recopila hechos sobre resultados de investigación y la infraestructura que los aloja.
+    en: A database recording facts about research outputs and the infrastructure holding them.
+cris:
+  layer: institutional-system
+  label: { es: CRIS, en: CRIS }
+  definition:
+    es: El registro administrativo interno de una institución sobre su propia actividad de investigación.
+    en: An institution's administrative register of its own research activity.
+repository:
+  layer: institutional-system
+  label: { es: Repositorio, en: Repository }
+  definition:
+    es: Donde se depositan y preservan los objetos, tanto el software como el servicio en producción.
+    en: Where objects are deposited and preserved — both the software and the running service.
+aggregator:
+  layer: regional
+  label: { es: Agregador, en: Aggregator }
+  definition:
+    es: Infraestructura que cosecha, enlaza o federa metadatos entre instituciones y países sin alojar el contenido.
+    en: Infrastructure that harvests, links or federates metadata across institutions and countries for content it does not itself hold.
+publishing-platform:
+  layer: regional
+  label: { es: Plataforma editorial, en: Publishing platform }
+  definition:
+    es: Un programa que aloja, marca y publica revistas, preprints o libros bajo sus propios criterios de admisión.
+    en: A programme that hosts, marks up and publishes journals, preprints or books under its own admission criteria.
+standard:
+  layer: cross-cutting
+  label: { es: Estándar, en: Standard }
+  definition:
+    es: Una especificación, conjunto de principios, protocolo o criterio de certificación al que otros se ajustan.
+    en: A specification, set of principles, protocol or certification criteria others conform to.
+community:
+  layer: cross-cutting
+  label: { es: Comunidad, en: Community }
+  definition:
+    es: Un cuerpo que escribe las reglas o certifica contra ellas.
+    en: A body that writes the rules or certifies against them.
+coalition:
+  layer: cross-cutting
+  label: { es: Coalición, en: Coalition }
+  definition:
+    es: Una agrupación política que empuja cambios en lugar de escribir especificaciones.
+    en: A political grouping pushing change rather than writing specifications.
+policy:
+  layer: cross-cutting
+  label: { es: Política, en: Policy }
+  definition:
+    es: Un instrumento normativo que restringe comportamiento.
+    en: A normative instrument constraining behaviour.
+organization:
+  layer: cross-cutting
+  label: { es: Organización, en: Organization }
+  definition:
+    es: El actor detrás de la cosa — empresa, ONG, universidad, agencia, organismo intergubernamental.
+    en: The actor behind the thing — company, non-profit, university, agency, intergovernmental body.

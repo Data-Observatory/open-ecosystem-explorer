@@ -1,0 +1,16 @@
+# OECD FORD level-1 fields (A.3 proposes level 2 / ~40 terms; seeded here at
+# level 1 for Phase 1 and extended as real content needs finer terms).
+natural-sciences:
+  label: { es: Ciencias naturales, en: Natural sciences }
+engineering-technology:
+  label: { es: Ingeniería y tecnología, en: Engineering and technology }
+medical-health-sciences:
+  label: { es: Ciencias médicas y de la salud, en: Medical and health sciences }
+agricultural-sciences:
+  label: { es: Ciencias agrícolas, en: Agricultural sciences }
+social-sciences:
+  label: { es: Ciencias sociales, en: Social sciences }
+humanities:
+  label: { es: Humanidades, en: Humanities }
+multidisciplinary:
+  label: { es: Multidisciplinario, en: Multidisciplinary }

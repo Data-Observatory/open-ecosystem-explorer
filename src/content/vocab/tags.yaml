@@ -1,0 +1,47 @@
+# Namespaced, closed tag vocabulary (A.3). A tag on fewer than 2 entities is
+# flagged in review, not by an invariant (that starts once real content exists
+# past the Phase 1 seed set).
+function:identification:
+  label: { es: 'función: identificación', en: 'function: identification' }
+function:registration:
+  label: { es: 'función: registro', en: 'function: registration' }
+function:indexing:
+  label: { es: 'función: indexación', en: 'function: indexing' }
+function:deposit:
+  label: { es: 'función: depósito', en: 'function: deposit' }
+function:preservation:
+  label: { es: 'función: preservación', en: 'function: preservation' }
+function:aggregation:
+  label: { es: 'función: agregación', en: 'function: aggregation' }
+function:publishing:
+  label: { es: 'función: publicación', en: 'function: publishing' }
+function:evaluation:
+  label: { es: 'función: evaluación', en: 'function: evaluation' }
+function:certification:
+  label: { es: 'función: certificación', en: 'function: certification' }
+openness:open-content:
+  label: { es: 'apertura: contenido abierto', en: 'openness: open content' }
+openness:open-source:
+  label: { es: 'apertura: código abierto', en: 'openness: open source' }
+openness:open-governance:
+  label: { es: 'apertura: gobernanza abierta', en: 'openness: open governance' }
+openness:bulk-downloadable:
+  label: { es: 'apertura: descargable en bloque', en: 'openness: bulk downloadable' }
+region:latam:
+  label: { es: 'región: América Latina', en: 'region: Latin America' }
+region:europe:
+  label: { es: 'región: Europa', en: 'region: Europe' }
+region:global:
+  label: { es: 'región: global', en: 'region: global' }
+region:chile:
+  label: { es: 'región: Chile', en: 'region: Chile' }
+region:north-america:
+  label: { es: 'región: Norteamérica', en: 'region: North America' }
+theme:vertical-integration:
+  label: { es: 'tema: integración vertical', en: 'theme: vertical integration' }
+theme:exit-cost:
+  label: { es: 'tema: costo de salida', en: 'theme: exit cost' }
+theme:coverage-bias:
+  label: { es: 'tema: sesgo de cobertura', en: 'theme: coverage bias' }
+theme:ai-training-data:
+  label: { es: 'tema: IA y datos de entrenamiento', en: 'theme: AI and training data' }

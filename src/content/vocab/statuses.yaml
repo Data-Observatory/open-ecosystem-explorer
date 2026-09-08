@@ -1,0 +1,10 @@
+active:
+  label: { es: Activo, en: Active }
+deprecated:
+  label: { es: Obsoleto, en: Deprecated }
+superseded:
+  label: { es: Reemplazado, en: Superseded }
+planned:
+  label: { es: Planificado, en: Planned }
+unknown:
+  label: { es: Desconocido, en: Unknown }
