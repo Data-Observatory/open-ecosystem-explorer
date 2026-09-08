@@ -1,0 +1,2463 @@
+---
+// Shared explorer behind BOTH `/{loc}/map` (whole ~133-entity corpus) and
+// `/{loc}/map2` (a fixed curated ~33-entity subset for a first-time
+// visitor) — the two page routes are thin wrappers differing only in
+// `entityIds`/`showAdvanced`/`crossLinkHref`/`crossLinkLabel` props.
+//
+// History: built `/map2`-ONLY (Opus evaluation report, 2026-09-06 follow-up
+// pass) as a deliberately SEPARATE component from the then-existing
+// `MapExplorer.astro` (fcose layout, no hierarchy/class-box rendering), so
+// `/map` could stay byte-for-byte unchanged while this component was
+// iterated on and fixed across many rounds (explicit scope at the time:
+// "map 2 only, so we can test it"). Promoted to replace `/map` entirely on
+// 2026-09-07 once that iteration was validated (user: "implement this
+// layout, to map" -> "Full map2 experience") — `MapExplorer.astro` is
+// deleted; this file absorbed its unique features (Focus mode, facet
+// chips, URL query-state — see `showAdvanced` below) rather than the other
+// way around, since this component's rendering core (hierarchy layout,
+// class-box nodes, hover-dim fix, fetch-injected inline full-record panel)
+// was the more capable, more recently bug-fixed of the two.
+//
+// Shares the pure, already-unit-tested lib modules (facets/search-score/
+// graph-state/url-state/curated/subtypes/palette) plus hierarchy.ts
+// (tier+depth ranking), node-svg.ts (class-box rendering),
+// palette-overrides.ts + subtype-labels.ts.
+//
+// What changed vs. `/map`, and why (see specs.md §7's one-line `/map2` row
+// and CHANGELOG.md for the fuller writeup):
+//  - App-shell layout (Base.astro's new `appShell` prop) — the old page had
+//    a `100vw` breakout plus an `82vh`-tall canvas row stacked among other
+//    document-flow chrome, which produced BOTH a horizontal scrollbar
+//    (100vw includes the scrollbar gutter) and a vertical one (chrome height
+//    + 82vh routinely exceeded the viewport) — a real CSS defect, not a
+//    layout preference (report §A2).
+//  - `layout: 'preset'` driven by `hierarchy.ts`'s tier+depth ranking,
+//    instead of `fcose`'s force-directed layout pinned via one arbitrary
+//    leaf node per layer band — fcose never guaranteed any hierarchy at all
+//    (report §A7); this gives the literal "concepts/institutions at top,
+//    instruments at bottom" shape the user described, computed from the
+//    predicates' own real-world meaning, not memo-layer membership.
+//  - Class-box node rendering (`node-svg.ts`) instead of a 20x20 coloured
+//    dot — more information visible without a click, closer to
+//    template_example.html's UML-class-box vocabulary (report §A9/§B5).
+//  - Normal wheel-zoom rate (was a 4x-slower `wheelSensitivity: 0.25`),
+//    `ResizeObserver`-driven `cy.resize()`, search restored from the
+//    in-page payload (no network fetch needed at ~27 nodes).
+//  - "Chrome diet": Layers panel starts collapsed to its rail, no Inspector
+//    placeholder bullets, the 5-state colour key stays hidden until the
+//    first selection, a 2-line onboarding banner, and the type/layer legend
+//    lives as a small collapsed overlay in a canvas corner instead of taking
+//    document-flow space below the whole shell (report §B6).
+//  - `community`'s fill colour overridden (still `#0969da` on `/map` and
+//    every Mermaid diagram) — it collided with `repository` and `standard`
+//    at small size (report §A8).
+import Base from '../layouts/Base.astro';
+import DiagramLegend, { type LegendItem } from './DiagramLegend.astro';
+import { getSiteIndex } from '../content/site-index.js';
+import { getEntityTypesVocab, getTagsVocab } from '../content/vocab-index.js';
+import { layerForType } from '../lib/model/vocab.js';
+import { resolveProse } from '../lib/i18n/resolve.js';
+import { shapeForLayer } from '../lib/mermaid/palette.js';
+import { map2TypeFill } from '../lib/map/palette-overrides.js';
+import type { LocaleCode } from '../i18n/locales.js';
+import type { EntityType, Entity } from '../lib/model/types.js';
+import { subtypeOf, SUBTYPE_FIELD } from '../lib/model/subtypes.js';
+import { localizedSubtypeLabel } from '../lib/model/subtype-labels.js';
+import { hasNoRelations } from '../lib/map/facets.js';
+import { filterToEntitySet } from '../lib/map/curated.js';
+import { locales, defaultLocale } from '../i18n/locales.js';
+
+interface Props {
+  locale: LocaleCode;
+  // Fixed curated subset for `/map2`; omitted (whole corpus) for `/map` —
+  // promoted from `MapExplorer.astro` (removed 2026-09-07: this component now
+  // serves both routes, see this file's header comment).
+  entityIds?: readonly string[];
+  crossLinkHref: string;
+  crossLinkLabel: string;
+  // Facet-chip filtering, Focus mode, and URL query-state — clutter at
+  // `/map2`'s ~33-entity curated scale (never enabled there), load-bearing at
+  // `/map`'s full ~133-entity corpus (also promoted from `MapExplorer.astro`).
+  showAdvanced?: boolean;
+}
+const { locale, entityIds, crossLinkHref, crossLinkLabel, showAdvanced = false } = Astro.props;
+
+const LAYER_LABELS: Record<LocaleCode, Record<string, string>> = {
+  es: {
+    identifier: 'Identificadores',
+    agency: 'Agencias de registro',
+    index: 'Índices',
+    'institutional-system': 'Sistemas institucionales',
+    regional: 'Capa regional',
+    'cross-cutting': 'Transversal (estándares, comunidades, coaliciones)',
+  },
+  en: {
+    identifier: 'Identifiers',
+    agency: 'Registration agencies',
+    index: 'Indices',
+    'institutional-system': 'Institutional systems',
+    regional: 'Regional layer',
+    'cross-cutting': 'Cross-cutting (standards, communities, coalitions)',
+  },
+};
+const GOVERNANCE_LABELS: Record<LocaleCode, Record<string, string>> = {
+  es: {
+    commercial: 'Comercial',
+    nonprofit: 'Sin fines de lucro',
+    community: 'Comunitaria',
+    intergovernmental: 'Intergubernamental',
+    'public-agency': 'Agencia pública',
+    academic: 'Académica',
+    unknown: 'Desconocida',
+  },
+  en: {
+    commercial: 'Commercial',
+    nonprofit: 'Nonprofit',
+    community: 'Community',
+    intergovernmental: 'Intergovernmental',
+    'public-agency': 'Public agency',
+    academic: 'Academic',
+    unknown: 'Unknown',
+  },
+};
+
+const index = await getSiteIndex();
+const vocab = await getEntityTypesVocab();
+const tagsVocab = await getTagsVocab();
+
+// Same Mermaid-shape-vocabulary approximation as `/map`, but with the
+// Stage-0 fix: `subroutine` (agency's layer) had been silently folded into
+// the same Cytoscape `'rectangle'` as `rect` (institutional-system) — report
+// §A8: "12 types collapse to 5 shapes... agency and cris/repository are the
+// same rectangle". Given `'cut-rectangle'` instead so it reads as a
+// distinct box shape at the low-zoom "dot" LOD (see the client script).
+const CYTO_SHAPE_BY_MERMAID_SHAPE: Record<string, string> = {
+  stadium: 'round-rectangle',
+  subroutine: 'cut-rectangle',
+  cylinder: 'barrel',
+  rect: 'rectangle',
+  parallelogram: 'rhomboid',
+  hexagon: 'hexagon',
+};
+
+const typeStyle: Record<string, { fill: string; shape: string }> = {};
+for (const type of [...vocab.keys()] as EntityType[]) {
+  const layer = layerForType(vocab, type);
+  typeStyle[type] = { fill: map2TypeFill(type), shape: CYTO_SHAPE_BY_MERMAID_SHAPE[shapeForLayer(layer)] ?? 'ellipse' };
+}
+
+const predicateStyle: Record<string, { color: string; line: string }> = {};
+for (const [id, p] of index.predicates) {
+  predicateStyle[id] = { color: p.style.color, line: p.style.line };
+}
+function predicateLabelFor(predicateId: string, direction: 'out' | 'in'): string {
+  const p = index.predicates.get(predicateId as never);
+  const map = direction === 'out' ? p?.label : p?.inverseLabel;
+  return map?.[locale] ?? map?.en ?? predicateId;
+}
+
+const nameById = new Map<string, string>();
+for (const e of index.entities.values()) nameById.set(e.id, resolveProse(index, e.id, locale).prose.name ?? e.name);
+
+// Governance/status/type-specific "fields" shown on the class box — a small,
+// hand-picked set per type (report §B5 Option 2), not every schema field:
+// enough to answer "what makes this different from its neighbour" (the
+// OpenAlex/Scopus complaint) without turning the box into a full record.
+const GOV_LABEL = { governance: locale === 'es' ? 'Gobernanza' : 'Governance', status: locale === 'es' ? 'Estado' : 'Status' };
+const STATUS_LABELS: Record<LocaleCode, Record<string, string>> = {
+  es: { active: 'Activo', deprecated: 'Obsoleto', superseded: 'Reemplazado', planned: 'Planificado', unknown: 'Desconocido' },
+  en: { active: 'Active', deprecated: 'Deprecated', superseded: 'Superseded', planned: 'Planned', unknown: 'Unknown' },
+};
+
+interface ClassBoxFieldSpec {
+  label: string;
+  value: string;
+}
+function classBoxFields(e: (typeof allNodes)[number]): ClassBoxFieldSpec[] {
+  const fields: ClassBoxFieldSpec[] = [{ label: GOV_LABEL.governance, value: e.governanceLabel }];
+  fields.push({ label: GOV_LABEL.status, value: e.statusLabel });
+  return fields;
+}
+
+// Report follow-up ("not sure if the full record should be a full isolated
+// page; can be displayed inside the record tab") — the Inspector's single-
+// selection view already showed name/badges/summary/full relations; sources
+// and every type-specific field (persistentIdScheme, harvestProtocols,
+// isoStandard, ...) were the two things missing to make it a genuine inline
+// record rather than a preview. Rather than hand-enumerating each of the 12
+// types' own field lists (duplicating `types.ts`'s own type-specific
+// interfaces here), this generically dumps whatever fields exist on the raw
+// entity beyond the common `EntityBase` set (already shown elsewhere in the
+// panel) and the type's own subtype field (already shown as `subtypeLabel`).
+const COMMON_ENTITY_KEYS = new Set([
+  'id',
+  'type',
+  'name',
+  'aka',
+  'url',
+  'identifiers',
+  'status',
+  'governance',
+  'outputLicence',
+  'codebase',
+  'since',
+  'until',
+  'tags',
+  'disciplines',
+  'geography',
+  'relations',
+  'sources',
+  'lastReviewed',
+  'isolated',
+  'note',
+]);
+function humanizeFieldKey(key: string): string {
+  // camelCase -> "Camel case" (mirrors subtypes.ts's own humanizeSubtype
+  // spacing/capitalisation convention, applied to a field NAME instead of an
+  // enum value).
+  const spaced = key.replace(/([a-z])([A-Z])/g, '$1 $2').toLowerCase();
+  return spaced.charAt(0).toUpperCase() + spaced.slice(1);
+}
+function formatFieldValue(value: unknown): string | undefined {
+  if (value === undefined || value === null || value === '') return undefined;
+  if (Array.isArray(value)) return value.length > 0 ? value.join(', ') : undefined;
+  if (typeof value === 'boolean') return value ? (locale === 'es' ? 'Sí' : 'Yes') : locale === 'es' ? 'No' : 'No';
+  return String(value);
+}
+function extraFieldsFor(e: Entity): ClassBoxFieldSpec[] {
+  const subtypeField = SUBTYPE_FIELD[e.type];
+  const raw = e as unknown as Record<string, unknown>;
+  const out: ClassBoxFieldSpec[] = [];
+  for (const key of Object.keys(raw)) {
+    if (COMMON_ENTITY_KEYS.has(key) || key === subtypeField) continue;
+    const formatted = formatFieldValue(raw[key]);
+    if (formatted === undefined) continue;
+    out.push({ label: humanizeFieldKey(key), value: formatted });
+  }
+  return out;
+}
+
+const allNodes = [...index.entities.values()].map((e) => {
+  const layer = layerForType(vocab, e.type);
+  const { prose, fallback } = resolveProse(index, e.id, locale);
+  const typeEntry = vocab.get(e.type);
+  const subtype = subtypeOf(e);
+  const degree = index.degree.get(e.id) ?? { in: 0, out: 0 };
+  const outgoing = (index.outgoing.get(e.id) ?? []).map((r) => ({
+    predicate: r.predicate,
+    predicateLabel: predicateLabelFor(r.predicate, 'out'),
+    id: r.to,
+    name: nameById.get(r.to) ?? r.to,
+    note: r.note,
+    since: r.since,
+  }));
+  const incoming = (index.incoming.get(e.id) ?? []).map((r) => ({
+    predicate: r.predicate,
+    predicateLabel: predicateLabelFor(r.predicate, 'in'),
+    id: r.from,
+    name: nameById.get(r.from) ?? r.from,
+    note: r.note,
+    since: r.since,
+  }));
+  return {
+    id: e.id,
+    type: e.type,
+    typeLabel: typeEntry?.label[locale] ?? typeEntry?.label.en ?? e.type,
+    layer,
+    layerLabel: LAYER_LABELS[locale][layer] ?? layer,
+    subtype,
+    subtypeLabel: subtype ? localizedSubtypeLabel(subtype, locale) : undefined,
+    name: prose.name ?? e.name,
+    aka: e.aka,
+    summary: prose.summary,
+    body: prose.body,
+    fallback,
+    governance: e.governance,
+    governanceLabel: GOVERNANCE_LABELS[locale][e.governance] ?? e.governance,
+    status: e.status,
+    statusLabel: STATUS_LABELS[locale][e.status] ?? e.status,
+    tags: e.tags,
+    disciplines: e.disciplines,
+    geography: e.geography,
+    lastReviewed: e.lastReviewed,
+    degree,
+    noRelations: hasNoRelations(degree),
+    outgoing,
+    incoming,
+    sources: e.sources.map((s) => ({ url: s.url, title: s.title, accessed: s.accessed, note: s.note })),
+    extraFields: extraFieldsFor(e),
+  };
+});
+const allEdges = [...index.entities.keys()].flatMap((id) =>
+  (index.outgoing.get(id) ?? []).map((r) => ({ from: r.from, to: r.to, predicate: r.predicate })),
+);
+
+// `/map` passes no `entityIds` (the whole corpus) — `filterToEntitySet`
+// against the full id list is a no-op there (every edge's endpoints already
+// survive), same as it always was on the old `MapExplorer.astro`; skip the
+// call entirely rather than run a pure no-op over 133 nodes/183 edges.
+const { nodes, edges } = entityIds ? filterToEntitySet(allNodes, allEdges, entityIds) : { nodes: allNodes, edges: allEdges };
+
+// The inspector's single-entity relation lists must show the entity's TRUE
+// full relation set (matching `/[locale]/entity/[id]/`'s real outDegree/
+// inDegree), not `filterToEntitySet`'s canvas-only trimmed one — a real
+// entity often relates to things outside a curated subset (e.g., on `/map2`,
+// `datacite-metadata-schema` is `implements`-ed by 5 real repositories, only
+// 3 of which are curated there). The curated/trimmed `outgoing`/`incoming`
+// stay untouched for everything canvas/layout-related (isolated-node
+// detection, multi-select shared-neighbour logic) — only these two extra
+// `full*` fields, read solely by the single-selection inspector, carry the
+// uncurated truth, each ref tagged `inSet` so the renderer knows whether it
+// can be clicked-to-select on this canvas or only linked out to its own page.
+// On `/map` (no `entityIds`) every id is trivially "in set" — `fullOutgoing`/
+// `fullIncoming` end up identical to `outgoing`/`incoming` there, so this
+// stays correct rather than becoming dead branches at full scale.
+const idSet = entityIds ? new Set(entityIds) : new Set(allNodes.map((n) => n.id));
+const fullById = new Map(allNodes.map((n) => [n.id, n]));
+const nodesWithFields = nodes.map((n) => {
+  const full = fullById.get(n.id);
+  const fullOutgoing = (full?.outgoing ?? []).map((r) => ({ ...r, inSet: idSet.has(r.id) }));
+  const fullIncoming = (full?.incoming ?? []).map((r) => ({ ...r, inSet: idSet.has(r.id) }));
+  return { ...n, classBoxFields: classBoxFields(n), fullOutgoing, fullIncoming };
+});
+
+const graphPayload = JSON.stringify({ nodes: nodesWithFields, edges });
+const stylePayload = JSON.stringify({ types: typeStyle, predicates: predicateStyle });
+const entityTypes = [...new Set(nodes.map((n) => n.type))].sort() as EntityType[];
+
+const legendItems: LegendItem[] = entityTypes
+  .filter((t) => vocab.has(t))
+  .map((t) => {
+    const entry = vocab.get(t)!;
+    return { type: t, label: entry.label[locale] ?? entry.label.en ?? t, layer: entry.layer, shape: shapeForLayer(entry.layer), fill: map2TypeFill(t) };
+  });
+
+interface LayerPanelEntity {
+  id: string;
+  name: string;
+  subtypeLabel?: string;
+  noRelations: boolean;
+}
+interface LayerPanelGroup {
+  layer: string;
+  layerLabel: string;
+  count: number;
+  entities: LayerPanelEntity[];
+}
+import { LAYER_ORDER } from '../lib/mermaid/layers.js';
+const layerGroups: LayerPanelGroup[] = LAYER_ORDER.map((layer) => {
+  const layerNodes = nodes.filter((n) => n.layer === layer);
+  return {
+    layer,
+    layerLabel: LAYER_LABELS[locale][layer] ?? layer,
+    count: layerNodes.length,
+    entities: layerNodes
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .map((n) => ({ id: n.id, name: n.name, subtypeLabel: n.subtypeLabel, noRelations: n.noRelations })),
+  };
+}).filter((g) => g.count > 0);
+
+// --- Facet options (promoted from `MapExplorer.astro`): only values
+// actually present in the corpus, never the full closed vocab. Rendered
+// only when `showAdvanced` (i.e. on `/map`, never `/map2` — see Props). ---
+const layersPresent = layerGroups.map((g) => ({ value: g.layer, label: g.layerLabel, count: g.count }));
+const governancesPresent = [...new Set(nodes.map((n) => n.governance))]
+  .map((g) => ({ value: g, label: GOVERNANCE_LABELS[locale][g] ?? g, count: nodes.filter((n) => n.governance === g).length }))
+  .sort((a, b) => b.count - a.count);
+const typesPresent = entityTypes.map((t) => ({
+  value: t,
+  label: vocab.get(t)?.label[locale] ?? vocab.get(t)?.label.en ?? t,
+  count: nodes.filter((n) => n.type === t).length,
+}));
+const tagIdsPresent = [...new Set(nodes.flatMap((n) => n.tags))];
+const tagsPresent = tagIdsPresent
+  .map((tagId) => ({ value: tagId, label: tagsVocab.get(tagId)?.label[locale] ?? tagsVocab.get(tagId)?.label.en ?? tagId }))
+  .sort((a, b) => a.label.localeCompare(b.label));
+
+// Route-aware chrome: this component now backs both `/map` (no `entityIds`)
+// and `/map2` (curated `entityIds`) — see Props/header comment.
+const routeSegment = entityIds ? 'map2' : 'map';
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/${routeSegment}/`])) as Record<LocaleCode, string>;
+const pageTitle = entityIds ? { es: 'Conceptos esenciales', en: 'Essential concepts' } : { es: 'Mapa', en: 'Map' };
+
+const strings = {
+  es: {
+    intro: `${nodes.length} entidades, ${edges.length} relaciones.`,
+    tableLink: 'Ver como tabla (equivalente accesible)',
+    noJs: 'Este mapa requiere JavaScript. Mientras tanto, explora la tabla de entidades.',
+    zoomIn: 'Acercar',
+    zoomOut: 'Alejar',
+    reset: 'Restablecer vista',
+    loadError: 'No se pudo cargar el mapa interactivo. Explora la tabla de entidades en su lugar.',
+    onboardTitle: '¿Qué estoy viendo?',
+    onboardLines: [
+      'Un mapa jerárquico: principios y estándares arriba, quién los gobierna en medio, herramientas concretas abajo.',
+      'Arrastra, haz zoom, haz clic en cualquier nodo — su ficha aparece a la derecha.',
+    ],
+    onboardDismiss: 'Entendido',
+    tooltipType: 'Tipo',
+    tooltipLayer: 'Capa',
+    tooltipSubtype: 'Subtipo',
+    layersTitle: 'Capas',
+    noRelationsBadge: 'sin relaciones registradas',
+    inspectorTitle: 'Ficha',
+    openFullPageLabel: 'Ver página completa',
+    fullPageLoadErrorLabel: 'No se pudo cargar la ficha completa.',
+    loadingFullPageLabel: 'Cargando ficha completa…',
+    resizeHandleLabel: 'Redimensionar panel de ficha',
+    clearSelection: 'Quitar de la selección',
+    selectionChipsLabel: 'Seleccionados',
+    sharedLabel: 'En común',
+    searchLabel: 'Buscar en el mapa',
+    searchPlaceholder: 'Buscar entidad…',
+    searchNoResults: 'Sin resultados',
+    stateSelected: 'Seleccionado',
+    stateUpstream: 'Depende de',
+    stateDownstream: 'Depende de esto',
+    stateShared: 'En común',
+    collapseLayers: 'Contraer panel de capas',
+    expandLayers: 'Expandir panel de capas',
+    collapseInspector: 'Contraer ficha',
+    expandInspector: 'Expandir ficha',
+    legendToggle: 'Leyenda',
+    statusSelectionTemplate: '{n} seleccionado(s) · ▲ {up} arriba · ▼ {down} abajo · ⋂ {shared} común(es)',
+    // Advanced (`/map`-only, `showAdvanced`) — promoted from `MapExplorer.astro`.
+    filtersLabel: 'Filtros',
+    layerFacet: 'Capa',
+    typeFacet: 'Tipo',
+    governanceFacet: 'Gobernanza',
+    tagFacet: 'Etiqueta',
+    clearFilters: 'Limpiar filtros',
+    focusLabel: 'Enfoque',
+    hopsLabel: 'Saltos',
+    focusClear: '← Todo el mapa',
+  },
+  en: {
+    intro: `${nodes.length} entities, ${edges.length} relations.`,
+    tableLink: 'View as table (accessible equivalent)',
+    noJs: 'This map requires JavaScript. In the meantime, browse the entities table.',
+    zoomIn: 'Zoom in',
+    zoomOut: 'Zoom out',
+    reset: 'Reset view',
+    loadError: 'The interactive map could not load. Browse the entities table instead.',
+    onboardTitle: 'What am I looking at?',
+    onboardLines: [
+      'A hierarchical map: principles and standards on top, who governs them in the middle, concrete tools at the bottom.',
+      'Drag, zoom, click any node — its record appears on the right.',
+    ],
+    onboardDismiss: 'Got it',
+    tooltipType: 'Type',
+    tooltipLayer: 'Layer',
+    tooltipSubtype: 'Subtype',
+    layersTitle: 'Layers',
+    noRelationsBadge: 'no relations recorded',
+    inspectorTitle: 'Record',
+    openFullPageLabel: 'View full page',
+    fullPageLoadErrorLabel: 'Could not load the full record.',
+    loadingFullPageLabel: 'Loading full record…',
+    resizeHandleLabel: 'Resize record panel',
+    clearSelection: 'Remove from selection',
+    selectionChipsLabel: 'Selected',
+    sharedLabel: 'Shared',
+    searchLabel: 'Search the map',
+    searchPlaceholder: 'Search entity…',
+    searchNoResults: 'No results',
+    stateSelected: 'Selected',
+    stateUpstream: 'Depends on',
+    stateDownstream: 'Depends on this',
+    stateShared: 'Shared',
+    collapseLayers: 'Collapse layers panel',
+    expandLayers: 'Expand layers panel',
+    collapseInspector: 'Collapse record panel',
+    expandInspector: 'Expand record panel',
+    legendToggle: 'Legend',
+    statusSelectionTemplate: '{n} selected · ▲ {up} upstream · ▼ {down} downstream · ⋂ {shared} shared',
+    filtersLabel: 'Filters',
+    layerFacet: 'Layer',
+    typeFacet: 'Type',
+    governanceFacet: 'Governance',
+    tagFacet: 'Tag',
+    clearFilters: 'Clear filters',
+    focusLabel: 'Focus',
+    hopsLabel: 'Hops',
+    focusClear: '← Full map',
+  },
+} as const;
+const t = strings[locale];
+
+const panelI18n = {
+  tooltipType: t.tooltipType,
+  tooltipLayer: t.tooltipLayer,
+  tooltipSubtype: t.tooltipSubtype,
+  noRelationsBadge: t.noRelationsBadge,
+  openFullPageLabel: t.openFullPageLabel,
+  fullPageLoadErrorLabel: t.fullPageLoadErrorLabel,
+  loadingFullPageLabel: t.loadingFullPageLabel,
+  clearSelection: t.clearSelection,
+  selectionChipsLabel: t.selectionChipsLabel,
+  sharedLabel: t.sharedLabel,
+  searchNoResults: t.searchNoResults,
+  defaultLocale,
+};
+---
+
+<Base locale={locale} title={`${pageTitle[locale]} — openscience-ecosystem`} switcherHrefs={switcherHrefs} appShell>
+  <div id="map2-app" data-locale={locale} class="map2-shell">
+    <div class="map2-toolbar">
+      <a href={crossLinkHref} class="map2-crosslink">{crossLinkLabel}</a>
+      <div class="map2-toolbar__zoom" role="group" aria-label="Diagram view controls">
+        <button type="button" data-map-action="zoom-in" aria-label={t.zoomIn}>+</button>
+        <button type="button" data-map-action="zoom-out" aria-label={t.zoomOut}>&minus;</button>
+        <button type="button" data-map-action="reset">{t.reset}</button>
+      </div>
+      <div class="map2-search">
+        <label for="map2-search-input" class="visually-hidden">{t.searchLabel}</label>
+        <input type="search" id="map2-search-input" autocomplete="off" placeholder={t.searchPlaceholder} />
+        <ul id="map2-search-results" class="map2-search-results" role="listbox" hidden></ul>
+      </div>
+
+      {showAdvanced && (
+        <details class="map2-filters">
+          <summary>{t.filtersLabel}</summary>
+          <div class="map2-filters__body">
+            <fieldset>
+              <legend>{t.layerFacet}</legend>
+              {layersPresent.map((l) => (
+                <label>
+                  <input type="checkbox" data-facet="layer" value={l.value} /> {l.label} ({l.count})
+                </label>
+              ))}
+            </fieldset>
+            <fieldset>
+              <legend>{t.typeFacet}</legend>
+              {typesPresent.map((ty) => (
+                <label>
+                  <input type="checkbox" data-facet="type" value={ty.value} /> {ty.label} ({ty.count})
+                </label>
+              ))}
+            </fieldset>
+            <fieldset>
+              <legend>{t.governanceFacet}</legend>
+              {governancesPresent.map((g) => (
+                <label>
+                  <input type="checkbox" data-facet="governance" value={g.value} /> {g.label} ({g.count})
+                </label>
+              ))}
+            </fieldset>
+            <fieldset>
+              <legend>{t.tagFacet}</legend>
+              {tagsPresent.map((tg) => (
+                <label>
+                  <input type="checkbox" data-facet="tag" value={tg.value} /> {tg.label}
+                </label>
+              ))}
+            </fieldset>
+            <button type="button" id="map2-filters-clear">{t.clearFilters}</button>
+          </div>
+        </details>
+      )}
+
+      {showAdvanced && (
+        <div class="map2-focus" id="map2-focus-controls" hidden>
+          <label for="map2-hops">{t.hopsLabel}</label>
+          <select id="map2-hops">
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+          </select>
+          <button type="button" id="map2-focus-clear">{t.focusClear}</button>
+        </div>
+      )}
+
+      <p id="map2-status" class="map2-status" role="status" aria-live="polite" data-selection-template={t.statusSelectionTemplate}>
+        {t.intro} <a href={`/${locale}/entities/`}>{t.tableLink}</a>
+      </p>
+      <div id="map2-state-key" class="map2-state-key" aria-hidden="true" hidden>
+        <span class="state-dot state-selected"></span>{t.stateSelected}
+        <span class="state-dot state-upstream"></span>{t.stateUpstream}
+        <span class="state-dot state-downstream"></span>{t.stateDownstream}
+        <span class="state-dot state-shared"></span>{t.stateShared}
+      </div>
+    </div>
+
+    <noscript>
+      <p role="note">{t.noJs}</p>
+    </noscript>
+
+    <div id="map2-onboarding" class="map2-onboarding" role="note" data-onboarding-key={`${routeSegment}OnboardingDismissed`} hidden>
+      <p class="map2-onboarding__title">{t.onboardTitle}</p>
+      {t.onboardLines.map((line) => <p>{line}</p>)}
+      <button type="button" id="map2-onboarding-dismiss">{t.onboardDismiss}</button>
+    </div>
+
+    <div class="map2-body" data-collapsed="layers">
+      <aside id="map2-layers-panel" class="map2-layers" aria-label={t.layersTitle}>
+        <div class="map2-panel-header">
+          <h2>{t.layersTitle}</h2>
+          <button type="button" id="map2-layers-toggle" aria-expanded="false" aria-controls="map2-layers-panel" aria-label={t.expandLayers}>
+            »
+          </button>
+        </div>
+        <div class="map2-panel-body">
+          {layerGroups.map((g) => (
+            <details class="map2-layer" data-layer={g.layer} open={g.layer === 'identifier' || g.layer === 'cross-cutting'}>
+              <summary>
+                {g.layerLabel} <span class="map2-layer__count">({g.count})</span>
+              </summary>
+              <ul>
+                {g.entities.map((e) => (
+                  <li>
+                    <button type="button" class="map2-entity-btn" data-select-id={e.id} aria-label={`${e.name} — ${g.layerLabel}`}>
+                      {e.name}
+                      {e.subtypeLabel && <span class="map2-badge">{e.subtypeLabel}</span>}
+                      {e.noRelations && (
+                        <span class="map2-badge map2-badge--warn" title={t.noRelationsBadge}>
+                          !
+                        </span>
+                      )}
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            </details>
+          ))}
+        </div>
+      </aside>
+
+      <div class="map2-canvas-col">
+        <div id="map2-tooltip" class="map2-tooltip" role="status" hidden>
+          <p class="map2-tooltip__name"></p>
+          <p class="map2-tooltip__meta"></p>
+        </div>
+        <div id="map2-canvas" tabindex="0" role="img" aria-label={t.intro}></div>
+        <p id="map2-error" role="alert" hidden>{t.loadError}</p>
+
+        <details class="map2-legend-overlay">
+          <summary>{t.legendToggle}</summary>
+          <DiagramLegend items={legendItems} locale={locale} groupByLayer layerLabels={LAYER_LABELS[locale]} />
+        </details>
+      </div>
+
+      <aside id="map2-inspector" class="map2-inspector" aria-label={t.inspectorTitle}>
+        <div
+          id="map2-inspector-resize"
+          class="map2-inspector-resize"
+          role="separator"
+          aria-orientation="vertical"
+          aria-label={t.resizeHandleLabel}
+          aria-valuenow="320"
+          aria-valuemin="300"
+          aria-valuemax="1100"
+          tabindex="0"
+        >
+        </div>
+        <div class="map2-panel-header">
+          <button type="button" id="map2-inspector-toggle" aria-expanded="true" aria-controls="map2-inspector" aria-label={t.collapseInspector}>
+            »
+          </button>
+          <h2>{t.inspectorTitle}</h2>
+        </div>
+        <div class="map2-panel-body">
+          <div id="map2-inspector-content"></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <script type="application/json" id="map2-graph-data" set:html={graphPayload} />
+  <script type="application/json" id="map2-style-data" set:html={stylePayload} />
+  <script type="application/json" id="map2-i18n-data" set:html={JSON.stringify(panelI18n)} />
+
+  <style>
+    .visually-hidden {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    .map2-onboarding {
+      max-width: 34rem;
+      margin: 0.4rem 1rem;
+      padding: 0.6rem 0.9rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      background: var(--muted-bg, #f6f8fa);
+      flex-shrink: 0;
+    }
+    .map2-onboarding__title {
+      margin: 0 0 0.3rem;
+      font-weight: 600;
+    }
+    .map2-onboarding p {
+      margin: 0.2rem 0;
+      font-size: 0.85rem;
+    }
+    .map2-onboarding button {
+      margin-top: 0.4rem;
+    }
+
+    .map2-shell {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .map2-toolbar {
+      flex-shrink: 0;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.6rem 1rem;
+      padding: 0.5rem 1rem;
+      border-bottom: 1px solid var(--border, #d0d7de);
+    }
+    .map2-crosslink {
+      font-size: 0.85rem;
+    }
+    .map2-toolbar__zoom {
+      display: flex;
+      gap: 0.4rem;
+    }
+    .map2-toolbar button {
+      font: inherit;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+      background: var(--bg, #fff);
+      cursor: pointer;
+    }
+    .map2-status {
+      margin: 0;
+      font-size: 0.82rem;
+      color: var(--muted-fg, #57606a);
+    }
+    .map2-state-key {
+      display: flex;
+      align-items: center;
+      gap: 0.15rem 0.6rem;
+      font-size: 0.76rem;
+      color: var(--muted-fg, #57606a);
+      flex-wrap: wrap;
+    }
+    .state-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 0.15rem;
+    }
+    .state-dot.state-selected {
+      background: #d4380d;
+    }
+    .state-dot.state-upstream {
+      background: #1f6feb;
+    }
+    .state-dot.state-downstream {
+      background: #1a7f37;
+    }
+    .state-dot.state-shared {
+      background: #8250df;
+    }
+
+    .map2-search {
+      position: relative;
+    }
+    .map2-search input {
+      font: inherit;
+      padding: 0.3rem 0.6rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+      min-width: 13rem;
+    }
+    .map2-search-results {
+      position: absolute;
+      z-index: 30;
+      top: 100%;
+      left: 0;
+      right: 0;
+      margin: 0.15rem 0 0;
+      padding: 0.25rem;
+      list-style: none;
+      background: var(--bg, #fff);
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      max-height: 16rem;
+      overflow-y: auto;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    .map2-search-results li {
+      padding: 0;
+    }
+    .map2-search-results button {
+      display: block;
+      width: 100%;
+      text-align: left;
+      padding: 0.35rem 0.5rem;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font: inherit;
+    }
+    .map2-search-results button:hover,
+    .map2-search-results button:focus-visible {
+      background: var(--muted-bg, #f6f8fa);
+    }
+
+    /* Advanced (`/map`-only, `showAdvanced`) — promoted from `MapExplorer.astro`. */
+    .map2-filters summary {
+      cursor: pointer;
+      font: inherit;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+    }
+    .map2-filters__body {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+      gap: 0.5rem 1rem;
+      padding: 0.5rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      margin-top: 0.3rem;
+      max-width: 44rem;
+      position: absolute;
+      z-index: 30;
+      background: var(--bg, #fff);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+    }
+    .map2-filters fieldset {
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+    .map2-filters legend {
+      font-weight: 600;
+      font-size: 0.8rem;
+      padding: 0;
+    }
+    .map2-filters label {
+      display: block;
+      font-size: 0.82rem;
+      padding: 0.1rem 0;
+    }
+    .map2-filters button {
+      font: inherit;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+      background: var(--bg, #fff);
+      cursor: pointer;
+    }
+    .map2-focus {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.85rem;
+    }
+    .map2-focus button {
+      font: inherit;
+      padding: 0.3rem 0.7rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+      background: var(--bg, #fff);
+      cursor: pointer;
+    }
+
+    .map2-body {
+      flex: 1;
+      min-height: 0;
+      display: grid;
+      /* --map2-inspector-w: set inline by the resize-handle drag JS below
+         (and restored from sessionStorage on load); the fallback (320px)
+         matches the panel's previous fixed width. */
+      grid-template-columns: 40px minmax(0, 1fr) minmax(0, var(--map2-inspector-w, 320px));
+      gap: 0;
+    }
+    .map2-body[data-collapsed~='layers'] #map2-layers-panel .map2-panel-body {
+      display: none;
+    }
+    .map2-body:not([data-collapsed~='layers']) {
+      grid-template-columns: minmax(0, 280px) minmax(0, 1fr) minmax(0, var(--map2-inspector-w, 320px));
+    }
+    .map2-body[data-collapsed~='inspector'] {
+      grid-template-columns: 40px minmax(0, 1fr) 40px;
+    }
+    .map2-body[data-collapsed~='inspector']:not([data-collapsed~='layers']) {
+      grid-template-columns: minmax(0, 280px) minmax(0, 1fr) 40px;
+    }
+    .map2-body[data-collapsed~='inspector'] #map2-inspector .map2-panel-body {
+      display: none;
+    }
+
+    .map2-layers,
+    .map2-inspector {
+      border-right: 1px solid var(--border, #d0d7de);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    .map2-inspector {
+      border-right: none;
+      border-left: 1px solid var(--border, #d0d7de);
+      position: relative;
+    }
+    .map2-inspector-resize {
+      position: absolute;
+      top: 0;
+      left: -3px;
+      width: 6px;
+      height: 100%;
+      cursor: ew-resize;
+      z-index: 5;
+      touch-action: none;
+    }
+    .map2-inspector-resize:hover,
+    .map2-inspector-resize:focus-visible {
+      background: var(--accent, #1f6feb);
+      opacity: 0.4;
+    }
+    .map2-body[data-collapsed~='inspector'] .map2-inspector-resize {
+      display: none;
+    }
+    .map2-panel-header {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.6rem;
+      border-bottom: 1px solid var(--border, #d0d7de);
+      background: var(--muted-bg, #f6f8fa);
+      flex-shrink: 0;
+    }
+    .map2-panel-header h2 {
+      margin: 0;
+      font-size: 0.9rem;
+      flex: 1;
+    }
+    .map2-body[data-collapsed~='layers'] #map2-layers-panel .map2-panel-header h2,
+    .map2-body[data-collapsed~='inspector'] #map2-inspector .map2-panel-header h2 {
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+    }
+    .map2-body[data-collapsed~='layers'] #map2-layers-panel .map2-panel-header,
+    .map2-body[data-collapsed~='inspector'] #map2-inspector .map2-panel-header {
+      flex-direction: column;
+      height: 100%;
+    }
+    .map2-panel-header button {
+      font: inherit;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 4px;
+      background: var(--bg, #fff);
+      cursor: pointer;
+      padding: 0.15rem 0.5rem;
+    }
+    .map2-panel-body {
+      padding: 0.5rem 0.6rem;
+      overflow-y: auto;
+      flex: 1;
+      min-height: 0;
+    }
+
+    .map2-layer {
+      margin-bottom: 0.15rem;
+    }
+    .map2-layer summary {
+      cursor: pointer;
+      font-weight: 600;
+      min-height: 24px;
+      padding: 4px 2px;
+      display: flex;
+      align-items: center;
+    }
+    .map2-layer__count {
+      font-weight: 400;
+      color: var(--muted-fg, #57606a);
+    }
+    .map2-layer ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+    .map2-entity-btn {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      width: 100%;
+      text-align: left;
+      font: inherit;
+      font-size: 0.85rem;
+      padding: 0.2rem 0.3rem;
+      border: 1px solid transparent;
+      border-radius: 4px;
+      background: none;
+      cursor: pointer;
+      min-height: 24px;
+    }
+    .map2-entity-btn:hover {
+      background: var(--muted-bg, #f6f8fa);
+    }
+    .map2-entity-btn[aria-pressed='true'] {
+      background: #ffe9e0;
+      border-color: #d4380d;
+    }
+    .map2-badge {
+      font-size: 0.66rem;
+      padding: 0.05rem 0.3rem;
+      border-radius: 3px;
+      background: var(--muted-bg, #eaeef2);
+      color: var(--muted-fg, #57606a);
+    }
+    .map2-badge--warn {
+      background: #fff1e5;
+      color: #9a4a00;
+      font-weight: 700;
+    }
+
+    .map2-canvas-col {
+      position: relative;
+      min-width: 0;
+      min-height: 0;
+      display: flex;
+    }
+    #map2-canvas {
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+    }
+    :global(html:not(.js)) #map2-canvas {
+      display: none;
+    }
+    .map2-tooltip {
+      position: fixed;
+      z-index: 20;
+      max-width: 18rem;
+      padding: 0.5rem 0.7rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      background: var(--bg, #fff);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+      font-size: 0.85rem;
+      pointer-events: none;
+    }
+    .map2-tooltip__name {
+      margin: 0 0 0.15rem;
+      font-weight: 600;
+    }
+    .map2-tooltip__meta {
+      margin: 0;
+      color: var(--muted-fg, #57606a);
+    }
+
+    .map2-legend-overlay {
+      position: absolute;
+      bottom: 0.6rem;
+      left: 0.6rem;
+      z-index: 15;
+      max-width: 16rem;
+      background: var(--bg, #fff);
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    }
+    .map2-legend-overlay summary {
+      cursor: pointer;
+      font-weight: 600;
+      min-height: 24px;
+      display: flex;
+      align-items: center;
+    }
+
+    :global(.map2-inspector-badges) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin: 0.3rem 0 0.5rem;
+    }
+    :global(.map2-inspector-badges span) {
+      font-size: 0.72rem;
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      background: var(--muted-bg, #eaeef2);
+    }
+    :global(.map2-relation-group) {
+      margin-bottom: 0.6rem;
+    }
+    :global(.map2-relation-group h4) {
+      margin: 0 0 0.2rem;
+      font-size: 0.8rem;
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-relation-subgroup) {
+      margin-bottom: 0.35rem;
+    }
+    :global(.map2-relation-subgroup h5) {
+      margin: 0 0 0.15rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    :global(.map2-relation-pill) {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.15rem 0.35rem;
+      font: inherit;
+      font-size: 0.82rem;
+      padding: 0.15rem 0.5rem;
+      margin: 0.1rem 0.2rem 0.1rem 0;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 10px;
+      background: var(--bg, #fff);
+      cursor: pointer;
+      text-align: left;
+      max-width: 100%;
+    }
+    :global(.map2-relation-pill:hover) {
+      background: var(--muted-bg, #f6f8fa);
+    }
+    :global(.map2-relation-pill-meta),
+    :global(.map2-relation-pill-note) {
+      flex-basis: 100%;
+      font-size: 0.72rem;
+      color: var(--muted-fg, #57606a);
+    }
+    /* A relation whose target isn't in this curated map — real link, not a
+       canvas-selecting pill, styled as dashed/muted so it visibly differs
+       from a clickable pill instead of looking like a broken one. */
+    :global(.map2-relation-link) {
+      display: inline-flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.15rem 0.35rem;
+      font-size: 0.82rem;
+      padding: 0.15rem 0.5rem;
+      margin: 0.1rem 0.2rem 0.1rem 0;
+      border: 1px dashed var(--border, #d0d7de);
+      border-radius: 10px;
+      color: inherit;
+      text-decoration: none;
+      max-width: 100%;
+    }
+    :global(.map2-relation-link:hover) {
+      background: var(--muted-bg, #f6f8fa);
+      text-decoration: underline;
+    }
+    :global(.map2-relation-not-on-map) {
+      font-style: italic;
+    }
+    :global(.map2-inspector-fallback) {
+      background: #fff8c5;
+      color: #24292f;
+      padding: 0.4rem 0.6rem;
+      border-radius: 4px;
+      font-size: 0.8rem;
+      margin: 0 0 0.5rem;
+    }
+    :global(.map2-inspector-aka) {
+      margin: 0 0 0.4rem;
+      font-size: 0.85rem;
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-inspector-description) {
+      margin: 0.3rem 0 0.6rem;
+      font-size: 0.85rem;
+    }
+    :global(.map2-inspector-description summary) {
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-inspector-description div) {
+      margin-top: 0.3rem;
+    }
+    :global(.map2-inspector-facets) {
+      font-size: 0.78rem;
+      color: var(--muted-fg, #57606a);
+      margin: 0 0 0.6rem;
+    }
+    :global(.map2-inspector-chips) {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-bottom: 0.5rem;
+    }
+    :global(.map2-inspector-chip) {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.8rem;
+      padding: 0.15rem 0.4rem;
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 999px;
+      background: var(--muted-bg, #f6f8fa);
+    }
+    :global(.map2-inspector-chip button) {
+      font: inherit;
+      border: none;
+      background: none;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+    }
+    :global(.map2-inspector-fields) {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      column-gap: 0.6rem;
+      row-gap: 0.15rem;
+      margin: 0;
+      font-size: 0.82rem;
+    }
+    :global(.map2-inspector-fields dt) {
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-inspector-fields dd) {
+      margin: 0;
+      word-break: break-word;
+    }
+    :global(.map2-inspector-sources) {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.82rem;
+    }
+    :global(.map2-inspector-sources li) {
+      margin-bottom: 0.2rem;
+      word-break: break-word;
+    }
+    :global(.map2-inspector-source-date) {
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-inspector-source-note) {
+      color: var(--muted-fg, #57606a);
+    }
+    :global(.map2-inspector-last-reviewed) {
+      font-size: 0.78rem;
+      color: var(--muted-fg, #57606a);
+      margin: 0.5rem 0 0;
+    }
+    :global(.map2-inspector-raw-json) {
+      display: inline-block;
+      margin-top: 0.3rem;
+      font-size: 0.8rem;
+    }
+    :global(.map2-open-full-page) {
+      display: inline-block;
+      margin-top: 0.5rem;
+      padding: 0.35rem 0.7rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--link, #0969da);
+      background: var(--bg-subtle, #f6f8fa);
+      border: 1px solid var(--border, #d0d7de);
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    :global(.map2-inspector-fullpage-status) {
+      color: var(--muted-fg, #57606a);
+      font-size: 0.85rem;
+    }
+    :global(.map2-inspector-fullpage-error) {
+      color: var(--danger-fg, #cf222e);
+    }
+    :global(.map2-inspector-fullpage-status a) {
+      color: var(--link, #0969da);
+    }
+    :global(.map2-inspector-fullpage) {
+      font-size: 0.9rem;
+      max-width: 100%;
+      overflow-wrap: break-word;
+    }
+    :global(.map2-inspector-fullpage img),
+    :global(.map2-inspector-fullpage svg) {
+      max-width: 100%;
+      height: auto;
+    }
+    :global(.map2-inspector-fullpage table) {
+      display: block;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+
+    @media (max-width: 900px) {
+      .map2-body,
+      .map2-body[data-collapsed~='layers'],
+      .map2-body[data-collapsed~='inspector'] {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto minmax(280px, 1fr) auto;
+        grid-template-areas: 'layers' 'canvas' 'inspector';
+      }
+      .map2-layers,
+      .map2-inspector {
+        max-height: 30vh;
+      }
+    }
+  </style>
+
+  <script>
+    import cytoscape from 'cytoscape';
+    import { LAYER_ORDER } from '../lib/mermaid/layers.js';
+    import { scoreSearchEntry } from '../lib/map/search-score.js';
+    import { classifyNodes, summarizeStates, nHopNeighborhood, type Adjacency } from '../lib/map/graph-state.js';
+    import { computeLayout, computeTier, DEFAULT_LAYOUT_OPTIONS } from '../lib/map/hierarchy.js';
+    import { classBoxDataUri, classBoxHeight } from '../lib/map/node-svg.js';
+    import { matchesFacets, type FacetableNode, type FacetFilters } from '../lib/map/facets.js';
+    import { parseMapUrlState, serializeMapUrlState, type MapUrlState } from '../lib/map/url-state.js';
+
+    interface RelationRef {
+      predicate: string;
+      predicateLabel: string;
+      id: string;
+      name: string;
+      note?: string;
+      since?: string;
+      /** True when `id` is one of this map's curated entities (clickable,
+       *  selectable pill); false when the relation is real but its target
+       *  isn't on this canvas (rendered as a plain link out instead). Only
+       *  set on `MapNode.fullOutgoing`/`fullIncoming` — the canvas-trimmed
+       *  `outgoing`/`incoming` never contain an out-of-set id in the first
+       *  place, so it's always true there and the field is omitted. */
+      inSet?: boolean;
+    }
+    interface ClassBoxFieldSpec {
+      label: string;
+      value: string;
+    }
+    interface SourceRef {
+      url: string;
+      title?: string;
+      accessed: string;
+      note?: string;
+    }
+    interface MapNode {
+      id: string;
+      type: string;
+      typeLabel: string;
+      layer: string;
+      layerLabel: string;
+      subtype?: string;
+      subtypeLabel?: string;
+      name: string;
+      aka?: string[];
+      summary: string;
+      body: string;
+      fallback: boolean;
+      governance: string;
+      governanceLabel: string;
+      status: string;
+      statusLabel: string;
+      tags: string[];
+      disciplines?: string[];
+      geography?: string[];
+      lastReviewed: string;
+      noRelations: boolean;
+      outgoing: RelationRef[];
+      incoming: RelationRef[];
+      /** Full, uncurated relation lists (real corpus truth, `inSet`-tagged)
+       *  — read by the single-selection inspector instead of `outgoing`/
+       *  `incoming` above, which stay canvas-trimmed for layout/adjacency. */
+      fullOutgoing: RelationRef[];
+      fullIncoming: RelationRef[];
+      classBoxFields: ClassBoxFieldSpec[];
+      sources: SourceRef[];
+      extraFields: ClassBoxFieldSpec[];
+    }
+    interface MapEdge {
+      from: string;
+      to: string;
+      predicate: string;
+    }
+    interface PanelI18n {
+      tooltipType: string;
+      tooltipLayer: string;
+      tooltipSubtype: string;
+      noRelationsBadge: string;
+      openFullPageLabel: string;
+      fullPageLoadErrorLabel: string;
+      loadingFullPageLabel: string;
+      clearSelection: string;
+      selectionChipsLabel: string;
+      sharedLabel: string;
+      searchNoResults: string;
+      defaultLocale: string;
+    }
+
+    function readJson<T>(id: string): T {
+      const el = document.getElementById(id);
+      return JSON.parse(el?.textContent ?? 'null') as T;
+    }
+    function showError(): void {
+      const err = document.getElementById('map2-error');
+      const canvas = document.getElementById('map2-canvas');
+      if (err) err.hidden = false;
+      if (canvas) (canvas as HTMLElement).style.display = 'none';
+    }
+
+    // Below this zoom, render a small dot instead of the full class box —
+    // a LEGIBILITY bar (176px-wide class-box text needs roughly this much
+    // zoom to read at all, independent of corpus size).
+    //
+    // History: earlier passes treated this threshold as ALSO having to be
+    // the default view's own zoom floor — i.e. "the default view must fit
+    // the whole graph AND land above 0.4" — and, once a real container-size
+    // race at construction time was fixed (see the ResizeObserver/
+    // `resetView` comment below; earlier "fit-zoom" readings had been
+    // measured against a container ~35% taller than the one that actually
+    // renders), that combination turned out to be mutually exclusive for
+    // this corpus's real row count: fitting all 33 nodes/13 tier-depth rows
+    // in one view landed at ~0.28-0.30, and no reasonable spacing closed
+    // that gap without making boxes touch. That's what the earlier version
+    // of this comment called "the honest default is dot mode".
+    //
+    // That framing is now the wrong one to hold onto: `MIN_DEFAULT_ZOOM`
+    // (see `resetView`) decouples the two concerns — it floors the default/
+    // reset view's zoom independently of whatever a naive `cy.fit()` would
+    // produce, so the default view is legible REGARDLESS of how many rows
+    // the corpus has, by panning to see the rest instead of shrinking to
+    // fit it all. `LOD_ZOOM_THRESHOLD` now does the one job it was always
+    // meant to do: degrade to dots only when the user deliberately zooms
+    // OUT past readability (e.g. via the zoom-out button/wheel/keyboard) —
+    // not as a description of the default view, which no longer needs to
+    // dip below it.
+    const LOD_ZOOM_THRESHOLD = 0.4;
+    const TIER_LABELS: Record<string, Record<number, string>> = {
+      es: {
+        4: 'Principios y políticas',
+        3: 'Estándares y especificaciones',
+        2: 'Instituciones y agencias',
+        1: 'Instrumentos y sistemas',
+      },
+      en: {
+        4: 'Principles and policies',
+        3: 'Standards and specifications',
+        2: 'Institutions and agencies',
+        1: 'Instruments and systems',
+      },
+    };
+    function tierNodeId(tier: number): string {
+      return `__tier-${tier}`;
+    }
+
+    function initMap(): void {
+      const canvas = document.getElementById('map2-canvas');
+      if (!canvas) return;
+      const graph = readJson<{ nodes: MapNode[]; edges: MapEdge[] }>('map2-graph-data');
+      const style = readJson<{ types: Record<string, { fill: string; shape: string }>; predicates: Record<string, { color: string; line: string }> }>(
+        'map2-style-data',
+      );
+      const i18n = readJson<PanelI18n>('map2-i18n-data');
+      if (!graph || !style || !i18n) {
+        showError();
+        return;
+      }
+
+      const locale = document.getElementById('map2-app')?.getAttribute('data-locale') ?? 'en';
+      const nodeById = new Map(graph.nodes.map((n) => [n.id, n]));
+      const allIds = graph.nodes.map((n) => n.id);
+
+      const outTargets = new Map<string, string[]>();
+      const inSources = new Map<string, string[]>();
+      for (const e of graph.edges) {
+        (outTargets.get(e.from) ?? outTargets.set(e.from, []).get(e.from)!).push(e.to);
+        (inSources.get(e.to) ?? inSources.set(e.to, []).get(e.to)!).push(e.from);
+      }
+      const adjacency: Adjacency = { outTargets, inSources };
+
+      // ---- Hierarchical preset layout: tier+depth ranking -> (x,y). ----
+      // Rows are ranked by their dense sorted position among the composite
+      // values actually present, not by the raw composite number — see
+      // hierarchy.ts's computeLayout doc: using composite (tier*100+depth)
+      // directly as a row multiplier bakes in up to 99 empty rows between
+      // tiers, which is what made the layout ~20x taller than it needed to
+      // be and forced the initial fit to zoom out far below readability.
+      // Spacing comes from hierarchy.ts's DEFAULT_LAYOUT_OPTIONS — the single
+      // source of truth shared with this module's own overlap tests, so the
+      // renderer's row gap can never again silently drift smaller than the
+      // class box's actual rendered height (that drift was the previous
+      // "cards on top of others" bug).
+      const positions = computeLayout(graph.nodes, graph.edges, DEFAULT_LAYOUT_OPTIONS);
+      function positionFor(id: string): { x: number; y: number } {
+        return positions.get(id) ?? { x: 0, y: 0 };
+      }
+
+      // Tier compound bands (report follow-up: "no clear division between
+      // roles is present... a zone with the name, a big rectangle, with the
+      // entities inside it" — restoring `/map`'s existing layer-band
+      // technique, but grouped by this hierarchy's `tier` concept instead of
+      // the taxonomy `layer`). Bands are given NO explicit position/size —
+      // Cytoscape derives a compound parent's bounding box from its already-
+      // positioned children automatically, for any layout including `preset`
+      // (this is what let `/map`'s fcose-based bands work without pinning the
+      // parent directly, which crashed fcose there; `preset` never touches
+      // parents at all, so this is even simpler here — no anchor node needed).
+      const tiersPresent = [...new Set(graph.nodes.map((n) => computeTier(n.type, n.subtype)))].sort((a, b) => b - a);
+      const parentElements = tiersPresent.map((tier) => ({
+        data: { id: tierNodeId(tier), label: TIER_LABELS[locale]?.[tier] ?? `Tier ${tier}` },
+        classes: 'tier-band',
+      }));
+
+      let cy: cytoscape.Core;
+      try {
+        cy = cytoscape({
+          container: canvas,
+          elements: [
+            ...parentElements,
+            ...graph.nodes.map((n) => ({
+              data: {
+                id: n.id,
+                label: n.name,
+                type: n.type,
+                typeLabel: n.typeLabel,
+                layer: n.layer,
+                layerLabel: n.layerLabel,
+                subtype: n.subtype,
+                subtypeLabel: n.subtypeLabel,
+                summary: n.summary,
+                parent: tierNodeId(computeTier(n.type, n.subtype)),
+              },
+              position: positionFor(n.id),
+            })),
+            ...graph.edges.map((e, i) => ({ data: { id: `e${i}`, source: e.from, target: e.to, predicate: e.predicate } })),
+          ],
+          style: [
+            {
+              // Compound tier-band parents only — kept off the plain 'node'
+              // selector so a band's look (light fill, top-left label) never
+              // has to fight the per-type colour/shape styling below, and so
+              // Cytoscape's automatic compound-parent sizing (which ignores
+              // any explicit width/height style anyway) isn't shadowed by it.
+              selector: 'node.tier-band',
+              style: {
+                'background-color': '#f6f8fa',
+                'background-opacity': 0.6,
+                'border-width': 1,
+                'border-color': '#d0d7de',
+                shape: 'round-rectangle',
+                label: 'data(label)',
+                'font-size': 12,
+                'font-weight': 600,
+                color: '#57606a',
+                'text-valign': 'top',
+                'text-halign': 'left',
+                'text-margin-y': -6,
+                'text-margin-x': 6,
+                padding: '24px',
+              },
+            },
+            {
+              selector: 'node:childless',
+              style: {
+                label: 'data(label)',
+                'font-size': 9,
+                'text-valign': 'bottom',
+                'text-margin-y': 3,
+                width: 14,
+                height: 14,
+                color: '#1f2328',
+                'background-color': (el: cytoscape.NodeSingular) => style.types[el.data('type')]?.fill ?? '#57606a',
+                shape: (el: cytoscape.NodeSingular) => (style.types[el.data('type')]?.shape ?? 'ellipse') as cytoscape.Css.NodeShape,
+                'border-width': 1.5,
+                'border-color': '#1f2328',
+                'background-fit': 'none',
+              },
+            },
+            {
+              selector: 'edge',
+              style: {
+                width: (el: cytoscape.EdgeSingular) => (style.predicates[el.data('predicate')]?.line === 'thick' ? 3 : 1.2),
+                'curve-style': 'bezier',
+                'target-arrow-shape': 'triangle',
+                'arrow-scale': 0.7,
+                'line-color': (el: cytoscape.EdgeSingular) => style.predicates[el.data('predicate')]?.color ?? '#57606a',
+                'target-arrow-color': (el: cytoscape.EdgeSingular) => style.predicates[el.data('predicate')]?.color ?? '#57606a',
+                'line-style': (el: cytoscape.EdgeSingular) =>
+                  (style.predicates[el.data('predicate')]?.line === 'dashed' ? 'dashed' : 'solid') as cytoscape.Css.LineStyle,
+                opacity: 0.85,
+              },
+            },
+            { selector: '.dimmed', style: { opacity: 0.12 } },
+            { selector: '.highlighted', style: { opacity: 1, 'z-index': 999 } },
+            // Border bump on top of the opacity difference: verified the
+            // hover logic itself is correct (reproduced directly — the
+            // right node gets `.highlighted`, the rest get `.dimmed`, at
+            // every zoom level, including dot mode) but opacity 1 vs 0.12 on
+            // a 14x14 dot renders ~4 real screen pixels apart, which is
+            // effectively imperceptible — this makes the hovered node/its
+            // neighbours stand out by outline as well as by fade, so the
+            // state reads clearly even at the smallest LOD.
+            { selector: 'node.highlighted', style: { 'border-width': 2.5, 'border-color': '#1f2328' } },
+            { selector: 'node.state-selected', style: { 'border-color': '#d4380d', 'border-width': 3 } },
+            { selector: 'node.state-upstream', style: { 'border-color': '#1f6feb', 'border-width': 2.5 } },
+            { selector: 'node.state-downstream', style: { 'border-color': '#1a7f37', 'border-width': 2.5 } },
+            { selector: 'node.state-shared', style: { 'border-color': '#8250df', 'border-width': 3 } },
+            { selector: 'node.state-dimmed', style: { opacity: 0.35 } },
+            { selector: 'edge.state-dimmed', style: { opacity: 0.06 } },
+            // Focus mode + facet filtering (`/map`-only, `showAdvanced`) —
+            // promoted from `MapExplorer.astro`.
+            { selector: 'node.focus-dimmed', style: { opacity: 0.15 } },
+            { selector: 'edge.focus-dimmed', style: { opacity: 0.06 } },
+            { selector: 'node.filtered-out', style: { opacity: 0.08 } },
+            // Class-box LOD: applied once the layout has an initial zoom
+            // (see fitAndClassify below), toggled again on every zoom change.
+            {
+              selector: 'node.classbox',
+              style: {
+                shape: 'round-rectangle',
+                'background-fit': 'contain',
+                'background-clip': 'none',
+                'border-width': 1,
+                // The class-box SVG already draws the name in its own title
+                // bar — an additional Cytoscape label here would float a
+                // second copy of the name above the box.
+                label: '',
+              },
+            },
+          ],
+          layout: { name: 'preset', fit: true, padding: 40 },
+          minZoom: 0.1,
+          maxZoom: 6,
+          wheelSensitivity: 1,
+        });
+      } catch {
+        showError();
+        return;
+      }
+
+      (window as unknown as { __cyMap2?: cytoscape.Core }).__cyMap2 = cy;
+
+      // ---- Zoom-dependent level of detail: dot below threshold, full
+      // class-box (background-image SVG data URI, sized to its content)
+      // above it — report §B5's "don't render fields on every node at every
+      // zoom, that's how ER tools stay usable at both scales". ----
+      // Two separate concerns, deliberately kept in two separate caches:
+      //
+      // `classBoxCache` holds the expensive-to-generate SVG data URI + box
+      // height per node — generated once, since it's deterministic for a
+      // given node's data.
+      //
+      // `boxApplied` tracks whether the CURRENT Cytoscape node style is
+      // already in "class-box" state, so the actual `n.style(...)` mutation
+      // below only runs on a real LOD *transition* (dot -> box or box -> dot),
+      // never redundantly on every 'zoom' event tick. This distinction fixes
+      // two bugs that came from conflating it into one guard:
+      //
+      // 1. An earlier version gated the width/height/background-image
+      //    application behind the SAME "already generated" check as the SVG
+      //    string itself. After the FIRST zoom-out (which inline-sets
+      //    width/height to the 14x14 dot size) a later zoom back in never
+      //    restored width/height to the box size — only re-added the
+      //    `.classbox` class — leaving the 176px-wide class-box image
+      //    squeezed into a 14x14 box via `background-fit: contain`, with
+      //    every baked-in text row scaled down to sub-pixel illegibility.
+      //    That was the "works fine until you pan/zoom, then text is
+      //    unreadable" bug.
+      // 2. The straightforward fix for #1 — always re-apply width/height/
+      //    background-image whenever `showBoxes` is true, on every 'zoom'
+      //    event — reintroduced a much worse problem: Cytoscape's 'zoom'
+      //    event fires continuously (many times per second during a mouse-
+      //    wheel or drag-zoom gesture), so re-assigning ~20+ base64 SVG
+      //    data-URI backgrounds on every single tick overloads the renderer
+      //    and reliably CRASHES the tab under software rasterization
+      //    (reproduced consistently in headless Chromium here). Only
+      //    touching a node's style when it actually crosses the LOD
+      //    threshold — tracked by `boxApplied` — fixes the illegibility bug
+      //    without paying that cost on every zoom tick.
+      const classBoxCache = new Map<string, { uri: string; height: number }>();
+      const boxApplied = new Set<string>();
+      function applyLod(): void {
+        const z = cy.zoom();
+        const showBoxes = z >= LOD_ZOOM_THRESHOLD;
+        cy.nodes().forEach((n) => {
+          const id = n.id();
+          if (!showBoxes) {
+            if (boxApplied.has(id)) {
+              n.removeClass('classbox');
+              n.style({ width: 14, height: 14 });
+              boxApplied.delete(id);
+            }
+            return;
+          }
+          if (boxApplied.has(id)) return; // already in class-box state — nothing to do this tick
+          const node = nodeById.get(id);
+          if (!node) return;
+          let entry = classBoxCache.get(id);
+          if (!entry) {
+            const height = classBoxHeight(node.classBoxFields.length);
+            const uri = classBoxDataUri({
+              name: node.name,
+              stereotype: node.subtypeLabel ? `${node.typeLabel} · ${node.subtypeLabel}` : node.typeLabel,
+              fill: style.types[node.type]?.fill ?? '#57606a',
+              fields: node.classBoxFields,
+            });
+            entry = { uri, height };
+            classBoxCache.set(id, entry);
+          }
+          n.style({ 'background-image': entry.uri, width: 176, height: entry.height });
+          n.addClass('classbox');
+          boxApplied.add(id);
+        });
+      }
+      // `applyLod` is never called directly from the 'zoom' event handler.
+      // Cytoscape dispatches 'zoom' SYNCHRONOUSLY from inside its own
+      // zoom-setting/render code; running style-mutating logic (touching up
+      // to ~20+ nodes' width/height/background-image) reentrantly on that
+      // same call stack reliably crashed the tab under this environment's
+      // software rasterizer (reproduced consistently — every single call to
+      // `cy.zoom(level)`, even changing nothing else, crashed the renderer
+      // once inside `applyLod`'s per-node `n.style(...)` calls). Deferring
+      // the actual work to the next animation frame — and coalescing any
+      // zoom events that fire before that frame runs into a single
+      // `applyLod()` call — fixes both the crash (mutation happens outside
+      // Cytoscape's own dispatch) and, as a side benefit, avoids redundant
+      // work during a fast wheel/drag-zoom gesture that fires 'zoom' many
+      // times per second.
+      let lodFrameScheduled = false;
+      function scheduleApplyLod(): void {
+        if (lodFrameScheduled) return;
+        lodFrameScheduled = true;
+        requestAnimationFrame(() => {
+          lodFrameScheduled = false;
+          applyLod();
+        });
+      }
+      cy.on('zoom', scheduleApplyLod);
+      applyLod();
+
+      // ---- ResizeObserver: keep Cytoscape's renderer in sync with its
+      // container's real size (report §A2 — collapsing a panel used to
+      // widen the canvas div without Cytoscape ever finding out), AND fix a
+      // real container-size race at construction time. Traced directly
+      // (console logging every zoom/bbox transition, not guessed): at the
+      // exact moment `cytoscape({...})` runs, `cy.height()` read 574 —
+      // taller than the container's true, final, settled height (424,
+      // confirmed identical both immediately after and well after load).
+      // The `layout: { fit: true, padding: 40 }` option computed its
+      // zoom/pan against that too-tall 574 reading, so on a corpus dense
+      // enough to need most of the canvas (33 entities/13 tier-depth rows,
+      // after the 2026-09-06 hierarchy expansion), the resulting zoom left
+      // real content — e.g. the T1 row DOI sits in — rendered below the
+      // container's ACTUAL bottom edge (`document.elementFromPoint` at
+      // that node's own `renderedPosition()` returned null: nothing there,
+      // because "there" was past `cy.height()`). Re-fitting from inside a
+      // `requestAnimationFrame` did NOT fix it — the 574 reading was not a
+      // one-frame-stale style question, it settled to 424 within the same
+      // synchronous script block that follows (before this ResizeObserver
+      // is even attached), so any fit computed off `cy`'s own internal
+      // container reference before that settles inherits the same bad
+      // number. A `ResizeObserver` callback is guaranteed by spec to fire
+      // once immediately upon `.observe()` with the container's CURRENT
+      // real size — traced to confirm that first callback already reports
+      // 424, the correct value — so doing the one-time initial fit from
+      // inside it (not at construction, not in a bare rAF) is what actually
+      // closes the gap. Only that FIRST callback re-fits (via
+      // `initialFitDone`) so a later resize (e.g. a user collapsing a side
+      // panel) still only resizes the renderer, not silently resetting a
+      // pan/zoom the user may have already adjusted.
+      // MIN_DEFAULT_ZOOM (follow-up, 2026-09-07): a naive `cy.fit()` shrinks
+      // to whatever zoom shows the ENTIRE graph at once — for this corpus's
+      // real row count (and the larger real gutters the SAME follow-up
+      // added between boxes — see hierarchy.ts's DEFAULT_LAYOUT_OPTIONS)
+      // that measures at ~0.21, well below LOD_ZOOM_THRESHOLD (0.4), so the
+      // graph opened in dot mode by default. That's not just an aesthetic
+      // complaint: at that zoom, a 14x14 dot renders at ~3 real screen
+      // pixels, and the hover-highlight state (opacity 1 vs 0.12 — see
+      // `highlight()` below) is functionally invisible on something that
+      // small regardless of whether the underlying logic is correct (it
+      // is — verified directly: the right classes/opacity ARE applied at
+      // that zoom, they're just imperceptible at 3px).
+      //
+      // The floor is deliberately set just ABOVE LOD_ZOOM_THRESHOLD (0.45,
+      // not e.g. 0.75) rather than at "whatever shows every box
+      // comfortably" — measured directly (not assumed): 0.4-0.5 all show
+      // the same ~16 of 33 nodes at this canvas's real size, while pushing
+      // the floor up to 0.75 drops that to ~5 of 33. A floor exists to fix
+      // the ONE concrete legibility problem (dots too small to read
+      // hover/selection state), not to maximise zoom for its own sake —
+      // picking the smallest floor that still clears the LOD bar keeps as
+      // much of the graph visible without panning as the legibility fix
+      // allows. `cy.fit()` still runs first so the floor is applied AROUND
+      // the graph's own centre (via the same viewport-centre
+      // `renderedPosition` `zoom({level,...})` uses elsewhere in this file
+      // for search/entity-select centring), not an arbitrary corner.
+      const MIN_DEFAULT_ZOOM = 0.45;
+      function resetView(): void {
+        cy.fit(undefined, 40);
+        if (cy.zoom() < MIN_DEFAULT_ZOOM) {
+          cy.zoom({ level: MIN_DEFAULT_ZOOM, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+        }
+      }
+
+      let initialFitDone = false;
+      const resizeObserver = new ResizeObserver(() => {
+        cy.resize();
+        if (!initialFitDone) {
+          initialFitDone = true;
+          resetView();
+        }
+      });
+      resizeObserver.observe(canvas);
+
+      // ---- Selection state (multi-select, click toggles membership). ----
+      const selected = new Set<string>();
+      const statusEl = document.getElementById('map2-status');
+      const stateKey = document.getElementById('map2-state-key');
+      const inspectorContent = document.getElementById('map2-inspector-content');
+      // Advanced (`/map`-only, `showAdvanced`) — absent from the DOM on
+      // `/map2` (no `showAdvanced` prop there), so these are null and every
+      // `?.`-guarded usage below no-ops correctly with zero `/map2` behaviour
+      // change. Promoted from `MapExplorer.astro`.
+      const focusControls = document.getElementById('map2-focus-controls');
+      const hopsSelect = document.getElementById('map2-hops') as HTMLSelectElement | null;
+
+      // Relation links inside the fetched/injected full-page content are
+      // real `<a href="/${locale}/entity/${id}/">` anchors from the
+      // standalone page — clicked as-is, they'd navigate the whole browser
+      // away from /map2, losing the map entirely (user: "we lose the
+      // buttons you implemented" — the old hand-built relation pills called
+      // toggleSelection() instead of navigating). One delegated listener on
+      // the stable container (its innerHTML is replaced wholesale on every
+      // selection, so a per-anchor listener would need re-attaching every
+      // time) intercepts same-locale entity links and redirects them into a
+      // canvas selection instead of a real navigation. Anything else — an
+      // external source URL, the raw-JSON link, a different-locale link —
+      // isn't an entity-page link at all and falls through to its normal
+      // behaviour untouched.
+      const ENTITY_LINK_RE = new RegExp(`^/${locale}/entity/([^/]+)/?$`);
+      inspectorContent?.addEventListener('click', (evt) => {
+        const anchor = (evt.target as HTMLElement).closest('a');
+        if (!anchor || !inspectorContent.contains(anchor)) return;
+        let path: string;
+        try {
+          path = new URL(anchor.href, window.location.origin).pathname;
+        } catch {
+          return;
+        }
+        const match = ENTITY_LINK_RE.exec(path);
+        if (!match) return; // not a same-locale entity link — real navigation/new-tab stays untouched
+        evt.preventDefault();
+        const targetId = decodeURIComponent(match[1]!);
+        if (!nodeById.has(targetId)) {
+          // A real relation to an entity outside the curated /map2 set has
+          // no node to select — let it navigate normally rather than
+          // silently doing nothing.
+          window.location.href = anchor.href;
+          return;
+        }
+        toggleSelection(targetId, { additive: false });
+        cy.animate({ center: { eles: cy.$id(targetId) }, zoom: Math.max(cy.zoom(), 1) }, { duration: 200 });
+      });
+
+      // Heading levels in the fetched full-page fragment (h1/h2) are correct
+      // for a standalone document but would be a second, competing h1 once
+      // injected under this pane's own `<h2>{t.inspectorTitle}</h2>` — demote
+      // each by one level (h1->h2, h2->h3, h3->h4) so the injected content
+      // nests correctly instead of skipping/duplicating levels (axe-core
+      // heading-order).
+      function demoteHeadings(root: HTMLElement): void {
+        for (const level of [3, 2, 1]) {
+          for (const el of Array.from(root.querySelectorAll(`h${level}`))) {
+            const replacement = document.createElement(`h${level + 1}`);
+            replacement.innerHTML = el.innerHTML;
+            for (const attr of Array.from(el.attributes)) replacement.setAttribute(attr.name, attr.value);
+            el.replaceWith(replacement);
+          }
+        }
+      }
+
+      // Guards against a stale fetch clobbering a newer selection's content:
+      // bumped on every call to renderSingleInspector, captured locally by
+      // the in-flight fetch, and checked before injecting — if the user has
+      // since selected a different node, `requestId` no longer matches
+      // `inspectorRequestId` and the stale result is dropped.
+      let inspectorRequestId = 0;
+
+      // The user asked, repeatedly and explicitly, for the full record to
+      // appear directly when a node is selected — no button, no separate
+      // compact-summary step, no new tab ("is not so hard to understand"; "why
+      // is not displayed directly?"). Fetches the real standalone
+      // `/${locale}/entity/${id}/` page (same origin, pre-rendered static
+      // HTML) and injects its `<article class="entity-page">` content
+      // straight into the pane. This also structurally guarantees content
+      // parity with the full page (same markup, fetched live) instead of a
+      // second hand-maintained summary that can drift out of sync.
+      function renderSingleInspector(node: MapNode): void {
+        if (!inspectorContent) return;
+        const requestId = ++inspectorRequestId;
+        inspectorContent.innerHTML = '';
+
+        const status = document.createElement('p');
+        status.className = 'map2-inspector-fullpage-status';
+        status.setAttribute('role', 'status');
+        status.textContent = `${i18n.loadingFullPageLabel} — ${node.name}`;
+        inspectorContent.appendChild(status);
+
+        void loadFullPageInto(node, requestId, status);
+      }
+
+      async function loadFullPageInto(node: MapNode, requestId: number, status: HTMLElement): Promise<void> {
+        const href = `/${locale}/entity/${node.id}/`;
+        try {
+          const res = await fetch(href);
+          if (!res.ok) throw new Error(`fetch failed: ${res.status}`);
+          const html = await res.text();
+          const doc = new DOMParser().parseFromString(html, 'text/html');
+          const article = doc.querySelector('article.entity-page');
+          if (!article) throw new Error('article.entity-page not found in fetched page');
+
+          // innerHTML never executes embedded <script> tags — the fetched
+          // page's progressive-enhancement script (Standard/Technical
+          // <details> persistence) is dropped rather than replayed; the
+          // full page's own comment confirms its <details> elements work
+          // correctly natively without it.
+          for (const script of Array.from(article.querySelectorAll('script'))) script.remove();
+
+          const container = document.createElement('div');
+          container.className = 'map2-inspector-fullpage';
+          container.innerHTML = article.innerHTML;
+          demoteHeadings(container);
+
+          // A newer selection superseded this one, or the pane was torn
+          // down/replaced in the meantime — drop the stale result.
+          if (requestId !== inspectorRequestId || !status.isConnected) return;
+          status.replaceWith(container);
+        } catch {
+          if (requestId !== inspectorRequestId || !status.isConnected) return;
+          status.className = 'map2-inspector-fullpage-status map2-inspector-fullpage-error';
+          status.textContent = '';
+          const msg = document.createElement('span');
+          msg.textContent = i18n.fullPageLoadErrorLabel;
+          status.appendChild(msg);
+          status.appendChild(document.createTextNode(' '));
+          const link = document.createElement('a');
+          link.href = href;
+          link.textContent = i18n.openFullPageLabel;
+          status.appendChild(link);
+        }
+      }
+
+      function renderMultiInspector(states: Map<string, string>): void {
+        if (!inspectorContent) return;
+        inspectorContent.innerHTML = '';
+        const chips = document.createElement('div');
+        chips.className = 'map2-inspector-chips';
+        for (const id of selected) {
+          const node = nodeById.get(id);
+          if (!node) continue;
+          const chip = document.createElement('span');
+          chip.className = 'map2-inspector-chip';
+          const label = document.createElement('span');
+          label.textContent = node.name;
+          chip.appendChild(label);
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.textContent = '×';
+          remove.setAttribute('aria-label', i18n.clearSelection);
+          remove.addEventListener('click', () => toggleSelection(id, { additive: true }));
+          chip.appendChild(remove);
+          chips.appendChild(chip);
+        }
+        inspectorContent.appendChild(chips);
+
+        const sharedIds = [...states.entries()].filter(([, s]) => s === 'shared').map(([id]) => id);
+        const sharedGroup = document.createElement('div');
+        sharedGroup.className = 'map2-relation-group';
+        const sharedH = document.createElement('h4');
+        sharedH.textContent = `${i18n.sharedLabel} (${sharedIds.length})`;
+        sharedGroup.appendChild(sharedH);
+        for (const id of sharedIds) {
+          const node = nodeById.get(id);
+          if (!node) continue;
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          btn.className = 'map2-relation-pill';
+          btn.textContent = node.name;
+          btn.addEventListener('click', () => toggleSelection(id, { additive: false }));
+          sharedGroup.appendChild(btn);
+        }
+        inspectorContent.appendChild(sharedGroup);
+      }
+
+      function applyStates(): void {
+        const states = classifyNodes(allIds, [...selected], adjacency);
+        // ':childless' excludes the tier-band compound parents added above —
+        // `states` is keyed by real entity ids only (`allIds`), so a band
+        // parent would otherwise pick up a bogus `state-undefined` class.
+        cy.nodes(':childless').forEach((n) => {
+          n.removeClass('state-selected state-upstream state-downstream state-shared state-dimmed');
+          if (selected.size > 0) n.addClass(`state-${states.get(n.id())}`);
+        });
+        cy.edges().forEach((e) => {
+          e.removeClass('state-dimmed');
+          if (selected.size > 0) {
+            const sourceIn = selected.has(e.data('source'));
+            const targetIn = selected.has(e.data('target'));
+            if (!sourceIn && !targetIn) e.addClass('state-dimmed');
+          }
+        });
+
+        if (stateKey) stateKey.hidden = selected.size === 0;
+
+        if (selected.size === 0) {
+          if (statusEl) statusEl.innerHTML = statusEl.dataset.idleHtml ?? '';
+          if (inspectorContent) inspectorContent.innerHTML = '';
+          if (focusControls) focusControls.hidden = true;
+          clearFocus();
+        } else {
+          const { upstream, downstream, shared } = summarizeStates(states);
+          if (statusEl) {
+            const template = statusEl.dataset.selectionTemplate;
+            statusEl.textContent = template
+              ? template
+                  .replace('{n}', String(selected.size))
+                  .replace('{up}', String(upstream))
+                  .replace('{down}', String(downstream))
+                  .replace('{shared}', String(shared))
+              : `${selected.size}`;
+          }
+          if (selected.size === 1) {
+            const node = nodeById.get([...selected][0]!);
+            if (node) renderSingleInspector(node);
+            if (focusControls) focusControls.hidden = false;
+          } else {
+            renderMultiInspector(states);
+            if (focusControls) focusControls.hidden = true;
+            clearFocus();
+          }
+        }
+
+        document.querySelectorAll<HTMLButtonElement>('.map2-entity-btn').forEach((btn) => {
+          btn.setAttribute('aria-pressed', selected.has(btn.dataset.selectId ?? '') ? 'true' : 'false');
+        });
+
+        syncUrlState();
+      }
+
+      function toggleSelection(id: string, opts: { additive: boolean }): void {
+        if (!opts.additive) {
+          if (selected.size === 1 && selected.has(id)) selected.delete(id);
+          else {
+            selected.clear();
+            selected.add(id);
+          }
+        } else if (selected.has(id)) selected.delete(id);
+        else selected.add(id);
+        applyStates();
+      }
+
+      // ---- Focus mode (`/map`-only, `showAdvanced`): N-hop neighbourhood,
+      // everything else dimmed to 15%. Promoted from `MapExplorer.astro`. ----
+      function clearFocus(): void {
+        cy.elements().removeClass('focus-dimmed');
+      }
+      function applyFocus(): void {
+        if (selected.size !== 1) return;
+        const hops = Number(hopsSelect?.value ?? '1');
+        const neighborhood = nHopNeighborhood([...selected][0]!, hops, adjacency);
+        cy.nodes(':childless').forEach((n) => {
+          if (!neighborhood.has(n.id())) n.addClass('focus-dimmed');
+          else n.removeClass('focus-dimmed');
+        });
+        cy.edges().forEach((e) => {
+          const inScope = neighborhood.has(e.data('source')) && neighborhood.has(e.data('target'));
+          if (inScope) e.removeClass('focus-dimmed');
+          else e.addClass('focus-dimmed');
+        });
+      }
+      hopsSelect?.addEventListener('change', applyFocus);
+      document.getElementById('map2-focus-clear')?.addEventListener('click', () => {
+        clearFocus();
+        if (hopsSelect) hopsSelect.value = '1';
+      });
+
+      document.querySelectorAll<HTMLButtonElement>('.map2-entity-btn').forEach((btn) => {
+        btn.addEventListener('click', (evt) => {
+          const additive = (evt as MouseEvent).shiftKey || (evt as MouseEvent).metaKey || (evt as MouseEvent).ctrlKey;
+          toggleSelection(btn.dataset.selectId ?? '', { additive });
+          const id = btn.dataset.selectId;
+          if (id) cy.animate({ center: { eles: cy.$id(id) }, zoom: Math.max(cy.zoom(), 1) }, { duration: 200 });
+          if (hopsSelect) applyFocus();
+        });
+      });
+
+      cy.on('tap', 'node', (evt) => {
+        // Tapping a tier-band's own background (not one of its children)
+        // fires this too, since the compound parent is a real node at that
+        // position — it isn't a selectable entity, so ignore it.
+        if (evt.target.hasClass('tier-band')) return;
+        const additive = (evt.originalEvent as MouseEvent | undefined)?.shiftKey ?? false;
+        toggleSelection(evt.target.id(), { additive });
+      });
+      cy.on('tap', (evt) => {
+        if (evt.target === cy) {
+          selected.clear();
+          applyStates();
+        }
+      });
+
+      function highlight(node: cytoscape.NodeSingular): void {
+        if (selected.size > 0) return;
+        const neighborhood = node.closedNeighborhood();
+        // Compound tier-band parents must never receive `.dimmed`: a
+        // compound child's rendered opacity is its own opacity times every
+        // ancestor's, so dimming the band the hovered node itself lives in
+        // dragged that node's EFFECTIVE opacity down to 0.12 even though its
+        // own `.highlighted` class/opacity was correctly 1 — reproduced live
+        // (node.effectiveOpacity() measured 0.12 on the hovered node) before
+        // this fix, since `node.closedNeighborhood()` never includes a
+        // node's own compound ancestor so every band always fell on the
+        // dimmed side of the difference below.
+        const dimmable = cy.elements().not('.tier-band');
+        dimmable.difference(neighborhood).addClass('dimmed').removeClass('highlighted');
+        neighborhood.removeClass('dimmed').addClass('highlighted');
+      }
+      function clearHighlight(): void {
+        if (selected.size > 0) return;
+        cy.elements().not('.tier-band').removeClass('dimmed highlighted');
+      }
+      cy.on('mouseover', 'node', (evt) => {
+        if (evt.target.hasClass('tier-band')) return;
+        highlight(evt.target);
+      });
+      cy.on('mouseout', 'node', clearHighlight);
+
+      const tooltip = document.getElementById('map2-tooltip');
+      const tooltipName = tooltip?.querySelector<HTMLElement>('.map2-tooltip__name');
+      const tooltipMeta = tooltip?.querySelector<HTMLElement>('.map2-tooltip__meta');
+      function showTooltip(node: cytoscape.NodeSingular, pageX: number, pageY: number): void {
+        if (!tooltip || !tooltipName || !tooltipMeta) return;
+        tooltipName.textContent = node.data('label');
+        const subtypeLabel = node.data('subtypeLabel');
+        const metaParts = [`${i18n.tooltipType}: ${node.data('typeLabel')}`, `${i18n.tooltipLayer}: ${node.data('layerLabel')}`];
+        if (subtypeLabel) metaParts.push(`${i18n.tooltipSubtype}: ${subtypeLabel}`);
+        tooltipMeta.textContent = metaParts.join(' · ');
+        tooltip.hidden = false;
+        const maxLeft = window.innerWidth - 300;
+        const maxTop = window.innerHeight - 100;
+        tooltip.style.left = `${Math.min(pageX + 14, Math.max(0, maxLeft))}px`;
+        tooltip.style.top = `${Math.min(pageY + 14, Math.max(0, maxTop))}px`;
+      }
+      function hideTooltip(): void {
+        if (tooltip) tooltip.hidden = true;
+      }
+      cy.on('mouseover', 'node', (evt) => {
+        if (evt.target.hasClass('tier-band')) return;
+        const original = evt.originalEvent as MouseEvent | undefined;
+        showTooltip(evt.target, original?.clientX ?? 0, original?.clientY ?? 0);
+      });
+      cy.on('mousemove', 'node', (evt) => {
+        if (evt.target.hasClass('tier-band')) return;
+        const original = evt.originalEvent as MouseEvent | undefined;
+        if (original) showTooltip(evt.target, original.clientX, original.clientY);
+      });
+      cy.on('mouseout', 'node', hideTooltip);
+      cy.on('tap', hideTooltip);
+
+      // ---- Search-as-you-type over the in-page payload — no fetch needed
+      // at ~27 nodes (report §B2: "/map2 doesn't need [the search-index
+      // fetch]... name/summary/tags are already in the in-page payload"). ----
+      const searchInput = document.getElementById('map2-search-input') as HTMLInputElement | null;
+      const searchResults = document.getElementById('map2-search-results');
+      function renderSearchResults(query: string): void {
+        if (!searchResults) return;
+        searchResults.innerHTML = '';
+        if (!query) {
+          searchResults.hidden = true;
+          return;
+        }
+        const scored = graph.nodes
+          .map((entry) => ({ entry, score: scoreSearchEntry({ name: entry.name, summary: entry.summary }, query) }))
+          .filter((r) => r.score >= 0)
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 12);
+        if (scored.length === 0) {
+          const li = document.createElement('li');
+          li.textContent = i18n.searchNoResults;
+          searchResults.appendChild(li);
+          searchResults.hidden = false;
+          return;
+        }
+        for (const { entry } of scored) {
+          const li = document.createElement('li');
+          const btn = document.createElement('button');
+          btn.type = 'button';
+          const badges = ` — ${entry.layerLabel} · ${entry.typeLabel}${entry.noRelations ? ` · ${i18n.noRelationsBadge}` : ''}`;
+          btn.textContent = `${entry.name}${badges}`;
+          btn.addEventListener('click', () => {
+            toggleSelection(entry.id, { additive: false });
+            cy.animate({ center: { eles: cy.$id(entry.id) }, zoom: Math.max(cy.zoom(), 1) }, { duration: 200 });
+            searchResults.hidden = true;
+            if (searchInput) searchInput.value = '';
+          });
+          li.appendChild(btn);
+          searchResults.appendChild(li);
+        }
+        searchResults.hidden = false;
+      }
+      searchInput?.addEventListener('input', () => renderSearchResults(searchInput.value));
+      searchInput?.addEventListener('blur', () => {
+        window.setTimeout(() => {
+          if (searchResults) searchResults.hidden = true;
+        }, 150);
+      });
+
+      // ---- Panel collapse toggles. ----
+      const bodyEl = document.querySelector('.map2-body');
+      function wireToggle(buttonId: string, panelKey: string): void {
+        const btn = document.getElementById(buttonId);
+        btn?.addEventListener('click', () => {
+          if (!bodyEl) return;
+          const collapsed = new Set((bodyEl.getAttribute('data-collapsed') ?? '').split(' ').filter(Boolean));
+          const nowCollapsed = collapsed.has(panelKey);
+          if (nowCollapsed) collapsed.delete(panelKey);
+          else collapsed.add(panelKey);
+          btn.setAttribute('aria-expanded', nowCollapsed ? 'true' : 'false');
+          bodyEl.setAttribute('data-collapsed', [...collapsed].join(' '));
+        });
+      }
+      wireToggle('map2-layers-toggle', 'layers');
+      wireToggle('map2-inspector-toggle', 'inspector');
+
+      // ---- Inspector panel resize (report follow-up: "can be displayed
+      // inside the record tab (that should allow the user for resizing)").
+      // A simple functional drag handle on the panel's left edge — no new
+      // dependency, no modal. Width persists for the session only
+      // (sessionStorage, not a durable preference) via the CSS custom
+      // property the grid-template-columns rule above reads. ----
+      // User feedback: the old fixed 280-640px range was too tight ("I
+      // cannot resize the pane too much, I should be able more liberty").
+      // MIN stays close to the old floor (raised slightly to 300px, since
+      // the richer inline record content added this pass — description,
+      // facets, grouped relations — needs a bit more room than the old
+      // badges+flat-list view did to stay readable). MAX is now dynamic
+      // rather than a bigger static number: it's recomputed from the real
+      // canvas/layers widths so the inspector can never crowd the canvas
+      // column down to nothing on a narrower viewport.
+      const INSPECTOR_WIDTH_MIN = 300;
+      const INSPECTOR_WIDTH_MAX_STATIC = 1100;
+      const CANVAS_MIN_WIDTH = 320;
+      const INSPECTOR_WIDTH_KEY = 'map2InspectorWidth';
+      function effectiveInspectorMax(): number {
+        const bodyWidth = (bodyEl as HTMLElement | null)?.getBoundingClientRect().width ?? window.innerWidth;
+        const layersWidth = document.getElementById('map2-layers-panel')?.getBoundingClientRect().width ?? 40;
+        const dynamicMax = bodyWidth - layersWidth - CANVAS_MIN_WIDTH;
+        return Math.max(INSPECTOR_WIDTH_MIN, Math.min(INSPECTOR_WIDTH_MAX_STATIC, dynamicMax));
+      }
+      function setInspectorWidth(px: number): void {
+        const max = effectiveInspectorMax();
+        const clamped = Math.min(max, Math.max(INSPECTOR_WIDTH_MIN, px));
+        (bodyEl as HTMLElement | null)?.style.setProperty('--map2-inspector-w', `${clamped}px`);
+        const handle = document.getElementById('map2-inspector-resize');
+        handle?.setAttribute('aria-valuenow', String(Math.round(clamped)));
+        handle?.setAttribute('aria-valuemax', String(Math.round(max)));
+        handle?.setAttribute('aria-valuemin', String(INSPECTOR_WIDTH_MIN));
+        try {
+          window.sessionStorage.setItem(INSPECTOR_WIDTH_KEY, String(clamped));
+        } catch {
+          // sessionStorage can throw in a locked-down/private-browsing
+          // context — resizing still works for the current interaction,
+          // it just won't persist across a reload. Not fatal either way.
+        }
+      }
+      window.addEventListener('resize', () => {
+        // Reclamp on viewport changes — nothing else re-enforces the cap
+        // once it's set as a fixed CSS custom property, so a window shrink
+        // after a wide manual resize could otherwise crowd the canvas
+        // column down to nothing.
+        const inspectorEl = document.getElementById('map2-inspector');
+        const current = inspectorEl?.getBoundingClientRect().width ?? 320;
+        setInspectorWidth(current);
+      });
+      try {
+        const stored = window.sessionStorage.getItem(INSPECTOR_WIDTH_KEY);
+        if (stored) setInspectorWidth(Number(stored));
+      } catch {
+        // same non-fatal storage-unavailable case as above.
+      }
+      const resizeHandle = document.getElementById('map2-inspector-resize');
+      resizeHandle?.addEventListener('pointerdown', (evt) => {
+        const startX = (evt as PointerEvent).clientX;
+        const inspectorEl = document.getElementById('map2-inspector');
+        const startWidth = inspectorEl?.getBoundingClientRect().width ?? 320;
+        resizeHandle.setPointerCapture((evt as PointerEvent).pointerId);
+        function onMove(moveEvt: PointerEvent): void {
+          // Handle sits on the panel's LEFT edge — dragging left (negative
+          // delta) widens the panel, dragging right narrows it.
+          setInspectorWidth(startWidth - (moveEvt.clientX - startX));
+        }
+        function onUp(): void {
+          window.removeEventListener('pointermove', onMove);
+          window.removeEventListener('pointerup', onUp);
+        }
+        window.addEventListener('pointermove', onMove);
+        window.addEventListener('pointerup', onUp);
+      });
+      resizeHandle?.addEventListener('keydown', (evt) => {
+        const inspectorEl = document.getElementById('map2-inspector');
+        const current = inspectorEl?.getBoundingClientRect().width ?? 320;
+        const step = 20;
+        if (evt.key === 'ArrowLeft') {
+          setInspectorWidth(current + step);
+          evt.preventDefault();
+        } else if (evt.key === 'ArrowRight') {
+          setInspectorWidth(current - step);
+          evt.preventDefault();
+        }
+      });
+      if (window.matchMedia('(max-width: 900px)').matches && bodyEl) {
+        bodyEl.setAttribute('data-collapsed', 'layers inspector');
+      }
+
+      // ---- Zoom/pan buttons + keyboard equivalents (normal wheel rate —
+      // report §A4: the old 0.25 sensitivity was a 4x slowdown). ----
+      document.querySelectorAll<HTMLButtonElement>('[data-map-action]').forEach((btn) => {
+        btn.addEventListener('click', () => {
+          const action = btn.getAttribute('data-map-action');
+          if (action === 'zoom-in') cy.zoom({ level: cy.zoom() * 1.25, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+          else if (action === 'zoom-out') cy.zoom({ level: cy.zoom() * 0.8, renderedPosition: { x: cy.width() / 2, y: cy.height() / 2 } });
+          else if (action === 'reset') resetView();
+        });
+      });
+      const step = 60;
+      canvas.addEventListener('keydown', (e) => {
+        const pan = cy.pan();
+        switch (e.key) {
+          case 'ArrowUp':
+            cy.pan({ x: pan.x, y: pan.y + step });
+            break;
+          case 'ArrowDown':
+            cy.pan({ x: pan.x, y: pan.y - step });
+            break;
+          case 'ArrowLeft':
+            cy.pan({ x: pan.x + step, y: pan.y });
+            break;
+          case 'ArrowRight':
+            cy.pan({ x: pan.x - step, y: pan.y });
+            break;
+          case '+':
+          case '=':
+            cy.zoom(cy.zoom() * 1.25);
+            break;
+          case '-':
+          case '_':
+            cy.zoom(cy.zoom() * 0.8);
+            break;
+          case '0':
+            resetView();
+            break;
+          default:
+            return;
+        }
+        e.preventDefault();
+      });
+
+      // ---- Facets (`/map`-only, `showAdvanced`) — promoted from
+      // `MapExplorer.astro`. Absent DOM (`input[data-facet]`) on `/map2`
+      // means `currentFilters()` always returns empty arrays and
+      // `applyFilters()`'s `active` flag stays false there, a correct no-op. ----
+      function currentFilters(): FacetFilters {
+        const get = (facet: string) =>
+          [...document.querySelectorAll<HTMLInputElement>(`input[data-facet="${facet}"]:checked`)].map((el) => el.value);
+        return { layers: get('layer'), types: get('type'), governances: get('governance'), tags: get('tag') };
+      }
+      function applyFilters(): void {
+        const filters = currentFilters();
+        const active = filters.layers.length + filters.types.length + filters.governances.length + filters.tags.length > 0;
+        cy.nodes(':childless').forEach((n) => {
+          const node = nodeById.get(n.id());
+          if (!node) return;
+          const facetNode: FacetableNode = { type: node.type, layer: node.layer, governance: node.governance, tags: node.tags };
+          if (!active || matchesFacets(facetNode, filters)) n.removeClass('filtered-out');
+          else n.addClass('filtered-out');
+        });
+        syncUrlState();
+      }
+      document.querySelectorAll<HTMLInputElement>('input[data-facet]').forEach((el) => el.addEventListener('change', applyFilters));
+      document.getElementById('map2-filters-clear')?.addEventListener('click', () => {
+        document.querySelectorAll<HTMLInputElement>('input[data-facet]').forEach((el) => (el.checked = false));
+        applyFilters();
+      });
+
+      if (statusEl) {
+        statusEl.dataset.idleHtml = statusEl.innerHTML;
+        statusEl.dataset.selectionTemplate = statusEl.getAttribute('data-selection-template') ?? '';
+      }
+      void LAYER_ORDER; // kept imported for parity/documentation of layer order source-of-truth
+
+      // ---- URL query state (`/map`-only in practice: `syncUrlState` is
+      // called unconditionally above/in `applyFilters`, but with no facet/
+      // focus DOM on `/map2` the serialized state there is just `sel=...`,
+      // harmless). Promoted from `MapExplorer.astro`. ----
+      function syncUrlState(): void {
+        const filters = currentFilters();
+        const state: MapUrlState = {
+          layers: [...filters.layers],
+          types: [...filters.types],
+          governances: [...filters.governances],
+          tags: [...filters.tags],
+          selected: [...selected],
+          hops: (Number(hopsSelect?.value ?? '1') as 1 | 2 | 3) || 1,
+        };
+        const qs = serializeMapUrlState(state);
+        history.replaceState(null, '', `${location.pathname}${qs}`);
+      }
+      function applyUrlState(): void {
+        const state = parseMapUrlState(location.search);
+        for (const [facet, values] of [
+          ['layer', state.layers],
+          ['type', state.types],
+          ['governance', state.governances],
+          ['tag', state.tags],
+        ] as const) {
+          for (const v of values) {
+            const el = document.querySelector<HTMLInputElement>(`input[data-facet="${facet}"][value="${CSS.escape(v)}"]`);
+            if (el) el.checked = true;
+          }
+        }
+        if (hopsSelect) hopsSelect.value = String(state.hops);
+        for (const id of state.selected) selected.add(id);
+        applyFilters();
+        applyStates();
+        if (state.selected.length === 1) applyFocus();
+      }
+      applyUrlState();
+    }
+
+    try {
+      if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initMap);
+      else initMap();
+    } catch {
+      showError();
+    }
+
+    function initOnboarding(): void {
+      const banner = document.getElementById('map2-onboarding');
+      const dismissBtn = document.getElementById('map2-onboarding-dismiss');
+      if (!banner || !dismissBtn) return;
+      const key = banner.getAttribute('data-onboarding-key') ?? 'map2OnboardingDismissed';
+      try {
+        if (!localStorage.getItem(key)) banner.hidden = false;
+      } catch {
+        banner.hidden = false;
+      }
+      dismissBtn.addEventListener('click', () => {
+        banner.hidden = true;
+        try {
+          localStorage.setItem(key, '1');
+        } catch {
+          /* no-op */
+        }
+      });
+    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initOnboarding);
+    else initOnboarding();
+  </script>
+</Base>
