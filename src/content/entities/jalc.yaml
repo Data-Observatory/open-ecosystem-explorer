@@ -1,0 +1,24 @@
+type: agency
+name: JaLC
+aka:
+  - Japan Link Center
+url: https://japanlinkcenter.org
+status: active
+governance: nonprofit
+registers:
+  - publication
+  - dataset
+feeModel: per-object
+consortiumModel: false
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: issues
+    target: doi
+    note: Japan's national DOI registration agency, covering publications and
+      research data.
+sources:
+  - url: https://japanlinkcenter.org/top/english.html
+    accessed: 2026-09-04

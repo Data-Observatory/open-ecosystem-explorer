@@ -1,0 +1,24 @@
+type: identifier
+name: Handle System
+aka:
+  - Handle
+url: https://www.dona.net/handle-system
+status: active
+governance: nonprofit
+identifies: object
+resolverUrl: https://hdl.handle.net/
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: governed-by
+    target: dona-foundation
+    note: DONA administers the Global Handle Registry via credentialed Multi-Primary
+      Administrators.
+    verified:
+      date: 2026-09-04
+      url: https://www.dona.net/handle-system
+sources:
+  - url: https://www.dona.net/handle-system
+    accessed: 2026-09-04

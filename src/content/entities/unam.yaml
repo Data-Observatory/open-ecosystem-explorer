@@ -1,0 +1,16 @@
+type: organization
+name: Universidad Nacional Autónoma de México
+aka:
+  - UNAM
+url: https://www.unam.mx/
+status: active
+governance: public-agency
+orgKind: university
+country: MX
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://latindex.unam.mx/latindex/nosotros/antecedentes
+    accessed: 2026-09-04

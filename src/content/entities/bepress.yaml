@@ -1,0 +1,23 @@
+type: organization
+name: bepress
+aka:
+  - Berkeley Electronic Press
+url: https://www.bepress.com
+status: active
+governance: commercial
+orgKind: company
+country: US
+tags:
+  - theme:vertical-integration
+  - region:north-america
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: elsevier
+    note: Acquired by Elsevier in 2017; operates as a wholly owned business unit.
+    verified:
+      date: 2026-09-04
+      url: https://scholarlykitchen.sspnet.org/2017/08/02/elsevier-acquires-bepress/
+sources:
+  - url: https://en.wikipedia.org/wiki/Digital_Commons_(Elsevier)
+    accessed: 2026-09-04

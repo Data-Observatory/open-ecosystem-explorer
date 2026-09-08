@@ -1,0 +1,23 @@
+type: index
+name: Sherpa Romeo
+url: https://web.archive.org/web/20241101000000*/v2.sherpa.ac.uk/romeo/
+status: superseded
+governance: public-agency
+outputLicence: open
+codebase: not-applicable
+indexKind: registry
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: none
+tags:
+  - function:indexing
+lastReviewed: 2026-09-04
+note: Retained as a historical record of the service merged into Open Policy
+  Finder on 4 Nov 2024, so the supersedes edge has a real target rather than
+  being asserted with nothing on the other end.
+relations:
+  - predicate: operated-by
+    target: jisc
+sources:
+  - url: https://openpolicyfinder.jisc.ac.uk/
+    accessed: 2026-09-04

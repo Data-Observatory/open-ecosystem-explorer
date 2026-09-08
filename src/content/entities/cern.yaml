@@ -1,0 +1,17 @@
+type: organization
+name: CERN
+aka:
+  - European Organization for Nuclear Research
+url: https://home.cern/
+status: active
+governance: intergovernmental
+orgKind: intergovernmental
+country: CH
+outputLicence: open
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://home.cern/about
+    accessed: 2026-09-04

@@ -1,0 +1,16 @@
+type: organization
+name: MARUM – Center for Marine Environmental Sciences
+aka:
+  - MARUM
+url: https://www.marum.de
+status: active
+governance: academic
+orgKind: research-institute
+country: DE
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.marum.de/en/PANGAEA-Data-Publisher-for-Earth-and-Environmental-Science-2.html
+    accessed: 2026-09-04

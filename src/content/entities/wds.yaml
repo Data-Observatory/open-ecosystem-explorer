@@ -1,0 +1,29 @@
+type: community
+name: World Data System
+aka:
+  - WDS
+url: https://worlddatasystem.org/about/
+status: active
+governance: nonprofit
+communityKind: certification-body
+tags:
+  - function:certification
+  - region:global
+lastReviewed: 2026-09-04
+note: Also directly certifies member data repositories (certified-by), once
+  repository entities exist in a later batch — e.g. PANGAEA, a self-described
+  WDS regular member.
+relations:
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter, self-audit published 2026.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+sources:
+  - url: https://worlddatasystem.org/about/
+    accessed: 2026-09-04
+  - url: https://council.science/member/world-data-system-wds/
+    accessed: 2026-09-04
+    note: Confirms WDS is a Research Programme of the International Science Council
+      (formerly ICSU).

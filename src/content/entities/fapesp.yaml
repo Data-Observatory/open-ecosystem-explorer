@@ -1,0 +1,16 @@
+type: organization
+name: São Paulo Research Foundation
+aka:
+  - FAPESP
+url: https://fapesp.br
+status: active
+governance: public-agency
+orgKind: government-agency
+country: BR
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+    accessed: 2026-09-04

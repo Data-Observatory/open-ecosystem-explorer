@@ -1,0 +1,16 @@
+type: cris
+name: Symplectic Elements
+url: https://www.digital-science.com/product/symplectic-elements/
+status: active
+governance: commercial
+codebase: proprietary
+crisKind: commercial
+tags:
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: digital-science
+sources:
+  - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
+    accessed: 2026-09-03

@@ -1,0 +1,16 @@
+type: organization
+name: Harvard University
+url: https://www.harvard.edu/
+status: active
+governance: academic
+orgKind: university
+country: US
+outputLicence: open
+tags:
+  - region:north-america
+  - openness:open-source
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.harvard.edu/about/
+    accessed: 2026-09-04

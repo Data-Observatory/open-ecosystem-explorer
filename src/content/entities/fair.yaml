@@ -1,0 +1,23 @@
+type: standard
+name: FAIR
+aka:
+  - FAIR Principles
+  - Findable, Accessible, Interoperable, Reusable
+url: https://www.go-fair.org/fair-principles/
+status: active
+governance: community
+standardKind: principles
+requiresOpenness: false
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: force11
+    note: FAIR Guiding Principles were drafted and disseminated within the FORCE11
+      community.
+sources:
+  - url: https://www.go-fair.org/fair-principles/
+    accessed: 2026-09-04
+    note: FAIR does not require openness; it separates findability/description from
+      the access-level decision, which stays with the data custodian.

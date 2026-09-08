@@ -1,0 +1,19 @@
+type: organization
+name: Cornell University
+url: https://www.cornell.edu/
+status: active
+governance: academic
+orgKind: university
+country: US
+outputLicence: open
+tags:
+  - region:north-america
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.cornell.edu/about/
+    accessed: 2026-09-04
+  - url: https://info.arxiv.org/about/people/cul.html
+    accessed: 2026-09-04
+    note: arXiv is operated by Cornell University Library, administratively under
+      Cornell Tech since 2019.

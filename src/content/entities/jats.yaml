@@ -1,0 +1,19 @@
+type: standard
+name: JATS
+aka:
+  - Journal Article Tag Suite
+  - NISO Z39.96
+url: https://www.niso.org/standards-committees/jats
+status: active
+governance: nonprofit
+standardKind: metadata-schema
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: niso
+sources:
+  - url: https://www.niso.org/standards-committees/jats
+    accessed: 2026-09-04

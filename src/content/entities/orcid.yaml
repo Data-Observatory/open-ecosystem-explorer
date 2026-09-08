@@ -1,0 +1,22 @@
+type: identifier
+name: ORCID iD
+aka:
+  - Open Researcher and Contributor ID
+url: https://orcid.org
+status: active
+governance: nonprofit
+identifies: person
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: depends-on
+    target: isni
+    note: ORCID iDs are drawn from a reserved block within the ISNI numeric range,
+      per a 2014 ORCID-ISNI memorandum of understanding.
+sources:
+  - url: https://info.orcid.org/what-is-orcid/
+    accessed: 2026-09-04
+  - url: https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier
+    accessed: 2026-09-04

@@ -1,0 +1,16 @@
+type: organization
+name: California Digital Library
+aka:
+  - CDL
+url: https://cdlib.org/
+status: active
+governance: academic
+orgKind: library
+country: US
+tags:
+  - region:north-america
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://cdlib.org/about/
+    accessed: 2026-09-04

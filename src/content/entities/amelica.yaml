@@ -1,0 +1,20 @@
+type: coalition
+name: AmeliCA
+url: https://amelica.org/
+status: active
+governance: nonprofit
+coalitionKind: network
+geography:
+  - latam
+tags:
+  - region:latam
+  - openness:open-governance
+lastReviewed: 2026-09-04
+note: Latin American non-commercial open-access initiative built around Redalyc
+  and UNESCO (specs.md Appendix A.1b).
+relations:
+  - predicate: complies-with
+    target: unesco-recommendation-open-science
+sources:
+  - url: https://amelica.org/
+    accessed: 2026-09-04

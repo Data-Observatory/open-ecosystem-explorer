@@ -1,0 +1,47 @@
+type: agency
+name: Crossref
+url: https://www.crossref.org
+status: active
+governance: nonprofit
+since: "2000"
+registers:
+  - publication
+feeModel: membership
+consortiumModel: false
+waiverProgramme: GEM programme — 93 eligible countries as of 2026-09, membership
+  and content-registration fees waived (Similarity Check and Metadata Plus still
+  charged); Chile is not eligible.
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-06
+relations:
+  - predicate: issues
+    target: doi
+    note: DOIs for scholarly publications, registered via the publisher or journal.
+  - predicate: complies-with
+    target: posi
+    note: Adopted by Crossref board vote in 2020; publishes periodic POSI
+      self-assessments.
+  - predicate: member-of
+    target: coara
+    note: Declared support for the CoARA Agreement on research assessment reform.
+    verified:
+      date: 2026-09-04
+      url: https://www.coara.org/
+  - predicate: depends-on
+    target: handle-system
+    note: Registers DOI-to-URL mappings into the Global Handle Registry, making
+      doi.org resolution work regardless of registration agency.
+    verified:
+      date: 2026-09-06
+      url: https://www.doi.org/the-identifier/resources/factsheets/doi-system-and-the-handle-system
+sources:
+  - url: https://www.crossref.org/gem/
+    accessed: 2026-09-04
+  - url: https://www.crossref.org/blog/the-gem-program-year-three-and-program-expansion-for-2026/
+    accessed: 2026-09-04
+  - url: https://www.crossref.org/blog/crossrefs-board-votes-to-adopt-the-principles-of-open-scholarly-infrastructure/
+    accessed: 2026-09-04
+  - url: https://www.doi.org/the-identifier/resources/factsheets/doi-system-and-the-handle-system
+    accessed: 2026-09-06

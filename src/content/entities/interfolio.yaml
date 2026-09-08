@@ -1,0 +1,19 @@
+type: cris
+name: Interfolio
+url: https://www.interfolio.com/
+status: active
+governance: commercial
+codebase: proprietary
+crisKind: commercial
+tags:
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+note: Faculty information, review and tenure system; acquired by Elsevier in 2022.
+relations:
+  - predicate: owned-by
+    target: elsevier
+sources:
+  - url: https://www.interfolio.com/
+    accessed: 2026-09-04
+  - url: https://scholarlykitchen.sspnet.org/2022/04/25/elsevier-acquire-interfolio/
+    accessed: 2026-09-04

@@ -1,0 +1,45 @@
+type: index
+name: Wikidata
+url: https://www.wikidata.org
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: open-source
+identifiers:
+  spdx: GPL-2.0-or-later
+indexKind: registry
+selectivity: inclusive
+inclusionCriteria: opaque
+bulkDownload: full
+coverageObjects:
+  - article
+  - dataset
+  - organization
+  - person
+tags:
+  - function:indexing
+  - openness:open-content
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: wikimedia-foundation
+    note: Wikimedia Foundation hosts Wikidata's infrastructure.
+    verified:
+      date: 2026-09-04
+      url: https://en.wikipedia.org/wiki/Wikidata
+  - predicate: developed-by
+    target: wikimedia-deutschland
+    note: Wikimedia Deutschland leads day-to-day development.
+    verified:
+      date: 2026-09-04
+      url: https://en.wikipedia.org/wiki/Wikidata
+  - predicate: funded-by
+    target: allen-institute-for-ai
+    note: One of three funders (with the Gordon and Betty Moore Foundation and
+      Google) of Wikidata's 2012 creation via a €1.3M grant.
+sources:
+  - url: https://www.wikidata.org/wiki/Wikidata:Introduction
+    accessed: 2026-09-04
+  - url: https://en.wikipedia.org/wiki/Wikidata
+    accessed: 2026-09-04

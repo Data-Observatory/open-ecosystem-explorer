@@ -1,0 +1,20 @@
+type: identifier
+name: ARK
+aka:
+  - Archival Resource Key
+url: https://arks.org
+status: active
+governance: community
+identifies: object
+tags:
+  - function:identification
+  - region:global
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations:
+  - predicate: governed-by
+    target: ark-alliance
+    note: NAAN registry and the N2T resolver are stewarded by the ARK Alliance.
+sources:
+  - url: https://arks.org/about/
+    accessed: 2026-09-04

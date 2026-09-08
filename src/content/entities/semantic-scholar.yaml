@@ -1,0 +1,24 @@
+type: index
+name: Semantic Scholar
+url: https://www.semanticscholar.org
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: mixed
+indexKind: bibliographic
+selectivity: algorithmic
+inclusionCriteria: published
+bulkDownload: full
+coverageObjects:
+  - article
+  - conference-paper
+tags:
+  - function:indexing
+  - openness:open-content
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: allen-institute-for-ai
+sources:
+  - url: https://www.semanticscholar.org/about
+    accessed: 2026-09-04

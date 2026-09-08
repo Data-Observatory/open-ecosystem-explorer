@@ -1,0 +1,50 @@
+type: repository
+name: Zenodo
+url: https://zenodo.org/
+status: active
+governance: nonprofit
+codebase: open-source
+outputLicence: partly-open
+repositoryKind: hosted-service
+certifications:
+  - coretrustseal
+persistentIdScheme:
+  - doi
+accessModel: mixed
+note: "Codebase is open source: Zenodo runs on InvenioRDM, released under the
+  MIT licence; the deployed instance itself has no separate package-level SPDX
+  id."
+tags:
+  - function:deposit
+  - function:preservation
+  - openness:open-content
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: cern
+    note: Operated by CERN since its 2013 launch.
+    verified:
+      date: 2026-09-04
+      url: https://about.zenodo.org/
+  - predicate: operated-by
+    target: openaire
+    note: Co-operated in partnership with OpenAIRE, which aggregates and cross-links
+      Zenodo's records.
+    verified:
+      date: 2026-09-04
+      url: https://about.zenodo.org/
+  - predicate: depends-on
+    target: invenio-rdm
+    note: Zenodo runs on InvenioRDM, the open-source repository software also led by
+      CERN.
+  - predicate: implements
+    target: oai-pmh
+  - predicate: implements
+    target: datacite-metadata-schema
+  - predicate: complies-with
+    target: ro-crate
+  - predicate: certified-by
+    target: coretrustseal
+sources:
+  - url: https://about.zenodo.org/
+    accessed: 2026-09-04

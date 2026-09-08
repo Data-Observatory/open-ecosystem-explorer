@@ -1,0 +1,19 @@
+type: organization
+name: ARDC
+aka:
+  - Australian Research Data Commons
+url: https://ardc.edu.au/
+status: active
+governance: public-agency
+orgKind: government-agency
+country: AU
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.raid.org/
+    accessed: 2026-09-04
+    note: ARDC is the ISO-appointed Registration Authority for RAiD (ISO 23527:2022)
+      globally, and a founding partner of the Global RAiD Operating Alliance
+      (established Utrecht, 14-16 Apr 2026).

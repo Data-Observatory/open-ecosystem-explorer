@@ -1,0 +1,16 @@
+type: standard
+name: OAI-PMH
+aka:
+  - Open Archives Initiative Protocol for Metadata Harvesting
+url: https://www.openarchives.org/pmh/
+status: active
+governance: community
+standardKind: protocol
+machineReadable: true
+tags:
+  - function:aggregation
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.openarchives.org/pmh/
+    accessed: 2026-09-04

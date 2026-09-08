@@ -1,0 +1,16 @@
+type: organization
+name: IS4OA
+aka:
+  - Infrastructure Services for Open Access
+url: https://is4oa.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: GB
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://is4oa.org/
+    accessed: 2026-09-04

@@ -1,0 +1,14 @@
+type: organization
+name: University of Oxford
+url: https://www.ox.ac.uk
+status: active
+governance: academic
+orgKind: university
+country: GB
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://oerc.ox.ac.uk/news/fairsharing-discover-and-curate-an-ecosystem-of-research-standards-and-databases
+    accessed: 2026-09-04

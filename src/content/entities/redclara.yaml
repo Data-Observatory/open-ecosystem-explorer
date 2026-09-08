@@ -1,0 +1,16 @@
+type: organization
+name: RedCLARA
+aka:
+  - Cooperación Latino Americana de Redes Avanzadas
+url: https://www.redclara.net
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: UY
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://redclara.net/en/somos
+    accessed: 2026-09-04

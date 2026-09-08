@@ -1,0 +1,31 @@
+type: aggregator
+name: BASE
+aka:
+  - Bielefeld Academic Search Engine
+url: https://www.base-search.net/
+status: active
+governance: academic
+outputLicence: open
+codebase: proprietary
+aggregatorKind: harvesting-network
+harvestProtocols:
+  - oai-pmh
+objectScope:
+  - article
+  - thesis
+  - dataset
+geography:
+  - global
+tags:
+  - function:aggregation
+lastReviewed: 2026-09-04
+note: The search engine software itself is not published as open source; the
+  aggregated metadata BASE exposes is open.
+relations:
+  - predicate: operated-by
+    target: bielefeld-university
+  - predicate: implements
+    target: oai-pmh
+sources:
+  - url: https://www.base-search.net/about/en/
+    accessed: 2026-09-04

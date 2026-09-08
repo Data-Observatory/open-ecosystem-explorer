@@ -1,0 +1,15 @@
+type: organization
+name: The Open University
+url: https://www.open.ac.uk/
+status: active
+governance: academic
+orgKind: university
+country: GB
+outputLicence: open
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.open.ac.uk/about/main/
+    accessed: 2026-09-04

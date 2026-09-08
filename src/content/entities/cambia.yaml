@@ -1,0 +1,16 @@
+type: organization
+name: Cambia
+url: https://www.cambia.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: AU
+outputLicence: open
+tags:
+  - region:global
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.cambia.org/
+    accessed: 2026-09-04

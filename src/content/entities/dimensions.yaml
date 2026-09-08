@@ -1,0 +1,35 @@
+type: index
+name: Dimensions
+url: https://www.dimensions.ai
+status: active
+governance: commercial
+outputLicence: partly-open
+codebase: proprietary
+indexKind: bibliographic
+selectivity: inclusive
+inclusionCriteria: partially-published
+bulkDownload: none
+coverageObjects:
+  - article
+  - grant
+  - patent
+  - clinical-trial
+tags:
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: digital-science
+  - predicate: operated-by
+    target: digital-science
+    note: Operated directly by Digital Science as one of its portfolio brands.
+    verified:
+      date: 2026-09-04
+      url: https://www.digital-science.com/portfolio/
+  - predicate: interoperates-with
+    target: symplectic-elements
+    note: Dimensions data has been integrated into Symplectic Elements since March
+      2021.
+sources:
+  - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
+    accessed: 2026-09-03

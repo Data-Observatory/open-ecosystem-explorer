@@ -1,0 +1,31 @@
+type: aggregator
+name: Global Biodiversity Information Facility
+aka:
+  - GBIF
+url: https://www.gbif.org/
+status: active
+governance: intergovernmental
+outputLicence: open
+codebase: open-source
+aggregatorKind: federation
+objectScope:
+  - dataset
+geography:
+  - global
+tags:
+  - function:aggregation
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+note: Core services (occurrence API, IPT, pipelines) are published open source
+  across several repositories; not tracked here under a single package-level
+  SPDX id.
+relations:
+  - predicate: depends-on
+    target: datacite
+    note: GBIF's IPT mints dataset and derived-dataset DOIs through a DataCite
+      account.
+sources:
+  - url: https://www.gbif.org/what-is-gbif
+    accessed: 2026-09-04
+  - url: https://ipt.gbif.org/manual/en/ipt/latest/doi-workflow
+    accessed: 2026-09-04

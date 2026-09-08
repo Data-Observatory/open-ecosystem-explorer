@@ -1,0 +1,32 @@
+type: index
+name: Scopus
+url: https://www.scopus.com
+status: active
+governance: commercial
+outputLicence: closed
+codebase: proprietary
+indexKind: bibliographic
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: none
+coverageObjects:
+  - article
+  - conference-paper
+  - book
+  - patent
+tags:
+  - function:indexing
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: elsevier
+  - predicate: operated-by
+    target: elsevier
+    note: Operated directly by Elsevier, not a separate subsidiary brand.
+    verified:
+      date: 2026-09-04
+      url: https://www.elsevier.com/products/scopus
+sources:
+  - url: https://www.elsevier.com/products/scopus
+    accessed: 2026-09-04

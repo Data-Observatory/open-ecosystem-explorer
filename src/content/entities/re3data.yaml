@@ -1,0 +1,32 @@
+type: index
+name: re3data
+url: https://www.re3data.org
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: open-source
+note: Codebase is open source; exact licence not verified in this pass.
+indexKind: registry
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: full
+coverageObjects:
+  - repository
+tags:
+  - function:indexing
+  - openness:open-content
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+relations:
+  - predicate: depends-on
+    target: datacite
+    note: Integrated as a DataCite service in 2022.
+  - predicate: operated-by
+    target: datacite
+    note: Continues to operate as a DataCite service since the 2022 integration.
+    verified:
+      date: 2026-09-04
+      url: https://www.re3data.org/about
+sources:
+  - url: https://www.re3data.org/about
+    accessed: 2026-09-04

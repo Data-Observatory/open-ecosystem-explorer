@@ -1,0 +1,28 @@
+type: repository
+name: InvenioRDM
+url: https://inveniosoftware.org/products/rdm/
+status: active
+governance: community
+codebase: open-source
+identifiers:
+  spdx: MIT
+outputLicence: not-applicable
+repositoryKind: software-platform
+tags:
+  - function:deposit
+  - function:preservation
+  - openness:open-source
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: cern
+    note: Led by CERN, the same team behind Zenodo.
+  - predicate: implements
+    target: oai-pmh
+  - predicate: implements
+    target: datacite-metadata-schema
+  - predicate: complies-with
+    target: ro-crate
+sources:
+  - url: https://inveniosoftware.org/products/rdm/
+    accessed: 2026-09-04

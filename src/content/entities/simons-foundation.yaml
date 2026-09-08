@@ -1,0 +1,14 @@
+type: organization
+name: Simons Foundation
+url: https://www.simonsfoundation.org/
+status: active
+governance: nonprofit
+orgKind: foundation
+country: US
+tags:
+  - region:north-america
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://blog.arxiv.org/2026/04/02/arxiv-is-becoming-an-independent-nonprofit/
+    accessed: 2026-09-04

@@ -1,0 +1,15 @@
+type: coalition
+name: Barcelona Declaration on Open Research Information
+url: https://barcelona-declaration.org/
+status: active
+governance: community
+coalitionKind: declaration
+workingGroups:
+  - "Group 4: replacing closed systems"
+tags:
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://barcelona-declaration.org/
+    accessed: 2026-09-04

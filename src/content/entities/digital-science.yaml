@@ -1,0 +1,17 @@
+type: organization
+name: Digital Science
+url: https://www.digital-science.com
+status: active
+governance: commercial
+orgKind: company
+country: GB
+tags:
+  - theme:vertical-integration
+lastReviewed: 2026-09-03
+relations:
+  - predicate: owned-by
+    target: holtzbrinck
+    note: Wholly owned; Holtzbrinck also holds 53% of Springer Nature.
+sources:
+  - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
+    accessed: 2026-09-03

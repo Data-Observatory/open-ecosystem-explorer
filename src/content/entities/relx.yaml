@@ -1,0 +1,20 @@
+type: organization
+name: RELX
+url: https://www.relx.com/
+status: active
+governance: commercial
+orgKind: company
+country: GB
+outputLicence: closed
+codebase: proprietary
+tags:
+  - theme:vertical-integration
+  - region:europe
+lastReviewed: 2026-09-04
+note: Publicly listed (LSE/Euronext Amsterdam); no single corporate parent is
+  publicly disclosed as of 2026-09-04.
+relations: []
+sources:
+  - url: https://www.relx.com/
+    accessed: 2026-09-04
+    note: Listed parent group; Elsevier is one of its divisions.

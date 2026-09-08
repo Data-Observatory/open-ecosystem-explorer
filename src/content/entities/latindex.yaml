@@ -1,0 +1,36 @@
+type: index
+name: Latindex
+url: https://www.latindex.org
+status: active
+since: 1997-01-01
+governance: academic
+outputLicence: open
+codebase: not-applicable
+indexKind: registry
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: none
+coverageObjects:
+  - journal
+tags:
+  - function:indexing
+  - region:latam
+lastReviewed: 2026-09-04
+relations:
+  - predicate: interoperates-with
+    target: redalyc
+    note: Joint Latindex-Redalyc-CLACSO-IBICT declaration on CC BY-NC-SA licensing
+      for the region's open-access journals.
+  - predicate: operated-by
+    target: unam
+    note: Convened and hosted since the 1997 founding meeting; runs on a UNAM domain.
+    verified:
+      date: 2026-09-04
+      url: https://latindex.unam.mx/latindex/nosotros/antecedentes
+sources:
+  - url: https://www.latindex.org/latindex/inicio
+    accessed: 2026-09-04
+  - url: https://www.redalyc.org/redalyc/media/inc/img/congresoeditores/presentacion/CongresoEditoresRedalycChile_Iniciativas_regionales-presentacionCLACSO.pdf
+    accessed: 2026-09-04
+  - url: https://latindex.unam.mx/latindex/nosotros/antecedentes
+    accessed: 2026-09-04

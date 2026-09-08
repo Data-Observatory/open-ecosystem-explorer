@@ -1,0 +1,24 @@
+type: organization
+name: Elsevier
+url: https://www.elsevier.com/
+status: active
+governance: commercial
+orgKind: company
+country: NL
+outputLicence: closed
+codebase: proprietary
+tags:
+  - theme:vertical-integration
+  - region:europe
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: relx
+    note: Elsevier is a division of RELX.
+sources:
+  - url: https://www.elsevier.com/
+    accessed: 2026-09-04
+  - url: https://scholarlykitchen.sspnet.org/2022/04/25/elsevier-acquire-interfolio/
+    accessed: 2026-09-04
+    note: Confirms the 2022 Interfolio acquisition, in addition to 2017
+      bepress/Digital Commons.

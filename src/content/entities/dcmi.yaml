@@ -1,0 +1,17 @@
+type: community
+name: DCMI
+aka:
+  - Dublin Core Metadata Initiative
+url: https://www.dublincore.org/
+status: active
+governance: nonprofit
+communityKind: standards-body
+openMembership: true
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.dublincore.org/about/
+    accessed: 2026-09-04

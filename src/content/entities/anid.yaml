@@ -1,0 +1,20 @@
+type: organization
+name: ANID
+aka:
+  - Agencia Nacional de Investigación y Desarrollo
+url: https://www.anid.cl/
+status: active
+governance: public-agency
+orgKind: government-agency
+country: CL
+outputLicence: open
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations:
+  - predicate: member-of
+    target: la-referencia
+    note: Chile participates in LA Referencia through ANID [M§6].
+sources:
+  - url: https://www.anid.cl/
+    accessed: 2026-09-04

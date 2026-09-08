@@ -1,0 +1,17 @@
+type: coalition
+name: SCOSS
+aka:
+  - Global Sustainability Coalition for Open Science Services
+url: https://scoss.org/
+status: active
+governance: nonprofit
+coalitionKind: funding-initiative
+since: 2017-01-01
+tags:
+  - openness:open-governance
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://scoss.org/what-is-scoss/
+    accessed: 2026-09-04

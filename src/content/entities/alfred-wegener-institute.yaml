@@ -1,0 +1,16 @@
+type: organization
+name: Alfred Wegener Institute
+aka:
+  - AWI
+url: https://www.awi.de
+status: active
+governance: public-agency
+orgKind: research-institute
+country: DE
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.awi.de/en/about-us/service/computing-centre/data-management/pangaea.html
+    accessed: 2026-09-04

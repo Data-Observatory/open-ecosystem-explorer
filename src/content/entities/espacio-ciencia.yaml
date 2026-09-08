@@ -1,0 +1,31 @@
+type: aggregator
+name: Espacio Ciencia
+url: https://acceso-abierto.anid.cl/sobreespaciociencia/
+status: active
+governance: public-agency
+outputLicence: open
+aggregatorKind: harvesting-network
+harvestProtocols:
+  - oai-pmh
+objectScope:
+  - article
+  - thesis
+  - dataset
+geography:
+  - cl
+tags:
+  - function:aggregation
+  - region:latam
+lastReviewed: 2026-09-04
+note: Chile's national access node, harvesting Chilean institutional
+  repositories and the ANID Repository into one discovery point (specs.md
+  Appendix A.1b).
+relations:
+  - predicate: operated-by
+    target: anid
+  - predicate: part-of
+    target: la-referencia
+    note: Chile's national node feeding into the LA Referencia federated network.
+sources:
+  - url: https://acceso-abierto.anid.cl/sobreespaciociencia/
+    accessed: 2026-09-04

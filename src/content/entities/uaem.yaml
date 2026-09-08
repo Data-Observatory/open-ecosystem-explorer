@@ -1,0 +1,19 @@
+type: organization
+name: UAEM
+aka:
+  - Universidad Autónoma del Estado de México
+url: https://www.uaem.mx/
+status: active
+governance: academic
+orgKind: university
+country: MX
+outputLicence: open
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.uaem.mx/
+    accessed: 2026-09-04
+  - url: https://www.redalyc.org/
+    accessed: 2026-09-04

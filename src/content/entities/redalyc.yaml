@@ -1,0 +1,37 @@
+type: publishing-platform
+name: Redalyc
+url: https://www.redalyc.org/
+status: active
+governance: academic
+outputLicence: open
+platformKind: journal-programme
+fullTextHosted: true
+admissionCriteria: published
+markupStandard:
+  - jats
+geography:
+  - latam
+tags:
+  - function:publishing
+  - region:latam
+  - openness:open-content
+lastReviewed: 2026-09-04
+note: Platform whose Marcalyc tool marks journals up in JATS XML and publishes
+  them [M§6].
+relations:
+  - predicate: operated-by
+    target: uaem
+  - predicate: implements
+    target: jats
+  - predicate: member-of
+    target: amelica
+    note: AmeliCA is built around Redalyc and UNESCO.
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure since its first funding cycle.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+sources:
+  - url: https://www.redalyc.org/
+    accessed: 2026-09-04

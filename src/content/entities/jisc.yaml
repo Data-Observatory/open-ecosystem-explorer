@@ -1,0 +1,18 @@
+type: organization
+name: Jisc
+url: https://www.jisc.ac.uk/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: GB
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.jisc.ac.uk/
+    accessed: 2026-09-04
+  - url: https://openpolicyfinder.jisc.ac.uk/
+    accessed: 2026-09-04
+    note: Open Policy Finder launched 4 Nov 2024, merging Sherpa Romeo, Juliet and
+      Fact.

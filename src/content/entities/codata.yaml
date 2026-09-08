@@ -1,0 +1,26 @@
+type: community
+name: CODATA
+url: https://codata.org/
+status: active
+governance: nonprofit
+communityKind: standards-body
+nationalChapters:
+  - Chile
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: member-of
+    target: rda
+    note: Documented Affiliate Member of RDA; the two bodies operate under an MoU
+      with complementary roles.
+    verified:
+      date: 2026-09-04
+      url: https://www.rd-alliance.org/codata
+sources:
+  - url: https://codata.org/
+    accessed: 2026-09-04
+    note: Committee of the International Science Council. Chile has a national
+      committee driven by Data Observatory.
+  - url: https://www.rd-alliance.org/codata
+    accessed: 2026-09-04

@@ -1,0 +1,37 @@
+type: index
+name: Web of Science
+url: https://www.webofscience.com
+status: active
+governance: commercial
+outputLicence: closed
+codebase: proprietary
+indexKind: bibliographic
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: none
+coverageObjects:
+  - article
+  - conference-paper
+  - book
+tags:
+  - function:indexing
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: clarivate
+  - predicate: operated-by
+    target: clarivate
+    note: Operated directly by Clarivate, not a separate subsidiary brand.
+    verified:
+      date: 2026-09-04
+      url: https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/
+  - predicate: depends-on
+    target: orcid
+    note: Web of Science Researcher Profiles two-way sync publications and peer
+      reviews with a connected ORCID iD.
+sources:
+  - url: https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/
+    accessed: 2026-09-04
+  - url: https://webofscience.zendesk.com/hc/en-us/articles/36787077862545-How-to-Sync-Your-ORCID-Record-with-Web-of-Science-Researcher-Profile
+    accessed: 2026-09-04

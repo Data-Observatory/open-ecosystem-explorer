@@ -1,0 +1,21 @@
+type: organization
+name: Clarivate
+url: https://clarivate.com/
+status: active
+governance: commercial
+orgKind: company
+country: GB
+outputLicence: closed
+codebase: proprietary
+tags:
+  - theme:vertical-integration
+  - region:europe
+lastReviewed: 2026-09-04
+note: Publicly listed (NYSE); no single corporate parent is publicly disclosed
+  as of 2026-09-04.
+relations: []
+sources:
+  - url: https://clarivate.com/products/scientific-and-academic-research/research-funding-and-analytics/converis/
+    accessed: 2026-09-04
+    note: Converis product page, live. No end-of-life announcement found for
+      Converis; Esploro came via the 2021 ProQuest/Ex Libris acquisition.

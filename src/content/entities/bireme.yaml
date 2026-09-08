@@ -1,0 +1,16 @@
+type: organization
+name: Latin American and Caribbean Center on Health Sciences Information
+aka:
+  - BIREME
+url: https://bireme.org
+status: active
+governance: intergovernmental
+orgKind: intergovernmental
+country: BR
+tags:
+  - region:latam
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+    accessed: 2026-09-04

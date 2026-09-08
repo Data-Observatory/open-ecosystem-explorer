@@ -1,0 +1,17 @@
+type: coalition
+name: CoARA
+aka:
+  - Coalition for Advancing Research Assessment
+url: https://www.coara.org/
+status: active
+governance: community
+coalitionKind: reform-movement
+since: 2022-07-01
+tags:
+  - function:evaluation
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.coara.org/about-coara/
+    accessed: 2026-09-04

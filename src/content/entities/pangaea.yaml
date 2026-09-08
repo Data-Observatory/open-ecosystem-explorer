@@ -1,0 +1,47 @@
+type: repository
+name: PANGAEA
+url: https://www.pangaea.de/
+status: active
+governance: academic
+codebase: mixed
+outputLicence: open
+repositoryKind: hosted-service
+certifications:
+  - coretrustseal
+  - wds
+persistentIdScheme:
+  - doi
+accessModel: open
+tags:
+  - function:deposit
+  - function:preservation
+disciplines:
+  - natural-sciences
+lastReviewed: 2026-09-04
+note: Data publisher for earth and environmental science, jointly run by AWI and
+  MARUM (specs.md Appendix A.1b).
+relations:
+  - predicate: implements
+    target: oai-pmh
+  - predicate: implements
+    target: datacite-metadata-schema
+  - predicate: certified-by
+    target: coretrustseal
+  - predicate: member-of
+    target: wds
+    note: Regular member of the World Data System.
+  - predicate: operated-by
+    target: alfred-wegener-institute
+    note: Operated jointly by AWI and MARUM.
+    verified:
+      date: 2026-09-04
+      url: https://www.awi.de/en/about-us/service/computing-centre/data-management/pangaea.html
+  - predicate: operated-by
+    target: marum
+    note: Operated jointly by AWI and MARUM.
+    verified:
+      date: 2026-09-04
+      url: https://www.marum.de/en/PANGAEA-Data-Publisher-for-Earth-and-Environmental-Science-2.html
+sources:
+  - url: https://www.pangaea.de/
+    accessed: 2026-09-04

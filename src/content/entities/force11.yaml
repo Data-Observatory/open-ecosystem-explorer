@@ -1,0 +1,18 @@
+type: community
+name: FORCE11
+aka:
+  - Future of Research Communications and e-Scholarship
+url: https://force11.org/
+status: active
+governance: nonprofit
+communityKind: technical-community
+openMembership: true
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://force11.org/
+    accessed: 2026-09-04
+    note: Scholarly-communication community in which the FAIR Guiding Principles
+      were drafted and disseminated.

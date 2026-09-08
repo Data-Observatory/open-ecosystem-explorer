@@ -1,0 +1,14 @@
+type: organization
+name: DONA Foundation
+url: https://www.dona.net/
+status: active
+governance: nonprofit
+orgKind: foundation
+country: CH
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.dona.net/handle-system
+    accessed: 2026-09-04

@@ -1,0 +1,23 @@
+type: standard
+name: Dublin Core
+url: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
+status: active
+governance: community
+standardKind: metadata-schema
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: governed-by
+    target: dcmi
+    note: DCMI has been a project of ASIS&T since 2013, maintaining Dublin Core
+      under a Governing Board.
+    verified:
+      date: 2026-09-04
+      url: https://www.dublincore.org/about/
+sources:
+  - url: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
+    accessed: 2026-09-04
+  - url: https://www.dublincore.org/about/
+    accessed: 2026-09-04

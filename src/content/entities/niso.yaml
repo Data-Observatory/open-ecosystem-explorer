@@ -1,0 +1,18 @@
+type: community
+name: NISO
+aka:
+  - National Information Standards Organization
+url: https://www.niso.org/
+status: active
+governance: nonprofit
+communityKind: standards-body
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.niso.org/
+    accessed: 2026-09-04
+    note: US-based, ANSI-accredited standards body for information science;
+      maintains JATS (NISO Z39.96).

@@ -1,0 +1,16 @@
+type: identifier
+name: ISBN
+aka:
+  - International Standard Book Number
+url: https://www.isbn-international.org
+status: active
+governance: nonprofit
+identifies: bibliographic
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.isbn-international.org/
+    accessed: 2026-09-04

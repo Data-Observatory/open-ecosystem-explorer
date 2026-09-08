@@ -1,0 +1,39 @@
+type: aggregator
+name: European Open Science Cloud
+aka:
+  - EOSC
+url: https://open-science-cloud.ec.europa.eu/
+status: active
+governance: intergovernmental
+outputLicence: open
+codebase: mixed
+aggregatorKind: federation
+objectScope:
+  - article
+  - dataset
+geography:
+  - eu
+tags:
+  - function:aggregation
+  - region:europe
+lastReviewed: 2026-09-04
+note: Federated infrastructure with an EU Node, re-procured in 2026 on a
+  four-year framework (specs.md Appendix A.1b).
+relations:
+  - predicate: governed-by
+    target: eosc-association
+  - predicate: interoperates-with
+    target: openaire
+    note: OpenAIRE is a core service provider for the EOSC EU Node's discovery and
+      resource-catalogue capabilities.
+  - predicate: funded-by
+    target: european-commission
+    note: EOSC-Hub project funded under Horizon 2020 (~€30M).
+    verified:
+      date: 2026-09-04
+      url: https://digital-strategy.ec.europa.eu/en/funding/implementing-european-open-science-cloud
+sources:
+  - url: https://open-science-cloud.ec.europa.eu/
+    accessed: 2026-09-04
+  - url: https://www.openaire.eu/openaire-and-eosc
+    accessed: 2026-09-04

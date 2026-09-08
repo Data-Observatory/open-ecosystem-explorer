@@ -1,0 +1,17 @@
+type: organization
+name: International DOI Foundation
+aka:
+  - IDF
+url: https://www.doi.org
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+tags:
+  - function:registration
+  - region:north-america
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.doi.org/the-foundation/board-and-governance/
+    accessed: 2026-09-04

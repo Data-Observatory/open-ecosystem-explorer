@@ -1,0 +1,24 @@
+type: community
+name: ARK Alliance
+url: https://arks.org
+status: active
+governance: community
+communityKind: technical-community
+tags:
+  - function:certification
+  - region:global
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations:
+  - predicate: funded-by
+    target: lyrasis
+    note: Community-governed body supported in part by LYRASIS as governance
+      transitioned away from the California Digital Library.
+    verified:
+      date: 2026-09-04
+      url: https://cdlib.org/cdlinfo/2021/01/27/announcing-the-ark-alliance/
+sources:
+  - url: https://arks.org/about/
+    accessed: 2026-09-04
+  - url: https://cdlib.org/cdlinfo/2021/01/27/announcing-the-ark-alliance/
+    accessed: 2026-09-04

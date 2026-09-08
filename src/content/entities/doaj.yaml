@@ -1,0 +1,32 @@
+type: index
+name: DOAJ
+aka:
+  - Directory of Open Access Journals
+url: https://doaj.org
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: mixed
+indexKind: registry
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: full
+coverageObjects:
+  - journal
+tags:
+  - function:indexing
+  - openness:open-content
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: is4oa
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter since 2022.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+sources:
+  - url: https://doaj.org/about/
+    accessed: 2026-09-04

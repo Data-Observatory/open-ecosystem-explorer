@@ -1,0 +1,56 @@
+type: aggregator
+name: OpenAIRE
+url: https://www.openaire.eu/
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: open-source
+aggregatorKind: harvesting-network
+harvestProtocols:
+  - oai-pmh
+objectScope:
+  - article
+  - dataset
+  - thesis
+geography:
+  - eu
+tags:
+  - function:aggregation
+  - openness:open-governance
+lastReviewed: 2026-09-04
+note: OpenAIRE's software components (e.g. the OpenAIRE Guidelines validator,
+  the research graph tooling) are published as open source across several
+  repositories; not tracked here under a single package-level SPDX id.
+relations:
+  - predicate: indexes
+    target: zenodo
+    note: OpenAIRE and Zenodo have been operated in partnership since Zenodo's 2013
+      launch; OpenAIRE aggregates and cross-links Zenodo's records.
+  - predicate: implements
+    target: oai-pmh
+    note: Harvests member repositories via OAI-PMH.
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter, self-audit published 2022.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+  - predicate: member-of
+    target: barcelona-declaration
+    note: Signed the Barcelona Declaration on Open Research Information.
+  - predicate: member-of
+    target: coara
+    note: Published an Action Plan supporting the CoARA commitments.
+  - predicate: funded-by
+    target: european-commission
+    note: OpenAIRE-Advance project funded under Horizon 2020/Europe (~€10M).
+    verified:
+      date: 2026-09-04
+      url: https://digital-strategy.ec.europa.eu/en/funding/implementing-european-open-science-cloud
+sources:
+  - url: https://www.openaire.eu/about
+    accessed: 2026-09-04
+  - url: https://openscholarlyinfrastructure.org/adopters/
+    accessed: 2026-09-04
+  - url: https://www.openaire.eu/openaire-signs-barcelona-declaration-a-catalyst-for-change-in-open-research-information
+    accessed: 2026-09-04

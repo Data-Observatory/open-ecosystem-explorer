@@ -1,0 +1,16 @@
+type: standard
+name: JSON-LD
+url: https://www.w3.org/TR/json-ld11/
+status: active
+governance: community
+standardKind: serialisation
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: w3c
+sources:
+  - url: https://www.w3.org/TR/json-ld11/
+    accessed: 2026-09-04

@@ -1,0 +1,36 @@
+type: standard
+name: CoreTrustSeal
+url: https://www.coretrustseal.org/
+status: active
+governance: nonprofit
+standardKind: certification-criteria
+tags:
+  - function:certification
+lastReviewed: 2026-09-04
+relations:
+  - predicate: profile-of
+    target: trust-principles
+    note: CoreTrustSeal operationalises the TRUST principles as a certifiable
+      requirements set.
+  - predicate: endorsed-by
+    target: wds
+    note: Formed in 2017 by harmonising WDS's Regular Member certification with the
+      Data Seal of Approval.
+  - predicate: endorsed-by
+    target: rda
+    note: Harmonisation of WDS and DSA certification was coordinated under the RDA
+      umbrella.
+  - predicate: governed-by
+    target: coretrustseal-foundation
+    note: Dutch Stichting whose 12-member elected Board maintains the certification
+      requirements.
+    verified:
+      date: 2026-09-04
+      url: https://www.coretrustseal.org/about/
+sources:
+  - url: https://www.coretrustseal.org/
+    accessed: 2026-09-04
+  - url: https://www.coretrustseal.org/about/history/
+    accessed: 2026-09-04
+    note: 2017 merger of ICSU-WDS and DSA certification, coordinated under RDA;
+      independent Dutch foundation since 2018.

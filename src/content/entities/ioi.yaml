@@ -1,0 +1,23 @@
+type: organization
+name: Invest in Open Infrastructure
+aka:
+  - IOI
+url: https://investinopen.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+tags:
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations:
+  - predicate: funded-by
+    target: digital-science
+    note: Contributor to the IOI Fund for Network Adoption, alongside Wellcome.
+    verified:
+      date: 2026-09-04
+      url: https://investinopen.org/blog/invest-in-open-infrastructure-announces-2-7m-commitment-from-founding-group-for-the-ioi-fund-for-network-adoption/
+sources:
+  - url: https://investinopen.org/about/
+    accessed: 2026-09-04
+  - url: https://investinopen.org/blog/invest-in-open-infrastructure-announces-2-7m-commitment-from-founding-group-for-the-ioi-fund-for-network-adoption/
+    accessed: 2026-09-04

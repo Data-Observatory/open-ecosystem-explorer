@@ -1,0 +1,44 @@
+type: publishing-platform
+name: SciELO
+aka:
+  - Scientific Electronic Library Online
+url: https://www.scielo.org/
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: mixed
+platformKind: journal-programme
+fullTextHosted: true
+admissionCriteria: published
+markupStandard:
+  - jats
+geography:
+  - latam
+tags:
+  - function:publishing
+  - region:latam
+  - openness:open-content
+lastReviewed: 2026-09-04
+note: Cooperative electronic publishing model and programme running sixteen
+  national journal collections plus Preprints, Data and Books, with its own
+  selection methodology and markup toolchain [M§6, specs.md §12 Q1(a)].
+relations:
+  - predicate: implements
+    target: jats
+  - predicate: operated-by
+    target: fapesp
+    note: Created and funded by FAPESP since 1997; now joined by other Brazilian
+      agencies.
+    verified:
+      date: 2026-09-04
+      url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+  - predicate: developed-by
+    target: bireme
+    note: BIREME provided the founding technical/indexing methodology alongside
+      FAPESP.
+    verified:
+      date: 2026-09-04
+      url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+sources:
+  - url: https://www.scielo.org/en/about-scielo/program-publication-model-and-scielo-network/
+    accessed: 2026-09-04

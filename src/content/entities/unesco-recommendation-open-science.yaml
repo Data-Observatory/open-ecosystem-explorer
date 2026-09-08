@@ -1,0 +1,25 @@
+type: policy
+name: UNESCO Recommendation on Open Science
+url: https://www.unesco.org/en/open-science/about
+status: active
+governance: intergovernmental
+policyKind: recommendation
+jurisdiction:
+  - global
+bindingness: advisory
+effectiveDate: 2021-11-25
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: mandates
+    target: fair
+    note: The 2021 Recommendation lists open scientific knowledge, described via
+      FAIR data principles, among its core values.
+  - predicate: applies-to
+    target: anid
+    note: Chile is a UNESCO member state; ANID is its implementing agency for
+      national open-science policy.
+sources:
+  - url: https://www.unesco.org/en/open-science/about
+    accessed: 2026-09-04

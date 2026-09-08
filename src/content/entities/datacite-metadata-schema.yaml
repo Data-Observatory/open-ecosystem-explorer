@@ -1,0 +1,26 @@
+type: standard
+name: DataCite Metadata Schema
+url: https://schema.datacite.org/
+status: active
+governance: nonprofit
+standardKind: metadata-schema
+specVersion: "4.6"
+machineReadable: true
+requiresOpenness: false
+tags:
+  - function:registration
+lastReviewed: 2026-09-03
+relations:
+  - predicate: governed-by
+    target: datacite
+  - predicate: depends-on
+    target: doi
+  - predicate: depends-on
+    target: orcid
+    note: ORCID is a documented supported nameIdentifierScheme value for the
+      Creator/Contributor properties.
+sources:
+  - url: https://schema.datacite.org/
+    accessed: 2026-09-03
+  - url: https://datacite-metadata-schema.readthedocs.io/en/4.6/properties/creator/
+    accessed: 2026-09-04

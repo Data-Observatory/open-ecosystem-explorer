@@ -1,0 +1,16 @@
+type: organization
+name: University of Bologna
+aka:
+  - Alma Mater Studiorum
+url: https://www.unibo.it
+status: active
+governance: academic
+orgKind: university
+country: IT
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://opencitations.net/governance/
+    accessed: 2026-09-04

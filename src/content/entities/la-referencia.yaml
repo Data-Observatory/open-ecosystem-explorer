@@ -1,0 +1,62 @@
+type: aggregator
+name: LA Referencia
+url: https://www.lareferencia.info/
+status: active
+governance: intergovernmental
+outputLicence: open
+codebase: open-source
+aggregatorKind: harvesting-network
+harvestProtocols:
+  - oai-pmh
+objectScope:
+  - article
+  - thesis
+memberCountries:
+  - AR
+  - BR
+  - CL
+  - CO
+  - MX
+  - PE
+  - UY
+  - ES
+geography:
+  - latam
+tags:
+  - function:aggregation
+  - region:latam
+  - openness:open-governance
+lastReviewed: 2026-09-04
+note: Federated network of eleven Latin American countries plus Spain, funded by
+  member-country contributions [M§6] — no single funding organisation to cite as
+  a `funded-by` target.
+relations:
+  - predicate: interoperates-with
+    target: openaire
+    note: Harvests from national nodes on the OpenAIRE guidelines since 2016.
+  - predicate: indexes
+    target: scielo
+    note: LA Referencia indexes SciELO's national collections.
+  - predicate: implements
+    target: openaire-guidelines
+    note: On the OpenAIRE Guidelines for repository managers since 2016.
+  - predicate: operated-by
+    target: redclara
+    note: Runs on technical/organisational agreements with RedCLARA's regional
+      network.
+    verified:
+      date: 2026-09-04
+      url: https://redclara.net/en/somos
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure since its first funding cycle.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+sources:
+  - url: https://www.lareferencia.info/
+    accessed: 2026-09-04
+    note: Site historically also served over http://; canonical https homepage cited
+      here.
+  - url: https://www.openaire.eu/la-referencia-openaire-and-coar-committed-to-a-shared-vision-of-a-global-network-of-repositories
+    accessed: 2026-09-04

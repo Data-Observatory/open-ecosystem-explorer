@@ -1,0 +1,31 @@
+type: index
+name: OpenDOAR
+url: https://v2.sherpa.ac.uk/opendoar/
+status: active
+governance: public-agency
+outputLicence: open
+codebase: mixed
+indexKind: directory
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: full
+coverageObjects:
+  - repository
+tags:
+  - function:indexing
+  - openness:open-content
+lastReviewed: 2026-09-04
+note: Being separated out of the merged Sherpa services as of 2026; operator
+  relationship recorded as historical/current best-known, may need revisiting.
+relations:
+  - predicate: operated-by
+    target: jisc
+  - predicate: member-of
+    target: coar
+    note: COAR and Jisc released a joint roadmap for OpenDOAR's transition to an
+      international, community-governed repository directory.
+sources:
+  - url: https://v2.sherpa.ac.uk/opendoar/
+    accessed: 2026-09-04
+  - url: https://coar-repositories.org/news-updates/new-roadmap-lays-out-path-for-opendoar-as-an-international-community-driven-repository-directory/
+    accessed: 2026-09-04

@@ -1,0 +1,16 @@
+type: community
+name: euroCRIS
+url: https://eurocris.org/
+status: active
+governance: nonprofit
+communityKind: standards-body
+tags:
+  - function:registration
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://eurocris.org/
+    accessed: 2026-09-04
+    note: International membership organisation for research information; maintains
+      CERIF.

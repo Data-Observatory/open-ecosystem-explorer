@@ -1,0 +1,23 @@
+type: agency
+name: ISSN International Centre
+aka:
+  - CIEPS
+url: https://www.issn.org
+status: active
+governance: intergovernmental
+registers:
+  - publication
+feeModel: membership
+consortiumModel: true
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: issues
+    target: issn
+    note: Intergovernmental organisation coordinating the national ISSN Centres that
+      assign ISSNs to serial publications.
+sources:
+  - url: https://www.issn.org/understanding-the-issn/standardization/
+    accessed: 2026-09-04

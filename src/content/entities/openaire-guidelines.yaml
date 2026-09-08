@@ -1,0 +1,23 @@
+type: standard
+name: OpenAIRE Guidelines
+url: https://guidelines.openaire.eu/
+status: active
+governance: community
+standardKind: metadata-schema
+machineReadable: true
+tags:
+  - function:aggregation
+lastReviewed: 2026-09-04
+relations:
+  - predicate: profile-of
+    target: dublin-core
+    note: Application profiles for repositories, journals and CRIS exposing
+      metadata, built on Dublin Core.
+  - predicate: developed-by
+    target: openaire
+    note: Authored and maintained by OpenAIRE for its network's literature/data/CRIS
+      repository managers.
+sources:
+  - url: https://guidelines.openaire.eu/
+    accessed: 2026-09-04
+    note: Implemented by LA Referencia since 2016.

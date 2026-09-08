@@ -1,0 +1,21 @@
+type: standard
+name: schema.org
+url: https://schema.org/
+status: active
+governance: community
+standardKind: metadata-schema
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: governed-by
+    target: w3c
+    note: Hosted as a W3C Community Group; steered jointly with the founding search
+      engines.
+  - predicate: depends-on
+    target: json-ld
+    note: schema.org markup is commonly serialised as JSON-LD.
+sources:
+  - url: https://schema.org/
+    accessed: 2026-09-04

@@ -1,0 +1,54 @@
+type: agency
+name: DataCite
+url: https://datacite.org
+status: active
+governance: nonprofit
+since: "2009"
+identifiers:
+  ror: 04wxnsj81
+registers:
+  - dataset
+  - software
+  - report
+  - platform
+  - sample
+feeModel: membership
+consortiumModel: true
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-06
+relations:
+  - predicate: issues
+    target: doi
+    note: €2,000 membership plus a €200–700 infrastructure fee scaled by context; no
+      per-DOI charge below 100,000/yr.
+  - predicate: issues
+    target: igsn
+    note: IGSNs for physical samples are issued as a DataCite record type.
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter since 2021.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+  - predicate: member-of
+    target: coara
+    note: Declared support for the CoARA Agreement on research assessment reform.
+    verified:
+      date: 2026-09-04
+      url: https://www.coara.org/
+  - predicate: depends-on
+    target: handle-system
+    note: Operates its own Handle server infrastructure; a DOI in
+      Registered/Findable state is registered in the global handle server.
+    verified:
+      date: 2026-09-06
+      url: https://support.datacite.org/docs/doi-persistence
+sources:
+  - url: https://datacite.org/fees/
+    accessed: 2026-09-03
+  - url: https://openscholarlyinfrastructure.org/adopters/
+    accessed: 2026-09-04
+  - url: https://support.datacite.org/docs/doi-persistence
+    accessed: 2026-09-06

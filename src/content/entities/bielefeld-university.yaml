@@ -1,0 +1,15 @@
+type: organization
+name: Bielefeld University
+url: https://www.uni-bielefeld.de/
+status: active
+governance: academic
+orgKind: university
+country: DE
+outputLicence: open
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.uni-bielefeld.de/en/university/
+    accessed: 2026-09-04

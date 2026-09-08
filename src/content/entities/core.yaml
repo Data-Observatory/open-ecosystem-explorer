@@ -1,0 +1,34 @@
+type: aggregator
+name: CORE
+url: https://core.ac.uk/
+status: active
+governance: academic
+outputLicence: open
+codebase: open-source
+aggregatorKind: harvesting-network
+harvestProtocols:
+  - oai-pmh
+objectScope:
+  - article
+geography:
+  - global
+tags:
+  - function:aggregation
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+note: CORE's software components are published as open source across several
+  repositories on GitHub; not tracked here under a single package-level SPDX id.
+relations:
+  - predicate: operated-by
+    target: open-university
+  - predicate: implements
+    target: oai-pmh
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter since 2022.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+sources:
+  - url: https://core.ac.uk/about
+    accessed: 2026-09-04

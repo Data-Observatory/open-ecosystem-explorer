@@ -1,0 +1,16 @@
+type: organization
+name: arXiv, Inc.
+aka:
+  - arXiv Inc
+url: https://info.arxiv.org
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+tags:
+  - region:north-america
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
+    accessed: 2026-09-04

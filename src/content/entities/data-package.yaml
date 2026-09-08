@@ -1,0 +1,20 @@
+type: standard
+name: Data Package
+aka:
+  - Frictionless Data Package
+url: https://datapackage.org/
+status: active
+governance: nonprofit
+standardKind: serialisation
+specVersion: "2"
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: open-knowledge-foundation
+sources:
+  - url: https://datapackage.org/
+    accessed: 2026-09-04
+    note: v2 released 26 June 2024.

@@ -1,0 +1,64 @@
+type: repository
+name: arXiv
+url: https://arxiv.org/
+status: active
+governance: nonprofit
+codebase: mixed
+outputLicence: open
+repositoryKind: hosted-service
+accessModel: open
+tags:
+  - function:deposit
+  - openness:open-content
+lastReviewed: 2026-09-04
+note: Spun out from Cornell University on 2026-07-01 to become an independent
+  nonprofit; historical operated-by/funded-by edges to Cornell are dated `until`
+  the spin-out.
+relations:
+  - predicate: operated-by
+    target: cornell
+    until: 2026-06
+    note: Hosted at Cornell for 25 years, ending with the 2026-07-01 spin-out to
+      independent nonprofit status.
+  - predicate: funded-by
+    target: cornell
+    until: 2026-06
+    note: One of several funders prior to the 2026 spin-out.
+  - predicate: funded-by
+    target: simons-foundation
+    note: Long-standing funder; contributed to a $10M gift (with Schmidt Sciences)
+      funding the post-spin-out cloud migration.
+    verified:
+      date: 2026-09-04
+      url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
+  - predicate: funded-by
+    target: schmidt-sciences
+    note: Contributed to a $10M gift (with the Simons Foundation) funding the
+      post-spin-out cloud migration.
+    verified:
+      date: 2026-09-04
+      url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
+  - predicate: implements
+    target: oai-pmh
+    note: arXiv is one of the original OAI-PMH implementers; the protocol grew out
+      of harvesting needs like arXiv's.
+  - predicate: governed-by
+    target: arxiv-inc
+    note: Governed by its own 12-member board since the 2026-07-01 spin-out to
+      independent nonprofit status.
+    verified:
+      date: 2026-09-04
+      url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure among its several funding sources.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+sources:
+  - url: https://info.arxiv.org/about/index.html
+    accessed: 2026-09-04
+  - url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
+    accessed: 2026-09-04
+  - url: https://news.cornell.edu/stories/2026/06/digital-research-repository-arxiv-start-new-chapter-nonprofit
+    accessed: 2026-09-04

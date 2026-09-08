@@ -1,0 +1,22 @@
+type: agency
+name: mEDRA
+aka:
+  - Multilingual European DOI Registration Agency
+url: https://www.medra.org
+status: active
+governance: nonprofit
+registers:
+  - publication
+feeModel: per-object
+consortiumModel: false
+tags:
+  - function:registration
+  - region:europe
+lastReviewed: 2026-09-04
+relations:
+  - predicate: issues
+    target: doi
+    note: Regional European DOI registration agency, mainly for publications.
+sources:
+  - url: https://www.medra.org/
+    accessed: 2026-09-04

@@ -1,0 +1,23 @@
+type: standard
+name: CDIF
+aka:
+  - Cross Domain Interoperability Framework
+url: https://cdif.codata.org/
+status: active
+governance: nonprofit
+standardKind: framework
+specVersion: "1.1"
+machineReadable: false
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: developed-by
+    target: codata
+sources:
+  - url: https://cdif.codata.org/
+    accessed: 2026-09-04
+  - url: https://codata.org/initiatives/making-data-work/cdif/
+    accessed: 2026-09-04
+    note: v1.1 released to coincide with the CDIF4EOSC project launch.

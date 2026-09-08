@@ -1,0 +1,48 @@
+type: index
+name: OpenAlex
+url: https://openalex.org
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: open-source
+note: Codebase is open source (OpenAlex ingest/API repos); exact licence not
+  verified in this pass.
+indexKind: bibliographic
+selectivity: algorithmic
+inclusionCriteria: partially-published
+bulkDownload: full
+coverageObjects:
+  - article
+  - dataset
+  - book
+  - preprint
+tags:
+  - function:indexing
+  - openness:open-content
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: ourresearch
+  - predicate: interoperates-with
+    target: opencitations
+    note: OpenAlex ingests OpenCitations' open citation data as one of its sources.
+  - predicate: interoperates-with
+    target: wikidata
+    note: Cross-referenced via WikiCite; OpenAlex reconciles entities against
+      Wikidata QIDs.
+  - predicate: indexes
+    target: zenodo
+    note: OpenAlex harvests and indexes works deposited in Zenodo.
+  - predicate: indexes
+    target: arxiv
+    note: OpenAlex harvests and indexes arXiv preprints.
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter since 2021.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+sources:
+  - url: https://openalex.org/about
+    accessed: 2026-09-04

@@ -1,0 +1,36 @@
+type: index
+name: FAIRsharing
+url: https://fairsharing.org
+status: active
+governance: academic
+outputLicence: open
+codebase: mixed
+indexKind: registry
+selectivity: editorial-board
+inclusionCriteria: published
+bulkDownload: partial
+coverageObjects:
+  - standard
+  - database
+  - policy
+tags:
+  - function:indexing
+  - openness:open-content
+lastReviewed: 2026-09-04
+relations:
+  - predicate: complies-with
+    target: fair
+    note: Built explicitly to help resource owners describe and improve alignment
+      with the FAIR principles.
+  - predicate: interoperates-with
+    target: re3data
+    note: Both curate registries of repositories/standards and cross-link entries.
+  - predicate: operated-by
+    target: university-of-oxford
+    note: Based in the Data Readiness Group at the Oxford e-Research Centre.
+    verified:
+      date: 2026-09-04
+      url: https://oerc.ox.ac.uk/news/fairsharing-discover-and-curate-an-ecosystem-of-research-standards-and-databases
+sources:
+  - url: https://fairsharing.org/about
+    accessed: 2026-09-04

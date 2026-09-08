@@ -1,0 +1,42 @@
+type: identifier
+name: ROR
+aka:
+  - Research Organization Registry
+url: https://ror.org
+status: active
+governance: nonprofit
+identifies: organization
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: datacite
+    note: One of three founding operating partners, alongside Crossref and CDL, via
+      a shared Memorandum of Agreement.
+    verified:
+      date: 2026-09-04
+      url: https://ror.org/about/
+  - predicate: operated-by
+    target: crossref
+    note: Founding operating partner; Crossref's accounting team handles ROR's
+      day-to-day financial administration.
+    verified:
+      date: 2026-09-04
+      url: https://ror.org/about/
+  - predicate: operated-by
+    target: california-digital-library
+    note: Founding operating partner.
+    verified:
+      date: 2026-09-04
+      url: https://ror.org/about/
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure since its first funding cycle.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+sources:
+  - url: https://ror.org/about/
+    accessed: 2026-09-04

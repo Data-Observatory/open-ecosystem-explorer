@@ -1,0 +1,22 @@
+type: standard
+name: CERIF
+aka:
+  - Common European Research Information Format
+url: https://eurocris.org/services/main-features-cerif
+status: active
+governance: community
+standardKind: framework
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+note: Classic CERIF is not under further development per euroCRIS; CERIF 2.0 /
+  CERIF-Core is proposed but not yet approved as of 2026-09-04.
+relations:
+  - predicate: governed-by
+    target: eurocris
+sources:
+  - url: https://eurocris.org/services/main-features-cerif
+    accessed: 2026-09-04
+  - url: https://github.com/EuroCRIS/CERIF-Core
+    accessed: 2026-09-04
+    note: "CERIF-Core / CERIF 2.0 status: proposed, not approved."

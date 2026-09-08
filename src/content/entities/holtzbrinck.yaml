@@ -1,0 +1,21 @@
+type: organization
+name: Holtzbrinck Publishing Group
+aka:
+  - Holtzbrinck
+url: https://www.holtzbrinck.com
+status: active
+governance: commercial
+orgKind: company
+country: DE
+tags:
+  - theme:vertical-integration
+  - region:europe
+lastReviewed: 2026-09-03
+note: Privately held family group; no further corporate parent is publicly
+  disclosed as of 2026-09-03.
+relations: []
+sources:
+  - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
+    accessed: 2026-09-03
+    note: Confirms Digital Science is wholly owned by Holtzbrinck, which holds ~53%
+      of Springer Nature.

@@ -1,0 +1,18 @@
+type: organization
+name: Center for Open Science
+aka:
+  - COS
+url: https://www.cos.io/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+outputLicence: open
+tags:
+  - region:north-america
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.cos.io/about/mission
+    accessed: 2026-09-04

@@ -1,0 +1,31 @@
+type: identifier
+name: RAiD
+aka:
+  - Research Activity Identifier
+url: https://www.raid.org
+status: active
+governance: nonprofit
+identifies: activity
+isoStandard: ISO 23527:2022
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: governed-by
+    target: ardc
+    note: ARDC is the ISO-appointed Registration Authority for RAiD globally.
+  - predicate: depends-on
+    target: datacite
+    note: ARDC and DataCite jointly deliver RAiD; RAiD registers through DataCite's
+      Consortium infrastructure.
+    verified:
+      date: 2026-09-04
+      url: https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/
+sources:
+  - url: https://www.iso.org/standard/75931.html
+    accessed: 2026-09-04
+  - url: https://www.raid.org/
+    accessed: 2026-09-04
+  - url: https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/
+    accessed: 2026-09-04

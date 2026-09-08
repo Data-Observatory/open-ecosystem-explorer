@@ -1,0 +1,29 @@
+type: index
+name: The Lens
+url: https://www.lens.org
+status: active
+governance: nonprofit
+outputLicence: partly-open
+codebase: proprietary
+indexKind: bibliographic
+selectivity: algorithmic
+inclusionCriteria: partially-published
+bulkDownload: partial
+coverageObjects:
+  - article
+  - patent
+tags:
+  - function:indexing
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: cambia
+  - predicate: depends-on
+    target: crossref
+    note: Lens scholarly records are built on Crossref metadata, supplemented with
+      DataCite DOIs and ORCID iDs.
+sources:
+  - url: https://www.lens.org/lens/about
+    accessed: 2026-09-04
+  - url: https://about.lens.org/what/
+    accessed: 2026-09-04

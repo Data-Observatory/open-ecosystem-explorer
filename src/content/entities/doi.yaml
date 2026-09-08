@@ -1,0 +1,36 @@
+type: identifier
+name: DOI
+aka:
+  - Digital Object Identifier
+url: https://www.doi.org
+status: active
+governance: nonprofit
+identifies: object
+isoStandard: ISO 26324
+resolverUrl: https://doi.org/
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-06
+relations:
+  - predicate: depends-on
+    target: handle-system
+    note: DOI names are Handles; resolution runs on the Handle System.
+  - predicate: governed-by
+    target: international-doi-foundation
+    note: IDF sets DOI policy; ISO 26324 Registration Authority. Also a
+      Multi-Primary Administrator of the Global Handle Registry, alongside CNRI.
+    verified:
+      date: 2026-09-06
+      url: https://www.dona.net/faq
+sources:
+  - url: https://www.doi.org/the-identifier/what-is-a-doi/
+    accessed: 2026-09-03
+  - url: https://www.doi.org/the-foundation/board-and-governance/
+    accessed: 2026-09-04
+  - url: https://www.dona.net/faq
+    accessed: 2026-09-06
+    note: Confirms IDF is a credentialed Multi-Primary Administrator (MPA) of the
+      Global Handle Registry alongside CNRI — i.e. DOI is a governed application
+      built on top of the more general Handle System, not a separate resolution
+      technology.

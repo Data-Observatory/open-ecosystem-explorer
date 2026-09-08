@@ -1,0 +1,13 @@
+type: community
+name: EOSC Association
+url: https://eosc.eu/
+status: active
+governance: nonprofit
+communityKind: confederation
+tags:
+  - region:europe
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://eosc.eu/
+    accessed: 2026-09-04

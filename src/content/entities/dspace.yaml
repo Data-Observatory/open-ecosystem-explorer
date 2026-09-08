@@ -1,0 +1,43 @@
+type: repository
+name: DSpace
+url: https://dspace.lyrasis.org/
+status: active
+governance: community
+codebase: open-source
+identifiers:
+  spdx: BSD-3-Clause
+outputLicence: not-applicable
+repositoryKind: software-platform
+tags:
+  - function:deposit
+  - function:preservation
+  - openness:open-source
+lastReviewed: 2026-09-06
+relations:
+  - predicate: governed-by
+    target: lyrasis
+    note: Organisational home hosting DSpace Governance (Steering + Leadership
+      Groups); installs are self-hosted, so there's no single operator.
+    verified:
+      date: 2026-09-04
+      url: https://dspace.org/governance/
+  - predicate: implements
+    target: oai-pmh
+  - predicate: complies-with
+    target: dublin-core
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure since its first funding cycle.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+  - predicate: depends-on
+    target: handle-system
+    note: Assigns Handles natively; ships with the dummy prefix 123456789, requiring
+      a real CNRI-allotted prefix for external resolution.
+    verified:
+      date: 2026-09-06
+      url: https://wiki.lyrasis.org/display/DSDOC9x/Handle.Net+Registry+Support
+sources:
+  - url: https://dspace.lyrasis.org/
+    accessed: 2026-09-04

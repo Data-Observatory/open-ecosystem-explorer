@@ -1,0 +1,15 @@
+type: community
+name: RDA
+aka:
+  - Research Data Alliance
+url: https://www.rd-alliance.org/
+status: active
+governance: community
+communityKind: technical-community
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.rd-alliance.org/
+    accessed: 2026-09-04

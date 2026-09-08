@@ -1,0 +1,16 @@
+type: community
+name: W3C
+aka:
+  - World Wide Web Consortium
+url: https://www.w3.org/
+status: active
+governance: nonprofit
+communityKind: standards-body
+tags:
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://www.w3.org/
+    accessed: 2026-09-04
+    note: Standards body behind JSON-LD and DCAT.

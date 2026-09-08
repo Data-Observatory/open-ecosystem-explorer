@@ -1,0 +1,19 @@
+type: community
+name: COAR
+aka:
+  - Confederation of Open Access Repositories
+url: https://coar-repositories.org/
+status: active
+governance: nonprofit
+communityKind: confederation
+openMembership: true
+tags:
+  - function:deposit
+  - region:global
+lastReviewed: 2026-09-04
+note: Inbound edge (developed-by, from coar-notify) authored on coar-notify's
+  own file per canonical-direction authoring (I7).
+relations: []
+sources:
+  - url: https://coar-repositories.org/
+    accessed: 2026-09-04

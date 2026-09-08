@@ -1,0 +1,47 @@
+type: repository
+name: Dataverse
+url: https://dataverse.org/
+status: active
+governance: community
+codebase: open-source
+identifiers:
+  spdx: Apache-2.0
+outputLicence: not-applicable
+repositoryKind: software-platform
+persistentIdScheme:
+  - doi
+  - handle-system
+tags:
+  - function:deposit
+  - function:preservation
+  - openness:open-source
+lastReviewed: 2026-09-06
+relations:
+  - predicate: developed-by
+    target: harvard
+    note: Developed at Harvard's Institute for Quantitative Social Science.
+  - predicate: implements
+    target: oai-pmh
+  - predicate: implements
+    target: datacite-metadata-schema
+    note: Mints DOIs via DataCite for deposited datasets.
+  - predicate: complies-with
+    target: dublin-core
+  - predicate: complies-with
+    target: fair
+    note: Dataverse lists FAIR data support as a top platform feature.
+    verified:
+      date: 2026-09-06
+      url: https://dataverse.org/book/data-reuse
+  - predicate: depends-on
+    target: handle-system
+    note: PID provider configuration supports Handle (`hdl`) alongside
+      DataCite/EZID/PermaLink.
+    verified:
+      date: 2026-09-06
+      url: https://guides.dataverse.org/en/latest/installation/config.html
+sources:
+  - url: https://dataverse.org/about
+    accessed: 2026-09-04
+  - url: https://dataverse.org/book/data-reuse
+    accessed: 2026-09-06

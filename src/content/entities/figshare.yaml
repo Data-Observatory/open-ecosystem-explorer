@@ -1,0 +1,30 @@
+type: repository
+name: Figshare
+url: https://figshare.com
+status: active
+governance: commercial
+outputLicence: open
+codebase: proprietary
+repositoryKind: hosted-service
+persistentIdScheme:
+  - doi
+accessModel: open
+tags:
+  - function:deposit
+  - openness:open-content
+  - theme:vertical-integration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: owned-by
+    target: digital-science
+  - predicate: operated-by
+    target: digital-science
+    note: Operated directly by Digital Science as one of its portfolio brands.
+    verified:
+      date: 2026-09-04
+      url: https://www.digital-science.com/portfolio/
+  - predicate: implements
+    target: datacite-metadata-schema
+sources:
+  - url: https://knowledge.figshare.com/
+    accessed: 2026-09-03

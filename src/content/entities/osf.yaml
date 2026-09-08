@@ -1,0 +1,33 @@
+type: repository
+name: OSF
+aka:
+  - Open Science Framework
+url: https://osf.io/
+status: active
+governance: nonprofit
+codebase: open-source
+identifiers:
+  spdx: Apache-2.0
+outputLicence: partly-open
+repositoryKind: hosted-service
+accessModel: mixed
+tags:
+  - function:deposit
+  - function:preservation
+  - openness:open-source
+lastReviewed: 2026-09-04
+relations:
+  - predicate: operated-by
+    target: center-for-open-science
+  - predicate: depends-on
+    target: datacite
+    note: OSF mints DOIs for projects, components and registrations via DataCite.
+  - predicate: depends-on
+    target: ror
+    note: OSF sends ROR IDs for contributor affiliations alongside ORCID iDs when
+      minting DOI metadata.
+sources:
+  - url: https://www.cos.io/products/osf
+    accessed: 2026-09-04
+  - url: https://ror.org/blog/2022-11-28-case-study-osf/
+    accessed: 2026-09-04

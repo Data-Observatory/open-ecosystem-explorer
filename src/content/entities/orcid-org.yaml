@@ -1,0 +1,23 @@
+type: agency
+name: ORCID (organisation)
+aka:
+  - ORCID, Inc.
+url: https://orcid.org
+status: active
+governance: nonprofit
+registers:
+  - person
+feeModel: membership
+consortiumModel: true
+tags:
+  - function:registration
+  - region:global
+lastReviewed: 2026-09-04
+relations:
+  - predicate: issues
+    target: orcid
+    note: The agency behind the ORCID iD identifier; kept as a separate entity from
+      the identifier itself.
+sources:
+  - url: https://info.orcid.org/what-is-orcid/
+    accessed: 2026-09-04

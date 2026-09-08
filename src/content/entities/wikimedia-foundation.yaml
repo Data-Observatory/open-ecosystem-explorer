@@ -1,0 +1,16 @@
+type: organization
+name: Wikimedia Foundation
+url: https://wikimediafoundation.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+outputLicence: open
+tags:
+  - region:north-america
+  - openness:open-governance
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Wikidata
+    accessed: 2026-09-04

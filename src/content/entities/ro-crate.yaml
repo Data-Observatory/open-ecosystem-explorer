@@ -1,0 +1,19 @@
+type: standard
+name: RO-Crate
+aka:
+  - Research Object Crate
+url: https://www.researchobject.org/ro-crate/
+status: active
+governance: community
+standardKind: serialisation
+machineReadable: true
+tags:
+  - function:registration
+lastReviewed: 2026-09-04
+relations:
+  - predicate: depends-on
+    target: json-ld
+    note: RO-Crate packages an object with its context and provenance as JSON-LD.
+sources:
+  - url: https://www.researchobject.org/ro-crate/
+    accessed: 2026-09-04

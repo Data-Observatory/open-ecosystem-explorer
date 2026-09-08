@@ -1,0 +1,18 @@
+type: identifier
+name: ISNI
+aka:
+  - International Standard Name Identifier
+url: https://isni.org
+status: active
+governance: nonprofit
+identifies: person
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+note: Issued via the ISNI International Agency, a consortium not yet modelled as
+  a separate entity in this dataset.
+relations: []
+sources:
+  - url: https://isni.org/page/about-the-isni-organisation/
+    accessed: 2026-09-04

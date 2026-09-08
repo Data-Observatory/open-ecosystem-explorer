@@ -1,0 +1,16 @@
+type: identifier
+name: IGSN
+aka:
+  - International Generic Sample Number
+url: https://igsn.org
+status: active
+governance: nonprofit
+identifies: sample
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-09-04
+relations: []
+sources:
+  - url: https://igsn.org/
+    accessed: 2026-09-04

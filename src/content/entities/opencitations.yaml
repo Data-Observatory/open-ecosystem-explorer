@@ -1,0 +1,45 @@
+type: index
+name: OpenCitations
+url: https://opencitations.net
+status: active
+governance: nonprofit
+outputLicence: open
+codebase: open-source
+note: Codebase is open source (ISC-licensed OpenCitations software suite).
+indexKind: citation
+selectivity: algorithmic
+inclusionCriteria: partially-published
+bulkDownload: full
+coverageObjects:
+  - citation
+tags:
+  - function:indexing
+  - openness:open-content
+  - openness:bulk-downloadable
+lastReviewed: 2026-09-04
+relations:
+  - predicate: depends-on
+    target: doi
+    note: Citation records are keyed on the DOIs of citing and cited works.
+  - predicate: complies-with
+    target: posi
+    note: POSI adopter since 2021.
+    verified:
+      date: 2026-09-04
+      url: https://openscholarlyinfrastructure.org/adopters/
+  - predicate: governed-by
+    target: university-of-bologna
+    note: University of Bologna is OpenCitations' Hosting Member, managing its
+      admin/financial/tech infrastructure.
+    verified:
+      date: 2026-09-04
+      url: https://opencitations.net/governance/
+  - predicate: funded-by
+    target: scoss
+    note: SCOSS-funded infrastructure since its first funding cycle.
+    verified:
+      date: 2026-09-04
+      url: https://scoss.org/what-is-scoss/
+sources:
+  - url: https://opencitations.net/
+    accessed: 2026-09-04
