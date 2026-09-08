@@ -1,0 +1,89 @@
+---
+// The real per-locale home page — specs.md §7's "Global chrome" links to
+// `/${locale}/` from the header site-title, and §9.3 names `/{loc}/` as
+// its own route in the a11y verification set, but no earlier phase
+// actually built this file: the site-title link and both `/es/`/`/en/`
+// were silently falling through to the static 404 page. Fixed in Phase 7
+// while auditing the a11y route set against what actually exists.
+import Base from '../../layouts/Base.astro';
+import { getSiteIndex } from '../../content/site-index.js';
+import { locales, type LocaleCode } from '../../i18n/locales.js';
+import { getUiStrings } from '../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+const stats = index.stats;
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/`])) as Record<LocaleCode, string>;
+
+const strings = {
+  es: {
+    title: 'Explorador del ecosistema de información de investigación',
+    intro:
+      'Un mapa navegable de identificadores, agencias de registro, índices, sistemas institucionales, estándares y comunidades del ecosistema de ciencia abierta — y cómo se relacionan entre sí.',
+    entities: 'entidades',
+    relations: 'relaciones',
+    start: 'Puntos de partida',
+  },
+  en: {
+    title: 'Open-science ecosystem explorer',
+    intro:
+      'A browsable map of identifiers, registration agencies, indices, institutional systems, standards and communities in the open-science ecosystem — and how they relate to each other.',
+    entities: 'entities',
+    relations: 'relations',
+    start: 'Start here',
+  },
+} as const;
+const t = strings[locale];
+---
+
+<Base locale={locale} title={`${t.title} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{t.title}</h1>
+  <p>{t.intro}</p>
+  <p class="stats">
+    <strong>{stats.entityCount}</strong> {t.entities} · <strong>{stats.edgeCount}</strong> {t.relations}
+  </p>
+
+  <p class="map-cta">
+    <a href={`/${locale}/map/`} class="map-cta__button">
+      {locale === 'es' ? 'Explorar el mapa interactivo →' : 'Explore the interactive map →'}
+    </a>
+  </p>
+
+  <h2>{t.start}</h2>
+  <ul class="start-links">
+    <li><a href={`/${locale}/layers/`}>{ui.nav.layers}</a></li>
+    <li><a href={`/${locale}/entities/`}>{ui.nav.entities}</a></li>
+    <li><a href={`/${locale}/relations/owned-by/`}>{locale === 'es' ? 'Quién es propietario de qué' : 'Who owns what'}</a></li>
+    <li><a href={`/${locale}/views/`}>{ui.nav.views}</a></li>
+  </ul>
+</Base>
+
+<style>
+  .map-cta {
+    margin: 1.5rem 0;
+  }
+  .map-cta__button {
+    display: inline-block;
+    font-size: 1.15rem;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 6px;
+    background: #1f6feb;
+    color: #fff;
+    text-decoration: none;
+  }
+  .map-cta__button:hover,
+  .map-cta__button:focus-visible {
+    background: #1a5fc7;
+  }
+  .map-cta__button:focus-visible {
+    outline: 2px solid #1a5fc7;
+    outline-offset: 2px;
+  }
+</style>

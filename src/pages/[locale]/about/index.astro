@@ -1,0 +1,63 @@
+---
+// specs.md §7 `/{loc}/about` row: scope, inclusion criteria (C7), editorial
+// policy (§3). Licence/how-to-cite/DOI-reference content omitted per user
+// request (2026-09-04) — kept only in the footer, not as a prose section here.
+import Base from '../../../layouts/Base.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/about/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${ui.nav.about} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{ui.nav.about}</h1>
+
+  {locale === 'es' ? (
+    <>
+      <h2>Alcance</h2>
+      <p>
+        Un explorador de conocimiento del ecosistema de información de investigación: identificadores, agencias de
+        registro, índices, sistemas institucionales, estándares, comunidades y coaliciones — {index.entities.size} entidades
+        hoy. No es una herramienta de autoevaluación ni de puntuación (a diferencia del proyecto de referencia en el
+        que se basa este sitio); es de solo lectura.
+      </p>
+      <h2>Criterios de inclusión (C7)</h2>
+      <p>Una entidad se incluye cuando: (a) tiene una URL pública estable, (b) es referenciada por al menos otra entidad del grafo o es un registro, organismo de normalización o coalición reconocido, y (c) no es una herramienta interna de un solo proyecto.</p>
+      <h2>Política editorial (§3)</h2>
+      <ul>
+        <li>Un hecho, un solo lugar — los hechos derivados (relaciones inversas, capa, totales) se calculan, nunca se escriben a mano.</li>
+        <li>Cada relación se autoría una sola vez, en su dirección canónica.</li>
+        <li>Descriptivo, no evaluativo — sin adjetivos de calidad.</li>
+        <li>Procedencia obligatoria — cada entidad cita al menos una fuente con fecha de acceso.</li>
+        <li>Vigencia rastreada — cada entidad registra su última revisión.</li>
+      </ul>
+    </>
+  ) : (
+    <>
+      <h2>Scope</h2>
+      <p>
+        A knowledge explorer of the research-information ecosystem: identifiers, registration agencies, indices,
+        institutional systems, standards, communities and coalitions — {index.entities.size} entities today. Not a
+        self-assessment or scoring tool (unlike the reference project this site is styled after) — read-only.
+      </p>
+      <h2>Inclusion criteria (C7)</h2>
+      <p>An entity is included when: (a) it has a stable public URL, (b) it is referenced by at least one other entity in the graph, or is a recognised registry, standards body or coalition, and (c) it is not a single project's internal tooling.</p>
+      <h2>Editorial policy (§3)</h2>
+      <ul>
+        <li>One fact, one place — derived facts (inverse relations, layer, totals) are computed, never hand-written.</li>
+        <li>Every relation is authored once, in its canonical direction.</li>
+        <li>Descriptive, not evaluative — no quality adjectives.</li>
+        <li>Provenance required — every entity cites at least one source with an access date.</li>
+        <li>Freshness tracked — every entity records when it was last reviewed.</li>
+      </ul>
+    </>
+  )}
+</Base>

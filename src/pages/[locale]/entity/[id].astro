@@ -1,0 +1,242 @@
+---
+// The core page (specs.md §7's `/{loc}/entity/[id]` row), layered per §7.1.
+//
+// PHASE 4: real per-locale generation (every locale × every entity) with
+// real fallback resolution — the i18n block uses a plain data-driven
+// `[locale]` param (see astro.config.mjs) instead of Astro's folder-based
+// i18n routing, which doesn't fit content-collection-driven path generation.
+import Base from '../../../layouts/Base.astro';
+import Diagram from '../../../components/Diagram.astro';
+import AttributeTable from '../../../components/AttributeTable.astro';
+import RelationTable from '../../../components/RelationTable.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { resolveProse } from '../../../lib/i18n/resolve.js';
+import { buildFocusDiagram } from '../../../lib/mermaid/flowchart.js';
+import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
+import { describeFocusEntity } from '../../../lib/a11y/describe.js';
+import { locales, defaultLocale, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+import type { EntityId } from '../../../lib/model/types.js';
+
+export async function getStaticPaths() {
+  const index = await getSiteIndex();
+  const ids = [...index.entities.keys()];
+  return locales.flatMap(({ code: locale }) => ids.map((id: EntityId) => ({ params: { locale, id } })));
+}
+
+const { locale, id } = Astro.params as { locale: LocaleCode; id: EntityId };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+const entity = index.entities.get(id);
+if (!entity) throw new Error(`entity '${id}' not found in the built graph index`);
+
+const { prose, fallback } = resolveProse(index, id, locale);
+const displayName = prose.name ?? entity.name;
+
+const mermaidSource = buildFocusDiagram(index, id, locale);
+const { html: svgHtml } = await renderMermaidToInlineSvg(mermaidSource, locale);
+const description = describeFocusEntity(index, id, locale);
+
+// Simple level: top 3-5 relations by predicate importance — approximated
+// here as "first edges in canonical sort order" (A3 determinism), since no
+// separate importance ranking exists yet; revisit if §6.3 turns out to
+// define one explicitly.
+const topRelations = description.rows.slice(0, 5);
+
+const outDegree = index.degree.get(id)?.out ?? 0;
+const inDegree = index.degree.get(id)?.in ?? 0;
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/entity/${id}/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${displayName} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <article class="entity-page">
+    {
+      // Literal wording from specs.md §5.7. Bilingual (es/en) because those
+      // are the only two locales that exist; a third language would need
+      // this generalised, which is out of scope until one is actually added
+      // (rule A9 — the schema/routing already support it, this string does not yet).
+      fallback && (
+        <p class="fallback-notice" role="note">
+          Esta ficha aún no está traducida al inglés / This entry is not yet translated into English — showing the Spanish original.{' '}
+          <a href={ui.entity.translationIssueUrl}>{ui.entity.suggestTranslation}</a>
+        </p>
+      )
+    }
+
+    <!-- Simple: expanded by default, always visible, no JS required. -->
+    <header class="entity-header">
+      <h1>{displayName}</h1>
+      <p class="badges">
+        <span class="badge">{entity.type}</span>
+        <span class="badge">{entity.governance}</span>
+        <span class="badge">{entity.status}</span>
+      </p>
+      <p class="summary" lang={fallback ? defaultLocale : undefined}>{prose.summary}</p>
+    </header>
+
+    <Diagram
+      svgHtml={svgHtml}
+      caption={description.caption}
+      description={description.description}
+      rows={description.rows}
+      idPrefix={`entity-${id}`}
+      locale={locale}
+    />
+
+    {
+      topRelations.length > 0 && (
+        <section aria-label={ui.entity.keyRelationships}>
+          <h2>{ui.entity.keyRelationships}</h2>
+          <ul>
+            {topRelations.map((row) => (
+              <li>
+                {row.subjectId === id ? (
+                  <>
+                    {row.predicateLabel} <a href={`/${locale}/entity/${row.objectId}/`}>{row.objectName}</a>
+                  </>
+                ) : (
+                  <>
+                    <a href={`/${locale}/entity/${row.subjectId}/`}>{row.subjectName}</a> {row.predicateLabel} this
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )
+    }
+
+    <!-- Standard: collapsed by default, full DOM, one native click away. -->
+    <details class="disclosure disclosure--standard">
+      <summary>{ui.entity.moreDetail}</summary>
+
+      {entity.aka && entity.aka.length > 0 && (
+        <p class="aka">
+          {ui.entity.alsoKnownAs}: {entity.aka.join(', ')}
+        </p>
+      )}
+
+      <section aria-label={ui.entity.description}>
+        <h2>{ui.entity.description}</h2>
+        <div set:html={prose.body} lang={fallback ? defaultLocale : undefined} />
+      </section>
+
+      <section aria-label={ui.entity.allRelationships}>
+        <h2>
+          {ui.entity.allRelationships} ({outDegree} {ui.entity.outgoing}, {inDegree} {ui.entity.incoming})
+        </h2>
+        <RelationTable index={index} entityId={id} locale={locale} />
+      </section>
+
+      <p class="facets">
+        <strong>{ui.entity.tags}:</strong> {entity.tags.join(', ')}
+        {entity.disciplines && entity.disciplines.length > 0 && (
+          <>
+            {' '}
+            · <strong>{ui.entity.disciplines}:</strong> {entity.disciplines.join(', ')}
+          </>
+        )}
+        {entity.geography && entity.geography.length > 0 && (
+          <>
+            {' '}
+            · <strong>{ui.entity.geography}:</strong> {entity.geography.join(', ')}
+          </>
+        )}
+      </p>
+
+      <!-- Technical: nested, collapsed by default — two native clicks from Simple. -->
+      <details class="disclosure disclosure--technical">
+        <summary>{ui.entity.technicalDetail}</summary>
+
+        <section aria-label={ui.entity.completeAttributes}>
+          <h2>{ui.entity.completeAttributes}</h2>
+          <AttributeTable entity={entity} />
+        </section>
+
+        <section aria-label={ui.entity.sources}>
+          <h2>{ui.entity.sources}</h2>
+          <ul>
+            {entity.sources.map((s) => (
+              <li>
+                <a href={s.url}>{s.title ?? s.url}</a> ({ui.entity.accessed} {s.accessed})
+                {s.note && <> — {s.note}</>}
+              </li>
+            ))}
+          </ul>
+        </section>
+
+        <p class="last-reviewed">{ui.entity.lastReviewed}: {entity.lastReviewed}</p>
+
+        <p class="raw-links">
+          <a href={`/entity/${id}.json`}>{ui.entity.rawJson ?? 'Raw JSON'}</a>
+        </p>
+
+        {/* TODO Phase 6+: 2-hop neighbourhood diagram (§6.3 "Neighbourhood
+             (2-hop)" row) — a real feature addition, out of scope for the
+             Phase 7 accessibility sweep. The JSON/embed link above (Phase
+             6's /entity/[id].json export route) is wired now since it was
+             a one-line fix once that route existed. */}
+      </details>
+    </details>
+  </article>
+</Base>
+
+<script define:vars={{ standardId: 'disclosure--standard', technicalId: 'disclosure--technical' }} is:inline>
+  // Progressive enhancement only (specs.md §7.1): both <details> already
+  // work correctly with JS disabled (native disclosure-triangle behaviour).
+  // This just persists a returning visitor's preferred depth across pages
+  // via ?detail= or localStorage, so they don't re-click "Technical" every
+  // time. Absence of this script, or its failure, changes nothing about
+  // correctness — everything stays reachable either way.
+  (function () {
+    try {
+      var params = new URLSearchParams(location.search);
+      var requested = params.get('detail'); // 'standard' | 'technical' | null
+      var stored = requested || localStorage.getItem('detailLevel');
+      if (!stored) return;
+      if (requested) localStorage.setItem('detailLevel', requested);
+
+      var standard = document.querySelector('.' + standardId);
+      var technical = document.querySelector('.' + technicalId);
+      if (stored === 'standard' || stored === 'technical') {
+        if (standard) standard.open = true;
+      }
+      if (stored === 'technical' && technical) {
+        technical.open = true;
+      }
+    } catch (e) {
+      /* localStorage disabled/unavailable: no-op, <details> still work. */
+    }
+  })();
+</script>
+
+<style>
+  .entity-header h1 {
+    margin-bottom: 0.25rem;
+  }
+  .badges {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .badge {
+    background: var(--border, #d0d7de);
+    border-radius: 999px;
+    padding: 0.1rem 0.6rem;
+    font-size: 0.8rem;
+  }
+  .fallback-notice {
+    background: #fff8c5;
+    color: #24292f;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+  }
+  .disclosure {
+    margin: 1rem 0;
+  }
+  .disclosure--technical {
+    margin-left: 1rem;
+    border-left: 2px solid var(--border, #d0d7de);
+    padding-left: 1rem;
+  }
+</style>

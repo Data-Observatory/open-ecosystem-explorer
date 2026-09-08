@@ -1,0 +1,157 @@
+---
+// Compact "what is what" key for a diagram — added per the user's
+// interactivity-pivot follow-up ("for dummies": the graph should be
+// self-explanatory without reading prose elsewhere). Shows only the types
+// actually present in the diagram it's attached to (never all 12 on a
+// 3-node focus view), with a small shape+colour swatch matching the exact
+// encoding used by both Mermaid diagrams (palette.ts) and the Cytoscape map
+// (map/index.astro's CYTO_SHAPE_BY_MERMAID_SHAPE) — one visual language,
+// not a second one invented for this component.
+import type { MermaidShape } from '../lib/mermaid/palette.js';
+import type { LocaleCode } from '../i18n/locales.js';
+
+export interface LegendItem {
+  type: string;
+  label: string;
+  layer: string;
+  shape: MermaidShape;
+  fill: string;
+}
+
+export interface Props {
+  items: LegendItem[];
+  locale: LocaleCode;
+  /** /map's case: group items under their layer instead of one flat list. */
+  groupByLayer?: boolean;
+  /** Required when groupByLayer is true — layer id -> plain-language label. */
+  layerLabels?: Record<string, string>;
+}
+
+const { items, locale, groupByLayer = false, layerLabels = {} } = Astro.props;
+
+const heading = locale === 'es' ? 'Leyenda' : 'Legend';
+const summaryLabel = locale === 'es' ? `Leyenda (${items.length})` : `Legend (${items.length})`;
+
+// >6 items would crowd a small diagram — collapse behind a <details> rather
+// than a flat row in that case. /map (up to 12 types) always collapses;
+// most per-diagram legends (2-5 types) stay flat and always visible.
+const collapse = items.length > 6;
+
+function shapeIcon(shape: MermaidShape, fill: string): string {
+  const stroke = '#1f2328';
+  switch (shape) {
+    case 'stadium':
+      return `<rect x="1" y="5" width="18" height="10" rx="5" fill="${fill}" stroke="${stroke}"/>`;
+    case 'subroutine':
+      return `<rect x="1" y="3" width="18" height="14" fill="${fill}" stroke="${stroke}"/><line x1="4.5" y1="3" x2="4.5" y2="17" stroke="${stroke}"/><line x1="15.5" y1="3" x2="15.5" y2="17" stroke="${stroke}"/>`;
+    case 'cylinder':
+      return `<path d="M1 6 C1 4.3 5 3 10 3 C15 3 19 4.3 19 6 V14 C19 15.7 15 17 10 17 C5 17 1 15.7 1 14 Z" fill="${fill}" stroke="${stroke}"/><path d="M1 6 C1 7.7 5 9 10 9 C15 9 19 7.7 19 6" fill="none" stroke="${stroke}"/>`;
+    case 'rect':
+      return `<rect x="1" y="3" width="18" height="14" fill="${fill}" stroke="${stroke}"/>`;
+    case 'parallelogram':
+      return `<polygon points="5,3 19,3 15,17 1,17" fill="${fill}" stroke="${stroke}"/>`;
+    case 'hexagon':
+      return `<polygon points="5,3 15,3 19,10 15,17 5,17 1,10" fill="${fill}" stroke="${stroke}"/>`;
+  }
+}
+
+const groups = groupByLayer
+  ? Object.entries(
+      items.reduce<Record<string, LegendItem[]>>((acc, item) => {
+        (acc[item.layer] ??= []).push(item);
+        return acc;
+      }, {}),
+    )
+  : [];
+---
+
+{
+  items.length > 0 && (
+    <div class="diagram-legend">
+      {collapse ? (
+        <details open={!groupByLayer}>
+          <summary>{summaryLabel}</summary>
+          <div class="diagram-legend__body">
+            {groupByLayer
+              ? groups.map(([layer, layerItems]) => (
+                  <div class="diagram-legend__group">
+                    <p class="diagram-legend__group-label">{layerLabels[layer] ?? layer}</p>
+                    <ul>
+                      {layerItems.map((item) => (
+                        <li>
+                          <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" set:html={shapeIcon(item.shape, item.fill)} />
+                          {item.label}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))
+              : (
+                <ul>
+                  {items.map((item) => (
+                    <li>
+                      <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" set:html={shapeIcon(item.shape, item.fill)} />
+                      {item.label}
+                    </li>
+                  ))}
+                </ul>
+              )}
+          </div>
+        </details>
+      ) : (
+        <>
+          <p class="diagram-legend__inline-heading">{heading}</p>
+          <ul>
+            {items.map((item) => (
+              <li>
+                <svg width="18" height="18" viewBox="0 0 20 20" aria-hidden="true" set:html={shapeIcon(item.shape, item.fill)} />
+                {item.label}
+              </li>
+            ))}
+          </ul>
+        </>
+      )}
+    </div>
+  )
+}
+
+<style>
+  .diagram-legend {
+    font-size: 0.82rem;
+    margin-bottom: 0.5rem;
+  }
+  .diagram-legend__inline-heading {
+    margin: 0 0 0.2rem;
+    font-weight: 600;
+    color: var(--muted-fg, #57606a);
+  }
+  .diagram-legend ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.15rem 0.9rem;
+    margin: 0;
+    padding: 0;
+  }
+  .diagram-legend li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 24px;
+  }
+  .diagram-legend summary {
+    cursor: pointer;
+    font-weight: 600;
+    color: var(--muted-fg, #57606a);
+  }
+  .diagram-legend__body {
+    margin-top: 0.4rem;
+  }
+  .diagram-legend__group {
+    margin-bottom: 0.5rem;
+  }
+  .diagram-legend__group-label {
+    margin: 0 0 0.15rem;
+    font-weight: 600;
+  }
+</style>

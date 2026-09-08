@@ -1,0 +1,43 @@
+{
+  "skipToContent": "Saltar al contenido",
+  "nav": {
+    "layers": "Capas",
+    "map": "Mapa",
+    "map2": "Conceptos esenciales",
+    "entities": "Entidades",
+    "relations": "Relaciones",
+    "views": "Líneas de falla",
+    "search": "Buscar",
+    "about": "Acerca de",
+    "contribute": "Contribuir",
+    "changelog": "Historial de cambios"
+  },
+  "footer": {
+    "codeLicense": "Código: MIT",
+    "dataLicense": "Datos: CC-BY-4.0",
+    "specs": "specs.md"
+  },
+  "languageSwitcher": {
+    "label": "Idioma"
+  },
+  "entity": {
+    "moreDetail": "Más detalle",
+    "technicalDetail": "Detalle técnico",
+    "alsoKnownAs": "También conocido como",
+    "keyRelationships": "Relaciones clave",
+    "description": "Descripción",
+    "allRelationships": "Todas las relaciones",
+    "outgoing": "salientes",
+    "incoming": "entrantes",
+    "completeAttributes": "Atributos completos",
+    "sources": "Fuentes",
+    "accessed": "consultado",
+    "lastReviewed": "Última revisión",
+    "rawJson": "JSON sin procesar",
+    "tags": "Etiquetas",
+    "disciplines": "Disciplinas",
+    "geography": "Geografía",
+    "suggestTranslation": "Sugerir una traducción",
+    "translationIssueUrl": "/CONTRIBUTING.md#translations"
+  }
+}

@@ -1,0 +1,106 @@
+---
+// specs.md §7 `/{loc}/search` row, §6.6: client-side fuzzy match over
+// name/aka/summary/tags from the prebuilt per-locale index (<=80KB target,
+// search-index-[locale].json.ts). No-JS fallback: a real link list of every
+// entity is always rendered server-side (this page IS an alphabetical
+// directory without JS; the script only adds live filtering on top).
+import Base from '../../../layouts/Base.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { resolveProse } from '../../../lib/i18n/resolve.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+
+const rows = [...index.entities.values()]
+  .map((e) => ({ id: e.id, name: resolveProse(index, e.id, locale).prose.name ?? e.name }))
+  .sort((a, b) => a.name.localeCompare(b.name));
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/search/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${ui.nav.search} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{ui.nav.search}</h1>
+  <form id="search-form" role="search">
+    <label for="q">{locale === 'es' ? 'Buscar entidades' : 'Search entities'}</label>
+    <input type="search" id="q" name="q" autocomplete="off" />
+  </form>
+  <p id="search-status" aria-live="polite"></p>
+
+  <ul id="results" class="search-results">
+    {rows.map((r) => (
+      <li data-id={r.id}><a href={`/${locale}/entity/${r.id}/`}>{r.name}</a></li>
+    ))}
+  </ul>
+</Base>
+
+<script define:vars={{ locale }} is:inline>
+  // Progressive enhancement only: the full alphabetical list above already
+  // works with JS disabled. This script fetches the prebuilt index and
+  // re-filters the same <li> elements in place — no new DOM, no framework.
+  (async function () {
+    const list = document.getElementById('results');
+    const status = document.getElementById('search-status');
+    const input = document.getElementById('q');
+    if (!list || !input) return;
+
+    const params = new URLSearchParams(location.search);
+    const initial = params.get('q') ?? '';
+    input.value = initial;
+
+    let data = [];
+    try {
+      const res = await fetch(`/search-index-${locale}.json`);
+      data = await res.json();
+    } catch {
+      return; // network/JS failure: the static list above still works.
+    }
+    const byId = new Map(data.map((d) => [d.id, d]));
+
+    function score(entry, q) {
+      const needle = q.toLowerCase();
+      if (!needle) return 0;
+      const name = entry.name.toLowerCase();
+      if (name.startsWith(needle)) return 3;
+      if (name.includes(needle)) return 2;
+      const aka = (entry.aka || []).join(' ').toLowerCase();
+      const tags = (entry.tags || []).join(' ').toLowerCase();
+      if (aka.includes(needle) || tags.includes(needle)) return 1.5;
+      if ((entry.summary || '').toLowerCase().includes(needle)) return 1;
+      return -1;
+    }
+
+    function render(q) {
+      const items = [...list.children];
+      if (!q) {
+        items.forEach((li) => (li.hidden = false));
+        status.textContent = '';
+        return;
+      }
+      let shown = 0;
+      for (const li of items) {
+        const entry = byId.get(li.dataset.id);
+        const s = entry ? score(entry, q) : -1;
+        li.hidden = s < 0;
+        if (s >= 0) shown++;
+      }
+      status.textContent = locale === 'es' ? `${shown} resultados` : `${shown} results`;
+    }
+
+    input.addEventListener('input', () => render(input.value));
+    if (initial) render(initial);
+  })();
+</script>
+
+<style>
+  #search-form { display: flex; gap: 0.5rem; align-items: center; margin: 1rem 0; }
+  #q { flex: 1; padding: 0.4rem 0.6rem; font-size: 1rem; }
+  .search-results { list-style: none; padding: 0; }
+  .search-results li { padding: 0.3rem 0; }
+</style>

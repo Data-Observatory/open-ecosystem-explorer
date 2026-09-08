@@ -1,0 +1,43 @@
+---
+// specs.md §7 `/{loc}/contribute` row: rendered CONTRIBUTING.md including the
+// §8.4 prompts/add-entity.md template — kept versioned in the repo and
+// rendered here so it can't drift from what's actually true (§8.4c).
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
+import Base from '../../../layouts/Base.astro';
+import { renderMarkdown } from '../../../lib/markdown/render.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+
+// process.cwd(), not import.meta.url — see changelog/index.astro's comment.
+const contributingMd = readFileSync(join(process.cwd(), 'CONTRIBUTING.md'), 'utf-8');
+const promptMd = readFileSync(join(process.cwd(), 'prompts/add-entity.md'), 'utf-8');
+const contributingHtml = renderMarkdown(contributingMd);
+const promptHtml = renderMarkdown(promptMd);
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/contribute/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${ui.nav.contribute} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{ui.nav.contribute}</h1>
+  <p>
+    {locale === 'es'
+      ? 'Este texto se genera directamente de CONTRIBUTING.md y prompts/add-entity.md en el repositorio — no puede quedar desactualizado sin que el propio archivo cambie.'
+      : 'This text is rendered directly from CONTRIBUTING.md and prompts/add-entity.md in the repository — it cannot drift without the file itself changing.'}
+  </p>
+  <div class="rendered-md" set:html={contributingHtml} />
+  <h2>{locale === 'es' ? 'Plantilla para agregar una entidad (§8.4c)' : 'Add-entity prompt template (§8.4c)'}</h2>
+  <div class="rendered-md" set:html={promptHtml} />
+</Base>
+
+<style>
+  .rendered-md :global(pre) { background: color-mix(in srgb, CanvasText 6%, Canvas); padding: 0.75rem; overflow-x: auto; }
+  .rendered-md :global(blockquote) { border-left: 3px solid var(--border, #d0d7de); margin-left: 0; padding-left: 1rem; color: var(--muted-fg, #57606a); }
+</style>

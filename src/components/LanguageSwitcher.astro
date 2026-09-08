@@ -1,0 +1,46 @@
+---
+// Plain server-rendered switcher (specs.md §7.2): "a switcher that is
+// markup" — one <a> per locale pointing at the same page in that locale,
+// computed at build time by the caller (which knows its own route shape).
+// Not a control: works identically with JavaScript disabled.
+import { locales, type LocaleCode } from '../i18n/locales.js';
+import { getUiStrings } from '../i18n/ui.js';
+
+export interface Props {
+  /** Current page's locale, for aria-current. */
+  currentLocale: LocaleCode;
+  /** The equivalent URL for this same content in each locale, keyed by locale code. */
+  hrefs: Record<LocaleCode, string>;
+}
+
+const { currentLocale, hrefs } = Astro.props;
+const ui = getUiStrings(currentLocale);
+---
+
+<nav aria-label={ui.languageSwitcher.label} class="language-switcher">
+  <ul>
+    {
+      locales.map(({ code, label }) => (
+        <li>
+          <a href={hrefs[code]} hreflang={code} lang={code} aria-current={code === currentLocale ? 'true' : undefined}>
+            {label}
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</nav>
+
+<style>
+  .language-switcher ul {
+    display: flex;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .language-switcher a[aria-current='true'] {
+    font-weight: 700;
+    text-decoration: underline;
+  }
+</style>

@@ -1,0 +1,66 @@
+---
+// Taxonomy mindmap (specs.md §7 `/{loc}/taxonomy` row, §6.3). Mermaid's
+// mindmap renderer has no `click` directive support, so real navigation
+// lives in the plain linked table below the diagram, not in Diagram.astro's
+// own generic (unlinked) accessible table — that component is still used
+// unchanged for the SVG/caption/description part, with an empty `rows` list,
+// per the "no information is diagram-only" rule being satisfied by this
+// page's own table rather than a second copy of the same pattern.
+import Base from '../../layouts/Base.astro';
+import Diagram from '../../components/Diagram.astro';
+import { getSiteIndex } from '../../content/site-index.js';
+import { getEntityTypesVocab, getTagsVocab } from '../../content/vocab-index.js';
+import { buildTaxonomyMindmap, describeTaxonomy } from '../../lib/mermaid/taxonomy.js';
+import { renderMermaidToInlineSvg } from '../../lib/mermaid/render.js';
+import { locales, type LocaleCode } from '../../i18n/locales.js';
+import { getUiStrings } from '../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+const typeVocab = await getEntityTypesVocab();
+const tagsVocab = await getTagsVocab();
+
+const source = buildTaxonomyMindmap(index, typeVocab, tagsVocab, locale);
+const { html: svgHtml } = await renderMermaidToInlineSvg(source, locale);
+const description = describeTaxonomy(index, typeVocab, tagsVocab, locale);
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/taxonomy/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${ui.nav.entities} taxonomy — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{locale === 'es' ? 'Taxonomía' : 'Taxonomy'}</h1>
+
+  <Diagram svgHtml={svgHtml} caption={description.caption} description={description.description} rows={[]} idPrefix="taxonomy" locale={locale} />
+
+  <table>
+    <caption>{locale === 'es' ? 'Tipos y etiquetas, con enlaces reales (el mindmap no admite clics)' : 'Types and tags, with real links (the mindmap has no click support)'}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{locale === 'es' ? 'Tipo' : 'Type'}</th>
+        <th scope="col">{locale === 'es' ? 'Etiqueta' : 'Tag'}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        description.rows.map((r) => (
+          <tr>
+            <td>{r.subjectName}</td>
+            <td>
+              <a href={r.href}>{r.objectName}</a>
+            </td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</Base>
+
+<style>
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
+  th, td { text-align: left; padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border, #d0d7de); }
+</style>

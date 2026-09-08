@@ -1,0 +1,95 @@
+---
+// One page per entity type (specs.md §7 `/{loc}/entities/[type]` row, §6.3
+// "Type map"). 12 pages per locale.
+import Base from '../../../layouts/Base.astro';
+import Diagram from '../../../components/Diagram.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { getEntityTypesVocab } from '../../../content/vocab-index.js';
+import { buildTypeMapDiagram, describeTypeMap, computeTypeMapView } from '../../../lib/mermaid/type-map.js';
+import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { ENTITY_TYPES, type EntityId, type EntityType } from '../../../lib/model/types.js';
+import { subtypeOf, humanizeSubtype } from '../../../lib/model/subtypes.js';
+
+export async function getStaticPaths() {
+  return locales.flatMap(({ code: locale }) => ENTITY_TYPES.map((type) => ({ params: { locale, type } })));
+}
+
+const { locale, type } = Astro.params as { locale: LocaleCode; type: EntityType };
+const index = await getSiteIndex();
+const vocab = await getEntityTypesVocab();
+const typeLabel = vocab.get(type)?.label[locale] ?? type;
+const typeDefinition = vocab.get(type)?.definition?.[locale];
+
+function name(id: EntityId): string {
+  return index.prose.get(locale)?.get(id)?.name ?? index.entities.get(id)?.name ?? id;
+}
+
+const members = (index.byType.get(type) ?? []).slice().sort((a, b) => name(a).localeCompare(name(b)));
+
+// Subtype facet (§5.2): groups members by e.g. repositoryKind so Zenodo
+// (hosted-service) and Dataverse (software-platform) no longer read as
+// interchangeable siblings just because both are `type: repository`.
+// Undefined for types with no dedicated Kind field (identifier, agency).
+const subtypeGroups = new Map<string | undefined, EntityId[]>();
+for (const id of members) {
+  const entity = index.entities.get(id);
+  const subtype = entity ? subtypeOf(entity) : undefined;
+  if (!subtypeGroups.has(subtype)) subtypeGroups.set(subtype, []);
+  subtypeGroups.get(subtype)!.push(id);
+}
+const hasSubtypes = [...subtypeGroups.keys()].some((k) => k !== undefined);
+const sortedSubtypeEntries = [...subtypeGroups.entries()].sort(([a], [b]) => (a ?? '').localeCompare(b ?? ''));
+const view = computeTypeMapView(index, type, locale);
+const hasDiagram = view.edges.length > 0;
+
+let svgHtml = '';
+let description: ReturnType<typeof describeTypeMap> | undefined;
+if (hasDiagram) {
+  const source = buildTypeMapDiagram(index, vocab, type, locale);
+  svgHtml = (await renderMermaidToInlineSvg(source, locale)).html;
+  description = describeTypeMap(index, type, locale);
+}
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/entities/${type}/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${typeLabel} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{typeLabel}</h1>
+  {typeDefinition && <p>{typeDefinition}</p>}
+  <p>{members.length} {locale === 'es' ? 'entidades.' : 'entities.'}</p>
+
+  {
+    hasDiagram && description && (
+      <Diagram svgHtml={svgHtml} caption={description.caption} description={description.description} rows={description.rows} idPrefix={`type-${type}`} locale={locale} />
+    )
+  }
+
+  {
+    hasSubtypes ? (
+      sortedSubtypeEntries.map(([subtype, ids]) => (
+        <section>
+          <h2>{subtype ? humanizeSubtype(subtype) : locale === 'es' ? 'Sin subtipo' : 'No subtype'}</h2>
+          <ul>
+            {ids
+              .slice()
+              .sort((a, b) => name(a).localeCompare(name(b)))
+              .map((id) => (
+                <li>
+                  <a href={`/${locale}/entity/${id}/`}>{name(id)}</a>
+                </li>
+              ))}
+          </ul>
+        </section>
+      ))
+    ) : (
+      <ul>
+        {members.map((id) => (
+          <li>
+            <a href={`/${locale}/entity/${id}/`}>{name(id)}</a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</Base>

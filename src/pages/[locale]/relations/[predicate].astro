@@ -1,0 +1,76 @@
+---
+// One page per predicate (specs.md §7 `/{loc}/relations/[predicate]` row,
+// §6.3 "Predicate map"). `/relations/owned-by` is the vertical-integration
+// picture the project's thesis rests on (§5.3).
+import Base from '../../../layouts/Base.astro';
+import Diagram from '../../../components/Diagram.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { buildPredicateMapDiagram, describePredicateMap } from '../../../lib/mermaid/predicate-map.js';
+import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+import { PREDICATE_IDS, type PredicateId } from '../../../lib/model/types.js';
+
+export async function getStaticPaths() {
+  return locales.flatMap(({ code: locale }) => PREDICATE_IDS.map((predicate) => ({ params: { locale, predicate } })));
+}
+
+const { locale, predicate } = Astro.params as { locale: LocaleCode; predicate: PredicateId };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+const def = index.predicates.get(predicate);
+const label = def?.label[locale] ?? predicate;
+
+const description = describePredicateMap(index, predicate, locale);
+const diagramSource = buildPredicateMapDiagram(index, predicate, locale);
+const svgHtml = diagramSource ? (await renderMermaidToInlineSvg(diagramSource, locale)).html : undefined;
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/relations/${predicate}/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${label} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{label}</h1>
+  <p>{ui.entity.description}: {def?.label[locale]} / {locale === 'es' ? 'inverso' : 'inverse'}: {def?.inverseLabel[locale]}</p>
+
+  {
+    svgHtml ? (
+      <Diagram svgHtml={svgHtml} caption={description.caption} description={description.description} rows={description.rows} idPrefix={`pred-${predicate}`} locale={locale} />
+    ) : (
+      <>
+        <p role="note">
+          {locale === 'es'
+            ? `Demasiadas relaciones para un diagrama legible (más de 60 nodos) — se muestra solo la tabla.`
+            : `Too many relationships for a legible diagram (over 60 nodes) — showing the table only.`}
+        </p>
+        <table>
+          <caption class="visually-hidden">{description.caption}</caption>
+          <thead>
+            <tr>
+              <th scope="col">{locale === 'es' ? 'Sujeto' : 'Subject'}</th>
+              <th scope="col">{locale === 'es' ? 'Objeto' : 'Object'}</th>
+              <th scope="col">{locale === 'es' ? 'Desde' : 'Since'}</th>
+              <th scope="col">{locale === 'es' ? 'Nota' : 'Note'}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {description.rows.map((r) => (
+              <tr>
+                <td>{r.subjectName} <span class="type-label">({r.subjectType})</span></td>
+                <td>{r.objectName} <span class="type-label">({r.objectType})</span></td>
+                <td>{r.since ?? '—'}</td>
+                <td>{r.note ?? ''}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </>
+    )
+  }
+</Base>
+
+<style>
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; margin-top: 1rem; }
+  th, td { text-align: left; padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border, #d0d7de); }
+  .type-label { color: var(--muted-fg, #57606a); font-size: 0.85em; }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+</style>

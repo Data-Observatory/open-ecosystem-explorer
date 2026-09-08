@@ -1,0 +1,202 @@
+---
+// Global chrome (specs.md §7 "Global chrome" line): skip-link, header with
+// nav + language switcher, footer, hreflang alternates. All nav links are
+// real routes as of Phase 6/7.
+import type { LocaleCode } from '../i18n/locales.js';
+import { locales } from '../i18n/locales.js';
+import { getUiStrings } from '../i18n/ui.js';
+import LanguageSwitcher from '../components/LanguageSwitcher.astro';
+
+export interface Props {
+  locale: LocaleCode;
+  title: string;
+  /** Equivalent URL for this same content in each locale (§7.2's hreflang + switcher). */
+  switcherHrefs: Record<LocaleCode, string>;
+  // Opt-in, additive-only: turns `<main>` into a real flex app-shell region
+  // (no page scroll, `<main>` fills the remaining viewport) instead of the
+  // default centred-column/normal-document-flow page. Added for `/map2`'s
+  // Stage 0 viewport fix (Opus evaluation report §A2/§B1 — the page-level
+  // scrollbars there were a real CSS defect, not a design choice) — every
+  // other page omits this prop and is completely unaffected; see the
+  // `body.app-shell` rules below, which only apply when this class is set.
+  appShell?: boolean;
+}
+
+const { locale, title, switcherHrefs, appShell = false } = Astro.props;
+const localeRecord = locales.find((l) => l.code === locale)!;
+const ui = getUiStrings(locale);
+---
+
+<html lang={locale} dir={localeRecord.dir}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {/* Classic no-JS-detection flag: `html:not(.js)` CSS rules (e.g.
+       Diagram.astro's overflow fallback) target browsers where this
+       synchronous script didn't run — JS disabled/blocked, not merely
+       "hasn't finished loading yet". */}
+    <script is:inline>document.documentElement.classList.add('js');</script>
+    {locales.map(({ code }) => <link rel="alternate" hreflang={code} href={switcherHrefs[code]} />)}
+    <link rel="alternate" hreflang="x-default" href="/" />
+  </head>
+  <body class={appShell ? 'app-shell' : undefined}>
+    <a href="#main" class="skip-link">{ui.skipToContent}</a>
+    <header class="site-header">
+      <a href={`/${locale}/`} class="site-title">openscience-ecosystem</a>
+      <nav aria-label="Primary">
+        <ul>
+          <li><a href={`/${locale}/map/`}>{ui.nav.map}</a></li>
+          <li><a href={`/${locale}/map2/`}>{ui.nav.map2}</a></li>
+          <li><a href={`/${locale}/layers/`}>{ui.nav.layers}</a></li>
+          <li><a href={`/${locale}/entities/`}>{ui.nav.entities}</a></li>
+          <li><a href={`/${locale}/relations/`}>{ui.nav.relations}</a></li>
+          <li><a href={`/${locale}/views/`}>{ui.nav.views}</a></li>
+          <li><a href={`/${locale}/search/`}>{ui.nav.search}</a></li>
+          <li><a href={`/${locale}/about/`}>{ui.nav.about}</a></li>
+        </ul>
+      </nav>
+      <form action={`/${locale}/search/`} method="get" role="search" class="header-search">
+        <label for="header-q" class="visually-hidden">{ui.nav.search}</label>
+        <input type="search" id="header-q" name="q" placeholder={ui.nav.search} />
+      </form>
+      <LanguageSwitcher currentLocale={locale} hrefs={switcherHrefs} />
+    </header>
+    <main id="main">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <p>
+        {ui.footer.codeLicense} · {ui.footer.dataLicense} · <a href="/specs.md">{ui.footer.specs}</a> ·{' '}
+        <a href={`/${locale}/contribute/`}>{ui.nav.contribute}</a> · <a href={`/${locale}/changelog/`}>{ui.nav.changelog}</a>
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    color-scheme: light dark;
+    --border: #d0d7de;
+    --muted-fg: #57606a;
+  }
+  body {
+    margin: 0;
+    font-family: system-ui, sans-serif;
+    background: Canvas;
+    color: CanvasText;
+  }
+  main {
+    max-width: 60rem;
+    margin: 0 auto;
+    padding: 1rem;
+  }
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: Canvas;
+    color: CanvasText;
+    padding: 0.5rem 1rem;
+    z-index: 10;
+  }
+  .skip-link:focus {
+    left: 0.5rem;
+    top: 0.5rem;
+  }
+  /* §9.2 2.4.7: visible 2px focus ring at >=3:1 contrast, every interactive element. */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  summary:focus-visible,
+  [tabindex]:focus-visible {
+    outline: 2px solid #0969da;
+    outline-offset: 2px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * {
+      animation-duration: 0.001ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.001ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+  .header-search input {
+    padding: 0.3rem 0.5rem;
+  }
+  .site-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .site-header nav ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  /* §9.2 2.5.8: every link's clickable area >=24x24 CSS px, including
+     plain-text links in list pages (entity indexes, tag/relation lists,
+     etc.) — axe-core's target-size check flagged bare inline <a> text as
+     ~16-22px tall. Scoped to <main> so header/footer chrome (already sized
+     via padding elsewhere) isn't affected. */
+  main ul:not(.diagram__data ul) li a,
+  main ol li a {
+    display: inline-block;
+    padding: 0.4rem 0.2rem;
+    min-height: 24px;
+    box-sizing: border-box;
+  }
+  .site-footer {
+    max-width: 60rem;
+    margin: 2rem auto 0;
+    padding: 1rem;
+    border-top: 1px solid var(--border);
+    font-size: 0.85rem;
+    color: var(--muted-fg);
+  }
+
+  /* Opt-in app-shell mode (see Props.appShell above) — html/body can only be
+     targeted from here, since a page component's own scoped styles never
+     reach elements Base.astro itself renders. `100dvh` (not `100vh`) so
+     mobile browser chrome showing/hiding doesn't clip the shell. */
+  html:has(body.app-shell) {
+    height: 100dvh;
+  }
+  body.app-shell {
+    height: 100dvh;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  body.app-shell .site-header {
+    flex-shrink: 0;
+  }
+  body.app-shell main {
+    flex: 1;
+    min-height: 0;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  body.app-shell .site-footer {
+    display: none;
+  }
+</style>

@@ -1,0 +1,69 @@
+---
+// The predicate vocabulary page (specs.md §7 `/{loc}/relations` row).
+import Base from '../../../layouts/Base.astro';
+import { getSiteIndex } from '../../../content/site-index.js';
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getUiStrings } from '../../../i18n/ui.js';
+import { PREDICATE_IDS } from '../../../lib/model/types.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const ui = getUiStrings(locale);
+const index = await getSiteIndex();
+
+const rows = PREDICATE_IDS.map((id) => {
+  const def = index.predicates.get(id);
+  return {
+    id,
+    label: def?.label[locale] ?? id,
+    inverseLabel: def?.inverseLabel[locale] ?? id,
+    domain: def?.domain.join(', ') ?? '',
+    range: def?.range.join(', ') ?? '',
+    edgeCount: index.stats.byPredicate[id] ?? 0,
+  };
+}).sort((a, b) => a.label.localeCompare(b.label));
+
+const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}/relations/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={`${ui.nav.relations} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
+  <h1>{ui.nav.relations}</h1>
+  <p>{locale === 'es' ? 'Vocabulario cerrado de 19 predicados (Apéndice A.2). Dirección canónica; los inversos se derivan al construir el sitio.' : 'Closed vocabulary of 19 predicates (Appendix A.2). Canonical direction; inverses are derived at build time.'}</p>
+
+  <table>
+    <caption class="visually-hidden">{locale === 'es' ? 'Predicados' : 'Predicates'}</caption>
+    <thead>
+      <tr>
+        <th scope="col">{locale === 'es' ? 'Predicado' : 'Predicate'}</th>
+        <th scope="col">{locale === 'es' ? 'Inverso' : 'Inverse'}</th>
+        <th scope="col">Domain</th>
+        <th scope="col">Range</th>
+        <th scope="col">{locale === 'es' ? 'Aristas' : 'Edges'}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {
+        rows.map((r) => (
+          <tr>
+            <td>
+              <a href={`/${locale}/relations/${r.id}/`}>{r.label}</a>
+            </td>
+            <td>{r.inverseLabel}</td>
+            <td>{r.domain}</td>
+            <td>{r.range}</td>
+            <td>{r.edgeCount}</td>
+          </tr>
+        ))
+      }
+    </tbody>
+  </table>
+</Base>
+
+<style>
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+  th, td { text-align: left; padding: 0.35rem 0.6rem; border-bottom: 1px solid var(--border, #d0d7de); }
+  .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+</style>
