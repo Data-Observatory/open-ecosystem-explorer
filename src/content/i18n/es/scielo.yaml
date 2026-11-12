@@ -1,7 +1,6 @@
-summary: Programa cooperativo de publicación electrónica que aloja, marca y
-  publica dieciséis colecciones nacionales de revistas.
+summary: Programa cooperativo de publicación electrónica que aloja, marca y publica dieciséis colecciones nacionales de revistas.
 relationNotes:
-  funded-by@fapesp: Creó SciELO en 1997; desde agosto de 2024 lo cofinancia (~47%) con CAPES y CNPq mediante un consorcio nacional.
+  funded-by@fapesp: Creó SciELO en 1997; desde agosto de 2024 lo cofinancia (47 %) con CAPES (48 %) y CNPq (5 %) mediante un consorcio nacional.
   related-to@diamond-open-access: Opera revistas bajo el modelo diamante.
 body: |-
   SciELO no cosecha metadatos ajenos como OpenAIRE o LA Referencia: aloja el texto completo, aplica sus propios criterios de admisión y hace el marcado editorial.

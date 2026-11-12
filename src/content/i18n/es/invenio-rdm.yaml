@@ -1,4 +1,3 @@
-summary: Software de repositorio de código abierto liderado por el CERN, el
-  mismo equipo detrás de Zenodo.
+summary: Software de repositorio de código abierto desarrollado en colaboración, con el CERN y Northwestern University como socios principales.
 body: |-
-  InvenioRDM es la base tecnológica que también sostiene a Zenodo, desarrollado por el CERN.
+  InvenioRDM es la plataforma sobre la que funciona Zenodo, el repositorio alojado por el CERN. El CERN y Northwestern University son los dos socios principales del proyecto.

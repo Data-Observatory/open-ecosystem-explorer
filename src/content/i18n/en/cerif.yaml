@@ -1,4 +1,3 @@
-summary: euroCRIS research information exchange model, recommended by the EU to its
-  member states.
+summary: euroCRIS research information exchange model, recommended by the EU to its member states.
 body: |-
-  CERIF is the interoperability standard behind commercial and national CRIS systems. The classic version is no longer actively developed, and CERIF 2.0 is not yet approved.
+  CERIF is a research information exchange model used in current research information systems (CRIS). euroCRIS is preparing a refactoring, CERIF-Core, which has not yet been approved as an official standard.

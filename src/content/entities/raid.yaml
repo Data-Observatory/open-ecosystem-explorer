@@ -10,7 +10,7 @@ isoStandard: ISO 23527:2022
 tags:
   - function:identification
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: governed-by
     target: ardc
@@ -28,6 +28,7 @@ sources:
   - url: https://www.iso.org/standard/75931.html
     accessed: 2026-09-04
   - url: https://www.raid.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Designed for use worldwide with project information that can be made public (temporary embargoes supported).
   - url: https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/
     accessed: 2026-09-04

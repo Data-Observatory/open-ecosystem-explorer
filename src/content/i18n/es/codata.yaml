@@ -1,8 +1,6 @@
-summary: Comité del International Science Council dedicado a datos,
-  interoperabilidad, políticas y capacidades. Chile tiene comité nacional
-  impulsado por Data Observatory.
+summary: Comité del International Science Council dedicado a datos, interoperabilidad, políticas y capacidades.
 relationNotes:
-  member-of@rda: CODATA es Miembro Afiliado documentado de RDA; ambos organismos
-    operan bajo un memorando de entendimiento con roles complementarios.
+  member-of@rda: CODATA es Miembro Afiliado documentado de RDA; ambos organismos operan bajo un memorando de entendimiento con roles complementarios.
+localNote: Chile se unió a CODATA en 2025; Data Observatory es su organización miembro y está constituyendo el comité nacional.
 body: |-
   CODATA trabaja en interoperabilidad de datos entre dominios, y es la comunidad detrás de CDIF.

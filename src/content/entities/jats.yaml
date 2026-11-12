@@ -10,7 +10,7 @@ standardKind: metadata-schema
 machineReadable: true
 tags:
   - function:registration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: developed-by
     target: niso
@@ -19,4 +19,10 @@ relations:
     note: XML format for articles that includes their bibliographic description.
 sources:
   - url: https://www.niso.org/standards-committees/jats
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+  - url: https://www.scielo.org/en/about-scielo/program-publication-model-and-scielo-network/
+    accessed: 2026-11-12
+    note: SciELO Publishing Schema is built on the NISO JATS (ANSI/NISO Z39.96-2021).
+  - url: https://blog.doaj.org/2016/08/25/the-redalyc-jats-project-strides-towards-standardisation
+    accessed: 2026-11-12
+    note: Redalyc adopts XML-JATS through its Marcalyc markup tool.

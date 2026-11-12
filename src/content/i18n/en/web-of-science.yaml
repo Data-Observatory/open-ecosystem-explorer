@@ -1,8 +1,6 @@
-summary: Selective citation index since the 1960s; an editorial board decides which
-  journals are included. The impact factor comes from it.
+summary: Selective citation index descended from the 1964 Science Citation Index; an editorial team decides which journals are included.
 relationNotes:
   owned-by@clarivate: Owned by Clarivate, a private company.
-  depends-on@orcid: Web of Science Researcher Profiles sync publications and reviews
-    in both directions with a connected ORCID iD.
+  depends-on@orcid: Web of Science Researcher Profiles sync publications and reviews in both directions with a connected ORCID iD.
 body: |-
-  Web of Science is the oldest and most selective index: an editorial board decides which journals are included. It is owned by Clarivate.
+  Web of Science is a selective index: according to Clarivate, an in-house editorial team assesses journals against 28 criteria. It is owned by Clarivate.

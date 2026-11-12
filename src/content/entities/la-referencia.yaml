@@ -27,7 +27,7 @@ tags:
   - function:aggregation
   - region:latam
   - openness:open-governance
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: Federated network of eleven Latin American countries plus Spain, funded by
   member-country contributions [M§6] — no single funding organisation to cite as
   a `funded-by` target.
@@ -55,6 +55,9 @@ relations:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
 sources:
+  - url: https://infrafinder.investinopen.org/solutions/la-referencia
+    accessed: 2026-11-12
+    note: More than 5 million records; ANID (Chile) listed under current affiliations; funded mainly by annual member-country contributions.
   - url: https://www.lareferencia.info/
     accessed: 2026-09-04
     note: Site historically also served over http://; canonical https homepage cited

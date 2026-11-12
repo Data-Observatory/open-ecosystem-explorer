@@ -9,15 +9,18 @@ geography:
 tags:
   - region:latam
   - openness:open-governance
-lastReviewed: 2026-09-04
-note: Latin American non-commercial open-access initiative built around Redalyc
-  and UNESCO (specs.md Appendix A.1b).
+lastReviewed: 2026-11-12
+note: Latin American non-commercial open-access initiative linked to Redalyc,
+  UNESCO and CLACSO (logos on amelica.org). No source states compliance with the UNESCO
+  Recommendation, so it is not modelled.
 relations:
-  - predicate: complies-with
-    target: unesco-recommendation-open-science
   - predicate: related-to
     target: diamond-open-access
     note: Promotes a non-commercial, diamond-style communication model.
 sources:
   - url: https://amelica.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Shows Redalyc, UNESCO and CLACSO logos; describes AmeliCA as a collaborative initiative promoting science that is open.
+  - url: https://amelica.org/index.php/en/2022/12/26/2022-achievements-for-diamond-open-access
+    accessed: 2026-11-12
+    note: Mentions a joint project with Redalyc supported by UNESCO for a non-commercial strategy in Angola.

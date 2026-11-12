@@ -6,7 +6,7 @@ governance: community
 coalitionKind: funding-initiative
 tags:
   - openness:open-content
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: cOAlition S welcomed the Barcelona Declaration on Open Research
   Information but did not itself sign it (individual funder-members did); its
   member funding agencies (Wellcome, UKRI, ANR, NWO, etc.) are not modelled as
@@ -15,4 +15,8 @@ note: cOAlition S welcomed the Barcelona Declaration on Open Research
 relations: []
 sources:
   - url: https://www.coalition-s.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes cOAlition S as an international consortium of research funding and performing organisations supporting Plan S.
+  - url: https://www.coalition-s.org/about/
+    accessed: 2026-11-12
+    note: Launched 4 September 2018; Plan S principle - with effect from 2021, publications in OA journals/platforms or immediately in repositories without embargo.

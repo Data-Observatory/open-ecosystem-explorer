@@ -13,7 +13,7 @@ tags:
   - function:deposit
   - openness:open-content
   - theme:vertical-integration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: owned-by
     target: digital-science

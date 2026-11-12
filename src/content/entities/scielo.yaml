@@ -28,8 +28,8 @@ relations:
     target: jats
   - predicate: funded-by
     target: fapesp
-    note: Created SciELO in 1997; since Aug 2024 co-funds it (~47%) with CAPES
-      and CNPq through a national consortium.
+    note: Created SciELO in 1997; since Aug 2024 co-funds it (47%) with CAPES
+      (48%) and CNPq (5%) through a national consortium.
     verified:
       date: 2026-11-12
       url: https://revistapesquisa.fapesp.br/en/national-consortium-takes-over-management-and-funding-of-the-scielo-library/
@@ -45,7 +45,8 @@ relations:
     note: Operates journals on the diamond model.
 sources:
   - url: https://www.scielo.org/en/about-scielo/program-publication-model-and-scielo-network/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Programme adopted in sixteen countries (16 national collections); publishing schema built on the JATS standard.
   - url: https://revistapesquisa.fapesp.br/en/national-consortium-takes-over-management-and-funding-of-the-scielo-library/
     accessed: 2026-11-12
     note: Since August 2024 a consortium of FAPESP, CAPES and CNPq funds SciELO

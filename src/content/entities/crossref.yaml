@@ -8,8 +8,8 @@ registers:
   - publication
 feeModel: membership
 consortiumModel: false
-waiverProgramme: GEM programme — 93 eligible countries as of 2026-09, membership
-  and content-registration fees waived (Similarity Check and Metadata Plus still
+waiverProgramme: GEM programme — 79 eligible countries on the 2026 list (18 added in
+  January 2026), membership and content-registration fees waived (Similarity Check and Metadata Plus still
   charged); Chile is not eligible.
 prominence: core
 tags:
@@ -39,9 +39,11 @@ relations:
       url: https://barcelona-declaration.org/signatories/
 sources:
   - url: https://www.crossref.org/gem/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Lists 79 eligible countries (as of 2026); 18 added in January 2026; Chile not listed.
   - url: https://www.crossref.org/blog/the-gem-program-year-three-and-program-expansion-for-2026/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Expansion for 2026 took effect on 1 January 2026; 18 new countries, Chile not included.
   - url: https://www.crossref.org/blog/crossrefs-board-votes-to-adopt-the-principles-of-open-scholarly-infrastructure/
     accessed: 2026-09-04
   - url: https://www.doi.org/the-identifier/resources/factsheets/doi-system-and-the-handle-system

@@ -1,11 +1,7 @@
-summary: Identifica instituciones de investigación; probablemente el
-  identificador con mejor relación costo-beneficio para instituciones
-  latinoamericanas.
+summary: Registro comunitario y abierto de identificadores persistentes para organizaciones de investigación y financiación.
 relationNotes:
-  operated-by@datacite: Uno de los tres socios operadores fundadores, junto con
-    Crossref y California Digital Library.
-  operated-by@crossref: Socio operador fundador; su equipo de contabilidad
-    administra las finanzas de ROR.
+  operated-by@datacite: Uno de los tres socios operadores fundadores, junto con Crossref y California Digital Library.
+  operated-by@crossref: Socio operador fundador; su equipo de contabilidad administra las finanzas de ROR.
   operated-by@california-digital-library: Socio operador fundador.
 body: |-
-  ROR es gratuito y abierto, y es la única forma de que el trabajo de una institución chilena se agregue correctamente en las bases mundiales en vez de quedar disperso bajo nombres distintos.
+  ROR es un registro abierto: sus datos se publican bajo CC0 y se pueden consultar por buscador, API REST y volcado de datos. Lo operan California Digital Library, Crossref y DataCite.

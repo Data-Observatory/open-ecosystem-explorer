@@ -8,7 +8,7 @@ nationalChapters:
   - Chile
 tags:
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: member-of
     target: rda
@@ -19,8 +19,10 @@ relations:
       url: https://www.rd-alliance.org/codata
 sources:
   - url: https://codata.org/
-    accessed: 2026-09-04
-    note: Committee of the International Science Council. Chile has a national
-      committee driven by Data Observatory.
+    accessed: 2026-11-12
+    note: Site is titled "CODATA, Committee on Data of the ISC"; lists Chile among National Members.
+  - url: https://codata.org/chile/
+    accessed: 2026-11-12
+    note: Says Chile joined CODATA in 2025 and is in the process of establishing a National Committee; the CODATA member organisation for Chile is Data Observatory (page last updated 2025-06-23).
   - url: https://www.rd-alliance.org/codata
     accessed: 2026-09-04

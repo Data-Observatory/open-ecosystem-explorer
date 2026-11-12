@@ -3,4 +3,4 @@ relationNotes:
   governed-by@ardc: ARDC is the ISO-appointed registration authority for RAiD worldwide.
   depends-on@datacite: ARDC and DataCite deliver RAiD jointly; registration takes place through the DataCite Consortium infrastructure.
 body: |-
-  RAiD is of great interest to countries without a national CRIS, because it makes it possible to identify research activity without building a full system.
+  RAiD identifies research activity, that is, the project rather than its outputs. It is designed for use worldwide with project information that can be made public; temporary embargoes are supported.

@@ -10,10 +10,16 @@ prominence: detail
 tags:
   - function:registration
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://www.niso.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
     note: US-based, ANSI-accredited standards body for information science;
       maintains JATS (NISO Z39.96).
+  - url: https://www.scielo.org/en/about-scielo/program-publication-model-and-scielo-network/
+    accessed: 2026-11-12
+    note: A regional journal programme's publishing schema is built on the NISO JATS (ANSI/NISO Z39.96-2021).
+  - url: https://blog.doaj.org/2016/08/25/the-redalyc-jats-project-strides-towards-standardisation
+    accessed: 2026-11-12
+    note: A regional journal platform adopts XML-JATS through its Marcalyc markup tool.

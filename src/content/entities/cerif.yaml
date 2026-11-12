@@ -8,9 +8,11 @@ governance: community
 standardKind: framework
 tags:
   - function:registration
-lastReviewed: 2026-09-04
-note: Classic CERIF is not under further development per euroCRIS; CERIF 2.0 /
-  CERIF-Core is proposed but not yet approved as of 2026-09-04.
+lastReviewed: 2026-11-12
+note: CERIF-Core (the refactored CERIF, output of the CERIF Refactoring Pilot
+  started by euroCRIS in 2021) is experimental and "has not been approved as the
+  official standard yet" as of 2026-11-12. Earlier wording that classic CERIF is
+  no longer developed could not be verified and was removed.
 relations:
   - predicate: governed-by
     target: eurocris
@@ -21,4 +23,7 @@ sources:
     accessed: 2026-09-04
   - url: https://github.com/EuroCRIS/CERIF-Core
     accessed: 2026-09-04
-    note: "CERIF-Core / CERIF 2.0 status: proposed, not approved."
+    note: "CERIF-Core status: experimental, not approved as the official standard."
+  - url: https://interoperable-europe.ec.europa.eu/collection/eu-semantic-interoperability-catalogue/solution/common-european-research-information-format
+    accessed: 2026-11-12
+    note: CERIF is a recommendation of the European Union to its member states.

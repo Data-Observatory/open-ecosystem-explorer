@@ -9,7 +9,7 @@ identifies: person
 tags:
   - function:identification
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: Issued via the ISNI International Agency, a consortium not yet modelled as
   a separate entity in this dataset.
 relations:
@@ -17,4 +17,5 @@ relations:
     target: persistent-identifier
 sources:
   - url: https://isni.org/page/about-the-isni-organisation/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: ISO standard in use by libraries, publishers, databases and rights management organisations; covers public personas such as pseudonyms, stage names, labels and imprints.

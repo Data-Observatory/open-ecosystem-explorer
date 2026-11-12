@@ -1,4 +1,3 @@
-summary: Modelo de intercambio de información de investigación de euroCRIS,
-  recomendado por la UE a sus estados miembro.
+summary: Modelo de intercambio de información de investigación de euroCRIS, recomendado por la UE a sus estados miembro.
 body: |-
-  CERIF es el estándar de interoperabilidad detrás de los CRIS comerciales y nacionales. La versión clásica ya no se desarrolla activamente y CERIF 2.0 aún no está aprobado.
+  CERIF es un modelo de intercambio de información de investigación usado en sistemas de información de investigación (CRIS). euroCRIS prepara una refactorización, CERIF-Core, que aún no ha sido aprobada como estándar oficial.

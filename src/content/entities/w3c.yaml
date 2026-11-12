@@ -8,9 +8,15 @@ governance: nonprofit
 communityKind: standards-body
 tags:
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://www.w3.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
     note: Standards body behind JSON-LD and DCAT.
+  - url: https://www.w3.org/TR/json-ld11/
+    accessed: 2026-11-12
+    note: JSON-LD 1.1, W3C Recommendation of 16 July 2020.
+  - url: https://www.w3.org/TR/vocab-dcat-3/
+    accessed: 2026-11-12
+    note: DCAT version 3, W3C Recommendation of 22 August 2024.

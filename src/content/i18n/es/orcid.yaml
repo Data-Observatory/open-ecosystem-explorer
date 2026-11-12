@@ -1,4 +1,3 @@
-summary: Identificador persistente que resuelve el problema de que la misma
-  persona investigadora aparezca escrita de formas distintas.
+summary: Identificador persistente que resuelve el problema de que la misma persona investigadora aparezca escrita de formas distintas.
 body: |-
-  El ORCID iD es el identificador de persona más adoptado en la investigación mundial; permite enlazar de forma inequívoca a un investigador con sus publicaciones, datasets y financiamiento. Lo emite y opera ORCID, Inc., una organización sin fines de lucro independiente que administra el registro, mantiene los estándares de interoperabilidad y se financia con cuotas de membresía, sin depender de ninguna editorial o financiador.
+  El ORCID iD permite enlazar de forma inequívoca a una persona investigadora con sus publicaciones, datasets y financiamiento. Lo emite y opera ORCID, Inc., una organización global sin fines de lucro, gobernada por un directorio representativo de sus miembros y sostenida por cuotas de organizaciones miembro. Ofrece API que permiten la interoperabilidad entre un registro ORCID y las organizaciones miembro.

@@ -12,11 +12,12 @@ tags:
   - function:deposit
   - function:preservation
   - openness:open-source
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: developed-by
     target: cern
-    note: Led by CERN, the same team behind Zenodo.
+    note: One of the two main partners (with Northwestern University); Zenodo,
+      hosted by CERN, is built on InvenioRDM.
   - predicate: implements
     target: oai-pmh
   - predicate: implements
@@ -27,4 +28,5 @@ relations:
     target: repository-software
 sources:
   - url: https://inveniosoftware.org/products/rdm/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Relies on two main partners, one of them CERN; Zenodo is built on InvenioRDM.

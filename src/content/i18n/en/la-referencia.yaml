@@ -2,5 +2,6 @@ summary: Federated network of eleven Latin American countries plus Spain, which 
 relationNotes:
   interoperates-with@openaire: Harvests from national nodes under the OpenAIRE guidelines since 2016.
   indexes@scielo: LA Referencia indexes the national collections of SciELO.
+localNote: In Chile, ANID is one of the institutions affiliated with LA Referencia.
 body: |-
-  LA Referencia brings together more than five million records. Chile takes part through ANID. It is funded by contributions from member countries and interoperates with OpenAIRE.
+  LA Referencia brings together more than five million metadata records. It is funded mainly by annual contributions from member countries and interoperates with OpenAIRE.

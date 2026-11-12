@@ -14,4 +14,4 @@ relations: []
 sources:
   - url: https://www.w3.org/community/schemaorg/how-we-work
     accessed: 2026-11-12
-    note: Says schema.org is run directly by Google, which owns its domain name.
+    note: Says that "as of 2026 Schema.org is being run directly by Google" and that Google owns its domain name; gives no date for the handover.

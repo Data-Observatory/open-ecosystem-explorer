@@ -1,10 +1,7 @@
-summary: Identifies research institutions; probably the identifier with the best
-  cost-benefit ratio for Latin American institutions.
+summary: Community-led, open registry of persistent identifiers for research and funding organisations.
 relationNotes:
-  operated-by@datacite: One of three founding operating partners, along with Crossref
-    and California Digital Library.
-  operated-by@crossref: Founding operating partner; its accounting team manages ROR's
-    finances.
+  operated-by@datacite: One of three founding operating partners, along with Crossref and California Digital Library.
+  operated-by@crossref: Founding operating partner; its accounting team manages ROR's finances.
   operated-by@california-digital-library: Founding operating partner.
 body: |-
-  ROR is free and open, and it is the only way for the work of a Chilean institution to be aggregated correctly in global databases rather than scattered under different names.
+  ROR is an open registry: its data is published under CC0 and can be accessed through a search interface, a REST API and a data dump. It is operated by California Digital Library, Crossref and DataCite.

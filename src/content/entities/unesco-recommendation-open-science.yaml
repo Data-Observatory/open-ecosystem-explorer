@@ -31,7 +31,8 @@ relations:
     target: open-science-policy
 sources:
   - url: https://www.unesco.org/en/open-science/about
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Adopted in 2021 by 193 countries, which agreed to abide by common standards.
   - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
     accessed: 2026-11-12
     note: Text of the Recommendation (UNESDOC 379949). It recommends and

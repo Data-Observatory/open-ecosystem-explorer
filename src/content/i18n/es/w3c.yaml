@@ -1,4 +1,3 @@
-summary: Consorcio de estándares web; desarrolla JSON-LD y DCAT, dos esquemas de
-  los que depende la capa de estándares.
+summary: Consorcio de estándares web que desarrolla, entre otros, JSON-LD y DCAT.
 body: |-
-  El W3C define especificaciones web abiertas, incluidas JSON-LD y DCAT, ampliamente usadas para describir y publicar catálogos de datos.
+  El W3C define especificaciones web abiertas, incluidas JSON-LD 1.1 (serialización de datos enlazados basada en JSON) y DCAT 3 (vocabulario para describir catálogos de datos), ambas Recomendaciones W3C.

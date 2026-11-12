@@ -1,8 +1,6 @@
-summary: Índice bibliográfico selectivo desde los años sesenta; un comité decide
-  qué revistas entran. De ahí sale el factor de impacto.
+summary: Índice bibliográfico selectivo heredero del Science Citation Index de 1964; un equipo editorial decide qué revistas se incluyen.
 relationNotes:
   owned-by@clarivate: Propiedad de Clarivate, empresa privada.
-  depends-on@orcid: Los Perfiles de Investigador de Web of Science sincronizan
-    bidireccionalmente publicaciones y revisiones con un iD de ORCID conectado.
+  depends-on@orcid: Los Perfiles de Investigador de Web of Science sincronizan bidireccionalmente publicaciones y revisiones con un iD de ORCID conectado.
 body: |-
-  Web of Science es el índice más antiguo y selectivo: un comité editorial decide qué revistas se incluyen. Es propiedad de Clarivate.
+  Web of Science es un índice selectivo: según Clarivate, un equipo editorial interno evalúa las revistas con 28 criterios. Es propiedad de Clarivate.

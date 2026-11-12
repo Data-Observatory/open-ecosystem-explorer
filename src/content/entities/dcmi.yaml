@@ -11,8 +11,12 @@ prominence: detail
 tags:
   - function:registration
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://www.dublincore.org/about/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: DCMI is officially constituted as a project of ASIS&T; governed by a Governing Board.
+  - url: https://www.dublincore.org/news/2014/03-19-dcmi-announces-completion-of-governance-restructuring/
+    accessed: 2026-11-12
+    note: DCMI ceased operating as a Singapore company in June 2013 and became a project of ASIS&T.

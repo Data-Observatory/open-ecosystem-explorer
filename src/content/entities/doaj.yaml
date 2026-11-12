@@ -29,8 +29,8 @@ relations:
   - predicate: operated-by
     target: is4oa
     until: "2026"
-    note: Previous managing organisation; operations moved to the DOAJ
-      Foundation, and IS4OA was due to wind down by mid-2026.
+    note: Previous managing organisation; per doaj.org/about it operates until
+      mid-2026 (transition end); closure unconfirmed at 2026-11-12.
     verified:
       date: 2026-11-12
       url: https://doaj.org/about/

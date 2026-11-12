@@ -1,7 +1,5 @@
-summary: Suite de etiquetado XML para artículos de revista; la capa de marcado
-  sobre la que construyen SciELO y Redalyc.
+summary: Suite de etiquetado XML para artículos de revista, usada por SciELO y Redalyc.
 relationNotes:
-  related-to@metadata-standard: Formato XML para artículos que incluye su descripción
-    bibliográfica.
+  related-to@metadata-standard: Formato XML para artículos que incluye su descripción bibliográfica.
 body: |-
-  JATS define cómo marcar en XML el contenido de un artículo de revista; SciELO y Redalyc lo usan, cada una en su propio dialecto.
+  JATS define cómo marcar en XML el contenido de un artículo de revista. SciELO lo usa como base de su SciELO Publishing Schema y Redalyc lo aplica con su herramienta de marcación Marcalyc.

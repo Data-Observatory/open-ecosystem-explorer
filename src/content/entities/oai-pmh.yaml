@@ -10,8 +10,12 @@ machineReadable: true
 prominence: core
 tags:
   - function:aggregation
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://www.openarchives.org/pmh/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes OAI-PMH as a low-barrier mechanism for repository interoperability.
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-12
+    note: Chilean funder policy text; data repositories must be interoperable with the funder repository through OAI-PMH.

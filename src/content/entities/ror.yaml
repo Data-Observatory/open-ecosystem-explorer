@@ -10,7 +10,7 @@ prominence: core
 tags:
   - function:identification
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: operated-by
     target: datacite
@@ -43,3 +43,6 @@ relations:
 sources:
   - url: https://ror.org/about/
     accessed: 2026-09-04
+  - url: https://ror.org/about/faqs/
+    accessed: 2026-11-12
+    note: ROR is completely open (CC0 data, open API) and noncommercial; operated by California Digital Library, Crossref and DataCite.

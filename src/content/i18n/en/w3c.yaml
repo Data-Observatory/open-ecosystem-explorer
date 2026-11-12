@@ -1,3 +1,3 @@
-summary: Web standards consortium; develops JSON-LD and DCAT, two schemas on which the standards layer depends.
+summary: Web standards consortium that develops, among others, JSON-LD and DCAT.
 body: |-
-  The W3C defines open web specifications, including JSON-LD and DCAT, which are widely used to describe and publish data catalogues.
+  The W3C defines open web specifications, including JSON-LD 1.1 (a JSON-based serialisation for linked data) and DCAT 3 (a vocabulary for describing data catalogues), both W3C Recommendations.

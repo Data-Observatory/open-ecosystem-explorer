@@ -16,7 +16,7 @@ coverageObjects:
 tags:
   - function:indexing
   - theme:vertical-integration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: owned-by
     target: clarivate
@@ -33,6 +33,12 @@ relations:
   - predicate: is-a
     target: citation-index
 sources:
+  - url: https://clarivate.com/academia-government/the-institute-for-scientific-information/history/
+    accessed: 2026-11-12
+    note: ISI published the first Science Citation Index in 1964; the Web of Science launched online in 1997.
+  - url: https://clarivate.com/academia-government/scientific-and-academic-research/research-discovery-and-referencing/web-of-science/web-of-science-core-collection/editorial-selection-process/
+    accessed: 2026-11-12
+    note: Collection curated by in-house editors; journals assessed against 28 criteria (24 quality, 4 impact).
   - url: https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/
     accessed: 2026-09-04
   - url: https://webofscience.zendesk.com/hc/en-us/articles/36787077862545-How-to-Sync-Your-ORCID-Record-with-Web-of-Science-Researcher-Profile

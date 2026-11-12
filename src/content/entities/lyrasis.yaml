@@ -10,8 +10,11 @@ prominence: detail
 tags:
   - region:north-america
   - openness:open-governance
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://www.lyrasis.org/
     accessed: 2026-09-04
+  - url: https://infrafinder.investinopen.org/solutions/dspace
+    accessed: 2026-11-12
+    note: Lyrasis is DSpace's organisational home; community-based membership model; DuraSpace and Lyrasis merged in July 2019.

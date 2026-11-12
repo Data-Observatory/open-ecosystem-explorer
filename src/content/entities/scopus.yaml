@@ -17,7 +17,7 @@ coverageObjects:
 tags:
   - function:indexing
   - theme:vertical-integration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: owned-by
     target: elsevier
@@ -31,4 +31,5 @@ relations:
     target: citation-index
 sources:
   - url: https://www.elsevier.com/products/scopus
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes Scopus as a source-neutral abstract and citation database curated by the Content Selection Advisory Board (CSAB).

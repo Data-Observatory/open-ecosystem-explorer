@@ -13,11 +13,12 @@ prominence: detail
 tags:
   - function:registration
   - region:europe
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: issues
     target: doi
     note: Regional European DOI registration agency, mainly for publications.
 sources:
   - url: https://www.medra.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes itself as the multilingual European Registration Agency of DOI; a brand of ediSer, the service company of the Italian Publishers Association.

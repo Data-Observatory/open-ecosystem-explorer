@@ -19,7 +19,7 @@ tags:
   - function:deposit
   - function:preservation
   - openness:open-content
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: operated-by
     target: cern
@@ -36,8 +36,8 @@ relations:
       url: https://about.zenodo.org/
   - predicate: depends-on
     target: invenio-rdm
-    note: Zenodo runs on InvenioRDM, the open-source repository software also led by
-      CERN.
+    note: Zenodo runs on InvenioRDM, the open-source repository software whose
+      main partners include CERN.
   - predicate: implements
     target: oai-pmh
   - predicate: implements
@@ -53,4 +53,5 @@ relations:
     note: Asks depositors to choose a licence for open-access records.
 sources:
   - url: https://about.zenodo.org/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Launched May 2013; OpenAIRE was commissioned by the EC, and CERN, an OpenAIRE partner, provided the capability.

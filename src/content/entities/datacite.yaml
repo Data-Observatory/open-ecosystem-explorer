@@ -48,7 +48,14 @@ relations:
       url: https://barcelona-declaration.org/signatories/
 sources:
   - url: https://datacite.org/fees/
-    accessed: 2026-09-03
+    accessed: 2026-11-12
+    note: A consortium is an organisation responsible for a consortium (region- or service-based); members pay no membership fee but an infrastructure fee.
+  - url: https://portalinnova.cl/biblioteca-del-congreso-nacional-firma-convenio-con-data-observatory-para-integrar-el-consorcio-datacite/
+    accessed: 2026-11-12
+    note: Chile; Data Observatory leads a DataCite consortium (article of 2026-03-25).
+  - url: https://uchile.cl/noticias/217546/sisib-lidera-consorcio-chileno-de-numeros-doi-para-publicaciones
+    accessed: 2026-11-12
+    note: Chile; SISIB of Universidad de Chile leads a DataCite consortium with eight other universities (article of 2024-06-19).
   - url: https://openscholarlyinfrastructure.org/adopters/
     accessed: 2026-09-04
   - url: https://support.datacite.org/docs/doi-persistence

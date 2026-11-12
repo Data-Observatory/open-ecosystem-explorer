@@ -1,3 +1,4 @@
-summary: Classic metadata harvesting mechanism between repositories; required by ANID's open access policy in Chile.
+summary: Low-barrier protocol for interoperability between repositories, based on harvesting their metadata.
+localNote: In Chile, ANID's open access policy requires repositories holding ANID-funded data to be interoperable with the ANID repository through OAI-PMH.
 body: |-
-  OAI-PMH remains the most widely used harvesting protocol between repositories.
+  OAI-PMH lets a repository expose its metadata so that other services can harvest it.

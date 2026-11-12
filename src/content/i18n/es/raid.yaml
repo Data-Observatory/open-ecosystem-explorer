@@ -1,8 +1,6 @@
-summary: Identifica un proyecto o actividad de investigación, no su resultado;
-  norma ISO 23527:2022 operada por ARDC.
+summary: Identifica un proyecto o actividad de investigación, no su resultado; norma ISO 23527:2022 operada por ARDC.
 relationNotes:
   governed-by@ardc: ARDC es la autoridad de registro designada por ISO para RAiD a nivel mundial.
-  depends-on@datacite: ARDC y DataCite entregan RAiD conjuntamente; el registro
-    ocurre a través de la infraestructura de Consorcio de DataCite.
+  depends-on@datacite: ARDC y DataCite entregan RAiD conjuntamente; el registro ocurre a través de la infraestructura de Consorcio de DataCite.
 body: |-
-  RAiD interesa mucho a países sin CRIS nacional, porque permite identificar la actividad de investigación sin construir un sistema completo.
+  RAiD identifica la actividad de investigación, es decir, el proyecto y no sus resultados. Está diseñado para uso mundial con información de proyecto que puede hacerse pública; se admiten embargos temporales.

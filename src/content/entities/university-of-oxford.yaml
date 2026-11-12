@@ -8,8 +8,11 @@ country: GB
 prominence: detail
 tags:
   - region:europe
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
+  - url: https://datareadiness.eng.ox.ac.uk/
+    accessed: 2026-11-12
+    note: Data Readiness Group, based at the Oxford e-Research Centre, presents FAIRsharing as its resource.
   - url: https://oerc.ox.ac.uk/news/fairsharing-discover-and-curate-an-ecosystem-of-research-standards-and-databases
     accessed: 2026-09-04

@@ -11,10 +11,10 @@ prominence: core
 tags:
   - function:identification
   - region:global
-lastReviewed: 2026-09-04
-note: Issued and run by ORCID, Inc., an independent nonprofit that operates the
-  registry on a membership/consortium fee model, independent of any publisher or
-  funder.
+lastReviewed: 2026-11-12
+note: Issued and run by ORCID, Inc., a global not-for-profit organisation
+  sustained by fees from member organisations and governed by a Board
+  representative of its membership.
 relations:
   - predicate: depends-on
     target: isni
@@ -24,6 +24,7 @@ relations:
     target: persistent-identifier
 sources:
   - url: https://info.orcid.org/what-is-orcid/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Global not-for-profit, sustained by member fees, community-built and governed by a Board representative of its membership; provides APIs enabling interoperability.
   - url: https://support.orcid.org/hc/en-us/articles/360006897674-Structure-of-the-ORCID-Identifier
     accessed: 2026-09-04

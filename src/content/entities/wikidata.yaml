@@ -20,7 +20,7 @@ tags:
   - function:indexing
   - openness:open-content
   - openness:bulk-downloadable
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: Hosted by the Wikimedia Foundation (US nonprofit, which hosts its
   infrastructure); day-to-day development is led by Wikimedia Deutschland (DE
   nonprofit).
@@ -31,7 +31,8 @@ relations:
       Google) of Wikidata's 2012 creation via a €1.3M grant.
 sources:
   - url: https://www.wikidata.org/wiki/Wikidata:Introduction
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Structured data published under the Creative Commons CC0 licence.
   - url: https://wikimediafoundation.org/
     accessed: 2026-09-04
     note: Wikimedia Foundation, host of Wikidata's infrastructure.

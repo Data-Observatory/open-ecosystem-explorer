@@ -12,7 +12,7 @@ prominence: core
 tags:
   - function:identification
   - region:global
-lastReviewed: 2026-09-06
+lastReviewed: 2026-11-12
 relations:
   - predicate: depends-on
     target: handle-system
@@ -27,6 +27,9 @@ relations:
   - predicate: is-a
     target: persistent-identifier
 sources:
+  - url: https://portalinnova.cl/biblioteca-del-congreso-nacional-firma-convenio-con-data-observatory-para-integrar-el-consorcio-datacite/
+    accessed: 2026-11-12
+    note: Chile; Data Observatory leads a DataCite consortium; Biblioteca del Congreso Nacional joined it to assign DOIs (article of 2026-03-25).
   - url: https://www.doi.org/the-identifier/what-is-a-doi/
     accessed: 2026-09-03
   - url: https://www.doi.org/the-foundation/board-and-governance/

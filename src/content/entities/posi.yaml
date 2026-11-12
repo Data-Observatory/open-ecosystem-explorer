@@ -9,9 +9,12 @@ standardKind: governance-criteria
 specVersion: "2.0"
 tags:
   - theme:vertical-integration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
+  - url: https://openscholarlyinfrastructure.org/adopters/
+    accessed: 2026-11-12
+    note: Adopters commit by publishing a self-audit; lists Crossref self-audits for 2020, 2022 and 2024.
   - url: https://openscholarlyinfrastructure.org/
     accessed: 2026-09-04
     note: Current release v2.0 (Oct 2025), 20 principles across
