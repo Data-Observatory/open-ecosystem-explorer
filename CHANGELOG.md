@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Phase 2: minimal map at `/{loc}/map3` (2026-11-12, for owner review)
+
+- New route `/{loc}/map3` (`MapExplorer.astro` + `MapExplorer.client.ts`): 14 anchor nodes by default, detail on click (card with summary, relations as sentences, entry and Wikipedia links), `+N` expand, keyboard navigation, `?n=` / `?modo=experto` URL state, expert mode with full corpus, filters and list view. Dark mode, reduced motion and a mobile bottom sheet. `/map` and `/map2` are unchanged.
+- Build-time deterministic layout: `scripts/layout-graph.ts` writes the committed `src/generated/graph-layout.json`; `npm run build` regenerates it, `npm run layout:check` fails when it is stale.
+- `src/lib/map/anchors.ts`: default anchors, five node families with distinct shapes, five predicate-family edge styles (all >= 3:1 on both canvases). Unit tests for anchors and layout, Playwright suite `tests/e2e/map3.spec.ts` (incl. axe).
+
 ### Phase 1 content: the concept layer (2026-11-12)
 
 - 22 `concept` entities (ES + EN prose each), 2 new `policy` entities (`plan-s`, `anid-open-access-policy`); `concept` / `is-a` shed `pending`. 34 `is-a` edges (strict fits only) plus 27 `related-to` edges.
