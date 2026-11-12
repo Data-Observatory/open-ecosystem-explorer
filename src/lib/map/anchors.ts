@@ -64,9 +64,9 @@ export interface NodeFamilyStyle {
 }
 
 export const NODE_FAMILY_STYLE: Record<NodeFamily, NodeFamilyStyle> = {
-  concept: { shape: 'round-rectangle', light: '#4f46e5', dark: '#a5b4fc' },
+  concept: { shape: 'ellipse', light: '#4f46e5', dark: '#a5b4fc' },
   identifier: { shape: 'diamond', light: '#b45309', dark: '#f5b84b' },
-  service: { shape: 'ellipse', light: '#0e7490', dark: '#5fd3e3' },
+  service: { shape: 'round-rectangle', light: '#0e7490', dark: '#5fd3e3' },
   rule: { shape: 'hexagon', light: '#be185d', dark: '#f4a3c8' },
   actor: { shape: 'rectangle', light: '#57606a', dark: '#b9c2cc' },
 };

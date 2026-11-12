@@ -1,0 +1,558 @@
+---
+// Minimal map explorer behind `/{loc}/map3` (Phase 2 redesign; review report
+// §3.2-§4). Plain nodes + labels on a Cytoscape canvas, positions precomputed
+// at build time (src/generated/graph-layout.json, `preset` layout — no
+// simulation in the browser, specs.md A3). Default mode shows the 14 anchors
+// of src/lib/map/anchors.ts; a click reveals neighbours and opens a small
+// card. Expert mode (`?modo=experto`) shows the whole corpus with a compact
+// type/relation filter and a list view.
+import { getSiteIndex } from '../content/site-index.js';
+import { getEntityTypesVocab, getPredicateFamiliesVocab } from '../content/vocab-index.js';
+import { resolveProse } from '../lib/i18n/resolve.js';
+import { getUiStrings } from '../i18n/ui.js';
+import { prominenceOf, PREDICATE_FAMILY_IDS } from '../lib/model/types.js';
+import { clampWords, isAnchor, nodeFamilyOf } from '../lib/map/anchors.js';
+import layout from '../generated/graph-layout.json';
+import type { LocaleCode } from '../i18n/locales.js';
+
+interface Props {
+  locale: LocaleCode;
+}
+const { locale } = Astro.props;
+const t = getUiStrings(locale).map3;
+const index = await getSiteIndex();
+const typesVocab = await getEntityTypesVocab();
+const familiesVocab = await getPredicateFamiliesVocab();
+const positions = layout.positions as unknown as Record<string, [number, number]>;
+
+const nodes = [...index.entities.values()]
+  .sort((a, b) => (a.id < b.id ? -1 : 1))
+  .map((e) => {
+    const { prose } = resolveProse(index, e.id, locale);
+    const qid = e.identifiers?.wikidata;
+    const deg = index.degree.get(e.id) ?? { in: 0, out: 0 };
+    const [x, y] = positions[e.id] ?? [0, 0];
+    return {
+      id: e.id,
+      name: prose.name ?? e.name,
+      aka: [...(e.aka ?? []), ...(prose.aka ?? [])],
+      type: e.type,
+      typeLabel: typesVocab.get(e.type)?.label[locale] ?? e.type,
+      family: nodeFamilyOf(e.type),
+      anchor: isAnchor(e.id),
+      core: prominenceOf(e) === 'core',
+      degree: deg.in + deg.out,
+      summary: clampWords(prose.summary),
+      wp: qid ? `https://www.wikidata.org/wiki/Special:GoToLinkedPage/${locale}wiki/${qid}` : null,
+      x,
+      y,
+    };
+  });
+const edges = index.edges
+  .filter((e) => !e.derived)
+  .map((e) => ({ s: e.from, t: e.to, p: e.predicate, f: index.predicates.get(e.predicate)?.family ?? 'kind' }));
+const predicates = Object.fromEntries(
+  [...index.predicates.values()].map((p) => [p.id, p.label[locale] ?? p.label.en ?? p.id]),
+);
+const typeOptions = [...new Map(nodes.map((n) => [n.type, n.typeLabel])).entries()].sort((a, b) => a[1].localeCompare(b[1], locale));
+const familyOptions = PREDICATE_FAMILY_IDS.map((f) => [f, familiesVocab.get(f)?.label[locale] ?? f] as const);
+const payload = JSON.stringify({ locale, nodes, edges, predicates, t, entityBase: `/${locale}/entity/` });
+---
+
+<div class="m3" id="m3" data-mode="default" data-view="map">
+  <div class="m3-bar">
+    <div class="m3-search" role="search">
+      <label for="m3-q" class="visually-hidden">{t.searchLabel}</label>
+      <input
+        id="m3-q"
+        type="search"
+        autocomplete="off"
+        placeholder={t.searchPlaceholder}
+        role="combobox"
+        aria-expanded="false"
+        aria-controls="m3-results"
+        aria-autocomplete="list"
+      />
+      <ul id="m3-results" role="listbox" aria-label={t.searchLabel} hidden></ul>
+    </div>
+    <div class="m3-expert-tools">
+      <label class="m3-select"><span>{t.filterType}</span>
+        <select id="m3-type">
+          <option value="">{t.allTypes}</option>
+          {typeOptions.map(([v, l]) => <option value={v}>{l}</option>)}
+        </select>
+      </label>
+      <label class="m3-select"><span>{t.filterFamily}</span>
+        <select id="m3-family">
+          <option value="">{t.allFamilies}</option>
+          {familyOptions.map(([v, l]) => <option value={v}>{l}</option>)}
+        </select>
+      </label>
+      <div class="m3-seg" role="group" aria-label={t.viewLabel}>
+        <button type="button" id="m3-view-map" aria-pressed="true">{t.viewMap}</button>
+        <button type="button" id="m3-view-list" aria-pressed="false">{t.viewList}</button>
+      </div>
+    </div>
+    <button type="button" class="m3-toggle" id="m3-expert" role="switch" aria-checked="false">
+      <span class="m3-toggle__track" aria-hidden="true"><span></span></span>{t.expert}
+    </button>
+  </div>
+
+  <div class="m3-stage">
+    <div id="m3-cy" class="m3-cy" tabindex="0" role="application" aria-label={t.canvasLabel} aria-describedby="m3-keys"></div>
+    <button type="button" id="m3-badge" class="m3-badge" hidden></button>
+    <p class="m3-hint" id="m3-hint">{t.hint}</p>
+    <p id="m3-keys" class="visually-hidden">{t.keysHelp}</p>
+    <div id="m3-list" class="m3-list" hidden>
+      <p id="m3-count" class="m3-count"></p>
+      <table>
+        <thead><tr><th scope="col">{t.colName}</th><th scope="col">{t.colType}</th><th scope="col">{t.colLinks}</th></tr></thead>
+        <tbody id="m3-rows"></tbody>
+      </table>
+    </div>
+    <aside id="m3-card" class="m3-card" aria-labelledby="m3-card-title" hidden>
+      <button type="button" class="m3-close" id="m3-close" aria-label={t.close}>×</button>
+      <p class="m3-chip"><i class="m3-dot" aria-hidden="true"></i><span id="m3-card-type"></span></p>
+      <h2 id="m3-card-title"></h2>
+      <p id="m3-card-summary" class="m3-summary"></p>
+      <h3 class="visually-hidden">{t.connections}</h3>
+      <ul id="m3-card-rels" class="m3-rels"></ul>
+      <p class="m3-links">
+        <a id="m3-card-entry">{t.seeEntry} →</a>
+        <a id="m3-card-wp" rel="noopener" target="_blank">{t.wikipedia} ↗</a>
+      </p>
+    </aside>
+    <p id="m3-live" class="visually-hidden" aria-live="polite"></p>
+  </div>
+  <noscript><p class="m3-noscript"><a href={`/${locale}/entities/`}>{getUiStrings(locale).nav.entities}</a></p></noscript>
+</div>
+
+<script is:inline type="application/json" id="m3-data" set:html={payload} />
+
+<style is:global>
+  /* Global (not scoped): the card, list and search rows are built in the
+     client script, so they never carry Astro's scoping attribute. Every
+     selector is prefixed with .m3. */
+  .m3 {
+    --m3-bg: #fafaf9;
+    --m3-ink: #1c1d1f;
+    --m3-muted: #5f6368;
+    --m3-line: #d4d4d1;
+    --m3-surface: #ffffff;
+    --m3-border: #e4e4e1;
+    --m3-accent: #2563eb;
+    --m3-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.18), 0 2px 6px -2px rgb(0 0 0 / 0.08);
+    --m3-fam-concept: #4f46e5;
+    --m3-fam-identifier: #b45309;
+    --m3-fam-service: #0e7490;
+    --m3-fam-rule: #be185d;
+    --m3-fam-actor: #57606a;
+    position: relative;
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--m3-bg);
+    color: var(--m3-ink);
+  }
+  @media (prefers-color-scheme: dark) {
+    .m3 {
+      --m3-bg: #111418;
+      --m3-ink: #e8eaed;
+      --m3-muted: #9aa0a6;
+      --m3-line: #3a3f46;
+      --m3-surface: #1a1e23;
+      --m3-border: #2c3138;
+      --m3-accent: #7aa7ff;
+      --m3-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.6);
+      --m3-fam-concept: #a5b4fc;
+      --m3-fam-identifier: #f5b84b;
+      --m3-fam-service: #5fd3e3;
+      --m3-fam-rule: #f4a3c8;
+      --m3-fam-actor: #b9c2cc;
+    }
+  }
+  .m3-bar {
+    position: absolute;
+    inset: 0.75rem 0.75rem auto;
+    z-index: 3;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    align-items: center;
+    pointer-events: none;
+  }
+  .m3-bar > * {
+    pointer-events: auto;
+  }
+  .m3-search {
+    position: relative;
+    flex: 0 1 20rem;
+  }
+  .m3-search input,
+  .m3-select select,
+  .m3-seg,
+  .m3-toggle {
+    font: inherit;
+    font-size: 0.9rem;
+    color: var(--m3-ink);
+    background: var(--m3-surface);
+    border: 1px solid var(--m3-border);
+    border-radius: 999px;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.05);
+  }
+  .m3-search input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.5rem;
+    padding: 0 1rem;
+  }
+  .m3-search input::placeholder {
+    color: var(--m3-muted);
+  }
+  .m3-search ul {
+    position: absolute;
+    top: calc(100% + 0.35rem);
+    left: 0;
+    right: 0;
+    margin: 0;
+    padding: 0.3rem;
+    list-style: none;
+    background: var(--m3-surface);
+    border: 1px solid var(--m3-border);
+    border-radius: 14px;
+    box-shadow: var(--m3-shadow);
+  }
+  .m3-search li {
+    display: flex;
+    gap: 0.5rem;
+    align-items: baseline;
+    padding: 0.45rem 0.7rem;
+    border-radius: 10px;
+    cursor: pointer;
+  }
+  .m3-search li small {
+    color: var(--m3-muted);
+    margin-left: auto;
+  }
+  .m3-search li[aria-selected='true'] {
+    background: color-mix(in srgb, var(--m3-accent) 12%, transparent);
+  }
+  .m3-toggle {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    min-height: 2.5rem;
+    padding: 0 0.9rem 0 0.6rem;
+    cursor: pointer;
+  }
+  .m3-toggle__track {
+    width: 1.9rem;
+    height: 1.1rem;
+    border-radius: 999px;
+    background: var(--m3-line);
+    position: relative;
+    transition: background 200ms ease-out;
+  }
+  .m3-toggle__track span {
+    position: absolute;
+    top: 0.15rem;
+    left: 0.15rem;
+    width: 0.8rem;
+    height: 0.8rem;
+    border-radius: 50%;
+    background: var(--m3-surface);
+    transition: transform 200ms ease-out;
+  }
+  .m3-toggle[aria-checked='true'] .m3-toggle__track {
+    background: var(--m3-accent);
+  }
+  .m3-toggle[aria-checked='true'] .m3-toggle__track span {
+    transform: translateX(0.8rem);
+  }
+  .m3-expert-tools {
+    display: none;
+    gap: 0.5rem;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .m3[data-mode='expert'] .m3-expert-tools {
+    display: flex;
+  }
+  .m3-select span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+  }
+  .m3-select select {
+    min-height: 2.5rem;
+    padding: 0 0.8rem;
+  }
+  .m3-seg {
+    display: inline-flex;
+    padding: 0.2rem;
+  }
+  .m3-seg button {
+    font: inherit;
+    border: 0;
+    border-radius: 999px;
+    padding: 0.35rem 0.8rem;
+    min-height: 2rem;
+    background: transparent;
+    color: var(--m3-muted);
+    cursor: pointer;
+  }
+  .m3-seg button[aria-pressed='true'] {
+    background: color-mix(in srgb, var(--m3-accent) 14%, transparent);
+    color: var(--m3-ink);
+  }
+  .m3-stage {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+  .m3-cy {
+    position: absolute;
+    inset: 0;
+  }
+  .m3-cy:focus-visible {
+    outline: 2px solid color-mix(in srgb, var(--m3-accent) 55%, transparent);
+    outline-offset: -3px;
+  }
+  .m3-hint {
+    position: absolute;
+    left: 50%;
+    bottom: 1.25rem;
+    transform: translateX(-50%);
+    margin: 0;
+    padding: 0.4rem 0.9rem;
+    font-size: 0.85rem;
+    color: var(--m3-muted);
+    background: color-mix(in srgb, var(--m3-bg) 85%, transparent);
+    border-radius: 999px;
+    pointer-events: none;
+    transition: opacity 250ms ease-out;
+    white-space: nowrap;
+  }
+  .m3[data-touched] .m3-hint {
+    opacity: 0;
+  }
+  .m3-badge {
+    position: absolute;
+    z-index: 2;
+    transform: translate(-50%, -50%);
+    font: inherit;
+    font-size: 0.75rem;
+    font-weight: 600;
+    min-width: 1.9rem;
+    min-height: 1.6rem;
+    padding: 0 0.45rem;
+    border-radius: 999px;
+    border: 1px solid var(--m3-border);
+    background: var(--m3-surface);
+    color: var(--m3-ink);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 0.12);
+    cursor: pointer;
+  }
+  .m3-card {
+    position: absolute;
+    z-index: 4;
+    top: 4.25rem;
+    right: 0.75rem;
+    width: min(22rem, calc(100% - 1.5rem));
+    max-height: calc(100% - 5rem);
+    overflow: auto;
+    box-sizing: border-box;
+    padding: 1.1rem 1.25rem 1rem;
+    background: var(--m3-surface);
+    border: 1px solid var(--m3-border);
+    border-radius: 16px;
+    box-shadow: var(--m3-shadow);
+    animation: m3-in 220ms ease-out;
+  }
+  @keyframes m3-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+  }
+  .m3-card h2 {
+    margin: 0.2rem 2rem 0.5rem 0;
+    font-size: 1.3rem;
+    line-height: 1.25;
+  }
+  .m3-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.02em;
+    color: var(--m3-muted);
+  }
+  .m3-dot {
+    width: 0.6rem;
+    height: 0.6rem;
+    border-radius: 50%;
+    background: var(--m3-dot, var(--m3-muted));
+  }
+  .m3-summary {
+    margin: 0 0 0.8rem;
+    font-size: 1rem;
+    line-height: 1.5;
+  }
+  .m3-rels {
+    margin: 0 0 0.9rem;
+    padding: 0;
+    list-style: none;
+    font-size: 0.9rem;
+    line-height: 1.45;
+    color: var(--m3-muted);
+  }
+  .m3-rels li {
+    padding: 0.35rem 0;
+    border-top: 1px solid var(--m3-border);
+  }
+  .m3-rels b {
+    font-weight: 500;
+    color: var(--m3-ink);
+  }
+  .m3-rels button {
+    font: inherit;
+    color: var(--m3-ink);
+    font-weight: 500;
+    padding: 0.1rem 0;
+    min-height: 24px;
+    background: none;
+    border: 0;
+    border-bottom: 1px solid color-mix(in srgb, var(--m3-accent) 45%, transparent);
+    cursor: pointer;
+  }
+  .m3-links {
+    display: flex;
+    gap: 1.2rem;
+    margin: 0;
+    font-size: 0.9rem;
+  }
+  .m3-links a {
+    color: var(--m3-accent);
+    text-decoration: none;
+    padding: 0.2rem 0;
+  }
+  .m3-links a:hover {
+    text-decoration: underline;
+  }
+  .m3-close {
+    position: absolute;
+    top: 0.6rem;
+    right: 0.6rem;
+    width: 2rem;
+    height: 2rem;
+    border: 0;
+    border-radius: 50%;
+    background: transparent;
+    color: var(--m3-muted);
+    font-size: 1.3rem;
+    line-height: 1;
+    cursor: pointer;
+  }
+  .m3-close:hover {
+    background: color-mix(in srgb, var(--m3-ink) 8%, transparent);
+  }
+  .m3-list {
+    position: absolute;
+    inset: 4.25rem 0 0;
+    overflow: auto;
+    padding: 0 1rem 1rem;
+    background: var(--m3-bg);
+  }
+  .m3-list table {
+    width: 100%;
+    max-width: 52rem;
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .m3-count {
+    max-width: 52rem;
+    margin: 0 auto 0.5rem;
+    color: var(--m3-muted);
+    font-size: 0.85rem;
+  }
+  .m3-list th,
+  .m3-list td {
+    text-align: left;
+    padding: 0.45rem 0.6rem;
+    border-bottom: 1px solid var(--m3-border);
+  }
+  .m3-list th {
+    color: var(--m3-muted);
+    font-weight: 500;
+  }
+  .m3-list td button {
+    font: inherit;
+    color: var(--m3-ink);
+    background: none;
+    border: 0;
+    padding: 0.2rem 0;
+    min-height: 24px;
+    cursor: pointer;
+    text-align: left;
+  }
+  .m3-list td button:hover {
+    color: var(--m3-accent);
+  }
+  .m3-noscript {
+    padding: 1rem;
+  }
+  @media (max-width: 640px) {
+    .m3-bar {
+      flex-wrap: nowrap;
+    }
+    .m3-search {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    .m3[data-mode='expert'] .m3-bar {
+      flex-wrap: wrap;
+    }
+    .m3[data-mode='expert'] .m3-search {
+      flex-basis: 100%;
+      order: 2;
+    }
+    .m3-toggle {
+      flex: none;
+      padding-right: 0.7rem;
+    }
+    .m3-card {
+      top: auto;
+      right: 0;
+      bottom: 0;
+      width: 100%;
+      max-height: 48%;
+      border-radius: 18px 18px 0 0;
+      border-bottom: 0;
+    }
+    .m3-list {
+      top: 7.5rem;
+    }
+    .m3-hint {
+      white-space: normal;
+      text-align: center;
+      width: max-content;
+      max-width: calc(100% - 2rem);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .m3-card {
+      animation: none;
+    }
+  }
+</style>
+
+<script>
+  import './MapExplorer.client.ts';
+</script>

@@ -1,0 +1,21 @@
+---
+// Minimal map (Phase 2 redesign, specs.md §7 `/map3` row): 14 calm anchors by
+// default, detail on click, full corpus behind an expert toggle. Candidate to
+// replace `/map` after owner review; `/map` and `/map2` are untouched.
+import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import Base from '../../../layouts/Base.astro';
+import MapExplorer from '../../../components/MapExplorer.astro';
+import { getUiStrings } from '../../../i18n/ui.js';
+
+export async function getStaticPaths() {
+  return locales.map(({ code: locale }) => ({ params: { locale } }));
+}
+
+const { locale } = Astro.params as { locale: LocaleCode };
+const t = getUiStrings(locale).map3;
+const switcherHrefs = Object.fromEntries(locales.map(({ code }) => [code, `/${code}/map3/`])) as Record<LocaleCode, string>;
+---
+
+<Base locale={locale} title={t.pageTitle} switcherHrefs={switcherHrefs} appShell>
+  <MapExplorer locale={locale} />
+</Base>

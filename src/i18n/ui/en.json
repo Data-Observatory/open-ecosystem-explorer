@@ -92,5 +92,41 @@
   "home": {
     "cta": "Explore the interactive map →",
     "fullMap": "Full map (advanced)"
+  },
+  "map3": {
+    "pageTitle": "Open science ecosystem map",
+    "heading": "Ecosystem map",
+    "canvasLabel": "Interactive map: open science concepts and services",
+    "searchLabel": "Search the map",
+    "searchPlaceholder": "Search  ( / )",
+    "noResults": "No results",
+    "hint": "Tap a point to see what it connects to.",
+    "keysHelp": "Keyboard: / searches, arrow keys move between points, Enter opens or shows more, Esc goes back.",
+    "expert": "Expert mode",
+    "viewMap": "Map",
+    "viewList": "List",
+    "viewLabel": "View",
+    "filterType": "Type",
+    "filterFamily": "Relations",
+    "allTypes": "All types",
+    "allFamilies": "All relations",
+    "close": "Close",
+    "seeEntry": "See entry",
+    "wikipedia": "Wikipedia",
+    "connections": "Connections",
+    "moreLabel": "Show {n} more connections",
+    "selected": "{name}: {n} connections.",
+    "cleared": "Starting view.",
+    "count": "{n} of {total} entries",
+    "colName": "Name",
+    "colType": "Type",
+    "colLinks": "Connections",
+    "families": {
+      "concept": "Concept",
+      "identifier": "Identifier",
+      "service": "Service",
+      "rule": "Standard or policy",
+      "actor": "Organisation or community"
+    }
   }
 }
