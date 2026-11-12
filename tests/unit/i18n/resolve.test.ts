@@ -44,12 +44,12 @@ describe('resolveProse', () => {
     expect(figshare.localeUsed).toBe('en');
   });
 
-  it('resolves real seed content correctly: an untranslated entity falls back to es in en', async () => {
+  it('resolves real seed content correctly: every entity has en prose, so none falls back (full parity)', async () => {
     const { loadRealProseMap } = await import('../../fixtures/load-real-content.js');
     const prose = loadRealProseMap();
     const index = { prose } as unknown as GraphIndex;
     const result = resolveProse(index, 'digital-science', 'en');
-    expect(result.fallback).toBe(true);
-    expect(result.localeUsed).toBe('es');
+    expect(result.fallback).toBe(false);
+    expect(result.localeUsed).toBe('en');
   });
 });
