@@ -1,0 +1,4 @@
+summary: A CRIS is an information system that links projects, people, organisations
+  and outputs so institutions and funders can manage and report research.
+body: |-
+  Its core entities are people, organisations, projects and outputs, and the euroCRIS CERIF data model is the common reference. A CRIS mainly manages records about research activity rather than storing the outputs themselves.

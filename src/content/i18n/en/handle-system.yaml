@@ -1,0 +1,5 @@
+summary: Resolution protocol and prefix registry underlying the DOI, managed globally by the DONA Foundation.
+relationNotes:
+  related-to@persistent-identifier: Resolution system that underpins the DOI and other persistent identifiers.
+body: |-
+  The Handle System resolves a persistent identifier to the current location of the object it represents. The DOI is the best-known naming scheme built on this protocol.

@@ -1,0 +1,5 @@
+summary: European open science cloud, a federated infrastructure with an EU node.
+relationNotes:
+  interoperates-with@openaire: OpenAIRE is a core service provider for discovery and resource-catalogue services for the EOSC EU Node.
+body: |-
+  The European Open Science Cloud (EOSC) is the European Union's federated infrastructure, governed by the EOSC Association.

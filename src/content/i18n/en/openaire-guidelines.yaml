@@ -1,0 +1,6 @@
+summary: Application profiles that let repositories, journals and CRIS expose metadata in
+  an interoperable way.
+relationNotes:
+  is-a@metadata-standard: Application profile of a metadata standard.
+body: |-
+  The OpenAIRE Guidelines define application profiles built on Dublin Core, so that repositories, journals and CRIS expose their metadata consistently.

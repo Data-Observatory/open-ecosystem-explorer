@@ -1,0 +1,7 @@
+summary: Principles that require data to be findable, describable, connectable and reusable, leaving the level of access to whoever holds it.
+relationNotes:
+  related-to@research-data-management: Principles for managing research data so that it can be reused.
+  related-to@open-data: FAIR data does not have to be open; openness is a separate decision.
+  related-to@metadata: Findability and interoperability depend on rich metadata.
+body: |-
+  FAIR is neither a technical standard nor a requirement to open data. That separation between access and description is the most useful tool when talking to public institutions about sensitive data without asking them to open it.

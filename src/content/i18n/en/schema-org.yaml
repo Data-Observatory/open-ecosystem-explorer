@@ -1,0 +1,6 @@
+summary: Shared vocabulary that lets search engines read the content of web pages.
+relationNotes:
+  governed-by@google: Since 2026 Google runs it directly. The W3C community group is only a discussion forum.
+  related-to@metadata-standard: Shared vocabulary for marking up structured data on web pages.
+body: |-
+  schema.org defines a common vocabulary that lets web search engines interpret a page's content, including datasets and repositories. It is not a W3C initiative. According to its own community group, Google has run it directly since 2026.

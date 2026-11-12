@@ -1,0 +1,3 @@
+summary: The common minimum of library metadata — 15 core elements for describing any resource.
+body: |-
+  Dublin Core is the floor on which many other schemas, including OpenAIRE's guidelines, build more specific application profiles.

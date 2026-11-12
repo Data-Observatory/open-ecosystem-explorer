@@ -1,0 +1,7 @@
+summary: Platform for projects, preprints and data run by the Center for Open Science.
+relationNotes:
+  depends-on@datacite: OSF mints DOIs for projects, components and registrations through DataCite.
+  depends-on@ror: OSF sends ROR identifiers for institutional affiliation together with
+    ORCID iDs when minting DOI metadata.
+body: |-
+  OSF (Open Science Framework) supports the whole life cycle of a research project, from registration to data publication.

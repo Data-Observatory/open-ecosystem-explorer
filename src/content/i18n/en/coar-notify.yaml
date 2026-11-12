@@ -1,0 +1,5 @@
+summary: Community conventions that connect repositories to external services, such as peer review, through linked data notifications.
+relationNotes:
+  related-to@peer-review: Lets repositories and review services exchange review notifications.
+body: |-
+  COAR Notify defines profiles and conventions built on the W3C's Linked Data Notifications, so a repository can alert external services (peer review, overlay journals) and receive alerts from them. It is not a harvesting protocol and does not replace OAI-PMH.

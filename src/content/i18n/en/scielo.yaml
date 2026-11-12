@@ -1,0 +1,6 @@
+summary: Cooperative electronic publishing programme that hosts, marks up and publishes sixteen national journal collections.
+relationNotes:
+  funded-by@fapesp: Created SciELO in 1997; since August 2024 it has been co-funded (about 47%) by CAPES and CNPq through a national consortium.
+  related-to@diamond-open-access: Runs journals under the diamond model.
+body: |-
+  SciELO does not harvest metadata from elsewhere the way OpenAIRE or LA Referencia do: it hosts the full text, applies its own admission criteria and does the editorial markup.

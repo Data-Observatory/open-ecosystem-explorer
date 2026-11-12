@@ -1,0 +1,6 @@
+summary: An institutional repository is a repository that a university or research
+  centre runs to collect, preserve and share the output of its own community.
+localNote: In Chile, ANID's policy accepts research-data deposits in institutional
+  repositories as well as the agency's own repository; many universities run one.
+body: |-
+  An institutional repository typically gathers the articles, theses and datasets of one university or institute, and most are built on software that supports OAI-PMH harvesting, so national and regional aggregators can collect their records.

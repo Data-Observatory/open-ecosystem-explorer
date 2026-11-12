@@ -1,0 +1,5 @@
+summary: International standard identifier for serial publications, coordinated by the ISSN International Centre.
+relationNotes:
+  related-to@persistent-identifier: Identifies serial publication titles; it is a title number, not a resolvable link.
+body: |-
+  The ISSN identifies journals and other serial publications, and complements other identifiers such as the DOI at the level of the whole publication. National ISSN Centres assign the numbers; the ISSN International Centre (CIEPS), an intergovernmental organisation with a membership model, coordinates them.

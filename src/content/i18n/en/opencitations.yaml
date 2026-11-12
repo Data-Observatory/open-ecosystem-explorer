@@ -1,0 +1,6 @@
+summary: Nonprofit infrastructure that publishes open citation data as linked data.
+relationNotes:
+  member-of@barcelona-declaration: Listed among the Declaration's supporters (not among its signatories).
+  depends-on@doi: Citation records are identified by the DOIs of the citing and cited articles.
+body: |-
+  OpenCitations publishes academic citation data as open linked data, which can be downloaded and reused without restrictions.

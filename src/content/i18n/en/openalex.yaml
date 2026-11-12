@@ -1,0 +1,11 @@
+summary: Open alternative to proprietary indexes, free and fully downloadable; built by OurResearch.
+relationNotes:
+  member-of@barcelona-declaration: Listed as a supporter of the Declaration, not as a signatory.
+  operated-by@ourresearch: Built and maintained by OurResearch, a nonprofit organisation.
+  interoperates-with@opencitations: OpenAlex includes OpenCitations' open citation data as one of its sources.
+  interoperates-with@wikidata: Cross-referenced via WikiCite; OpenAlex reconciles entities against Wikidata QIDs.
+  indexes@zenodo: OpenAlex harvests and indexes works deposited in Zenodo.
+  indexes@arxiv: OpenAlex harvests and indexes arXiv preprints.
+  related-to@citation-index: Open catalogue of works that includes citation links.
+body: |-
+  OpenAlex is the open alternative to closed indexes: free, fully downloadable and auditable. It covers more objects than proprietary indexes, though with less editorial curation.

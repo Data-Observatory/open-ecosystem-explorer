@@ -1,0 +1,5 @@
+summary: XML tagging suite for journal articles; the markup layer on which SciELO and Redalyc are built.
+relationNotes:
+  related-to@metadata-standard: XML format for articles that includes their bibliographic description.
+body: |-
+  JATS defines how to mark up journal article content in XML; SciELO and Redalyc use it, each in its own dialect.

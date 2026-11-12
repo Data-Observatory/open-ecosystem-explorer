@@ -1,0 +1,9 @@
+summary: European infrastructure that aggregates repositories and links publications
+  to funding.
+relationNotes:
+  indexes@zenodo: OpenAIRE and Zenodo have worked closely together since Zenodo launched
+    in 2013; OpenAIRE aggregates and links its records.
+  member-of@barcelona-declaration: Listed as a supporter on the Barcelona Declaration
+    website; OpenAIRE presents itself as a signatory.
+body: |-
+  OpenAIRE is the reference model for open aggregation in Europe, connecting institutional repositories with funding data.

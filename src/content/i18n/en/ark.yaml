@@ -1,0 +1,6 @@
+summary: Persistent identifier scheme that is free to issue, with a NAAN registry
+  and the N2T resolver stewarded by the ARK Alliance.
+relationNotes:
+  funded-by@lyrasis: The community-governed ARK Alliance is supported in part by LYRASIS.
+body: |-
+  ARK is an alternative to the DOI that costs nothing to issue. It is popular with libraries, archives and some data repositories. It is governed by the ARK Alliance, a technical community that coordinates the institutions issuing identifiers and maintains the NAAN registry and the N2T resolver.

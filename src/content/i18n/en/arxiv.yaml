@@ -1,0 +1,7 @@
+summary: Preprint server for physics, mathematics and computer science; an independent nonprofit since July 2026.
+relationNotes:
+  funded-by@cornell: One of several funders until June 2026, alongside the Simons Foundation and a consortium of member institutions.
+  implements@oai-pmh: arXiv is one of the first implementers of OAI-PMH; the protocol partly grew out of harvesting needs such as arXiv's.
+  related-to@preprint: A server that hosts preprints; it is a platform, not a preprint.
+body: |-
+  arXiv is a preprint server with more than three million articles. They go through moderation but not peer review. It was hosted at Cornell University for 25 years. Since 1 July 2026 it is an independent organisation, arXiv, Inc., a Delaware nonprofit corporation governed by its own board (8 inaugural members, up to 4 more), with Cornell and the Simons Foundation as founding members.

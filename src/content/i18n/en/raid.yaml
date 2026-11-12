@@ -1,0 +1,6 @@
+summary: Identifies a research project or activity, not its output; ISO 23527:2022 standard operated by ARDC.
+relationNotes:
+  governed-by@ardc: ARDC is the ISO-appointed registration authority for RAiD worldwide.
+  depends-on@datacite: ARDC and DataCite deliver RAiD jointly; registration takes place through the DataCite Consortium infrastructure.
+body: |-
+  RAiD is of great interest to countries without a national CRIS, because it makes it possible to identify research activity without building a full system.

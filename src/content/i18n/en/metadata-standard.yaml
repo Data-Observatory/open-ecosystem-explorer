@@ -1,0 +1,4 @@
+summary: A metadata standard is an agreement on which fields to use and how to name
+  them so systems describe and share information alike.
+body: |-
+  A shared standard lets different systems describe the same thing in the same way, so records can be exchanged and combined. Dublin Core, the DataCite metadata schema, DCAT and CERIF are examples.

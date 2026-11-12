@@ -1,0 +1,6 @@
+summary: From the Cambia foundation; links scientific literature with patents, useful for innovation and technology transfer.
+relationNotes:
+  operated-by@cambia: Operated by the Cambia foundation.
+  depends-on@crossref: Lens records are built on Crossref metadata, supplemented by DataCite DOIs and ORCID iDs.
+body: |-
+  The Lens combines scientific literature and patent data in a single index, which makes it particularly useful for innovation and technology transfer analysis.

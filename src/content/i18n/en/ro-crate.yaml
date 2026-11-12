@@ -1,0 +1,3 @@
+summary: Specification for packaging a research object together with its context and provenance.
+body: |-
+  RO-Crate packages an object with its context and provenance using JSON-LD, making it easier to share data in a self-contained and reusable way.

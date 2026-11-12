@@ -1,0 +1,7 @@
+summary: International standard identifier for books, issued by national agencies
+  coordinated by the International ISBN Agency.
+relationNotes:
+  related-to@persistent-identifier: Identifies books permanently, but does not resolve
+    to a location on its own.
+body: |-
+  The ISBN predates the digital era and remains the reference identifier for monographs and books. National agencies assign the numbers within their ranges. The International ISBN Agency, a nonprofit with a membership model, coordinates them.

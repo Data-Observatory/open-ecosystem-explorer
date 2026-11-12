@@ -1,0 +1,6 @@
+summary: Free general-purpose repository operated by CERN, with CoreTrustSeal certification and DOIs included.
+relationNotes:
+  operated-by@cern: Operated by CERN, originally launched alongside OpenAIRE and still working closely with that network (see the incoming "indexes" relation from OpenAIRE).
+  related-to@open-license: Asks depositors to choose a licence for open access records.
+body: |-
+  Zenodo is one of the reference repositories in the ecosystem: free, with DOIs included and CoreTrustSeal certification.

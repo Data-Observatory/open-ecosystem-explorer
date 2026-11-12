@@ -1,0 +1,3 @@
+summary: Classic metadata harvesting mechanism between repositories; required by ANID's open access policy in Chile.
+body: |-
+  OAI-PMH remains the most widely used harvesting protocol between repositories.

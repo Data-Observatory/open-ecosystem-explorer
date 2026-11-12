@@ -1,0 +1,6 @@
+summary: Curated registry of standards, databases and data policies, and of how they relate to one another.
+relationNotes:
+  complies-with@fair: Built explicitly to help align resources with the FAIR principles.
+  interoperates-with@re3data: Both curate registries of repositories and standards, and cross-link their entries.
+body: |-
+  FAIRsharing catalogues standards, databases and data policies, showing how they relate to each other, with an explicit focus on supporting the adoption of FAIR.

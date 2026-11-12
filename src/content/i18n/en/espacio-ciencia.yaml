@@ -1,0 +1,6 @@
+summary: Chile's national access node, run by ANID.
+relationNotes:
+  part-of@la-referencia: Chile's national node within the federated LA Referencia network.
+  related-to@research-repository: Harvests institutional repositories into a single national discovery point.
+body: |-
+  Espacio Ciencia harvests Chile's institutional repositories and the Repositorio ANID into a single discovery point.

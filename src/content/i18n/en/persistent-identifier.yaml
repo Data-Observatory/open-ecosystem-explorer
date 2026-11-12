@@ -1,0 +1,4 @@
+summary: A persistent identifier is a unique, lasting code that keeps pointing to
+  the same resource even if its address changes, so it can be cited.
+body: |-
+  Persistence is a matter of service, not of the code itself: someone has to keep the link between the identifier and the resource up to date. DOI, ARK, Handle and ORCID iD are common examples.
