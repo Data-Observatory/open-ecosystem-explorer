@@ -15,7 +15,8 @@ import { buildFocusDiagram } from '../../../lib/mermaid/flowchart.js';
 import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
 import { describeFocusEntity } from '../../../lib/a11y/describe.js';
 import { locales, defaultLocale, type LocaleCode } from '../../../i18n/locales.js';
-import { getUiStrings } from '../../../i18n/ui.js';
+import { getUiStrings, governanceLabel } from '../../../i18n/ui.js';
+import { getDisciplinesVocab, getEntityTypesVocab, getStatusesVocab, getTagsVocab } from '../../../content/vocab-index.js';
 import type { EntityId } from '../../../lib/model/types.js';
 
 export async function getStaticPaths() {
@@ -29,6 +30,14 @@ const ui = getUiStrings(locale);
 const index = await getSiteIndex();
 const entity = index.entities.get(id);
 if (!entity) throw new Error(`entity '${id}' not found in the built graph index`);
+
+const typeVocab = await getEntityTypesVocab();
+const statusVocab = await getStatusesVocab();
+const tagsVocab = await getTagsVocab();
+const disciplinesVocab = await getDisciplinesVocab();
+const typeEntry = typeVocab.get(entity.type);
+const typeText = typeEntry?.label[locale] ?? typeEntry?.label.en ?? entity.type;
+const statusText = statusVocab.get(entity.status)?.label[locale] ?? entity.status;
 
 const { prose, fallback } = resolveProse(index, id, locale);
 const displayName = prose.name ?? entity.name;
@@ -68,12 +77,20 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
     <header class="entity-header">
       <h1>{displayName}</h1>
       <p class="badges">
-        <span class="badge">{entity.type}</span>
-        <span class="badge">{entity.governance}</span>
-        <span class="badge">{entity.status}</span>
+        <span class="badge">{typeText}</span>
+        <span class="badge">{governanceLabel(locale, entity.governance)}</span>
+        <span class="badge">{statusText}</span>
       </p>
       <p class="summary" lang={fallback ? defaultLocale : undefined}>{prose.summary}</p>
     </header>
+
+    {
+      prose.localNote && (
+        <aside class="local-note" aria-label={ui.entity.localNote} lang={fallback ? defaultLocale : undefined}>
+          <strong>{ui.entity.localNote}.</strong> {prose.localNote}
+        </aside>
+      )
+    }
 
     <Diagram
       svgHtml={svgHtml}
@@ -97,7 +114,7 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
                   </>
                 ) : (
                   <>
-                    <a href={`/${locale}/entity/${row.subjectId}/`}>{row.subjectName}</a> {row.predicateLabel} this
+                    <a href={`/${locale}/entity/${row.subjectId}/`}>{row.subjectName}</a> {row.predicateLabel} {displayName}
                   </>
                 )}
               </li>
@@ -130,11 +147,17 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
       </section>
 
       <p class="facets">
-        <strong>{ui.entity.tags}:</strong> {entity.tags.join(', ')}
+        <strong>{ui.entity.tags}:</strong>{' '}
+        {entity.tags.map((tag, i) => (
+          <>
+            {i > 0 ? ', ' : ''}
+            <a href={`/${locale}/tags/${tag}/`}>{tagsVocab.get(tag)?.label[locale] ?? tag}</a>
+          </>
+        ))}
         {entity.disciplines && entity.disciplines.length > 0 && (
           <>
             {' '}
-            · <strong>{ui.entity.disciplines}:</strong> {entity.disciplines.join(', ')}
+            · <strong>{ui.entity.disciplines}:</strong> {entity.disciplines.map((d) => disciplinesVocab.get(d)?.label[locale] ?? d).join(', ')}
           </>
         )}
         {entity.geography && entity.geography.length > 0 && (
@@ -151,7 +174,7 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
 
         <section aria-label={ui.entity.completeAttributes}>
           <h2>{ui.entity.completeAttributes}</h2>
-          <AttributeTable entity={entity} />
+          <AttributeTable entity={entity} locale={locale} />
         </section>
 
         <section aria-label={ui.entity.sources}>
@@ -224,6 +247,14 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
     border-radius: 999px;
     padding: 0.1rem 0.6rem;
     font-size: 0.8rem;
+  }
+  .local-note {
+    margin: 1rem 0;
+    padding: 0.6rem 1rem;
+    border-left: 4px solid #0969da;
+    background: #f6f8fa;
+    color: #24292f;
+    border-radius: 0 4px 4px 0;
   }
   .fallback-notice {
     background: #fff8c5;

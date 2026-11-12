@@ -8,6 +8,7 @@ import { getSiteIndex } from '../../../content/site-index.js';
 import { buildPredicateMapDiagram, describePredicateMap } from '../../../lib/mermaid/predicate-map.js';
 import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
 import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { getEntityTypesVocab } from '../../../content/vocab-index.js';
 import { getUiStrings } from '../../../i18n/ui.js';
 import { PREDICATE_IDS, type PredicateId } from '../../../lib/model/types.js';
 
@@ -20,6 +21,9 @@ const ui = getUiStrings(locale);
 const index = await getSiteIndex();
 const def = index.predicates.get(predicate);
 const label = def?.label[locale] ?? predicate;
+
+const typeVocab = await getEntityTypesVocab();
+const typeText = (t: string) => typeVocab.get(t as never)?.label[locale] ?? t;
 
 const description = describePredicateMap(index, predicate, locale);
 const diagramSource = buildPredicateMapDiagram(index, predicate, locale);
@@ -55,8 +59,8 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
           <tbody>
             {description.rows.map((r) => (
               <tr>
-                <td>{r.subjectName} <span class="type-label">({r.subjectType})</span></td>
-                <td>{r.objectName} <span class="type-label">({r.objectType})</span></td>
+                <td>{r.subjectName} <span class="type-label">({typeText(r.subjectType)})</span></td>
+                <td>{r.objectName} <span class="type-label">({typeText(r.objectType)})</span></td>
                 <td>{r.since ?? '—'}</td>
                 <td>{r.note ?? ''}</td>
               </tr>

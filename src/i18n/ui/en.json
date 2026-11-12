@@ -10,7 +10,8 @@
     "search": "Search",
     "about": "About",
     "contribute": "Contribute",
-    "changelog": "Changelog"
+    "changelog": "Changelog",
+    "primary": "Primary"
   },
   "footer": {
     "codeLicense": "Code: MIT",
@@ -37,7 +38,59 @@
     "tags": "Tags",
     "disciplines": "Disciplines",
     "geography": "Geography",
+    "localNote": "Local context",
     "suggestTranslation": "Suggest a translation",
     "translationIssueUrl": "/CONTRIBUTING.md#translations"
+  },
+  "diagram": {
+    "controlsLabel": "Diagram view controls",
+    "tableSummary": "View as table ({n} relationships)",
+    "colSubject": "Subject",
+    "colRelationship": "Relationship",
+    "colObject": "Object",
+    "colSince": "Since",
+    "colNote": "Note"
+  },
+  "attributes": {
+    "caption": "Complete attributes of {name}",
+    "yes": "yes",
+    "no": "no"
+  },
+  "relationsPage": {
+    "domain": "Domain",
+    "range": "Range"
+  },
+  "enums": {
+    "governance": {
+      "commercial": "Commercial",
+      "nonprofit": "Nonprofit",
+      "community": "Community",
+      "intergovernmental": "Intergovernmental",
+      "public-agency": "Public agency",
+      "academic": "Academic",
+      "unknown": "Unknown",
+      "not-applicable": "Not applicable"
+    },
+    "prominence": {
+      "core": "Core",
+      "extended": "Extended",
+      "detail": "Detail"
+    }
+  },
+  "tagsIndex": {
+    "title": "Tags",
+    "intro": "Tags group entities by function, region and other facets. Each tag leads to the list of its entities.",
+    "entities": "entities",
+    "namespaces": {
+      "function": "Function",
+      "openness": "Openness",
+      "region": "Region",
+      "theme": "Theme",
+      "other": "Other"
+    }
+  },
+  "home": {
+    "cta": "Explore the interactive map →",
+    "fullMap": "Full map (advanced)"
   }
 }

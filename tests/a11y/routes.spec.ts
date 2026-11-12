@@ -15,6 +15,7 @@ const ROUTES_PER_LOCALE = (locale: string) => [
   `/${locale}/entity/openalex/`,
   `/${locale}/entities/index/`,
   `/${locale}/relations/owned-by/`,
+  `/${locale}/tags/`,
   `/${locale}/views/vertical-integration/`,
   `/${locale}/taxonomy/`,
   `/${locale}/model/`,

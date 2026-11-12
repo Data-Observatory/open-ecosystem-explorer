@@ -85,18 +85,21 @@ export function describeFocusEntity(index: GraphIndex, entityId: EntityId, local
   const rows = view.edges.flatMap((e) => expandRow(index, e, locale));
 
   const subjectName = name(index, entityId, locale);
-  const caption = `${subjectName} — relationships`;
+  const es = locale === 'es';
+  const caption = es ? `${subjectName} — relaciones` : `${subjectName} — relationships`;
 
   const outgoing = index.outgoing.get(entityId) ?? [];
   const incoming = index.incoming.get(entityId) ?? [];
   const ownedByEdge = outgoing.find((e) => e.predicate === 'owned-by');
-  let description = `${subjectName} has ${outgoing.length} outgoing and ${incoming.length} incoming relationships.`;
+  let description = es
+    ? `${subjectName} tiene ${outgoing.length} relaciones salientes y ${incoming.length} entrantes.`
+    : `${subjectName} has ${outgoing.length} outgoing and ${incoming.length} incoming relationships.`;
   if (ownedByEdge) {
     const ownerName = name(index, ownedByEdge.to, locale);
     const ownerSiblings = (index.incoming.get(ownedByEdge.to) ?? []).filter((e) => e.predicate === 'owned-by' && e.from !== entityId);
     if (ownerSiblings.length > 0) {
-      const siblingNames = ownerSiblings.map((e) => `${name(index, e.from, locale)} (${typeLabel(index, e.from)})`).join(' and ');
-      description += ` Its owner, ${ownerName}, also owns ${siblingNames}.`;
+      const siblingNames = ownerSiblings.map((e) => `${name(index, e.from, locale)} (${typeLabel(index, e.from)})`).join(es ? ' y ' : ' and ');
+      description += es ? ` Su propietario, ${ownerName}, también posee ${siblingNames}.` : ` Its owner, ${ownerName}, also owns ${siblingNames}.`;
     }
   }
 

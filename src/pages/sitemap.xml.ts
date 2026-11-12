@@ -7,7 +7,7 @@ import { getViewsData } from '../content/views-index.js';
 import { locales } from '../i18n/locales.js';
 import { PREDICATE_IDS, ENTITY_TYPES } from '../lib/model/types.js';
 
-const STATIC_PATHS = ['', 'layers', 'map', 'entities', 'relations', 'taxonomy', 'model', 'views', 'search', 'about', 'contribute', 'changelog'];
+const STATIC_PATHS = ['', 'layers', 'map', 'entities', 'relations', 'tags', 'taxonomy', 'model', 'views', 'search', 'about', 'contribute', 'changelog'];
 
 export const GET: APIRoute = async () => {
   const index = await getSiteIndex();

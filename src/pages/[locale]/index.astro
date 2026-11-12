@@ -50,14 +50,14 @@ const t = strings[locale];
   </p>
 
   <p class="map-cta">
-    <a href={`/${locale}/map/`} class="map-cta__button">
-      {locale === 'es' ? 'Explorar el mapa interactivo →' : 'Explore the interactive map →'}
-    </a>
+    <a href={`/${locale}/map2/`} class="map-cta__button">{ui.home.cta}</a>
   </p>
 
   <h2>{t.start}</h2>
   <ul class="start-links">
+    <li><a href={`/${locale}/map/`}>{ui.home.fullMap}</a></li>
     <li><a href={`/${locale}/layers/`}>{ui.nav.layers}</a></li>
+    <li><a href={`/${locale}/tags/`}>{ui.tagsIndex.title}</a></li>
     <li><a href={`/${locale}/entities/`}>{ui.nav.entities}</a></li>
     <li><a href={`/${locale}/relations/owned-by/`}>{locale === 'es' ? 'Quién es propietario de qué' : 'Who owns what'}</a></li>
     <li><a href={`/${locale}/views/`}>{ui.nav.views}</a></li>

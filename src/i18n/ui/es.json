@@ -10,7 +10,8 @@
     "search": "Buscar",
     "about": "Acerca de",
     "contribute": "Contribuir",
-    "changelog": "Historial de cambios"
+    "changelog": "Historial de cambios",
+    "primary": "Principal"
   },
   "footer": {
     "codeLicense": "Código: MIT",
@@ -37,7 +38,59 @@
     "tags": "Etiquetas",
     "disciplines": "Disciplinas",
     "geography": "Geografía",
+    "localNote": "Contexto local",
     "suggestTranslation": "Sugerir una traducción",
     "translationIssueUrl": "/CONTRIBUTING.md#translations"
+  },
+  "diagram": {
+    "controlsLabel": "Controles de vista del diagrama",
+    "tableSummary": "Ver como tabla ({n} relaciones)",
+    "colSubject": "Sujeto",
+    "colRelationship": "Relación",
+    "colObject": "Objeto",
+    "colSince": "Desde",
+    "colNote": "Nota"
+  },
+  "attributes": {
+    "caption": "Atributos completos de {name}",
+    "yes": "sí",
+    "no": "no"
+  },
+  "relationsPage": {
+    "domain": "Dominio",
+    "range": "Rango"
+  },
+  "enums": {
+    "governance": {
+      "commercial": "Comercial",
+      "nonprofit": "Sin fines de lucro",
+      "community": "Comunitaria",
+      "intergovernmental": "Intergubernamental",
+      "public-agency": "Agencia pública",
+      "academic": "Académica",
+      "unknown": "Desconocida",
+      "not-applicable": "No aplica"
+    },
+    "prominence": {
+      "core": "Esencial",
+      "extended": "Ampliado",
+      "detail": "Detalle"
+    }
+  },
+  "tagsIndex": {
+    "title": "Etiquetas",
+    "intro": "Las etiquetas agrupan entidades por función, región y otras facetas. Cada etiqueta lleva a la lista de sus entidades.",
+    "entities": "entidades",
+    "namespaces": {
+      "function": "Función",
+      "openness": "Apertura",
+      "region": "Región",
+      "theme": "Tema",
+      "other": "Otras"
+    }
+  },
+  "home": {
+    "cta": "Explorar el mapa interactivo →",
+    "fullMap": "Mapa completo (avanzado)"
   }
 }

@@ -8,6 +8,7 @@ import { getEntityTypesVocab } from '../content/vocab-index.js';
 import { TYPE_FILL, shapeForLayer } from '../lib/mermaid/palette.js';
 import type { EntityType } from '../lib/model/types.js';
 import type { LocaleCode } from '../i18n/locales.js';
+import { fmt, getUiStrings } from '../i18n/ui.js';
 
 export interface Props {
   /** Inline <svg>...</svg> markup from renderMermaidToInlineSvg(). */
@@ -30,7 +31,7 @@ export interface Props {
   idPrefix: string;
   /** Drives the legend's plain-language labels and the pan/zoom buttons' default locale text. */
   locale: LocaleCode;
-  tableCaption?: string; // e.g. "View as table (7 relationships)" — locale-aware, built by the caller
+  tableCaption?: string; // overrides the default localised "View as table (N relationships)" summary
   /** Explicit overrides; otherwise a locale-aware default (see below) is used. */
   zoomInLabel?: string;
   zoomOutLabel?: string;
@@ -41,7 +42,8 @@ const { svgHtml, caption, description, rows, idPrefix, locale, tableCaption, zoo
 const titleId = `${idPrefix}-t`;
 const descId = `${idPrefix}-d`;
 const svgWrapperId = `${idPrefix}-svg`;
-const summary = tableCaption ?? `View as table (${rows.length} relationships)`;
+const ui = getUiStrings(locale);
+const summary = tableCaption ?? fmt(ui.diagram.tableSummary, { n: rows.length });
 
 const zoomLabels =
   locale === 'es'
@@ -56,6 +58,10 @@ const finalReset = resetViewLabel ?? zoomLabels.reset;
 // table already renders, so it can't drift from what's actually shown.
 const typeVocab = await getEntityTypesVocab();
 const presentTypes = [...new Set(rows.flatMap((r) => [r.subjectType, r.objectType]))].sort() as EntityType[];
+function typeLabel(type: string): string {
+  const entry = typeVocab.get(type as EntityType);
+  return entry?.label[locale] ?? entry?.label.en ?? type;
+}
 const legendItems: LegendItem[] = presentTypes
   .filter((t) => typeVocab.has(t))
   .map((t) => {
@@ -72,7 +78,7 @@ const legendItems: LegendItem[] = presentTypes
 
 <figure class="diagram" data-diagram-panzoom>
   <DiagramLegend items={legendItems} locale={locale} />
-  <div class="diagram__controls" role="group" aria-label="Diagram view controls">
+  <div class="diagram__controls" role="group" aria-label={ui.diagram.controlsLabel}>
     <button type="button" data-panzoom-for={svgWrapperId} data-panzoom-action="zoom-in" aria-label={finalZoomIn}>+</button>
     <button type="button" data-panzoom-for={svgWrapperId} data-panzoom-action="zoom-out" aria-label={finalZoomOut}>&minus;</button>
     <button type="button" data-panzoom-for={svgWrapperId} data-panzoom-action="reset" aria-label={finalReset}>{finalReset}</button>
@@ -94,11 +100,11 @@ const legendItems: LegendItem[] = presentTypes
       <caption class="visually-hidden">{caption}</caption>
       <thead>
         <tr>
-          <th scope="col">Subject</th>
-          <th scope="col">Relationship</th>
-          <th scope="col">Object</th>
-          <th scope="col">Since</th>
-          <th scope="col">Note</th>
+          <th scope="col">{ui.diagram.colSubject}</th>
+          <th scope="col">{ui.diagram.colRelationship}</th>
+          <th scope="col">{ui.diagram.colObject}</th>
+          <th scope="col">{ui.diagram.colSince}</th>
+          <th scope="col">{ui.diagram.colNote}</th>
         </tr>
       </thead>
       <tbody>
@@ -106,11 +112,11 @@ const legendItems: LegendItem[] = presentTypes
           rows.map((row) => (
             <tr>
               <td>
-                {row.subjectName} <span class="type-label">({row.subjectType})</span>
+                {row.subjectName} <span class="type-label">({typeLabel(row.subjectType)})</span>
               </td>
               <td>{row.predicateLabel}</td>
               <td>
-                {row.objectName} <span class="type-label">({row.objectType})</span>
+                {row.objectName} <span class="type-label">({typeLabel(row.objectType)})</span>
               </td>
               <td>{row.since ?? '—'}</td>
               <td>{row.note ?? ''}</td>

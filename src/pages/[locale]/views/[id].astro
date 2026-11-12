@@ -13,7 +13,9 @@ import { resolveViewQuery, describeEntitySet, activeOptionalColumns } from '../.
 import { buildPredicateMapDiagram, describePredicateMap } from '../../../lib/mermaid/predicate-map.js';
 import { renderMermaidSource } from '../../../lib/mermaid/flowchart.js';
 import { renderMermaidToInlineSvg } from '../../../lib/mermaid/render.js';
+import { getEntityTypesVocab } from '../../../content/vocab-index.js';
 import { locales, type LocaleCode } from '../../../i18n/locales.js';
+import { governanceLabel } from '../../../i18n/ui.js';
 import type { NodeSpec } from '../../../lib/mermaid/flowchart.js';
 import type { EntityId } from '../../../lib/model/types.js';
 
@@ -27,6 +29,8 @@ const { locale, id } = Astro.params as { locale: LocaleCode; id: string };
 const index = await getSiteIndex();
 const data = await getViewsData();
 const view = data.views.get(id)!;
+const typeVocab = await getEntityTypesVocab();
+const typeText = (t: string) => typeVocab.get(t as never)?.label[locale] ?? t;
 const { prose, fallback } = resolveViewProse(data, id, locale);
 const resolved = resolveViewQuery(index, view.query, locale);
 
@@ -109,8 +113,8 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
         {entityRows.map((r) => (
           <tr>
             <td><a href={`/${locale}/entity/${r.id}/`}>{r.name}</a></td>
-            <td>{r.type}</td>
-            <td>{r.governance}</td>
+            <td>{typeText(r.type)}</td>
+            <td>{governanceLabel(locale, r.governance)}</td>
             {columns.map((c) => <td>{r.optional[c] ?? '—'}</td>)}
           </tr>
         ))}

@@ -4,6 +4,8 @@
 // own page — the site's primary means of navigation between entities.
 import type { EntityId, GraphIndex, PredicateId } from '../lib/model/types.js';
 import type { LocaleCode } from '../../src/i18n/locales.js';
+import { getUiStrings } from '../i18n/ui.js';
+import { getEntityTypesVocab } from '../content/vocab-index.js';
 
 export interface Props {
   index: GraphIndex;
@@ -12,13 +14,17 @@ export interface Props {
 }
 
 const { index, entityId, locale } = Astro.props;
+const ui = getUiStrings(locale);
 
 function name(id: EntityId): string {
   return index.prose.get(locale)?.get(id)?.name ?? index.entities.get(id)?.name ?? id;
 }
 
+const typeVocab = await getEntityTypesVocab();
 function typeOf(id: EntityId): string {
-  return index.entities.get(id)?.type ?? 'unknown';
+  const type = index.entities.get(id)?.type;
+  if (!type) return 'unknown';
+  return typeVocab.get(type)?.label[locale] ?? typeVocab.get(type)?.label.en ?? type;
 }
 
 function label(predicate: PredicateId, direction: 'label' | 'inverseLabel'): string {
@@ -51,7 +57,7 @@ const inGroups = groupByPredicate(incoming, 'from');
       <h4>{label(group.predicate, 'label')}</h4>
       <table>
         <caption class="visually-hidden">
-          {label(group.predicate, 'label')} — outgoing relations
+          {label(group.predicate, 'label')} — {ui.entity.outgoing}
         </caption>
         <tbody>
           {group.entries.map((e) => (
@@ -73,7 +79,7 @@ const inGroups = groupByPredicate(incoming, 'from');
       <h4>{label(group.predicate, 'inverseLabel')}</h4>
       <table>
         <caption class="visually-hidden">
-          {label(group.predicate, 'inverseLabel')} — incoming relations
+          {label(group.predicate, 'inverseLabel')} — {ui.entity.incoming}
         </caption>
         <tbody>
           {group.entries.map((e) => (

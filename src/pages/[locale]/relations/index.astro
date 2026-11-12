@@ -31,7 +31,7 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
 
 <Base locale={locale} title={`${ui.nav.relations} — openscience-ecosystem`} switcherHrefs={switcherHrefs}>
   <h1>{ui.nav.relations}</h1>
-  <p>{locale === 'es' ? 'Vocabulario cerrado de 19 predicados (Apéndice A.2). Dirección canónica; los inversos se derivan al construir el sitio.' : 'Closed vocabulary of 19 predicates (Appendix A.2). Canonical direction; inverses are derived at build time.'}</p>
+  <p>{locale === 'es' ? 'Vocabulario cerrado de 21 predicados (Apéndice A.2). Dirección canónica; los inversos se derivan al construir el sitio.' : 'Closed vocabulary of 21 predicates (Appendix A.2). Canonical direction; inverses are derived at build time.'}</p>
 
   <table>
     <caption class="visually-hidden">{locale === 'es' ? 'Predicados' : 'Predicates'}</caption>
@@ -39,8 +39,8 @@ const switcherHrefs = Object.fromEntries(locales.map((l) => [l.code, `/${l.code}
       <tr>
         <th scope="col">{locale === 'es' ? 'Predicado' : 'Predicate'}</th>
         <th scope="col">{locale === 'es' ? 'Inverso' : 'Inverse'}</th>
-        <th scope="col">Domain</th>
-        <th scope="col">Range</th>
+        <th scope="col">{ui.relationsPage.domain}</th>
+        <th scope="col">{ui.relationsPage.range}</th>
         <th scope="col">{locale === 'es' ? 'Aristas' : 'Edges'}</th>
       </tr>
     </thead>
