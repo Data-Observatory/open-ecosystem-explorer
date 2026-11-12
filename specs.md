@@ -1,6 +1,6 @@
 # Open Science Ecosystem Explorer — Technical Specification
 
-**Status:** Draft v0.3 — proposal for review. **Not yet implemented.** No code exists in this repository.
+**Status:** Draft v0.4 — implemented and validated (`npm run validate`, typecheck, unit/e2e/a11y suites pass); the simplification work listed in §12 is still open. Supersedes v0.3, which was written before any code existed.
 **Format reference:** [`Data-Observatory/repository-crisis-scorecards-assesment`](https://github.com/Data-Observatory/repository-crisis-scorecards-assesment) `specs.md` — structure and rigour only. None of its content, scoring engine, or question bank carries over.
 **Content source of truth:** *Manual breve del ecosistema de información de investigación*, Rodrigo Roa López de Heredia, Data Observatory, September 2026 (internal memo, Spanish). Appendix A is derived from it; memo sections are cited as **[M§n]**. Every factual claim taken from the memo has been checked against a primary source; corrections and their sources are logged in **A.4**, and the corrected value is what the spec states.
 **Sections marked 🟡 require user confirmation before implementation.** All are enumerated in §12.
@@ -87,7 +87,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 
 "Simpler website" should mean **what ships to the browser**, not the absence of a build step: hand-maintaining 50+ cross-linked HTML pages is more complexity, not less, and it makes G3 impossible.
 
-- **Astro** ships zero client JS by default (an entity page ships no framework bytes); Content Collections are typed, schema-validated globs with build-time errors, which is exactly G2 + G3; file-based routing turns one `[locale]/entity/[id].astro` into every entity page in every language; islands confine interactivity to `/map`; YAML frontmatter + Markdown body in one file suits entities that need both fields and prose. Astro's built-in `i18n` routing gives G9 without a plugin.
+- **Astro** ships zero client JS by default (an entity page ships no framework bytes); Content Collections are typed, schema-validated globs with build-time errors, which is exactly G2 + G3; file-based routing turns one `[locale]/entity/[id].astro` into every entity page in every language; islands confine interactivity to `/map`; a single plain-YAML document per file suits entities that need both fields and prose — prose is just a `body` field, not a second file format. Astro's built-in `i18n` routing gives G9 without a plugin.
 - **Not SvelteKit** (the reference project's choice, correct *there* because that app was ~90% derived reactive state): this project has none — only list filtering and canvas panning. A viable second choice carrying weight it does not need. **Not Eleventy / Hugo / Jekyll:** workable; Astro wins on TypeScript shared across content schema, graph logic and templates. **Not a graph database:** violates G6 and N6; a few hundred KB of JSON fits in memory.
 - **Not plain HTML + client-side Mermaid:** no build step means no validation, so a dangling reference reaches users instead of CI (fails G3); inverse relations must be hand-maintained in both directions (violates C1); client-side Mermaid costs ~500 KB of JS and a render flash.
 
@@ -101,8 +101,8 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 ├── scripts/  validate.ts (invariant runner) · new-entity.ts (scaffold) · export-graph.ts
 ├── src/
 │   ├── content.config.ts        # collection definitions + Zod schemas
-│   ├── content/entities/        # ONE FACTS FILE PER ENTITY, flat, <id>.md — no prose body
-│   ├── content/i18n/<locale>/   # <id>.md translated prose, + views/ (§5.7)
+│   ├── content/entities/        # ONE FACTS FILE PER ENTITY, flat, <id>.yaml — no prose body
+│   ├── content/i18n/<locale>/   # <id>.yaml translated prose (body is a field, not a body), + views/ (§5.7)
 │   ├── content/views/           # query + render + sources (§5.6), locale-independent
 │   ├── content/vocab/           # entity-types.yaml (incl. the type→layer map), predicates.yaml,
 │   │                            # tags.yaml, disciplines.yaml, statuses.yaml — per-locale labels
@@ -139,30 +139,35 @@ Field names and enum members are concrete proposals derived from the source memo
 
 ### 5.1 Core entity, `type` and the derived `layer`
 
-`type` says what a thing is; `layer` says where it sits in the memo's stack [M§1]. **`layer` is derived, not authored**: it is declared once per type in `vocab/entity-types.yaml` and computed into `GraphIndex.byLayer`. Authoring it in an entity file is a build error (C1, I23). The five cross-cutting types carry no layer — the memo describes them as *"atravesando todo… tres cosas que no son software"* [M§1] — and render as a cross-cutting band rather than a stack row.
+`type` says what a thing is; `layer` says where it sits in the memo's stack [M§1]. **`layer` is derived, not authored**: it is declared once per type in `vocab/entity-types.yaml` and computed into `GraphIndex.byLayer`. Authoring it in an entity file is a build error (C1, I23). The five cross-cutting types (`standard`, `community`, `coalition`, `policy`, `organization`) map to the layer `cross-cutting` — the memo describes them as *"atravesando todo… tres cosas que no son software"* [M§1] — and render as a band rather than a stack row. The v0.5 thirteenth type, `concept` (an idea or term: *persistent identifier*, *open access*, *metadata*, *FAIR principles*, *repository*), maps to its own layer `concept`, rendered after the band. `cross-cutting` and `concept` form the non-stack group (`CrossCuttingLayer` in `types.ts`). Layer derivation is unchanged: `vocab/entity-types.yaml` gives each type its `layer`, `buildIndex` fills `byLayer` and `stats.byLayer` with **every** layer key (zero when empty), and diagrams skip a layer or type that has no entities yet.
 
 ```ts
 /** Unique across ALL types. /^[a-z0-9]+(?:-[a-z0-9]+)*$/, 2..64 chars, == filename stem. */
 export type EntityId = string;
-/** The 19 predicates of Appendix A.2, which is the single definition of each. */
-export type PredicateId = 'issues' | 'implements' | … | 'applies-to';
+/** The 21 predicates of Appendix A.2, which is the single definition of each. */
+export type PredicateId = 'issues' | 'implements' | … | 'applies-to' | 'is-a' | 'related-to';
 
 /** M§2–M§6. Derived from `type`, never authored. `regional` is the memo's own "capa
  *  regional": supra-institutional infrastructure operating across institutions and
  *  countries — a scope, not a geographic tag (that is `geography[]`). */
 export type Layer = 'identifier' | 'agency' | 'index' | 'institutional-system' | 'regional';
+export type CrossCuttingLayer = 'cross-cutting' | 'concept';   // the non-stack group
 
 /** Definitions, subtype fields and examples per type: Appendix A.1. */
 export type EntityType =
   | 'identifier' | 'agency' | 'index' | 'cris' | 'repository'
   | 'aggregator' | 'publishing-platform'                        // layered
-  | 'standard' | 'community' | 'coalition' | 'policy' | 'organization';  // cross-cutting
+  | 'standard' | 'community' | 'coalition' | 'policy' | 'organization'   // layer: cross-cutting
+  | 'concept';                                                        // layer: concept
 
 export type Status = 'active' | 'deprecated' | 'superseded' | 'planned' | 'unknown';
 export type Confidence = 'asserted' | 'reported' | 'inferred';
 /** The memo's second question — "quién lo gobierna" [M§1]. Required on every entity. */
 export type Governance = 'commercial' | 'nonprofit' | 'community'
-  | 'intergovernmental' | 'public-agency' | 'academic' | 'unknown';
+  | 'intergovernmental' | 'public-agency' | 'academic' | 'unknown'
+  | 'not-applicable';   // concepts only: an idea has no governing body
+/** Progressive disclosure tier; omitted => 'extended' (`DEFAULT_PROMINENCE`, read via `prominenceOf`). */
+export type Prominence = 'core' | 'extended' | 'detail';
 /** Separate from `governance`, which is what makes M§5's central distinction
  *  ("contenido abierto no es lo mismo que infraestructura abierta") queryable. */
 export type OutputLicence = 'open' | 'partly-open' | 'closed' | 'not-applicable';
@@ -197,19 +202,20 @@ export interface EntityBase {
   status: Status; governance: Governance;        // governance REQUIRED — M§1
   outputLicence?: OutputLicence; codebase?: Codebase;
   since?: string; until?: string;
+  prominence?: Prominence;      // core = default view · extended (default) = on expand/search · detail = entity page / expert only
   tags: string[];               // ≥1, from vocab/tags.yaml
   disciplines?: string[]; geography?: string[];  // FORD; ISO 3166-1 alpha-2 / eu / latam / global
   relations: Relation[];        // outgoing, canonical direction only
   sources: Source[];            // ≥1 (I15)
   lastReviewed: string;         // YYYY-MM-DD
   isolated?: true;              // explicit opt-out of the no-orphans rule (I11)
-  // Markdown body MUST be empty (I31). `summary` and prose live in the i18n files.
+  // This file has no `body` field (I31). `summary` and prose live in the i18n files.
 }
 ```
 
 ### 5.2 Type-specific fields
 
-`Entity` is a discriminated union on `type` over the twelve interfaces below (`XxxEntity extends EntityBase`). Each field set is what the memo says is worth knowing about that kind of thing; **bold = required**, `?` = optional.
+`Entity` is a discriminated union on `type` over the thirteen interfaces below (`XxxEntity extends EntityBase`). Each field set is what the memo says is worth knowing about that kind of thing; **bold = required**, `?` = optional.
 
 | Type | Fields |
 |---|---|
@@ -225,14 +231,17 @@ export interface EntityBase {
 | `coalition` [M§8] | **`coalitionKind`**: declaration · reform-movement · funding-initiative · network · `signatoryCount?: number` · `workingGroups?: string[]` (e.g. Barcelona Declaration WG4) |
 | `policy` | **`policyKind`**: law · mandate · guideline · funder-requirement · strategy · recommendation · **`jurisdiction`**: string[] · **`bindingness`**: binding · conditional · advisory · `effectiveDate?` |
 | `organization` | **`orgKind`**: company · nonprofit · foundation · university · research-institute · government-agency · intergovernmental · library · `country?` (ISO 3166-1 alpha-2) |
+| `concept` | *(no type-specific fields; no `*Kind`)* — `governance` is `not-applicable`, `url` is the canonical reference page (e.g. the Wikipedia article), `identifiers.wikidata` is the only external id worth storing. Concrete things point at their concepts with `is-a`; concepts nest with `is-a` (subtype) and `part-of`. |
 
 **What was dropped from v0.1 and why.** The old `tool` / `infrastructure` types are gone. Their boundary ("software you can run" vs "a service run for you") was the model's weakest join, and the memo does not draw it — it lists DSpace, Dataverse, InvenioRDM, Zenodo and Figshare in one breath [M§5]. That distinction now lives inside `repositoryKind` (`software-platform` vs `hosted-service`), where it is a field value rather than a categorisation decision. (Post-launch fix, per `model/subtypes.ts`: this and the equivalent per-type `*Kind` fields — `indexKind`, `crisKind`, `aggregatorKind`, `platformKind`, `standardKind`, `communityKind`, `coalitionKind`, `orgKind` — are surfaced in `/map`'s filters/tooltip, `/taxonomy`'s mindmap level, and `/entities/[type]`'s grouping, not just carried as inert data — the earlier gap that made e.g. Zenodo and Dataverse read as interchangeable despite `repositoryKind` already correctly distinguishing them.)
+
+**What was added in v0.5: `concept`, `is-a`, `prominence`, predicate `family`.** A newcomer starts from ideas (*what is a persistent identifier?*), not from infrastructure, and the graph had no node for the idea. `concept` is a new type in its own layer; `is-a` (below) attaches every other type to it. `prominence` (`core` · `extended` · `detail`, default `extended`) is authored per entity and drives progressive disclosure in the UI; it never affects validation. Predicates gained a display `family` (A.2). The type and the predicate ship *declared but unpopulated*: both carry `pending: true` in their vocab file, which exempts them from I12 until the first instance exists (I12 then warns if the flag is left behind).
 
 **What was added in v0.3 and why: `publishing-platform`.** See the Q1(a) decision in §12 and the reasoning in A.1. In short: SciELO and Redalyc host, mark up and publish the full text they expose, under their own admission criteria; OpenAIRE and LA Referencia harvest metadata for content they never hold. Those are different machines with different failure modes, and `aggregatorKind: publishing-platform` was hiding that inside a field.
 
 ### 5.3 Predicate metadata, and `owned-by` as a first-class relation
 
-`vocab/predicates.yaml` declares per predicate: `inverseLabel`, `domain`, `range`, `symmetric`, `acyclic`, `sameTypeOnly`, `crossTypePairs`, `maxOutDegree`, and display attributes. Full table in **A.2**.
+`vocab/predicates.yaml` declares per predicate: `family` (display group, `vocab/predicate-families.yaml`, ≤5, I35), `pending?`, `inverseLabel`, `domain`, `range`, `symmetric`, `acyclic`, `sameTypeOnly`, `crossTypePairs`, `maxOutDegree`, and display attributes. Full table in **A.2**.
 
 ```ts
 export interface PredicateDef {
@@ -283,7 +292,7 @@ export interface GraphEdge {           // one directed, resolved, deduplicated e
 export interface GraphIndex {          // all members readonly; deep-frozen in dev
   entities: ReadonlyMap<EntityId, Entity>;
   byType: ReadonlyMap<EntityType, readonly EntityId[]>;               // sorted by name
-  byLayer: ReadonlyMap<Layer | 'cross-cutting', readonly EntityId[]>; // derived, §5.1
+  byLayer: ReadonlyMap<Layer | CrossCuttingLayer, readonly EntityId[]>; // derived, §5.1
   edges: readonly GraphEdge[];                                        // canonical, sorted
   outgoing: ReadonlyMap<EntityId, readonly GraphEdge[]>;
   incoming: ReadonlyMap<EntityId, readonly GraphEdge[]>;              // derived inverse view
@@ -316,7 +325,7 @@ Each rule is a pure predicate in `src/lib/invariants/rules.ts`, exercised agains
 | I9 | ERROR | Symmetric predicates authored once per unordered pair, on the lexicographically smaller `id`. |
 | I10 | ERROR | Acyclic predicates form a DAG (`part-of`, `supersedes`, `profile-of`, `depends-on`, `owned-by`, `member-of`). Error prints the cycle path. |
 | I11 | ERROR | No orphans: in-degree + out-degree ≥ 1 unless `isolated: true` with an explanatory `note`. |
-| I12 | ERROR | Every declared `EntityType` has ≥1 instance and every declared predicate ≥1 edge. Unused vocabulary is removed or populated. |
+| I12 | ERROR | Every declared `EntityType` has ≥1 instance and every declared predicate ≥1 edge. Unused vocabulary is removed or populated. An entry flagged `pending: true` (none at present: `concept`, `is-a` and `related-to` shed the flag once the concept layer was populated; the synthetic test fixtures re-apply it) is exempt until its first instance; a WARN is raised if the flag is then left behind. |
 | I13 | ERROR | Every `tags[]`, `disciplines[]`, `status`, `governance` value exists in the corresponding vocab file. |
 | I14 | ERROR | `summary` (in each locale file) is 40–200 chars, single-line, no Markdown syntax, not identical to `name`. |
 | I15 | ERROR | `sources.length ≥ 1`; every `Source.url` is `https:`; `accessed` is a valid ISO date not in the future. Relations with `confidence !== 'asserted'` carry ≥1 source. |
@@ -333,21 +342,24 @@ Each rule is a pure predicate in `src/lib/invariants/rules.ts`, exercised agains
 | I26 | WARN | `lastReviewed` older than 18 months (also badged in the UI). |
 | I27 | WARN | An `identifier` entity with no inbound `issues` edge. |
 | I28 | WARN | Any generated diagram exceeds its node/edge budget (§6.4) before overflow collapsing; or the graph has >1 weakly connected component (prints each component's size and members). |
-| I29 | ERROR | **Every entity and every view has a prose file in the default locale**, with a valid `summary`. A facts file without `content/i18n/<default>/<id>.md` fails the build (§5.7). |
-| I30 | WARN / ERROR | **WARN** per missing non-default-locale prose file, aggregated as one line per locale (`en: 12 of 78 entities untranslated`). **ERROR** if a locale file declares a field outside the translatable set, or if a `relationNotes` key does not resolve to a relation authored in the facts file. |
-| I31 | ERROR | An entity facts file has an empty Markdown body, and carries no `summary` or `description`. Prose exists only in `content/i18n/**` (C10). |
+| I29 | ERROR | **Every entity and every view has a prose file in the default locale**, with a valid `summary`. A facts file without `content/i18n/<default>/<id>.yaml` fails the build (§5.7). |
+| I30 | WARN / ERROR | **WARN** per missing non-default-locale prose file, aggregated as one line per locale (`en: 12 of 78 entities untranslated`) — or, when the strict-i18n switch `REQUIRE_FULL_I18N` is on, **ERROR** per missing file, reported on the entity's own file (default: off; see the note below the table). **ERROR** if a locale file declares a field outside the translatable set, or if a `relationNotes` key does not resolve to a relation authored in the facts file. |
+| I31 | ERROR | An entity facts file carries a `body`, `summary` or `description` field. Prose exists only in `content/i18n/**` (C10). |
 | I32 | WARN | Every edge of a governance predicate (`owned-by`, `governed-by`, `operated-by`, `developed-by`, `funded-by`) carries `relations[].verified: { date, url }` recording the primary source it was checked against. Added post-launch to make a relation-completeness audit scoped and trackable ("how many governance edges are unverified?"), independent of `confidence`/`sources` (I15), which gate on non-default confidence, not on governance predicates specifically. |
 | I33 | WARN | Completeness floor: every `repository`/`index`/`aggregator`/`publishing-platform` has ≥1 of `{operated-by, developed-by, governed-by}`; every `standard` has ≥1 of `{developed-by, governed-by}`. An empty set here is far more often a research gap than a genuine fact. |
 | I34 | WARN | Heuristic: an entity's `note`, `relations[].note` or `sources[].note` text mentions another entity by name (or `aka`, ≥3 chars, word-boundary match) with no relation connecting the two in either direction. Facts are sometimes written down in prose and never authored as an edge — this catches the pattern without blocking the build (noisy-tolerant by design). |
+| I35 | ERROR | Every predicate declares a `family` present in `vocab/predicate-families.yaml` (display grouping, at most five families). |
 
 `npm run validate` prints `N entities, M edges, X errors, Y warnings, translation coverage per locale` and groups errors by file. Exit codes: `0` clean, `1` errors, `2` runner crash.
+
+**Strict i18n (`REQUIRE_FULL_I18N`).** The owner's target is 100% prose in every locale. Until the translations land, a missing non-default-locale file stays a WARN (I30) so the build is not broken. The switch is one constant, `REQUIRE_FULL_I18N` in `src/lib/invariants/config.ts` (default `false`), overridable per run by the environment variable of the same name. To flip it: run `REQUIRE_FULL_I18N=1 npm run validate` (or `=0` to force lenient) to preview; once every entity has `en` and `es`, change the constant to `true` so `npm run build` enforces it for good. In strict mode each missing file is an ERROR on the entity's facts file (`no 'en' prose file …`) and the aggregated WARN disappears. `tests/unit/invariants/concept-and-modes.test.ts` covers both modes.
 
 ### 5.6 Views: the memo's five fault lines as saved queries — CONFIRMED for v1
 
 [M§9] lists five structural fault lines. Four are, in graph terms, **queries over fields the model already carries**; the fifth is prose. Rather than invent a `fault-line` entity type — which would put non-things into the node set and corrupt degree counts, orphan detection and every diagram — they live in a second content collection, `src/content/views/`: a declarative query plus provenance, with the analysis prose in the locale files. Views are never nodes and never have edges.
 
 ```ts
-export interface View {              // prose body lives in content/i18n/<locale>/views/<id>.md
+export interface View {              // prose (title/question/body) lives in content/i18n/<locale>/views/<id>.yaml
   id: string;
   query: ViewQuery;
   render: 'diagram' | 'table' | 'both';
@@ -376,18 +388,19 @@ export type ViewQuery =
 
 **The problem to avoid.** The obvious approach — one complete file per entity per language — duplicates `relations`, `type`, `identifiers` and `status` into every locale, where they immediately begin to drift. A Spanish file saying `owned-by: digital-science` and an English file that lost the edge in translation would produce two different graphs from one dataset. A stale translation is a small problem; a locale-dependent graph is a fatal one. Hence C10.
 
-**The model: one facts file, N prose files.** `src/content/entities/figshare.md` holds facts and relations with no prose and no `summary` (I31); `src/content/i18n/es/figshare.md` is required as the default locale (I29); `src/content/i18n/en/figshare.md` is optional (I30 warns); a new locale adds only more files of the second kind.
+**The model: one facts file, N prose files.** `src/content/entities/figshare.yaml` holds facts and relations with no prose and no `summary` (I31); `src/content/i18n/es/figshare.yaml` is required as the default locale (I29); `src/content/i18n/en/figshare.yaml` is optional (I30 warns); a new locale adds only more files of the second kind. Every prose file is a single, plain YAML document — there is no frontmatter/body split — and the prose text itself is just the `body` field, written as a YAML block scalar; it is never compiled as Markdown (rendered verbatim), so it is plain text, not a mini Markdown document.
 
 ```yaml
-# src/content/i18n/en/figshare.md — the complete translatable surface. Nothing else is allowed (I30).
+# src/content/i18n/en/figshare.yaml — the complete translatable surface. Nothing else is allowed (I30). `localNote` (added with the concept layer) is optional per locale, translatable, and rendered as a labelled callout under the summary; a concept's definition stays neutral/global and any Chile- or Latin-America-specific fact goes only there.
 summary: Commercial repository platform that publishes content under open licences and mints DataCite DOIs for every record.
 name: Figshare                 # optional override; omit unless the official name differs by language
 aka: [figshare]                # optional
 relationNotes:                 # optional; keys are "<predicate>@<target>" and must resolve (I30)
+localNote: ...                 # optional; <=30 words (<=260 chars); the 'Local context' callout on the entity page. Only for a locally-specific fact about a global entity (concepts: the Chile/LatAm angle)
   owned-by@digital-science: Acquired in 2012; roadmap and continuity are decided by the parent company.
----
-Figshare publishes content under open licences and issues DOIs; its governance,
-roadmap and continuity are decided by a company. The distinction is the point.
+body: |
+  Figshare publishes content under open licences and issues DOIs; its governance,
+  roadmap and continuity are decided by a company. The distinction is the point.
 ```
 
 **The locale list is data, not code.** `src/i18n/locales.ts` is the single declaration; the Zod locale enum, the routing config, the language switcher, the `hreflang` alternates and the sitemap all read from it (A9).
@@ -452,7 +465,7 @@ Hard caps enforced by `src/lib/mermaid/budget.ts`, checked by I28:
 
 - **60 nodes / 100 edges** maximum per rendered diagram.
 - **Neighbour collapsing:** more than `predicate.maxOutDegree` (default 5) neighbours via one predicate collapse into a cluster node (`12 standards ▸`) linking to the filtered list. The full set always remains in the accessible table (§9).
-- **Shape encodes `layer`; fill hue encodes `type`.** Six shapes, one per layer plus one for cross-cutting: `([stadium])` identifier · `[[subroutine]]` agency · `[(cylinder)]` index · `[rect]` institutional-system · `[/parallelogram/]` regional · `{{hexagon}}` cross-cutting. Twelve types cannot map to twelve legible shapes, so type is carried by a colourblind-safe fill **plus** the legend **plus** the accessible table, which names every node's type in text — no information is distinguishable by colour alone (WCAG 1.4.1).
+- **Shape encodes `layer`; fill hue encodes `type`.** Seven shapes, one per layer: `([stadium])` identifier · `[[subroutine]]` agency · `[(cylinder)]` index · `[rect]` institutional-system · `[/parallelogram/]` regional · `{{hexagon}}` cross-cutting · `(rounded)` concept. Thirteen types cannot map to thirteen legible shapes, so type is carried by a colourblind-safe fill **plus** the legend **plus** the accessible table, which names every node's type in text — no information is distinguishable by colour alone (WCAG 1.4.1).
 - **Predicate** is encoded by line style (`-->` / `-.->` / `==>`) plus colour; `owned-by` is drawn thick, since it is the edge most often read on its own.
 - **Edge labels** are drawn only when the predicate is not already unambiguous from line style and endpoint shapes; otherwise the legend carries it.
 - **Inactive entities** (`status` ∈ {deprecated, superseded}) and expired relations (`until` past) render dashed and reduced-opacity, never by colour alone.
@@ -490,10 +503,10 @@ Every content route is locale-prefixed (§7.2). `{loc}` below stands for a code 
 | `/{loc}/map` | Global explorer (§6.2). Degrades to `/{loc}/entities` without JS. | island only |
 | `/{loc}/map2` | "Essential concepts": a curated ~33-entity subset, for a first-time visitor before the full ~130-entity map. Rendered by its own component (`MapExplorerV2.astro`, separate from `/map`'s), not the same explorer restricted — a 2026-09-06 follow-up pass gave it a hierarchical tier+depth layout (4 tiers — principles/policies, then standards/specs, then institutions/agencies, then instruments, top to bottom, per the predicates' own real-world meaning and each `standard`/`coalition` entity's own subtype rather than `type` alone — replacing force-directed layer bands), class-box node rendering, tier-band groupings, an app-shell viewport (no page scroll), restored search, and a map2-only palette/shape tweak. Cross-links to/from `/{loc}/map`. | island only |
 | `/{loc}/entities` | Master index: sortable, filterable table of every entity (name, type, layer, governance, status, degree, `lastReviewed`). **Also the site-wide accessible equivalent of the global map** (§9). | ≤20 KB |
-| `/{loc}/entities/[type]` | One page per entity type: type map + list + type-specific facets. 12 pages per locale. | ≤20 KB |
+| `/{loc}/entities/[type]` | One page per entity type: type map + list + type-specific facets. 13 pages per locale (the `concept` page is empty until the first concept lands). | ≤20 KB |
 | `/{loc}/entity/[id]` | **The core page.** Header, summary, prose (or the untranslated-fallback notice, §5.7), attribute table, focus diagram, relations grouped by predicate (outgoing then incoming) each with its accessible table, external identifiers, sources, `lastReviewed` badge, correction link, JSON/embed links. Layered per §7.1. | ≤5 KB |
 | `/{loc}/relations` | The predicate vocabulary: definition, inverse label, domain/range, edge count. | none |
-| `/{loc}/relations/[predicate]` | All edges of one predicate as diagram + table. 19 pages per locale. | none |
+| `/{loc}/relations/[predicate]` | All edges of one predicate as diagram + table. 20 pages per locale. | none |
 | `/{loc}/views`, `/{loc}/views/[id]` | The fault-line analyses (§5.6): prose, resolved query, diagram or table, sources. | none |
 | `/{loc}/taxonomy`, `/{loc}/tags/[tag]` | Mindmap of layer → type → subtype → tags; per-tag entity sets with their interconnections. | none |
 | `/{loc}/model` | The data model: `erDiagram`, field reference, and I1–I31 generated from `rules.ts` metadata, so published documentation cannot drift from enforced rules. | none |
@@ -530,15 +543,17 @@ Why not the alternatives. **A query parameter** (`/entity/doi?lang=en`) is not a
 
 ## 8. Content Authoring Format & Workflow
 
-### 8.1 YAML frontmatter + Markdown body, one facts file per entity
+### 8.1 One plain-YAML document per file, everywhere
 
-The reference project used JSON + Zod. This project uses YAML, for reasons specific to G2 — both a non-developer and an LLM agent must be able to add an entity by pull request. YAML supports `#` comments, which curated data needs; its failure mode is indentation (highlighted by editors) rather than a trailing comma; entity prose is the Markdown body instead of one long `\n`-escaped JSON line; and diffs are line-oriented, so adding a relation is a one-line change — which also makes an agent's edit reviewable. JSON's stricter grammar buys nothing here because every field is validated by Zod plus the invariants regardless of serialisation — and YAML's footguns are closed by the schema (no field accepts a bare boolean where a string is expected, so the Norway problem cannot occur; `specVersion` is `z.string()`, so an unquoted `4.5` is rejected with a message telling the author to quote it). `graph.json` remains the distribution format; YAML is only the authoring format.
+The reference project used JSON + Zod. This project uses YAML, for reasons specific to G2 — both a non-developer and an LLM agent must be able to add an entity by pull request. YAML supports `#` comments, which curated data needs; its failure mode is indentation (highlighted by editors) rather than a trailing comma; and diffs are line-oriented, so adding a relation is a one-line change — which also makes an agent's edit reviewable. JSON's stricter grammar buys nothing here because every field is validated by Zod plus the invariants regardless of serialisation — and YAML's footguns are closed by the schema (no field accepts a bare boolean where a string is expected, so the Norway problem cannot occur; `specVersion` is `z.string()`, so an unquoted `4.5` is rejected with a message telling the author to quote it). `graph.json` remains the distribution format; YAML is only the authoring format.
 
-`vocab/*.yaml` and `views/*.md` follow the same convention: pure YAML for vocabularies, frontmatter for views, frontmatter + prose for locale files.
+Every content file — facts, prose, views, vocab — is the *same* format: a single YAML document, no `---`-delimited frontmatter/body split. A facts file has no body at all (it never had one — I31); a prose file's description text is simply its `body` field, written as a YAML block scalar (`body: |`). That text is never compiled as Markdown — it is injected verbatim — so it is plain prose, not a Markdown document with a `.md` extension pretending to be one. Collapsing everything to one format and one extension (`.yaml`) also means editor tooling (`yaml-language-server`, via the `redhat.vscode-yaml` extension) actually applies: that extension activates on the `.yaml`/`.yml` language mode only, never on Markdown, so keeping prose in `.md` files would have silently defeated the schema-driven autocomplete described in §8.4(d) — one format avoids that trap rather than trading it for a second convention.
+
+`vocab/*.yaml`, `views/*.yaml` and `i18n/**/*.yaml` all follow the same convention: pure YAML, one document per file.
 
 ### 8.2 File format
 
-`src/content/entities/<id>.md` — filename **is** the ID (I1). Required frontmatter is `type`, `name`, `url`, `status`, `governance`, `tags`, `relations`, `sources`, `lastReviewed`, plus the required subtype fields of §5.2; everything else is optional. The body is empty (I31). `summary` and prose go in `src/content/i18n/<locale>/<id>.md`, required for the default locale (I29). Worked examples: Appendix B.1.
+`src/content/entities/<id>.yaml` — filename **is** the ID (I1). Required fields are `type`, `name`, `url`, `status`, `governance`, `tags`, `relations`, `sources`, `lastReviewed`, plus the required subtype fields of §5.2; everything else is optional. There is no `body` field (I31). `summary` and prose go in `src/content/i18n/<locale>/<id>.yaml`, required for the default locale (I29). Worked examples: Appendix B.1.
 
 ### 8.3 Where the content comes from — CONFIRMED (Q2)
 
@@ -550,19 +565,19 @@ Two consequences the rest of the spec depends on. First, the entity set is expec
 
 The expected author of a change is **an LLM coding agent given the schema and the vocabulary**, not a person hand-typing YAML. The workflow is designed around that, and three things have to hold for it to be reliable.
 
-**(a) Validation must be fast and must be run by the agent, not only by CI.** `npm run validate` is a thin Node entry point over `src/lib/invariants/run.ts`: it reads the content globs, parses YAML, runs the Zod schemas and I1–I31, and exits. It does **not** build the site, launch Chromium, render Mermaid or typecheck the components. Target: **under 3 seconds** on the full content set, so an agent can run it after every single edit and treat the exit code as ground truth. It is a hard requirement, not a performance aspiration: an agent that has to wait 45 s for a full build will batch its edits and lose the ability to attribute an error to the edit that caused it. `npm run validate -- --file src/content/entities/scielo.md` scopes graph-local checks to one file for the same reason. The instruction to the agent is therefore concrete: *edit one file, run validate, fix, repeat; do not open a PR with a non-zero exit code.*
+**(a) Validation must be fast and must be run by the agent, not only by CI.** `npm run validate` is a thin Node entry point over `src/lib/invariants/run.ts`: it reads the content globs, parses YAML, runs the Zod schemas and I1–I31, and exits. It does **not** build the site, launch Chromium, render Mermaid or typecheck the components. Target: **under 3 seconds** on the full content set, so an agent can run it after every single edit and treat the exit code as ground truth. It is a hard requirement, not a performance aspiration: an agent that has to wait 45 s for a full build will batch its edits and lose the ability to attribute an error to the edit that caused it. `npm run validate -- --file src/content/entities/scielo.yaml` scopes graph-local checks to one file for the same reason. The instruction to the agent is therefore concrete: *edit one file, run validate, fix, repeat; do not open a PR with a non-zero exit code.*
 
 **(b) Error messages are a machine-readable interface and are specified as such.** Every ERROR emits file path, field path (dotted, with array index), the offending value, the rule ID, and — this is the part that matters — **the correction**, drawn from the same vocabulary files that produced the failure. A raw Zod message is not acceptable output. Concretely:
 
 ```
-ERROR I7  src/content/entities/digital-science.md  relations[0].predicate
+ERROR I7  src/content/entities/digital-science.yaml  relations[0].predicate
   Unknown predicate 'implemented-by'. It is the INVERSE label of 'implements'. Relations
   are authored in the canonical direction only (C2): write `implements` in the file of the
-  entity that conforms to the standard — here, src/content/entities/figshare.md — not the
+  entity that conforms to the standard — here, src/content/entities/figshare.yaml — not the
   reverse in this file. Inverses are derived at build time; you never author them.
   Valid predicates with domain 'organization': owned-by, part-of, member-of, funded-by.
 
-ERROR I8  src/content/entities/scielo.md  relations[2]
+ERROR I8  src/content/entities/scielo.yaml  relations[2]
   Domain violation: `issues` requires subject.type ∈ [agency]; 'scielo' is a
   publishing-platform. Did you mean `implements` (→ standard) or `indexes` (→ repository,
   aggregator, index, publishing-platform)?  See A.2.
@@ -573,11 +588,11 @@ Each names the rule, the fix, and the closed set of legal alternatives, which is
 **(c) The prompt template is a file in the repository.** `prompts/add-entity.md`, also rendered at `/{loc}/contribute`, so it is versioned alongside the schema it describes and cannot rot silently:
 
 > Add `<name>` to this repository as an entity.
-> Read first: `specs.md` §5.1–5.2 (fields per type), `specs.md` A.2 (the 19 predicates, with domain and range), `src/content/vocab/*.yaml` (closed vocabularies — do not invent terms), and two existing files of the same `type` as models.
-> Then: create `src/content/entities/<id>.md` with the facts and outgoing relations only, and `src/content/i18n/es/<id>.md` with `summary` and prose (`en` too if you can source it). Author relations in the canonical direction only; if a target entity does not exist, either add it in the same change or omit the relation. Every entity needs ≥1 `sources` entry with a real URL and today's `accessed` date — do not cite the memo for an external fact, cite the thing itself.
+> Read first: `specs.md` §5.1–5.2 (fields per type), `specs.md` A.2 (the 21 predicates, with domain and range), `src/content/vocab/*.yaml` (closed vocabularies — do not invent terms), and two existing files of the same `type` as models.
+> Then: create `src/content/entities/<id>.yaml` with the facts and outgoing relations only, and `src/content/i18n/es/<id>.yaml` with `summary` and prose (`en` too if you can source it). Author relations in the canonical direction only; if a target entity does not exist, either add it in the same change or omit the relation. Every entity needs ≥1 `sources` entry with a real URL and today's `accessed` date — do not cite the memo for an external fact, cite the thing itself.
 > Finally: run `npm run validate` and fix every ERROR before stopping. Report the WARN lines rather than suppressing them. Do not add a vocabulary term (that is a separate PR, C6), and do not edit any other entity's file to add the inverse relation.
 
-**(d) Review stays human.** The gate does not move: CI runs validate → typecheck → unit tests → invariant tests → build → axe-core, all blocking, and a person merges. What changes is what the reviewer is reading for. Schema conformance, dangling references, direction and vocabulary are already guaranteed by the time the diff exists, so review is about the things a validator cannot see: is the `summary` descriptive rather than evaluative (C3), is the source the right source, is the relation *true*, and is the entity in scope (C7). A JSON Schema generated from the Zod schemas into `.schema/entity.schema.json` and wired to `yaml-language-server` gives the same autocomplete and inline errors to a human editor and to an agent that reads LSP diagnostics. Issue templates remain for non-Git users, and `npm run new:entity -- --type=index --id=openalex` still scaffolds a commented template for anyone who prefers to start from one.
+**(d) Review stays human.** The gate does not move: CI runs validate → typecheck → unit tests → invariant tests → build → axe-core, all blocking, and a person merges. What changes is what the reviewer is reading for. Schema conformance, dangling references, direction and vocabulary are already guaranteed by the time the diff exists, so review is about the things a validator cannot see: is the `summary` descriptive rather than evaluative (C3), is the source the right source, is the relation *true*, and is the entity in scope (C7). A JSON Schema generated from the Zod schemas (`npm run schema:generate`, into `schema/entity.schema.json` and `schema/prose.schema.json`) and wired to `yaml-language-server` via `.vscode/settings.json` gives the same autocomplete and inline errors to a human editor and to an agent that reads LSP diagnostics — this only works because content files are plain `.yaml` (§8.1): `yaml-language-server` activates on that extension, never on Markdown. Issue templates remain for non-Git users, and `npm run new:entity -- --type=index --id=openalex` still scaffolds a commented template for anyone who prefers to start from one.
 
 ---
 
@@ -663,7 +678,7 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 | **External link health** | `lychee`, weekly | All `url` and `Source.url` resolve; opens a single tracking issue. | **Non-blocking** — third-party outages must not break our builds. |
 | **Visual regression** | Playwright screenshots | Recommended once visual design settles; Mermaid version bumps silently change layout. | Non-blocking |
 
-**Fixtures.** `tests/fixtures/` holds a synthetic graph covering all 12 entity types, all 19 predicates, all 3 view-query forms and 3 locales (one of them deliberately incomplete), with invalid variants per invariant. Unit and snapshot tests use fixtures; invariant tests run against real content.
+**Fixtures.** `tests/fixtures/` holds a synthetic graph covering all 12 populated entity types and 19 populated predicates (concept, `is-a` and `related-to` are exercised by `tests/unit/invariants/concept-and-modes.test.ts`), all 3 view-query forms and 3 locales (one of them deliberately incomplete), with invalid variants per invariant. Unit and snapshot tests use fixtures; invariant tests run against real content.
 
 ---
 
@@ -697,6 +712,8 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 
 **Q11 — Confidence and disputed assertions. ✅ CONFIRMED (default): visual distinction, no hide-toggle; no separate contested mechanism.** `confidence: asserted | reported | inferred` (already in §5.2) renders `inferred` edges with the same dashed/reduced-opacity treatment §6.4 already uses for inactive entities — one visual convention, not two. Disagreement between sources is recorded as a free-text note on the relation (`relationNotes`, §5.7); a dedicated `contested: true` flag is deferred until a real case shows the note isn't enough.
 
+**Q12 — Fault-line analyses ("Líneas de falla"). ⏸ PENDING — deferred to a later release (decided 2026-11-12).** The critical views (`vertical-integration`, `cost-of-exit`, `open-content-closed-governance`, `index-coverage`; §5.6) presuppose the vocabulary a newcomer is there to learn, and add information load to a site whose first priority is simplicity. They stay in the repository as data and prose, but are **out of the newcomer path** in the simplification release: no primary navigation entry, no home-page prompt, not linked from the default map. To be revisited once the concept layer and glossary exist, as an expert-mode section.
+
 All five are defaults chosen for the common case, not irreversible — flagged for revisit if the project's needs outgrow them (e.g. going public reopens Q7/Q8; a source conflict that a note can't capture reopens Q11).
 
 ---
@@ -705,7 +722,7 @@ All five are defaults chosen for the common case, not irreversible — flagged f
 
 Derived from the source memo, corrected against primary sources (A.4). Each row cites the memo section that justifies it.
 
-### A.1 Entity types (12) and their derived layer
+### A.1 Entity types (13) and their derived layer
 
 | Type | Layer (derived) | Definition | Subtype field | Examples |
 |---|---|---|---|---|
@@ -721,6 +738,7 @@ Derived from the source memo, corrected against primary sources (A.4). Each row 
 | `coalition` | *(cross-cutting)* | A political grouping pushing change rather than writing specifications. [M§8] | `coalitionKind` | Barcelona Declaration, CoARA, DORA, Invest in Open Infrastructure, SCOSS, ICSTI, cOAlition S, AmeliCA |
 | `policy` | *(cross-cutting)* | A normative instrument constraining behaviour. [M§7] | `policyKind`, `jurisdiction`, `bindingness` | ANID open-access policy, UNESCO Recommendation on Open Science |
 | `organization` | *(cross-cutting)* | The actor behind the thing: company, non-profit, university, agency, intergovernmental body. | `orgKind`, `country` | Elsevier, RELX, Clarivate, Digital Science, Holtzbrinck, CERN, Harvard, LYRASIS, OurResearch, Allen Institute for AI, Cambia, ARDC, ANID, UAEM, California Digital Library, DONA Foundation, Open Knowledge Foundation, IS4OA, Jisc, Data Observatory |
+| `concept` | `concept` | An idea or term — persistent identifier, open access, metadata, FAIR principles, repository — of which concrete things are instances. Added v0.5; populated with 22 instances in the concept layer. | *(none)*; `governance: not-applicable` | persistent identifier, open access, diamond open access, metadata standard, preprint, research information system |
 
 **Modelling notes.**
 - **Layer is derived from type** (§5.1), declared once in `vocab/entity-types.yaml`. The memo treats layers as categories of thing, not properties of individual things, so deriving them keeps C1 intact.
@@ -777,7 +795,7 @@ Four more `organization` / `community` entities arrive with the rows above as th
 
 *Candidates researched and deliberately excluded:* ROAR (Registry of Open Access Repositories) — current operational status could not be confirmed at 2026-09-03, so it is not asserted; GO FAIR and the PID Forum — not verifiable as currently active from a primary source in this pass, left for a later check rather than added from memory. Recorded so the omission is a decision rather than an oversight.
 
-### A.2 Relation predicates (19)
+### A.2 Relation predicates (20)
 
 Canonical direction is subject → object, subject being the entity described (C2). Inverses are derived, never authored. `pp` abbreviates `publishing-platform`.
 
@@ -802,12 +820,27 @@ Canonical direction is subject → object, subject being the entity described (C
 | `endorsed-by` | endorses | standard, policy, coalition | organization, community, coalition | — | — | Public endorsement or adoption by vote. |
 | `mandates` | mandated by | policy, coalition | standard, identifier, policy | — | — | The ANID policy mandates OAI-PMH exposure [M§7]. |
 | `applies-to` | subject to | policy | organization, repository, cris, aggregator, pp | — | — | Scope of a policy. |
+| `is-a` | includes | any (all 13 types) | concept | — | ✓ | Classification (added v0.5). DOI is-a persistent identifier; diamond open access is-a open access. Concept → concept is a subtype link. Acyclic but a concept may have several parents; **transitivity is not required** — consumers follow chains, the validator never infers `a is-a c`. `part-of` and `supersedes` also accept concept ↔ concept (sameTypeOnly). |
+| `related-to` | relates to (symmetric) | any (all 13 types) | concept | — | — | Association with a concept where `is-a` would be wrong: SciELO *relates to* diamond open access (it operates the model, it is not a kind of it); FAIR *relates to* research data management. Symmetric, not acyclic, `maxOutDegree` 3. A concept ↔ concept pair is authored once on the lexicographically smaller id (I9); a thing → concept edge is authored on the thing (the reverse is not a legal edge, so I9 does not apply). Every edge carries a short `note` saying how the two relate. Added after the concept layer was populated, at the owner's decision. |
 
-**Rejected deliberately:** `related-to` (if a relationship cannot be named it should not be an edge), `uses` (ambiguous between `depends-on` and `implements`), `similar-to` (subjective, violates C3), `competes-with` (an interpretation, not a fact; belongs in a view's prose).
+**Display families (`family:` in `predicates.yaml`, labels in `vocab/predicate-families.yaml`, I35).** Metadata only — the fine-grained predicate stays authoritative and is shown on hover / in expert mode. Five families:
+
+| Family (`id`) | ES / EN label | Predicates |
+|---|---|---|
+| `behind` | Quién está detrás / Who is behind it | `issues`, `owned-by`, `governed-by`, `operated-by`, `developed-by`, `funded-by` |
+| `builds-on` | Se apoya en / Builds on | `implements`, `depends-on`, `complies-with`, `profile-of`, `certified-by` |
+| `connects` | Se conecta con / Connects to | `interoperates-with`, `indexes`, `member-of`, `part-of` |
+| `shapes` | Orienta / Shapes | `mandates`, `applies-to`, `endorsed-by`, `supersedes` |
+| `kind` | Es un/a / Is a | `is-a`, `related-to` |
+
+(`issues` is folded into `behind` — the agency standing behind an identifier — to stay within five families; splitting it out later is a one-line vocab change.)
+
+**Rejected deliberately:** an unrestricted `related-to` between any two things (if a relationship cannot be named it should not be an edge — the concept-scoped `related-to` above is allowed only because it targets a concept and must carry a naming `note`), `uses` (ambiguous between `depends-on` and `implements`), `similar-to` (subjective, violates C3), `competes-with` (an interpretation, not a fact; belongs in a view's prose).
 
 ### A.3 Controlled vocabularies
 
-- `vocab/entity-types.yaml` — the 12 types of A.1 **and the type → layer map**, which is the only place layer is stated. Each type carries per-locale `label` and `definition`.
+- `vocab/entity-types.yaml` — the 13 types of A.1 **and the type → layer map**, which is the only place layer is stated. Each type carries per-locale `label` and `definition`.
+- `vocab/predicate-families.yaml` — the ≤5 display families of A.2 (`behind`, `builds-on`, `connects`, `shapes`, `kind`), each with per-locale `label` and `definition`.
 - `vocab/predicates.yaml` — A.2; single source for I6–I10, the `/model` `erDiagram`, and diagram edge styling. `label` / `inverseLabel` are locale maps (§5.3).
 - `vocab/tags.yaml` — 🟡 namespaced and closed. Proposed namespaces: `function:` (identification, registration, indexing, deposit, preservation, aggregation, publishing, evaluation, certification), `openness:` (open-content, open-source, open-governance, bulk-downloadable), `region:` (latam, europe, global, chile), `theme:` (vertical-integration, exit-cost, coverage-bias, ai-training-data — the tags that feed §5.6). Target 40–80 terms; a tag on fewer than 2 entities is flagged in review.
 - `vocab/disciplines.yaml` — 🟡 OECD FORD level 2, ~40 terms; a recognised classification beats an ad-hoc list because it makes the dataset comparable.
@@ -841,7 +874,7 @@ Seven real entities — one of each layered type plus a standard and a commercia
 ### B.1 Source files
 
 ```yaml
-# src/content/entities/doi.md — facts [M§2]
+# src/content/entities/doi.yaml — facts [M§2], the whole file
 type: identifier
 name: DOI
 aka: [Digital Object Identifier]
@@ -855,19 +888,18 @@ lastReviewed: 2026-09-03
 relations:
   - { predicate: depends-on, target: handle-system, note: "DOI names are Handles; resolution runs on the Handle System." }
 sources: [{ url: "https://www.doi.org/the-identifier/what-is-a-doi/", accessed: 2026-09-03 }]
----
 ```
 ```yaml
-# src/content/i18n/es/doi.md — prose, default locale (REQUIRED, I29)
+# src/content/i18n/es/doi.yaml — prose, default locale (REQUIRED, I29); body is plain text, not Markdown
 summary: Identificador persistente de un objeto — artículo, dataset, informe, plataforma o software — que resuelve a su ubicación actual.
----
-El DOI es el identificador persistente más conocido y el que Data Observatory ya acuña…
+body: |
+  El DOI es el identificador persistente más conocido y el que Data Observatory ya acuña…
 
-# src/content/i18n/en/doi.md — same two parts in English (optional; I30 warns if absent)
+# src/content/i18n/en/doi.yaml — same fields in English (optional; I30 warns if absent)
 ```
 
 ```yaml
-# src/content/entities/figshare.md — facts [M§5], and the fault-line-1 case
+# src/content/entities/figshare.yaml — facts [M§5], and the fault-line-1 case
 type: repository
 name: Figshare
 url: https://figshare.com
@@ -884,18 +916,17 @@ relations:
   - { predicate: owned-by,   target: digital-science }
   - { predicate: implements, target: datacite-metadata-schema }
 sources: [{ url: "https://knowledge.figshare.com/", accessed: 2026-09-03 }]
----
 ```
 
 The remaining five files have the same shape; only their distinguishing fields are listed.
 
 | File | Key fields | Relations |
 |---|---|---|
-| `datacite.md` [M§3; fees per A.4] | `type: agency`, `governance: nonprofit`, `since: 2009`, `identifiers: { ror: 04wxnsj81 }`, `registers: [dataset, software, report, platform, sample]`, `feeModel: membership`, `consortiumModel: true` | `issues: doi` (note: "€2,000 membership plus a €200–700 infrastructure fee scaled by context; no per-DOI charge below 100,000/yr") |
-| `digital-science.md` [M§4, M§5; A.4] | `type: organization`, `governance: commercial`, `orgKind: company`, `country: GB` | `part-of: holtzbrinck` ("wholly owned; Holtzbrinck also holds 53% of Springer Nature") |
-| `datacite-metadata-schema.md` [M§7] | `type: standard`, `governance: nonprofit`, `standardKind: metadata-schema`, `specVersion: "4.6"`, `machineReadable: true`, `requiresOpenness: false` | `governed-by: datacite`, `depends-on: doi` |
-| `dimensions.md` [M§4] | `type: index`, `governance: commercial`, `outputLicence: partly-open`, `codebase: proprietary`, `indexKind: bibliographic`, `selectivity: inclusive`, `inclusionCriteria: partially-published`, `bulkDownload: none`, `coverageObjects: [article, grant, patent, clinical-trial]` | `owned-by: digital-science` |
-| `symplectic-elements.md` [M§5] | `type: cris`, `governance: commercial`, `codebase: proprietary`, `crisKind: commercial` | `owned-by: digital-science` |
+| `datacite.yaml` [M§3; fees per A.4] | `type: agency`, `governance: nonprofit`, `since: 2009`, `identifiers: { ror: 04wxnsj81 }`, `registers: [dataset, software, report, platform, sample]`, `feeModel: membership`, `consortiumModel: true` | `issues: doi` (note: "€2,000 membership plus a €200–700 infrastructure fee scaled by context; no per-DOI charge below 100,000/yr") |
+| `digital-science.yaml` [M§4, M§5; A.4] | `type: organization`, `governance: commercial`, `orgKind: company`, `country: GB` | `part-of: holtzbrinck` ("wholly owned; Holtzbrinck also holds 53% of Springer Nature") |
+| `datacite-metadata-schema.yaml` [M§7] | `type: standard`, `governance: nonprofit`, `standardKind: metadata-schema`, `specVersion: "4.6"`, `machineReadable: true`, `requiresOpenness: false` | `governed-by: datacite`, `depends-on: doi` |
+| `dimensions.yaml` [M§4] | `type: index`, `governance: commercial`, `outputLicence: partly-open`, `codebase: proprietary`, `indexKind: bibliographic`, `selectivity: inclusive`, `inclusionCriteria: partially-published`, `bulkDownload: none`, `coverageObjects: [article, grant, patent, clinical-trial]` | `owned-by: digital-science` |
+| `symplectic-elements.yaml` [M§5] | `type: cris`, `governance: commercial`, `codebase: proprietary`, `crisKind: commercial` | `owned-by: digital-science` |
 
 *(`holtzbrinck` and `handle-system` are referenced above and would be additional files. In the real repository their absence fails I3 — which is what that invariant is for.)*
 
@@ -941,22 +972,21 @@ Description from `describe.ts`: *"Figshare, a repository in the institutional-sy
 
 ### B.4 View — `/es/views/open-content-closed-governance`
 
-Fault line 1 [M§9], from the query table in §5.6. Query and provenance are locale-independent; title, question and analysis are not.
+Fault line 1 [M§9], from the query table in §5.6. Query and provenance are locale-independent; title, question and body are not.
 
 ```yaml
-# src/content/views/open-content-closed-governance.md
+# src/content/views/open-content-closed-governance.yaml
 query: { kind: entities, where: [{ outputLicence: open, governance: commercial }] }
 render: both
 lastReviewed: 2026-09-03
 sources: [{ url: "https://…", title: "Manual breve del ecosistema de información de investigación", accessed: 2026-09-03 }]
----
 ```
 ```yaml
-# src/content/i18n/es/views/open-content-closed-governance.md
+# src/content/i18n/es/views/open-content-closed-governance.yaml
 title: Contenido abierto, gobernanza cerrada
 question: ¿Qué plataformas publican contenido con licencias abiertas mientras una sola empresa decide su hoja de ruta y su continuidad?
----
-El criterio correcto no es la licencia del archivo, es quién gobierna la plataforma.
+body: |
+  El criterio correcto no es la licencia del archivo, es quién gobierna la plataforma.
 ```
 
 Against the seven entities above the result set is `[figshare]`, rendered as a table of name, type, layer, `outputLicence`, `governance` and the `owned-by` target.
