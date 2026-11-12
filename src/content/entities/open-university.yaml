@@ -7,6 +7,9 @@ orgKind: university
 country: GB
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 05mzfcs16
+  wikidata: Q2413375
 tags:
   - region:europe
 lastReviewed: 2026-09-04

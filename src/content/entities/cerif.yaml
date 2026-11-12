@@ -6,6 +6,8 @@ url: https://eurocris.org/services/main-features-cerif
 status: active
 governance: community
 standardKind: framework
+identifiers:
+  wikidata: Q2986818
 tags:
   - function:registration
 lastReviewed: 2026-11-12

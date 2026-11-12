@@ -8,6 +8,9 @@ governance: commercial
 orgKind: company
 country: DE
 prominence: detail
+identifiers:
+  ror: 02bh93636
+  wikidata: Q127005
 tags:
   - theme:vertical-integration
   - region:europe

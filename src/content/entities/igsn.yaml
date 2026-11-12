@@ -6,6 +6,8 @@ url: https://igsn.org
 status: active
 governance: nonprofit
 identifies: sample
+identifiers:
+  wikidata: Q17058352
 tags:
   - function:identification
   - region:global

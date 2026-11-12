@@ -5,6 +5,8 @@ status: active
 governance: commercial
 standardKind: metadata-schema
 machineReadable: true
+identifiers:
+  wikidata: Q3475322
 tags:
   - function:registration
 lastReviewed: 2026-11-12

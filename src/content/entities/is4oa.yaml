@@ -8,6 +8,8 @@ governance: nonprofit
 orgKind: nonprofit
 country: GB
 prominence: detail
+identifiers:
+  wikidata: Q62391725
 tags:
   - region:global
 lastReviewed: 2026-11-12

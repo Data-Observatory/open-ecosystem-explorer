@@ -8,6 +8,8 @@ status: active
 governance: nonprofit
 identifies: person
 prominence: core
+identifiers:
+  wikidata: Q51044
 tags:
   - function:identification
   - region:global

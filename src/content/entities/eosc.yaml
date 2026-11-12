@@ -13,6 +13,8 @@ objectScope:
   - dataset
 geography:
   - eu
+identifiers:
+  wikidata: Q29051497
 tags:
   - function:aggregation
   - region:europe

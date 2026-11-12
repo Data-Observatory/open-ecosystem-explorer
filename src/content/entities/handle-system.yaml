@@ -7,6 +7,8 @@ status: active
 governance: nonprofit
 identifies: object
 resolverUrl: https://hdl.handle.net/
+identifiers:
+  wikidata: Q3126718
 tags:
   - function:identification
   - region:global

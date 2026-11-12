@@ -5,6 +5,9 @@ status: active
 governance: nonprofit
 orgKind: nonprofit
 country: GB
+identifiers:
+  ror: 01rv9gx86
+  wikidata: Q6269240
 tags:
   - region:europe
 lastReviewed: 2026-09-04

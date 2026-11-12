@@ -8,6 +8,8 @@ url: https://www.issn.org
 status: active
 governance: nonprofit
 identifies: bibliographic
+identifiers:
+  wikidata: Q131276
 tags:
   - function:identification
   - region:global

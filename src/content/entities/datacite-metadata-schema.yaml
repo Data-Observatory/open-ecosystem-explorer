@@ -7,6 +7,8 @@ standardKind: metadata-schema
 specVersion: "4.6"
 machineReadable: true
 requiresOpenness: false
+identifiers:
+  wikidata: Q105762834
 tags:
   - function:registration
 lastReviewed: 2026-09-03

@@ -6,6 +6,9 @@ governance: nonprofit
 orgKind: foundation
 country: CH
 prominence: detail
+identifiers:
+  ror: 05hwzej55
+  wikidata: Q125520602
 tags:
   - region:europe
 lastReviewed: 2026-09-04

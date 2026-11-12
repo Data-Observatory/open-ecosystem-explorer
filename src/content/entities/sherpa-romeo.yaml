@@ -9,6 +9,8 @@ indexKind: registry
 selectivity: editorial-board
 inclusionCriteria: published
 bulkDownload: none
+identifiers:
+  wikidata: Q16172543
 tags:
   - function:indexing
 lastReviewed: 2026-09-04

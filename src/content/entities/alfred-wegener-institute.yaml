@@ -8,6 +8,9 @@ governance: public-agency
 orgKind: research-institute
 country: DE
 prominence: detail
+identifiers:
+  ror: 032e6b942
+  wikidata: Q536656
 tags:
   - region:europe
 lastReviewed: 2026-09-04

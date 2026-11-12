@@ -11,6 +11,9 @@ registers:
 feeModel: per-object
 consortiumModel: false
 prominence: detail
+identifiers:
+  ror: 056cwrs58
+  wikidata: Q100319347
 tags:
   - function:registration
   - region:global

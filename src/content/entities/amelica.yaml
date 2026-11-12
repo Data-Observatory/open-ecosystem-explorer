@@ -6,6 +6,8 @@ governance: nonprofit
 coalitionKind: network
 geography:
   - latam
+identifiers:
+  wikidata: Q65163744
 tags:
   - region:latam
   - openness:open-governance

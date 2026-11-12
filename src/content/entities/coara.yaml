@@ -7,6 +7,9 @@ status: active
 governance: community
 coalitionKind: reform-movement
 since: 2022-07-01
+identifiers:
+  ror: 05433te07
+  wikidata: Q115682002
 tags:
   - function:evaluation
   - region:europe

@@ -8,6 +8,9 @@ governance: nonprofit
 communityKind: technical-community
 openMembership: true
 prominence: detail
+identifiers:
+  ror: 04ht56804
+  wikidata: Q30324903
 tags:
   - region:global
 lastReviewed: 2026-09-04

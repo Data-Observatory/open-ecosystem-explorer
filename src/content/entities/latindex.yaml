@@ -12,6 +12,8 @@ inclusionCriteria: published
 bulkDownload: none
 coverageObjects:
   - journal
+identifiers:
+  wikidata: Q6496562
 tags:
   - function:indexing
   - region:latam

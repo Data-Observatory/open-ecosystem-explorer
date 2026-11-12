@@ -8,6 +8,9 @@ governance: nonprofit
 orgKind: research-institute
 country: US
 prominence: detail
+identifiers:
+  ror: 05w520734
+  wikidata: Q16002567
 tags:
   - region:north-america
 lastReviewed: 2026-09-04

@@ -5,6 +5,8 @@ status: active
 governance: commercial
 codebase: proprietary
 crisKind: commercial
+identifiers:
+  wikidata: Q96473535
 tags:
   - theme:vertical-integration
 lastReviewed: 2026-09-04

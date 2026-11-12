@@ -14,6 +14,8 @@ bulkDownload: full
 coverageObjects:
   - journal
 prominence: core
+identifiers:
+  wikidata: Q1227538
 tags:
   - function:indexing
   - openness:open-content

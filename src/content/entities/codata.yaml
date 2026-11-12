@@ -6,6 +6,9 @@ governance: nonprofit
 communityKind: standards-body
 nationalChapters:
   - Chile
+identifiers:
+  ror: 02cy4j108
+  wikidata: Q735279
 tags:
   - region:global
 lastReviewed: 2026-11-12

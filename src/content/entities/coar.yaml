@@ -7,6 +7,9 @@ status: active
 governance: nonprofit
 communityKind: confederation
 openMembership: true
+identifiers:
+  ror: 05nyrkz27
+  wikidata: Q48789578
 tags:
   - function:deposit
   - region:global

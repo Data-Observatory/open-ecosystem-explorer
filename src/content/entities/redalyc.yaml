@@ -11,6 +11,8 @@ markupStandard:
   - jats
 geography:
   - latam
+identifiers:
+  wikidata: Q7305434
 tags:
   - function:publishing
   - region:latam

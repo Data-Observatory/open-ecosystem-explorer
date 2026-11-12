@@ -9,6 +9,9 @@ orgKind: nonprofit
 country: US
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 05d5mza29
+  wikidata: Q16972305
 tags:
   - region:north-america
   - openness:open-governance

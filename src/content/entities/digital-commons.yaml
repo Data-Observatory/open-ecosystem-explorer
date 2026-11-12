@@ -10,6 +10,8 @@ codebase: proprietary
 outputLicence: partly-open
 repositoryKind: hosted-service
 accessModel: mixed
+identifiers:
+  wikidata: Q5275819
 tags:
   - function:deposit
   - theme:vertical-integration

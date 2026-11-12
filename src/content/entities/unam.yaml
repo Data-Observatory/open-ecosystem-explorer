@@ -8,6 +8,9 @@ governance: academic
 orgKind: university
 country: MX
 prominence: detail
+identifiers:
+  ror: 01tmp8f25
+  wikidata: Q222738
 tags:
   - region:latam
 lastReviewed: 2026-11-12

@@ -7,6 +7,9 @@ orgKind: university
 country: US
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 03vek6s52
+  wikidata: Q13371
 tags:
   - region:north-america
   - openness:open-source

@@ -6,6 +6,9 @@ governance: commercial
 orgKind: company
 country: US
 prominence: detail
+identifiers:
+  ror: 00njsd438
+  wikidata: Q95
 tags:
   - region:north-america
 lastReviewed: 2026-11-12

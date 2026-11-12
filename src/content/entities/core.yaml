@@ -12,6 +12,8 @@ objectScope:
   - article
 geography:
   - global
+identifiers:
+  wikidata: Q22661180
 tags:
   - function:aggregation
   - openness:bulk-downloadable

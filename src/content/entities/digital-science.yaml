@@ -5,6 +5,9 @@ status: active
 governance: commercial
 orgKind: company
 country: GB
+identifiers:
+  ror: 02ktfc112
+  wikidata: Q30338362
 tags:
   - theme:vertical-integration
 lastReviewed: 2026-11-12

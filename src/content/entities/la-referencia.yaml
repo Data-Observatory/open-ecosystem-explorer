@@ -23,6 +23,9 @@ memberCountries:
 geography:
   - latam
 prominence: core
+identifiers:
+  ror: 024pbfj84
+  wikidata: Q65557864
 tags:
   - function:aggregation
   - region:latam

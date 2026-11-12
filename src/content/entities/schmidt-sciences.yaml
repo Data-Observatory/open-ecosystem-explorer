@@ -6,6 +6,9 @@ governance: nonprofit
 orgKind: foundation
 country: US
 prominence: detail
+identifiers:
+  ror: 044fk6795
+  wikidata: Q133190183
 tags:
   - region:north-america
 lastReviewed: 2026-09-04

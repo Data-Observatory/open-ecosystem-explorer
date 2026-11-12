@@ -6,6 +6,9 @@ url: https://worlddatasystem.org/about/
 status: active
 governance: nonprofit
 communityKind: certification-body
+identifiers:
+  ror: 01pwmqe95
+  wikidata: Q17102557
 tags:
   - function:certification
   - region:global

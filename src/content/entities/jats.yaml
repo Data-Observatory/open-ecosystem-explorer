@@ -8,6 +8,8 @@ status: active
 governance: nonprofit
 standardKind: metadata-schema
 machineReadable: true
+identifiers:
+  wikidata: Q17060731
 tags:
   - function:registration
 lastReviewed: 2026-11-12

@@ -7,6 +7,8 @@ status: active
 governance: nonprofit
 identifies: activity
 isoStandard: ISO 23527:2022
+identifiers:
+  wikidata: Q108378148
 tags:
   - function:identification
   - region:global

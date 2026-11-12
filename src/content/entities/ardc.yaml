@@ -8,6 +8,9 @@ governance: public-agency
 orgKind: government-agency
 country: AU
 prominence: detail
+identifiers:
+  ror: 038sjwq14
+  wikidata: Q4824459
 tags:
   - region:global
 lastReviewed: 2026-09-04

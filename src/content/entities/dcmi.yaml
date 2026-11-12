@@ -8,6 +8,8 @@ governance: nonprofit
 communityKind: standards-body
 openMembership: true
 prominence: detail
+identifiers:
+  wikidata: Q108771890
 tags:
   - function:registration
   - region:global

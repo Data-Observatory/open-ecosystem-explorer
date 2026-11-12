@@ -4,6 +4,8 @@ url: https://www.coalition-s.org/
 status: active
 governance: community
 coalitionKind: funding-initiative
+identifiers:
+  wikidata: Q56458328
 tags:
   - openness:open-content
 lastReviewed: 2026-11-12

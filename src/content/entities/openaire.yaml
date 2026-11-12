@@ -15,6 +15,8 @@ objectScope:
 geography:
   - eu
 prominence: core
+identifiers:
+  wikidata: Q25106053
 tags:
   - function:aggregation
   - openness:open-governance

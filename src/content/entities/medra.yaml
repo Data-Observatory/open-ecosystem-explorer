@@ -10,6 +10,9 @@ registers:
 feeModel: per-object
 consortiumModel: false
 prominence: detail
+identifiers:
+  ror: 05mz9t398
+  wikidata: Q100312513
 tags:
   - function:registration
   - region:europe

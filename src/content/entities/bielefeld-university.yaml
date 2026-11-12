@@ -7,6 +7,9 @@ orgKind: university
 country: DE
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 02hpadn98
+  wikidata: Q24382
 tags:
   - region:europe
 lastReviewed: 2026-09-04

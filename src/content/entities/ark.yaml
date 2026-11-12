@@ -6,6 +6,8 @@ url: https://arks.org
 status: active
 governance: community
 identifies: object
+identifiers:
+  wikidata: Q2860403
 tags:
   - function:identification
   - region:global

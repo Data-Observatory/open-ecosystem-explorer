@@ -7,6 +7,9 @@ orgKind: nonprofit
 country: AU
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 0307tfa50
+  wikidata: Q5008648
 tags:
   - region:global
   - openness:open-governance

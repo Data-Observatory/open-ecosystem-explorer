@@ -13,6 +13,8 @@ coverageObjects:
   - standard
   - database
   - policy
+identifiers:
+  wikidata: Q108921028
 tags:
   - function:indexing
   - openness:open-content

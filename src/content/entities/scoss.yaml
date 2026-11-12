@@ -7,6 +7,8 @@ status: active
 governance: nonprofit
 coalitionKind: funding-initiative
 since: 2017-01-01
+identifiers:
+  wikidata: Q75737631
 tags:
   - openness:open-governance
   - region:global

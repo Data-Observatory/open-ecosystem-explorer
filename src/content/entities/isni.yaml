@@ -6,6 +6,8 @@ url: https://isni.org
 status: active
 governance: nonprofit
 identifies: person
+identifiers:
+  wikidata: Q423048
 tags:
   - function:identification
   - region:global

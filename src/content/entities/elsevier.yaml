@@ -7,6 +7,9 @@ orgKind: company
 country: NL
 outputLicence: closed
 codebase: proprietary
+identifiers:
+  ror: 013fhv752
+  wikidata: Q746413
 tags:
   - theme:vertical-integration
   - region:europe

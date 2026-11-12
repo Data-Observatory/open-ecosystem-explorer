@@ -12,6 +12,8 @@ bulkDownload: full
 coverageObjects:
   - article
   - conference-paper
+identifiers:
+  wikidata: Q22908627
 tags:
   - function:indexing
   - openness:open-content

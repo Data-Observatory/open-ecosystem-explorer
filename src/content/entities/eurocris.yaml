@@ -5,6 +5,9 @@ status: active
 governance: nonprofit
 communityKind: standards-body
 prominence: detail
+identifiers:
+  ror: 04340dw19
+  wikidata: Q3060521
 tags:
   - function:registration
   - region:europe

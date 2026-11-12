@@ -9,6 +9,8 @@ jurisdiction:
 bindingness: advisory
 effectiveDate: 2021-11-25
 prominence: core
+identifiers:
+  wikidata: Q110684383
 tags:
   - region:global
 lastReviewed: 2026-11-12

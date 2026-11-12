@@ -6,6 +6,9 @@ governance: academic
 orgKind: university
 country: GB
 prominence: detail
+identifiers:
+  ror: 052gg0110
+  wikidata: Q34433
 tags:
   - region:europe
 lastReviewed: 2026-11-12

@@ -5,6 +5,9 @@ status: active
 governance: intergovernmental
 orgKind: intergovernmental
 country: EU
+identifiers:
+  ror: 00k4n6c32
+  wikidata: Q8880
 tags:
   - region:europe
 lastReviewed: 2026-09-04

@@ -7,6 +7,9 @@ orgKind: company
 country: GB
 outputLicence: closed
 codebase: proprietary
+identifiers:
+  ror: 04fce1c40
+  wikidata: Q27991358
 tags:
   - theme:vertical-integration
   - region:europe

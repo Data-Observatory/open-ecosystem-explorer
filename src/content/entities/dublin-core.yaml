@@ -5,6 +5,8 @@ status: active
 governance: community
 standardKind: metadata-schema
 machineReadable: true
+identifiers:
+  wikidata: Q624610
 tags:
   - function:registration
 lastReviewed: 2026-09-04

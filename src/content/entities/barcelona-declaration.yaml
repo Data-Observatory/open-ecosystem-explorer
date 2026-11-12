@@ -6,6 +6,8 @@ governance: community
 coalitionKind: declaration
 workingGroups:
   - "Group 4: replacing closed systems"
+identifiers:
+  wikidata: Q125499330
 tags:
   - theme:vertical-integration
 lastReviewed: 2026-09-04

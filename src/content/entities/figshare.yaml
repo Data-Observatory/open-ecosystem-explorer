@@ -9,6 +9,8 @@ repositoryKind: hosted-service
 persistentIdScheme:
   - doi
 accessModel: open
+identifiers:
+  wikidata: Q17013516
 tags:
   - function:deposit
   - openness:open-content

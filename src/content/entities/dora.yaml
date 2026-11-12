@@ -8,6 +8,8 @@ governance: nonprofit
 coalitionKind: declaration
 since: 2012-12-01
 signatoryCount: 2000
+identifiers:
+  wikidata: Q14704287
 tags:
   - function:evaluation
   - region:global

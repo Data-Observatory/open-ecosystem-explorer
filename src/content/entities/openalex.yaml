@@ -17,6 +17,8 @@ coverageObjects:
   - book
   - preprint
 prominence: core
+identifiers:
+  wikidata: Q107507571
 tags:
   - function:indexing
   - openness:open-content

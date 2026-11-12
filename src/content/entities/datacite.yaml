@@ -6,6 +6,7 @@ governance: nonprofit
 since: "2009"
 identifiers:
   ror: 04wxnsj81
+  wikidata: Q821542
 registers:
   - dataset
   - software

@@ -10,6 +10,9 @@ outputLicence: open
 platformKind: preprint-server
 fullTextHosted: true
 admissionCriteria: published
+identifiers:
+  ror: 00m2zh467
+  wikidata: Q118398
 tags:
   - function:deposit
   - openness:open-content

@@ -7,6 +7,9 @@ orgKind: university
 country: US
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 05bnh6r87
+  wikidata: Q49115
 tags:
   - region:north-america
 lastReviewed: 2026-11-12

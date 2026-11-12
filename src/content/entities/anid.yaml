@@ -8,6 +8,9 @@ governance: public-agency
 orgKind: government-agency
 country: CL
 outputLicence: open
+identifiers:
+  ror: 05btm5233
+  wikidata: Q60169264
 tags:
   - region:latam
 lastReviewed: 2026-09-04

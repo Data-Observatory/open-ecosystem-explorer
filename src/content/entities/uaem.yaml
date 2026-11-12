@@ -9,6 +9,9 @@ orgKind: university
 country: MX
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 0079gpv38
+  wikidata: Q18360632
 tags:
   - region:latam
 lastReviewed: 2026-11-12

@@ -8,6 +8,8 @@ country: GB
 outputLicence: closed
 codebase: proprietary
 prominence: detail
+identifiers:
+  wikidata: Q141817573
 tags:
   - theme:vertical-integration
   - region:europe

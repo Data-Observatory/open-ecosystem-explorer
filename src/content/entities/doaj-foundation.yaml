@@ -6,6 +6,8 @@ governance: nonprofit
 orgKind: foundation
 country: DK
 prominence: detail
+identifiers:
+  ror: 05amyt365
 tags:
   - openness:open-governance
 lastReviewed: 2026-11-12

@@ -16,6 +16,8 @@ objectScope:
   - dataset
 geography:
   - global
+identifiers:
+  wikidata: Q448335
 tags:
   - function:aggregation
 lastReviewed: 2026-09-04

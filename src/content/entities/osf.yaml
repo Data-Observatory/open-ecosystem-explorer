@@ -8,6 +8,7 @@ governance: nonprofit
 codebase: open-source
 identifiers:
   spdx: Apache-2.0
+  wikidata: Q18691678
 outputLicence: partly-open
 repositoryKind: hosted-service
 accessModel: mixed

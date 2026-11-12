@@ -8,6 +8,9 @@ governance: intergovernmental
 orgKind: intergovernmental
 country: CH
 outputLicence: open
+identifiers:
+  ror: 01ggx4157
+  wikidata: Q42944
 tags:
   - region:europe
 lastReviewed: 2026-09-04

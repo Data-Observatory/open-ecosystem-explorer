@@ -8,6 +8,9 @@ governance: nonprofit
 orgKind: nonprofit
 country: US
 prominence: detail
+identifiers:
+  ror: 01fyxcz70
+  wikidata: Q11713409
 tags:
   - function:registration
   - region:north-america

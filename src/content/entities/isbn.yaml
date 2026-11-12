@@ -7,6 +7,8 @@ url: https://www.isbn-international.org
 status: active
 governance: nonprofit
 identifies: bibliographic
+identifiers:
+  wikidata: Q33057
 tags:
   - function:identification
   - region:global

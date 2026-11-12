@@ -8,6 +8,9 @@ governance: academic
 orgKind: library
 country: US
 prominence: detail
+identifiers:
+  ror: 03yrm5c26
+  wikidata: Q5020447
 tags:
   - region:north-america
 lastReviewed: 2026-09-04

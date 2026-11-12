@@ -6,6 +6,8 @@ governance: community
 standardKind: serialisation
 machineReadable: true
 prominence: detail
+identifiers:
+  wikidata: Q6108942
 tags:
   - function:registration
 lastReviewed: 2026-09-04

@@ -6,6 +6,9 @@ url: https://www.rd-alliance.org/
 status: active
 governance: community
 communityKind: technical-community
+identifiers:
+  ror: 05dc6w374
+  wikidata: Q25338539
 tags:
   - region:global
 lastReviewed: 2026-09-04

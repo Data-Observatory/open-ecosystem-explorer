@@ -15,6 +15,9 @@ markupStandard:
 geography:
   - latam
 prominence: core
+identifiers:
+  ror: 0431zrt90
+  wikidata: Q7433389
 tags:
   - function:publishing
   - region:latam

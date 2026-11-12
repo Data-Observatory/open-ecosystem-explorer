@@ -12,6 +12,8 @@ inclusionCriteria: published
 bulkDownload: none
 coverageObjects:
   - policy
+identifiers:
+  wikidata: Q138427491
 tags:
   - function:indexing
 lastReviewed: 2026-09-04

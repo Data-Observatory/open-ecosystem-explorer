@@ -12,6 +12,9 @@ inclusionCriteria: partially-published
 bulkDownload: full
 coverageObjects:
   - citation
+identifiers:
+  ror: 00wb4mk85
+  wikidata: Q29279836
 tags:
   - function:indexing
   - openness:open-content

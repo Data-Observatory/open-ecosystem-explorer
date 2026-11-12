@@ -6,6 +6,7 @@ governance: community
 codebase: open-source
 identifiers:
   spdx: BSD-3-Clause
+  wikidata: Q595786
 outputLicence: not-applicable
 repositoryKind: software-platform
 tags:

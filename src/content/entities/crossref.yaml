@@ -12,6 +12,9 @@ waiverProgramme: GEM programme — 79 eligible countries on the 2026 list (18 ad
   January 2026), membership and content-registration fees waived (Similarity Check and Metadata Plus still
   charged); Chile is not eligible.
 prominence: core
+identifiers:
+  ror: 02twcfp32
+  wikidata: Q5188229
 tags:
   - function:registration
   - region:global

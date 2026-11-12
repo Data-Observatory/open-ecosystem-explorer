@@ -7,6 +7,8 @@ status: active
 governance: nonprofit
 identifies: organization
 prominence: core
+identifiers:
+  wikidata: Q110235640
 tags:
   - function:identification
   - region:global

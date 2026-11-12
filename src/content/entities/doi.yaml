@@ -9,6 +9,8 @@ identifies: object
 isoStandard: ISO 26324
 resolverUrl: https://doi.org/
 prominence: core
+identifiers:
+  wikidata: Q25670
 tags:
   - function:identification
   - region:global

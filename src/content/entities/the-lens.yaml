@@ -12,6 +12,8 @@ bulkDownload: partial
 coverageObjects:
   - article
   - patent
+identifiers:
+  wikidata: Q7144471
 tags:
   - function:indexing
 lastReviewed: 2026-09-04

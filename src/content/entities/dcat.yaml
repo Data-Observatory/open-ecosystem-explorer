@@ -8,6 +8,8 @@ governance: community
 standardKind: metadata-schema
 machineReadable: true
 prominence: detail
+identifiers:
+  wikidata: Q16892890
 tags:
   - function:registration
 lastReviewed: 2026-09-04

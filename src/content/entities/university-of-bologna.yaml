@@ -8,6 +8,9 @@ governance: academic
 orgKind: university
 country: IT
 prominence: detail
+identifiers:
+  ror: 01111rn36
+  wikidata: Q131262
 tags:
   - region:europe
 lastReviewed: 2026-09-04

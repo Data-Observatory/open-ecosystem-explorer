@@ -8,6 +8,8 @@ governance: community
 standardKind: protocol
 machineReadable: true
 prominence: core
+identifiers:
+  wikidata: Q2430433
 tags:
   - function:aggregation
 lastReviewed: 2026-11-12

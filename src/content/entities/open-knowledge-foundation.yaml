@@ -7,6 +7,9 @@ orgKind: nonprofit
 country: GB
 outputLicence: open
 prominence: detail
+identifiers:
+  ror: 00thqng93
+  wikidata: Q233015
 tags:
   - region:global
   - openness:open-governance

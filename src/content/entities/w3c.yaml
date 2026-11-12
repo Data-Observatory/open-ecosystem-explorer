@@ -6,6 +6,9 @@ url: https://www.w3.org/
 status: active
 governance: nonprofit
 communityKind: standards-body
+identifiers:
+  ror: 0059y1582
+  wikidata: Q37033
 tags:
   - region:global
 lastReviewed: 2026-11-12

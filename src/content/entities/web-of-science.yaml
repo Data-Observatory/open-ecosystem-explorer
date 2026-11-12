@@ -13,6 +13,8 @@ coverageObjects:
   - article
   - conference-paper
   - book
+identifiers:
+  wikidata: Q1201886
 tags:
   - function:indexing
   - theme:vertical-integration

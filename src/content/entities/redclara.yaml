@@ -8,6 +8,9 @@ governance: nonprofit
 orgKind: nonprofit
 country: UY
 prominence: detail
+identifiers:
+  ror: 02h21fh05
+  wikidata: Q2135885
 tags:
   - region:latam
 lastReviewed: 2026-09-04

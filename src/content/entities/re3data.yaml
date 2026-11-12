@@ -12,6 +12,8 @@ inclusionCriteria: published
 bulkDownload: full
 coverageObjects:
   - repository
+identifiers:
+  wikidata: Q18393912
 tags:
   - function:indexing
   - openness:open-content

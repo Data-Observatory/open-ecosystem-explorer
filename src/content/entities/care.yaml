@@ -6,6 +6,8 @@ governance: community
 standardKind: principles
 requiresOpenness: false
 prominence: core
+identifiers:
+  wikidata: Q108558452
 tags:
   - region:global
 lastReviewed: 2026-09-04

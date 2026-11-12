@@ -6,6 +6,8 @@ governance: commercial
 codebase: proprietary
 crisKind: commercial
 prominence: detail
+identifiers:
+  wikidata: Q5918976
 tags:
   - theme:vertical-integration
 lastReviewed: 2026-09-04

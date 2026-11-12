@@ -8,6 +8,9 @@ governance: academic
 orgKind: research-institute
 country: DE
 prominence: detail
+identifiers:
+  ror: 02gn1ar53
+  wikidata: Q1905964
 tags:
   - region:europe
 lastReviewed: 2026-09-04
