@@ -48,8 +48,8 @@ relations:
       url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
   - predicate: implements
     target: oai-pmh
-    note: arXiv is one of the original OAI-PMH implementers; the protocol grew out
-      of harvesting needs like arXiv's.
+    note: arXiv exposes its metadata through OAI-PMH; its early-implementer role is
+      unverified here.
   - predicate: funded-by
     target: scoss
     note: SCOSS-funded infrastructure among its several funding sources.

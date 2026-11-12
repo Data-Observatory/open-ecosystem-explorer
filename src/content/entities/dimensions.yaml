@@ -24,10 +24,10 @@ relations:
     target: digital-science
   - predicate: operated-by
     target: digital-science
-    note: Operated directly by Digital Science as one of its portfolio brands.
+    note: Operated by Digital Science, of which Dimensions is a part (per Wikipedia; the former Digital Science portfolio page was unreachable).
     verified:
       date: 2026-09-04
-      url: https://www.digital-science.com/portfolio/
+      url: https://en.wikipedia.org/wiki/Dimensions_(database)
   - predicate: interoperates-with
     target: symplectic-elements
     note: Dimensions data has been integrated into Symplectic Elements since March
@@ -35,6 +35,9 @@ relations:
   - predicate: is-a
     target: citation-index
 sources:
+  - url: https://en.wikipedia.org/wiki/Dimensions_(database)
+    accessed: 2026-11-12
+    note: States that Dimensions is part of Digital Science.
   - url: https://www.dimensions.ai
     accessed: 2026-11-12
     note: Presents Dimensions as a Digital Science solution connecting publications with grants, patents and clinical trials.

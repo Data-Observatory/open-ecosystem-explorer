@@ -47,7 +47,7 @@ relations:
   - predicate: operated-by
     target: redclara
     note: Runs on technical/organisational agreements with RedCLARA's regional
-      network.
+      network (not confirmed by a first-party source).
     verified:
       date: 2026-09-04
       url: https://redclara.net/en/somos

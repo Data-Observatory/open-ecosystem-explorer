@@ -6,8 +6,6 @@ governance: nonprofit
 codebase: open-source
 outputLicence: partly-open
 repositoryKind: hosted-service
-certifications:
-  - coretrustseal
 persistentIdScheme:
   - doi
 accessModel: mixed
@@ -46,8 +44,6 @@ relations:
     target: datacite-metadata-schema
   - predicate: complies-with
     target: ro-crate
-  - predicate: certified-by
-    target: coretrustseal
   - predicate: is-a
     target: research-repository
   - predicate: related-to

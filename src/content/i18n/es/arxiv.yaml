@@ -2,8 +2,7 @@ summary: arXiv es un servidor en línea donde investigadores de física, matemá
   informática y otras ciencias publican preprints antes de la revisión por pares.
 relationNotes:
   funded-by@cornell: Uno de varios financiadores hasta junio de 2026, junto a la Simons Foundation y un consorcio de instituciones miembro.
-  implements@oai-pmh: arXiv es uno de los primeros implementadores de OAI-PMH; el
-    protocolo surgió en parte de necesidades de cosecha como las de arXiv.
+  implements@oai-pmh: arXiv expone sus metadatos mediante OAI-PMH. Las afirmaciones de que fue un implementador temprano o de que el protocolo surgió de sus necesidades de cosecha no están verificadas aquí.
   related-to@preprint: Servidor que aloja preprints; es una plataforma, no un preprint.
 body: |-
-  arXiv es un servidor de preprints con más de tres millones de artículos, que pasan por un proceso de moderación pero no por revisión por pares. Estuvo alojado en Cornell University durante 25 años; desde el 1 de julio de 2026 es una organización independiente, arXiv, Inc., una corporación sin fines de lucro de Delaware gobernada por una junta directiva propia (8 miembros iniciales, hasta 4 más), con Cornell y la Simons Foundation como miembros fundadores.
+  arXiv es un servidor de preprints cuyos envíos pasan por un proceso de moderación pero no por revisión por pares. Estuvo alojado en Cornell University durante 25 años; desde el 1 de julio de 2026 es una organización independiente, arXiv, Inc., una corporación sin fines de lucro de Delaware gobernada por una junta directiva propia (8 miembros iniciales, hasta 4 más), con Cornell y la Simons Foundation como miembros fundadores.

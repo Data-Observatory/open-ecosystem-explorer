@@ -13,8 +13,8 @@ lastReviewed: 2026-09-04
 relations:
   - predicate: governed-by
     target: dcmi
-    note: DCMI has been a project of ASIS&T since 2013, maintaining Dublin Core
-      under a Governing Board.
+    note: DCMI is a project of ASIS&T, maintaining Dublin Core under a Governing
+      Board.
     verified:
       date: 2026-09-04
       url: https://www.dublincore.org/about/
