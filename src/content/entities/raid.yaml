@@ -22,6 +22,8 @@ relations:
     verified:
       date: 2026-09-04
       url: https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/
+  - predicate: is-a
+    target: persistent-identifier
 sources:
   - url: https://www.iso.org/standard/75931.html
     accessed: 2026-09-04

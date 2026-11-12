@@ -1,7 +1,0 @@
-summary: Organización sin fines de lucro independiente que administra el
-  registro de ORCID iD y los datos asociados.
-relationNotes:
-  issues@orcid: La agencia detrás del identificador ORCID iD; se modela como
-    entidad separada del identificador mismo.
-body: |-
-  ORCID (la organización) opera el registro, mantiene los estándares de interoperabilidad y gobierna el identificador ORCID iD de forma independiente de cualquier editorial o financiador.

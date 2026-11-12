@@ -14,10 +14,11 @@ objectScope:
   - thesis
 geography:
   - eu
+prominence: core
 tags:
   - function:aggregation
   - openness:open-governance
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: OpenAIRE's software components (e.g. the OpenAIRE Guidelines validator,
   the research graph tooling) are published as open source across several
   repositories; not tracked here under a single package-level SPDX id.
@@ -37,10 +38,17 @@ relations:
       url: https://openscholarlyinfrastructure.org/adopters/
   - predicate: member-of
     target: barcelona-declaration
-    note: Signed the Barcelona Declaration on Open Research Information.
+    note: Listed as a supporter on the Declaration's site; OpenAIRE's own post
+      calls it a signatory.
+    verified:
+      date: 2026-11-12
+      url: https://barcelona-declaration.org/signatories/
   - predicate: member-of
     target: coara
     note: Published an Action Plan supporting the CoARA commitments.
+    verified:
+      date: 2026-11-12
+      url: https://www.coara.org/coalition/membership/
   - predicate: funded-by
     target: european-commission
     note: OpenAIRE-Advance project funded under Horizon 2020/Europe (~€10M).
@@ -53,4 +61,9 @@ sources:
   - url: https://openscholarlyinfrastructure.org/adopters/
     accessed: 2026-09-04
   - url: https://www.openaire.eu/openaire-signs-barcelona-declaration-a-catalyst-for-change-in-open-research-information
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: OpenAIRE describes itself as a signatory; the Declaration's own site
+      lists it under Supporters.
+  - url: https://www.coara.org/coalition/membership/
+    accessed: 2026-11-12
+    note: The member list includes "OpenAIRE AMKE".

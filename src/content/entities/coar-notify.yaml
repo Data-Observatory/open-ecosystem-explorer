@@ -7,16 +7,18 @@ standardKind: protocol
 machineReadable: true
 tags:
   - function:aggregation
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: developed-by
     target: coar
-  - predicate: supersedes
-    target: oai-pmh
-    note: Positioned as the modern, notification-based replacement for OAI-PMH
-      harvesting.
+  - predicate: related-to
+    target: peer-review
+    note: Lets repositories and review services exchange review notifications.
 sources:
   - url: https://coar-notify.net/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes Notify as community conventions for linking repositories
+      with external services via Linked Data Notifications; not a harvesting
+      protocol.
   - url: https://coar-repositories.org/tools-and-resources/notify/
     accessed: 2026-09-04

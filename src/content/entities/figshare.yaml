@@ -25,6 +25,8 @@ relations:
       url: https://www.digital-science.com/portfolio/
   - predicate: implements
     target: datacite-metadata-schema
+  - predicate: is-a
+    target: research-repository
 sources:
   - url: https://knowledge.figshare.com/
     accessed: 2026-09-03

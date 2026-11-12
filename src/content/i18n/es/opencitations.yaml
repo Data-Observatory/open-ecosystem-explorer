@@ -1,6 +1,7 @@
 summary: Infraestructura sin fines de lucro que publica datos abiertos de citas
   como datos enlazados.
 relationNotes:
+  member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
   depends-on@doi: Los registros de citas se identifican mediante los DOI de los
     artículos citante y citado.
 body: |-

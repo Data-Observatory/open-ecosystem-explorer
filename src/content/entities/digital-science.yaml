@@ -7,11 +7,15 @@ orgKind: company
 country: GB
 tags:
   - theme:vertical-integration
-lastReviewed: 2026-09-03
+lastReviewed: 2026-11-12
 relations:
   - predicate: owned-by
     target: holtzbrinck
-    note: Wholly owned; Holtzbrinck also holds 53% of Springer Nature.
+    note: Wholly owned; Holtzbrinck also holds a 50.6% majority of Springer Nature.
+    sources:
+      - url: https://group.springernature.com/gp/group/about-us
+        accessed: 2026-11-12
+        note: "Holtzbrinck ... holds a majority share of 50.6 per cent."
 sources:
   - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
     accessed: 2026-09-03

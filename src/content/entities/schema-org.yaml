@@ -2,20 +2,31 @@ type: standard
 name: schema.org
 url: https://schema.org/
 status: active
-governance: community
+governance: commercial
 standardKind: metadata-schema
 machineReadable: true
 tags:
   - function:registration
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
+note: Run directly by Google as of 2026; not a standards-body initiative.
 relations:
   - predicate: governed-by
-    target: w3c
-    note: Hosted as a W3C Community Group; steered jointly with the founding search
-      engines.
+    target: google
+    note: As of 2026 run directly by Google; the W3C Community Group is only a
+      discussion forum.
+    verified:
+      date: 2026-11-12
+      url: https://www.w3.org/community/schemaorg/how-we-work
   - predicate: depends-on
     target: json-ld
     note: schema.org markup is commonly serialised as JSON-LD.
+  - predicate: related-to
+    target: metadata-standard
+    note: Shared vocabulary for marking up structured data on web pages.
 sources:
   - url: https://schema.org/
     accessed: 2026-09-04
+  - url: https://www.w3.org/community/schemaorg/how-we-work
+    accessed: 2026-11-12
+    note: States that schema.org is not a W3C initiative and, as of 2026, is run
+      directly by Google, which owns the domain.

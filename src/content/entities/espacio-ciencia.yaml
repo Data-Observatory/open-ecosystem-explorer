@@ -26,6 +26,9 @@ relations:
   - predicate: part-of
     target: la-referencia
     note: Chile's national node feeding into the LA Referencia federated network.
+  - predicate: related-to
+    target: research-repository
+    note: Harvests institutional repositories into one national discovery point.
 sources:
   - url: https://acceso-abierto.anid.cl/sobreespaciociencia/
     accessed: 2026-09-04

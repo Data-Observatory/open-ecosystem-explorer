@@ -1,0 +1,39 @@
+type: policy
+name: Plan S
+aka:
+  - Plan S principles
+url: https://www.coalition-s.org/principles-and-implementation/
+status: active
+governance: community
+policyKind: funder-requirement
+jurisdiction:
+  - global
+bindingness: conditional
+identifiers:
+  wikidata: Q56458321
+prominence: core
+tags:
+  - openness:open-content
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: is-a
+    target: open-access-mandate
+  - predicate: governed-by
+    target: coalition-s
+    note: Plan S is the requirement that cOAlition S funders commit to implement.
+    verified:
+      date: 2026-11-12
+      url: https://www.coalition-s.org/about/
+sources:
+  - url: https://www.coalition-s.org/principles-and-implementation/
+    accessed: 2026-11-12
+    note: Principles and implementation guidance. Funded publications must
+      appear in fully open journals or platforms, or be immediately available in
+      repositories without embargo, under a CC BY-type licence.
+  - url: https://www.coalition-s.org/about/
+    accessed: 2026-11-12
+    note: Announced on 4 September 2018 by a group of national research funders
+      with the backing of the EU's executive and the ERC.
+  - url: https://www.wikidata.org/wiki/Q56458321
+    accessed: 2026-11-12

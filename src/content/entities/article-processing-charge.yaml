@@ -1,0 +1,22 @@
+type: concept
+name: Article processing charge (APC)
+aka:
+  - APC
+url: https://en.wikipedia.org/wiki/Article_processing_charge
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q15291071
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: related-to
+    target: open-access
+    note: A fee-based way to fund open access publishing.
+sources:
+  - url: https://en.wikipedia.org/wiki/Article_processing_charge
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q15291071
+    accessed: 2026-11-12

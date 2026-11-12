@@ -11,10 +11,20 @@ tags:
   - region:global
   - openness:open-governance
 lastReviewed: 2026-09-04
+note: Governed by the ARK Alliance, a community-run technical body that stewards
+  the NAAN registry and the N2T resolver.
 relations:
-  - predicate: governed-by
-    target: ark-alliance
-    note: NAAN registry and the N2T resolver are stewarded by the ARK Alliance.
+  - predicate: funded-by
+    target: lyrasis
+    note: The community-governed ARK Alliance is supported in part by LYRASIS.
+    verified:
+      date: 2026-09-04
+      url: https://cdlib.org/cdlinfo/2021/01/27/announcing-the-ark-alliance/
+  - predicate: is-a
+    target: persistent-identifier
 sources:
   - url: https://arks.org/about/
     accessed: 2026-09-04
+  - url: https://cdlib.org/cdlinfo/2021/01/27/announcing-the-ark-alliance/
+    accessed: 2026-09-04
+    note: ARK Alliance announced; governance moved away from the California Digital Library.

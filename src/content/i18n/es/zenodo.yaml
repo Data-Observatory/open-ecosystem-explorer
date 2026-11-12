@@ -4,5 +4,7 @@ relationNotes:
   operated-by@cern: Operado por el CERN, lanzado originalmente junto a OpenAIRE y
     aún en estrecha colaboración con esa red (ver la relación entrante "indexa"
     desde OpenAIRE).
+  related-to@open-license: Pide a quien deposita elegir una licencia para los registros
+    en acceso abierto.
 body: |-
   Zenodo es uno de los repositorios de referencia del ecosistema: gratuito, con DOI incluido y certificación CoreTrustSeal.

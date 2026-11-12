@@ -22,6 +22,7 @@ memberCountries:
   - ES
 geography:
   - latam
+prominence: core
 tags:
   - function:aggregation
   - region:latam

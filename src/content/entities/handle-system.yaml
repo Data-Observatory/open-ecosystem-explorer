@@ -19,6 +19,9 @@ relations:
     verified:
       date: 2026-09-04
       url: https://www.dona.net/handle-system
+  - predicate: related-to
+    target: persistent-identifier
+    note: Resolution system underlying DOI and other persistent identifiers.
 sources:
   - url: https://www.dona.net/handle-system
     accessed: 2026-09-04

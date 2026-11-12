@@ -1,3 +1,7 @@
-summary: Reemplazo moderno de OAI-PMH basado en notificaciones entre repositorios.
+summary: Convenciones comunitarias que conectan repositorios con servicios
+  externos, como revisión por pares, mediante notificaciones de datos enlazados.
+relationNotes:
+  related-to@peer-review: Permite que repositorios y servicios de revisión intercambien
+    notificaciones de revisión.
 body: |-
-  COAR Notify propone un mecanismo de notificaciones descentralizado para conectar repositorios con servicios externos, como reemplazo del modelo clásico de cosecha OAI-PMH.
+  COAR Notify define perfiles y convenciones sobre las Linked Data Notifications del W3C para que un repositorio avise a servicios externos (revisión por pares, revistas overlay) y reciba avisos de ellos. No es un protocolo de cosecha y no reemplaza a OAI-PMH.

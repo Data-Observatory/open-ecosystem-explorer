@@ -2,6 +2,7 @@ type: repository
 name: Digital Commons
 aka:
   - bepress
+  - Berkeley Electronic Press
 url: https://www.bepress.com/products/digital-commons/
 status: active
 governance: commercial
@@ -13,19 +14,24 @@ tags:
   - function:deposit
   - theme:vertical-integration
 lastReviewed: 2026-09-04
-note: Hosted institutional-repository platform used by 500+ institutions;
-  bepress acquired by Elsevier in 2017.
+note: Hosted institutional-repository platform used by 500+ institutions.
+  Built and operated by bepress (Berkeley Electronic Press), a company acquired
+  by Elsevier in 2017 and run as a wholly owned business unit.
 relations:
   - predicate: owned-by
     target: elsevier
-  - predicate: developed-by
-    target: bepress
-    note: Built and operated by bepress, an Elsevier business unit.
+    note: Through bepress, acquired by Elsevier in 2017; a wholly owned unit.
     verified:
       date: 2026-09-04
-      url: https://en.wikipedia.org/wiki/Digital_Commons_(Elsevier)
+      url: https://scholarlykitchen.sspnet.org/2017/08/02/elsevier-acquires-bepress/
   - predicate: implements
     target: oai-pmh
+  - predicate: related-to
+    target: repository-software
+    note: Hosted commercial service that provides the repository software.
 sources:
   - url: https://en.wikipedia.org/wiki/Digital_Commons_(Elsevier)
     accessed: 2026-09-04
+  - url: https://www.bepress.com
+    accessed: 2026-09-04
+    note: bepress, the company that builds and operates Digital Commons.

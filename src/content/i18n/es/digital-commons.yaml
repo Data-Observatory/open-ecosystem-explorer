@@ -1,4 +1,8 @@
 summary: Plataforma comercial de repositorio institucional usada por más de 500
   instituciones, propiedad de Elsevier.
+relationNotes:
+  owned-by@elsevier: A través de bepress, adquirida por Elsevier en 2017; unidad de negocio de propiedad total.
+  related-to@repository-software: Servicio comercial alojado que proporciona el software
+    de repositorio.
 body: |-
-  Digital Commons (bepress) fue adquirida por Elsevier en 2017, sumándose a Pure e Interfolio bajo la misma matriz.
+  Digital Commons la construye y opera bepress (Berkeley Electronic Press), adquirida por Elsevier en 2017, sumándose a Pure e Interfolio bajo la misma matriz.

@@ -1,0 +1,20 @@
+type: concept
+name: Metadata
+url: https://en.wikipedia.org/wiki/Metadata
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q180160
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: related-to
+    target: metadata-standard
+    note: Standards agree how metadata is structured and named.
+sources:
+  - url: https://en.wikipedia.org/wiki/Metadata
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q180160
+    accessed: 2026-11-12

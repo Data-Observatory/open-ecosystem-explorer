@@ -1,6 +1,8 @@
 summary: Índice curado por comunidad de revistas de acceso abierto evaluadas,
-  operado por IS4OA.
+  operado por la DOAJ Foundation.
 relationNotes:
-  operated-by@is4oa: Operado por IS4OA (Infrastructure Services for Open Access).
+  operated-by@doaj-foundation: Dirigido y gestionado por la DOAJ Foundation, una fundación danesa sin fines de lucro.
+  operated-by@is4oa: Anterior organización gestora; la operación pasó a la DOAJ Foundation y IS4OA debía cerrar a mediados de 2026.
+  related-to@open-access: Directorio de revistas de acceso abierto que cumplen sus criterios.
 body: |-
   DOAJ mantiene un directorio curado de revistas de acceso abierto que cumplen criterios editoriales y de transparencia definidos.

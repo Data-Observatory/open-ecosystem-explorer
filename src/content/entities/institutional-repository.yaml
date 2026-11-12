@@ -1,0 +1,22 @@
+type: concept
+name: Institutional repository
+url: https://en.wikipedia.org/wiki/Institutional_repository
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q1065413
+tags:
+  - function:deposit
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: is-a
+    target: research-repository
+sources:
+  - url: https://en.wikipedia.org/wiki/Institutional_repository
+    accessed: 2026-11-12
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q1065413
+    accessed: 2026-11-12

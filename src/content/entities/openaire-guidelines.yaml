@@ -17,6 +17,9 @@ relations:
     target: openaire
     note: Authored and maintained by OpenAIRE for its network's literature/data/CRIS
       repository managers.
+  - predicate: is-a
+    target: metadata-standard
+    note: Application profile of a metadata standard.
 sources:
   - url: https://guidelines.openaire.eu/
     accessed: 2026-09-04

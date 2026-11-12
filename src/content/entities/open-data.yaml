@@ -1,0 +1,21 @@
+type: concept
+name: Open data
+url: https://en.wikipedia.org/wiki/Open_data
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q309901
+tags:
+  - openness:open-content
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: related-to
+    target: open-science
+    note: 'A pillar of open science: free access to research data.'
+sources:
+  - url: https://opendefinition.org/od/2.1/en/
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q309901
+    accessed: 2026-11-12

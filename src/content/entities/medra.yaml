@@ -9,6 +9,7 @@ registers:
   - publication
 feeModel: per-object
 consortiumModel: false
+prominence: detail
 tags:
   - function:registration
   - region:europe

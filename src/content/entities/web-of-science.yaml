@@ -30,6 +30,8 @@ relations:
     target: orcid
     note: Web of Science Researcher Profiles two-way sync publications and peer
       reviews with a connected ORCID iD.
+  - predicate: is-a
+    target: citation-index
 sources:
   - url: https://clarivate.com/products/scientific-and-academic-research/research-discovery-and-workflow-solutions/web-of-science/
     accessed: 2026-09-04

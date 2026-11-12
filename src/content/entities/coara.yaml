@@ -11,7 +11,10 @@ tags:
   - function:evaluation
   - region:europe
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: related-to
+    target: research-assessment
+    note: Agreement to reform how research is assessed.
 sources:
   - url: https://www.coara.org/about-coara/
     accessed: 2026-09-04

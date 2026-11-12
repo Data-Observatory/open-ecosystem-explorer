@@ -8,6 +8,7 @@ governance: nonprofit
 standardKind: serialisation
 specVersion: "2"
 machineReadable: true
+prominence: detail
 tags:
   - function:registration
 lastReviewed: 2026-09-04

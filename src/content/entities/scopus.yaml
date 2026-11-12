@@ -27,6 +27,8 @@ relations:
     verified:
       date: 2026-09-04
       url: https://www.elsevier.com/products/scopus
+  - predicate: is-a
+    target: citation-index
 sources:
   - url: https://www.elsevier.com/products/scopus
     accessed: 2026-09-04

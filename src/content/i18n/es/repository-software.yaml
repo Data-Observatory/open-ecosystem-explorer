@@ -1,0 +1,5 @@
+summary: El software de repositorio es un programa que permite a una institución montar
+  y administrar su propio repositorio digital sin construirlo desde cero.
+name: Software de repositorio
+body: |-
+  El software de repositorio es el programa, como DSpace o InvenioRDM, a diferencia de un servicio alojado que lo opera por usted. El mismo software puede sostener muchos repositorios independientes.

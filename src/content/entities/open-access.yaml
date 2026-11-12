@@ -1,0 +1,21 @@
+type: concept
+name: Open access
+url: https://en.wikipedia.org/wiki/Open_access
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q232932
+tags:
+  - openness:open-content
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: related-to
+    target: open-science
+    note: 'A pillar of open science: free access to publications.'
+sources:
+  - url: https://www.budapestopenaccessinitiative.org/read/
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q232932
+    accessed: 2026-11-12

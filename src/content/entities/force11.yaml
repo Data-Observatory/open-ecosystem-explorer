@@ -7,6 +7,7 @@ status: active
 governance: nonprofit
 communityKind: technical-community
 openMembership: true
+prominence: detail
 tags:
   - region:global
 lastReviewed: 2026-09-04

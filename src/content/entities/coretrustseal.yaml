@@ -7,6 +7,9 @@ standardKind: certification-criteria
 tags:
   - function:certification
 lastReviewed: 2026-09-04
+note: Maintained by the CoreTrustSeal Foundation (Stichting CoreTrustSeal, NL), an
+  independent Dutch foundation since 2018 whose 12-member elected Board keeps the
+  certification requirements.
 relations:
   - predicate: profile-of
     target: trust-principles
@@ -20,16 +23,12 @@ relations:
     target: rda
     note: Harmonisation of WDS and DSA certification was coordinated under the RDA
       umbrella.
-  - predicate: governed-by
-    target: coretrustseal-foundation
-    note: Dutch Stichting whose 12-member elected Board maintains the certification
-      requirements.
-    verified:
-      date: 2026-09-04
-      url: https://www.coretrustseal.org/about/
 sources:
   - url: https://www.coretrustseal.org/
     accessed: 2026-09-04
+  - url: https://www.coretrustseal.org/about/
+    accessed: 2026-09-04
+    note: CoreTrustSeal Foundation, Dutch Stichting with a 12-member elected Board.
   - url: https://www.coretrustseal.org/about/history/
     accessed: 2026-09-04
     note: 2017 merger of ICSU-WDS and DSA certification, coordinated under RDA;

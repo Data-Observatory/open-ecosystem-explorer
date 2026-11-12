@@ -7,10 +7,15 @@ status: active
 governance: nonprofit
 orgKind: nonprofit
 country: GB
+prominence: detail
 tags:
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://is4oa.org/
     accessed: 2026-09-04
+  - url: https://doaj.org/about/
+    accessed: 2026-11-12
+    note: Calls IS4OA the previous managing organisation for DOAJ, operating
+      until mid-2026.

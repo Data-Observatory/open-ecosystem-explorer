@@ -7,10 +7,13 @@ status: active
 governance: public-agency
 orgKind: government-agency
 country: BR
+prominence: detail
 tags:
   - region:latam
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
     accessed: 2026-09-04
+  - url: https://revistapesquisa.fapesp.br/en/national-consortium-takes-over-management-and-funding-of-the-scielo-library/
+    accessed: 2026-11-12

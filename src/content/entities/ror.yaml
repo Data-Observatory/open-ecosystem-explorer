@@ -6,6 +6,7 @@ url: https://ror.org
 status: active
 governance: nonprofit
 identifies: organization
+prominence: core
 tags:
   - function:identification
   - region:global
@@ -37,6 +38,8 @@ relations:
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
+  - predicate: is-a
+    target: persistent-identifier
 sources:
   - url: https://ror.org/about/
     accessed: 2026-09-04

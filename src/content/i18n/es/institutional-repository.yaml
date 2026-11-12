@@ -1,0 +1,9 @@
+summary: Un repositorio institucional es un repositorio que una universidad o centro
+  de investigación mantiene para reunir, conservar y difundir la producción de su
+  comunidad.
+name: Repositorio institucional
+localNote: En Chile, la política de ANID acepta depósitos de datos de investigación
+  en repositorios institucionales, además del repositorio de la agencia; muchas universidades
+  mantienen el suyo.
+body: |-
+  Un repositorio institucional suele reunir los artículos, tesis y datos de una universidad o instituto, y la mayoría usa software compatible con la cosecha OAI-PMH, de modo que los agregadores nacionales y regionales puedan recolectar sus registros.

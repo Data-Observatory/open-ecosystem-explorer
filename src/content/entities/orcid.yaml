@@ -2,19 +2,26 @@ type: identifier
 name: ORCID iD
 aka:
   - Open Researcher and Contributor ID
+  - ORCID, Inc.
 url: https://orcid.org
 status: active
 governance: nonprofit
 identifies: person
+prominence: core
 tags:
   - function:identification
   - region:global
 lastReviewed: 2026-09-04
+note: Issued and run by ORCID, Inc., an independent nonprofit that operates the
+  registry on a membership/consortium fee model, independent of any publisher or
+  funder.
 relations:
   - predicate: depends-on
     target: isni
     note: ORCID iDs are drawn from a reserved block within the ISNI numeric range,
       per a 2014 ORCID-ISNI memorandum of understanding.
+  - predicate: is-a
+    target: persistent-identifier
 sources:
   - url: https://info.orcid.org/what-is-orcid/
     accessed: 2026-09-04

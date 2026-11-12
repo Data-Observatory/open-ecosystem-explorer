@@ -7,15 +7,19 @@ status: active
 governance: commercial
 orgKind: company
 country: DE
+prominence: detail
 tags:
   - theme:vertical-integration
   - region:europe
-lastReviewed: 2026-09-03
+lastReviewed: 2026-11-12
 note: Privately held family group; no further corporate parent is publicly
   disclosed as of 2026-09-03.
 relations: []
 sources:
   - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
     accessed: 2026-09-03
-    note: Confirms Digital Science is wholly owned by Holtzbrinck, which holds ~53%
-      of Springer Nature.
+    note: Confirms Digital Science is wholly owned by Holtzbrinck.
+  - url: https://group.springernature.com/gp/group/about-us
+    accessed: 2026-11-12
+    note: States Holtzbrinck holds a majority share of 50.6 per cent of Springer
+      Nature (2026).

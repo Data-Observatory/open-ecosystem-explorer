@@ -19,6 +19,8 @@ relations:
     target: orcid
     note: ORCID is a documented supported nameIdentifierScheme value for the
       Creator/Contributor properties.
+  - predicate: is-a
+    target: metadata-standard
 sources:
   - url: https://schema.datacite.org/
     accessed: 2026-09-03

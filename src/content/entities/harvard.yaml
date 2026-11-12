@@ -6,6 +6,7 @@ governance: academic
 orgKind: university
 country: US
 outputLicence: open
+prominence: detail
 tags:
   - region:north-america
   - openness:open-source

@@ -1,19 +1,24 @@
-type: repository
+type: publishing-platform
 name: arXiv
+aka:
+  - arXiv, Inc.
 url: https://arxiv.org/
 status: active
 governance: nonprofit
 codebase: mixed
 outputLicence: open
-repositoryKind: hosted-service
-accessModel: open
+platformKind: preprint-server
+fullTextHosted: true
+admissionCriteria: published
 tags:
   - function:deposit
   - openness:open-content
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: Spun out from Cornell University on 2026-07-01 to become an independent
   nonprofit; historical operated-by/funded-by edges to Cornell are dated `until`
-  the spin-out.
+  the spin-out. Governed since then by arXiv, Inc., a US (Delaware) nonprofit,
+  nonstock corporation with its own board (8 inaugural members, up to 4 more);
+  Cornell and the Simons Foundation are founding Members.
 relations:
   - predicate: operated-by
     target: cornell
@@ -42,22 +47,24 @@ relations:
     target: oai-pmh
     note: arXiv is one of the original OAI-PMH implementers; the protocol grew out
       of harvesting needs like arXiv's.
-  - predicate: governed-by
-    target: arxiv-inc
-    note: Governed by its own 12-member board since the 2026-07-01 spin-out to
-      independent nonprofit status.
-    verified:
-      date: 2026-09-04
-      url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
   - predicate: funded-by
     target: scoss
     note: SCOSS-funded infrastructure among its several funding sources.
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
+  - predicate: related-to
+    target: preprint
+    note: Server that hosts preprints; it is a platform, not a preprint.
 sources:
   - url: https://info.arxiv.org/about/index.html
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: Describes itself as a curated research-sharing platform whose
+      submissions pass a moderation process; material is not peer-reviewed.
+  - url: https://info.arxiv.org/about/spinout_faq.html
+    accessed: 2026-11-12
+    note: arXiv, Inc. established 2026-07-01; inaugural board of eight, which may
+      appoint four more; Cornell and Simons Foundation are founding Members.
   - url: https://blog.arxiv.org/2026/06/30/arxivs-next-chapter/
     accessed: 2026-09-04
   - url: https://news.cornell.edu/stories/2026/06/digital-research-repository-arxiv-start-new-chapter-nonprofit

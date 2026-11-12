@@ -2,6 +2,7 @@ type: identifier
 name: ISBN
 aka:
   - International Standard Book Number
+  - International ISBN Agency
 url: https://www.isbn-international.org
 status: active
 governance: nonprofit
@@ -10,7 +11,12 @@ tags:
   - function:identification
   - region:global
 lastReviewed: 2026-09-04
-relations: []
+note: Issued by national ISBN agencies, coordinated by the International ISBN
+  Agency, a nonprofit that works on a membership fee model.
+relations:
+  - predicate: related-to
+    target: persistent-identifier
+    note: Identifies books for good, but does not resolve to a location by itself.
 sources:
   - url: https://www.isbn-international.org/
     accessed: 2026-09-04

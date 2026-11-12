@@ -1,9 +1,9 @@
 summary: Servidor de preprints de física, matemáticas y ciencias de la
-  computación, operado por Cornell University.
+  computación; organización sin fines de lucro independiente desde julio de 2026.
 relationNotes:
-  funded-by@cornell: Uno de varios financiadores, junto a la Simons Foundation y
-    un consorcio de instituciones miembro.
+  funded-by@cornell: Uno de varios financiadores hasta junio de 2026, junto a la Simons Foundation y un consorcio de instituciones miembro.
   implements@oai-pmh: arXiv es uno de los primeros implementadores de OAI-PMH; el
     protocolo surgió en parte de necesidades de cosecha como las de arXiv.
+  related-to@preprint: Servidor que aloja preprints; es una plataforma, no un preprint.
 body: |-
-  arXiv es el servidor de preprints más antiguo y usado del mundo, operado por Cornell University.
+  arXiv es un servidor de preprints con más de tres millones de artículos, que pasan por un proceso de moderación pero no por revisión por pares. Estuvo alojado en Cornell University durante 25 años; desde el 1 de julio de 2026 es una organización independiente, arXiv, Inc., una corporación sin fines de lucro de Delaware gobernada por una junta directiva propia (8 miembros iniciales, hasta 4 más), con Cornell y la Simons Foundation como miembros fundadores.

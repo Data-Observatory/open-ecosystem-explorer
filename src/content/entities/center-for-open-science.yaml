@@ -8,6 +8,7 @@ governance: nonprofit
 orgKind: nonprofit
 country: US
 outputLicence: open
+prominence: detail
 tags:
   - region:north-america
   - openness:open-governance

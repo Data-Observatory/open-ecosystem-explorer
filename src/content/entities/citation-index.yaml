@@ -1,0 +1,18 @@
+type: concept
+name: Citation index
+url: https://en.wikipedia.org/wiki/Citation_index
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q206290
+tags:
+  - function:indexing
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Citation_index
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q206290
+    accessed: 2026-11-12

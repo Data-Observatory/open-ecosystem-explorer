@@ -6,9 +6,11 @@ url: https://investinopen.org/
 status: active
 governance: nonprofit
 orgKind: nonprofit
+country: US
+prominence: detail
 tags:
   - openness:open-governance
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: funded-by
     target: digital-science
@@ -20,4 +22,6 @@ sources:
   - url: https://investinopen.org/about/
     accessed: 2026-09-04
   - url: https://investinopen.org/blog/invest-in-open-infrastructure-announces-2-7m-commitment-from-founding-group-for-the-ioi-fund-for-network-adoption/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+    note: States IOI is fiscally sponsored by Code for Science & Society, a US
+      501(c)(3); the Portuguese version calls it a North American non-profit.

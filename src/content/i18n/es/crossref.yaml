@@ -1,6 +1,7 @@
 summary: Agencia de registro de DOI sin fines de lucro orientada a publicaciones
   académicas, equivalente de DataCite para artículos.
 relationNotes:
+  member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
   issues@doi: DOI para publicaciones académicas, registrado normalmente a través
     de la revista o editorial.
   complies-with@posi: Adoptado por voto de directorio de Crossref en 2020; publica

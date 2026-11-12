@@ -1,0 +1,7 @@
+summary: Un identificador persistente es un código único y duradero que sigue apuntando
+  al mismo recurso aunque cambie de dirección, para poder citarlo y encontrarlo.
+name: Identificador persistente
+aka:
+  - PID
+body: |-
+  La persistencia es cuestión de servicio, no del código en sí: alguien debe mantener actualizado el vínculo entre el identificador y el recurso. DOI, ARK, Handle y ORCID iD son ejemplos habituales.

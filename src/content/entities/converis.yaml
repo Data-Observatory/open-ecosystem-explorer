@@ -21,6 +21,8 @@ relations:
     target: web-of-science
     note: Converis syncs publication metadata with Web of Science via its
       integrations engine.
+  - predicate: is-a
+    target: cris
 sources:
   - url: https://clarivate.com/products/scientific-and-academic-research/research-funding-and-analytics/converis/
     accessed: 2026-09-04

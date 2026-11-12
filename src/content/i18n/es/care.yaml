@@ -3,5 +3,9 @@ summary: Principios para datos de pueblos indígenas centrados en beneficio
 relationNotes:
   endorsed-by@rda: RDA se afilió formalmente a la Global Indigenous Data Alliance,
     que aloja CARE, y promueve la implementación de los Principios.
+  related-to@indigenous-data-sovereignty: Principios para llevar a la práctica la soberanía
+    de datos indígenas.
+  related-to@open-data: Pide que abrir datos respete también el beneficio colectivo
+    y el control.
 body: |-
-  CARE complementa a FAIR, no lo reemplaza: FAIR resuelve findability e interoperabilidad; CARE resuelve quién decide sobre datos que involucran a comunidades indígenas.
+  CARE fue redactado por la Global Indigenous Data Alliance (GIDA) en un taller de 2018 coorganizado con RDA en Gaborone, y GIDA sigue custodiándolo. CARE complementa a FAIR, no lo reemplaza: FAIR resuelve findability e interoperabilidad; CARE resuelve quién decide sobre datos que involucran a comunidades indígenas.

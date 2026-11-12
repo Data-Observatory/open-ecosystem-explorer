@@ -2,6 +2,8 @@ type: identifier
 name: ISSN
 aka:
   - International Standard Serial Number
+  - ISSN International Centre
+  - CIEPS
 url: https://www.issn.org
 status: active
 governance: nonprofit
@@ -10,7 +12,15 @@ tags:
   - function:identification
   - region:global
 lastReviewed: 2026-09-04
-relations: []
+note: Assigned by national ISSN Centres, coordinated by the ISSN International
+  Centre (CIEPS), an intergovernmental organisation on a membership fee model.
+relations:
+  - predicate: related-to
+    target: persistent-identifier
+    note: Identifies serial titles for good; a title number, not a resolvable link.
 sources:
   - url: https://www.issn.org/
     accessed: 2026-09-04
+  - url: https://www.issn.org/understanding-the-issn/standardization/
+    accessed: 2026-09-04
+    note: The ISSN International Centre, an intergovernmental organisation, coordinates the national ISSN Centres.

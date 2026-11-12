@@ -6,6 +6,7 @@ governance: nonprofit
 orgKind: nonprofit
 country: AU
 outputLicence: open
+prominence: detail
 tags:
   - region:global
   - openness:open-governance

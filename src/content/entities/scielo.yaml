@@ -14,24 +14,25 @@ markupStandard:
   - jats
 geography:
   - latam
+prominence: core
 tags:
   - function:publishing
   - region:latam
   - openness:open-content
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 note: Cooperative electronic publishing model and programme running sixteen
   national journal collections plus Preprints, Data and Books, with its own
   selection methodology and markup toolchain [M§6, specs.md §12 Q1(a)].
 relations:
   - predicate: implements
     target: jats
-  - predicate: operated-by
+  - predicate: funded-by
     target: fapesp
-    note: Created and funded by FAPESP since 1997; now joined by other Brazilian
-      agencies.
+    note: Created SciELO in 1997; since Aug 2024 co-funds it (~47%) with CAPES
+      and CNPq through a national consortium.
     verified:
-      date: 2026-09-04
-      url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+      date: 2026-11-12
+      url: https://revistapesquisa.fapesp.br/en/national-consortium-takes-over-management-and-funding-of-the-scielo-library/
   - predicate: developed-by
     target: bireme
     note: BIREME provided the founding technical/indexing methodology alongside
@@ -39,6 +40,13 @@ relations:
     verified:
       date: 2026-09-04
       url: https://revistapesquisa.fapesp.br/en/scielo-an-acclaimed-model/
+  - predicate: related-to
+    target: diamond-open-access
+    note: Operates journals on the diamond model.
 sources:
   - url: https://www.scielo.org/en/about-scielo/program-publication-model-and-scielo-network/
     accessed: 2026-09-04
+  - url: https://revistapesquisa.fapesp.br/en/national-consortium-takes-over-management-and-funding-of-the-scielo-library/
+    accessed: 2026-11-12
+    note: Since August 2024 a consortium of FAPESP, CAPES and CNPq funds SciELO
+      Brasil; a management committee with the three agencies governs it.

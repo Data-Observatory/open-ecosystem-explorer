@@ -16,7 +16,7 @@ tags:
   - function:indexing
   - openness:open-content
   - openness:bulk-downloadable
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: depends-on
     target: doi
@@ -40,6 +40,18 @@ relations:
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
+  - predicate: member-of
+    target: barcelona-declaration
+    note: Listed as a supporter (infrastructure provider), not as a signatory.
+    verified:
+      date: 2026-11-12
+      url: https://barcelona-declaration.org/signatories/
+  - predicate: is-a
+    target: citation-index
 sources:
   - url: https://opencitations.net/
     accessed: 2026-09-04
+  - url: https://barcelona-declaration.org/signatories/
+    accessed: 2026-11-12
+    note: Lists the organisation under Supporters (providers of data, services
+      and infrastructure).

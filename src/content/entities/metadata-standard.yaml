@@ -1,0 +1,19 @@
+type: concept
+name: Metadata standard
+aka:
+  - Metadata schema
+url: https://en.wikipedia.org/wiki/Metadata_standard
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q1924747
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Metadata_standard
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q1924747
+    accessed: 2026-11-12

@@ -1,0 +1,7 @@
+summary: Un estándar de metadatos es un acuerdo sobre qué campos usar y cómo nombrarlos
+  para que los sistemas describan y compartan información igual.
+name: Estándar de metadatos
+aka:
+  - Esquema de metadatos
+body: |-
+  Un estándar compartido permite que sistemas distintos describan lo mismo de la misma manera, de modo que los registros puedan intercambiarse y combinarse. Dublin Core, el esquema de metadatos de DataCite, DCAT y CERIF son ejemplos.

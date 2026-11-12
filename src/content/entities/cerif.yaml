@@ -14,6 +14,8 @@ note: Classic CERIF is not under further development per euroCRIS; CERIF 2.0 /
 relations:
   - predicate: governed-by
     target: eurocris
+  - predicate: is-a
+    target: metadata-standard
 sources:
   - url: https://eurocris.org/services/main-features-cerif
     accessed: 2026-09-04

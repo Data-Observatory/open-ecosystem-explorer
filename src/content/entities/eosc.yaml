@@ -18,10 +18,9 @@ tags:
   - region:europe
 lastReviewed: 2026-09-04
 note: Federated infrastructure with an EU Node, re-procured in 2026 on a
-  four-year framework (specs.md Appendix A.1b).
+  four-year framework (specs.md Appendix A.1b). Governed by the EOSC Association,
+  a nonprofit confederation of research organisations and infrastructures.
 relations:
-  - predicate: governed-by
-    target: eosc-association
   - predicate: interoperates-with
     target: openaire
     note: OpenAIRE is a core service provider for the EOSC EU Node's discovery and
@@ -35,5 +34,8 @@ relations:
 sources:
   - url: https://open-science-cloud.ec.europa.eu/
     accessed: 2026-09-04
+  - url: https://eosc.eu/
+    accessed: 2026-09-04
+    note: EOSC Association, the body that governs EOSC.
   - url: https://www.openaire.eu/openaire-and-eosc
     accessed: 2026-09-04

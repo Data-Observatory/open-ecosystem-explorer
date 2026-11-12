@@ -8,6 +8,7 @@ status: active
 governance: community
 standardKind: principles
 requiresOpenness: false
+prominence: core
 tags:
   - region:global
 lastReviewed: 2026-09-04
@@ -16,6 +17,15 @@ relations:
     target: force11
     note: FAIR Guiding Principles were drafted and disseminated within the FORCE11
       community.
+  - predicate: related-to
+    target: research-data-management
+    note: Principles for managing research data so it can be reused.
+  - predicate: related-to
+    target: open-data
+    note: FAIR data need not be open; openness is a separate decision.
+  - predicate: related-to
+    target: metadata
+    note: Findability and interoperability rely on rich metadata.
 sources:
   - url: https://www.go-fair.org/fair-principles/
     accessed: 2026-09-04

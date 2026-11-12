@@ -30,6 +30,8 @@ relations:
     target: symplectic-elements
     note: Dimensions data has been integrated into Symplectic Elements since March
       2021.
+  - predicate: is-a
+    target: citation-index
 sources:
   - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
     accessed: 2026-09-03

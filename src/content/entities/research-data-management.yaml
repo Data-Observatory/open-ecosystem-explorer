@@ -1,0 +1,19 @@
+type: concept
+name: Research data management
+url: https://en.wikipedia.org/wiki/Research_data_management
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q30089794
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Research_data_management
+    accessed: 2026-11-12
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q30089794
+    accessed: 2026-11-12

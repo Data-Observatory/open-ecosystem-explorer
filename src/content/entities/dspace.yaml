@@ -38,6 +38,8 @@ relations:
     verified:
       date: 2026-09-06
       url: https://wiki.lyrasis.org/display/DSDOC9x/Handle.Net+Registry+Support
+  - predicate: is-a
+    target: repository-software
 sources:
   - url: https://dspace.lyrasis.org/
     accessed: 2026-09-04

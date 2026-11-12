@@ -16,6 +16,8 @@ relations:
     verified:
       date: 2026-09-04
       url: https://www.dublincore.org/about/
+  - predicate: is-a
+    target: metadata-standard
 sources:
   - url: https://www.dublincore.org/specifications/dublin-core/dcmi-terms/
     accessed: 2026-09-04

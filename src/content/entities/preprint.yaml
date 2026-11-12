@@ -1,0 +1,18 @@
+type: concept
+name: Preprint
+url: https://en.wikipedia.org/wiki/Preprint
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q580922
+tags:
+  - function:publishing
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://asapbio.org/preprint-info/preprint-faq/
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q580922
+    accessed: 2026-11-12

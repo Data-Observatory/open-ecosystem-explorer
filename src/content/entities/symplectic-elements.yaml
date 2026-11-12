@@ -11,6 +11,8 @@ lastReviewed: 2026-09-04
 relations:
   - predicate: owned-by
     target: digital-science
+  - predicate: is-a
+    target: cris
 sources:
   - url: https://www.digital-science.com/press-releases/digital-science-appoints-stephen-leicht-as-ceo/
     accessed: 2026-09-03

@@ -1,0 +1,43 @@
+type: policy
+name: ANID open access policy
+aka:
+  - Política de acceso abierto a la información científica y a datos de investigación
+    financiados con fondos públicos de ANID
+  - Resolución Exenta 3906/2022
+url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
+status: active
+governance: public-agency
+policyKind: funder-requirement
+jurisdiction:
+  - cl
+bindingness: conditional
+effectiveDate: 2022-05-02
+prominence: core
+tags:
+  - openness:open-content
+  - region:chile
+lastReviewed: 2026-11-12
+relations:
+  - predicate: is-a
+    target: open-access-mandate
+  - predicate: governed-by
+    target: anid
+    note: Approved by ANID through Resolución Exenta 3906/2022 of 2 May 2022.
+    verified:
+      date: 2026-11-12
+      url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
+  - predicate: mandates
+    target: oai-pmh
+    note: Repositories used for ANID-funded data must interoperate with the ANID repository
+      via OAI-PMH.
+sources:
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
+    accessed: 2026-11-12
+    note: 'Resolución Exenta N° 3906/2022, Santiago, 2 May 2022: approves the open
+      access policy for scientific information and research data funded with public
+      funds of ANID.'
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-12
+    note: 'Policy text: deposit of the final version in the ANID repository within
+      six months of publication; data management plan required; data repositories
+      must interoperate via OAI-PMH.'

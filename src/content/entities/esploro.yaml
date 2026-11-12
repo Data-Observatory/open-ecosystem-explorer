@@ -18,6 +18,8 @@ relations:
   - predicate: interoperates-with
     target: web-of-science
     note: Esploro harvests and enriches asset metadata from Web of Science.
+  - predicate: is-a
+    target: cris
 sources:
   - url: https://exlibrisgroup.com/products/esploro-research-services/
     accessed: 2026-09-04

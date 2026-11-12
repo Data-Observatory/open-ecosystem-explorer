@@ -4,12 +4,13 @@ aka:
   - UNAM
 url: https://www.unam.mx/
 status: active
-governance: public-agency
+governance: academic
 orgKind: university
 country: MX
+prominence: detail
 tags:
   - region:latam
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
   - url: https://latindex.unam.mx/latindex/nosotros/antecedentes

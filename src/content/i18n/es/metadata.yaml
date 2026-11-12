@@ -1,0 +1,8 @@
+summary: Los metadatos son datos que describen otros datos (quién, qué, cuándo, cómo)
+  para que personas y programas puedan encontrarlos, entenderlos y reutilizarlos.
+name: Metadatos
+relationNotes:
+  related-to@metadata-standard: Los estándares acuerdan cómo se estructuran y nombran
+    los metadatos.
+body: |-
+  Los metadatos descriptivos, administrativos y técnicos permiten que buscadores, índices y repositorios encuentren, conecten y reutilicen un registro sin abrirlo. La mayoría de los principios FAIR dependen de buenos metadatos.

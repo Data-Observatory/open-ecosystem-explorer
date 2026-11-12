@@ -1,0 +1,20 @@
+type: concept
+name: Current research information system (CRIS)
+aka:
+  - Research information system
+  - RIS
+url: https://en.wikipedia.org/wiki/Current_research_information_system
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q5195075
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Current_research_information_system
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q5195075
+    accessed: 2026-11-12

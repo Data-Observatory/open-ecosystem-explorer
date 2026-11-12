@@ -14,6 +14,7 @@ accessModel: mixed
 note: "Codebase is open source: Zenodo runs on InvenioRDM, released under the
   MIT licence; the deployed instance itself has no separate package-level SPDX
   id."
+prominence: core
 tags:
   - function:deposit
   - function:preservation
@@ -45,6 +46,11 @@ relations:
     target: ro-crate
   - predicate: certified-by
     target: coretrustseal
+  - predicate: is-a
+    target: research-repository
+  - predicate: related-to
+    target: open-license
+    note: Asks depositors to choose a licence for open-access records.
 sources:
   - url: https://about.zenodo.org/
     accessed: 2026-09-04

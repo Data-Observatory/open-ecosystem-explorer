@@ -8,18 +8,32 @@ jurisdiction:
   - global
 bindingness: advisory
 effectiveDate: 2021-11-25
+prominence: core
 tags:
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: mandates
     target: fair
-    note: The 2021 Recommendation lists open scientific knowledge, described via
-      FAIR data principles, among its core values.
+    note: Advisory only; names FAIR (and CARE) as guiding principles for open
+      research data and infrastructure, creating no binding duty.
+    confidence: inferred
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-12
+        note: Recommendation text; recommends that Member States follow FAIR
+          principles, does not mandate them.
   - predicate: applies-to
     target: anid
-    note: Chile is a UNESCO member state; ANID is its implementing agency for
-      national open-science policy.
+    note: Addressed to UNESCO Member States (Chile among them); ANID is the
+      national research agency.
+  - predicate: is-a
+    target: open-science-policy
 sources:
   - url: https://www.unesco.org/en/open-science/about
     accessed: 2026-09-04
+  - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+    accessed: 2026-11-12
+    note: Text of the Recommendation (UNESDOC 379949). It recommends and
+      encourages actions by Member States and names data-stewardship principles
+      as guidance; it creates no mandate.

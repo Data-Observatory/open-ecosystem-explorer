@@ -1,0 +1,18 @@
+type: concept
+name: Peer review
+url: https://en.wikipedia.org/wiki/Peer_review
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q215028
+tags:
+  - function:evaluation
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Peer_review
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q215028
+    accessed: 2026-11-12

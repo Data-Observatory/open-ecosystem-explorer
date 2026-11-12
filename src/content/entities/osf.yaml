@@ -26,6 +26,8 @@ relations:
     target: ror
     note: OSF sends ROR IDs for contributor affiliations alongside ORCID iDs when
       minting DOI metadata.
+  - predicate: is-a
+    target: research-repository
 sources:
   - url: https://www.cos.io/products/osf
     accessed: 2026-09-04

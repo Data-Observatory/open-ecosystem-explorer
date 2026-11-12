@@ -7,6 +7,7 @@ orgKind: company
 country: GB
 outputLicence: closed
 codebase: proprietary
+prominence: detail
 tags:
   - theme:vertical-integration
   - region:europe

@@ -1,0 +1,17 @@
+type: concept
+name: Open science
+url: https://en.wikipedia.org/wiki/Open_science
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q309823
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://www.unesco.org/en/open-science/about
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q309823
+    accessed: 2026-11-12

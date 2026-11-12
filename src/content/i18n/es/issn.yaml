@@ -1,4 +1,7 @@
 summary: Identificador estándar internacional para publicaciones seriadas,
   coordinado por el Centro Internacional del ISSN.
+relationNotes:
+  related-to@persistent-identifier: Identifica títulos de publicaciones seriadas; es
+    un número de título, no un enlace resoluble.
 body: |-
-  El ISSN identifica revistas y otras publicaciones seriadas, y complementa a otros identificadores como el DOI a nivel de la publicación completa.
+  El ISSN identifica revistas y otras publicaciones seriadas, y complementa a otros identificadores como el DOI a nivel de la publicación completa. Los Centros Nacionales del ISSN asignan los números; el Centro Internacional del ISSN (CIEPS), organización intergubernamental con modelo de membresía, los coordina.

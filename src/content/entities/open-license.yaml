@@ -1,0 +1,20 @@
+type: concept
+name: Open licence
+url: https://opendefinition.org/licenses/
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q30939938
+tags:
+  - openness:open-content
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://opendefinition.org/licenses/
+    accessed: 2026-11-12
+  - url: https://creativecommons.org/share-your-work/cclicenses/
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q30939938
+    accessed: 2026-11-12

@@ -23,6 +23,8 @@ relations:
     target: datacite-metadata-schema
   - predicate: complies-with
     target: ro-crate
+  - predicate: is-a
+    target: repository-software
 sources:
   - url: https://inveniosoftware.org/products/rdm/
     accessed: 2026-09-04

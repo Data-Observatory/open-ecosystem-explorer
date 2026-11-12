@@ -1,0 +1,23 @@
+type: concept
+name: Open-access mandate
+url: https://en.wikipedia.org/wiki/Open-access_mandate
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q2000006
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: is-a
+    target: open-science-policy
+sources:
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
+    accessed: 2026-11-12
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-12
+  - url: https://acceso-abierto.anid.cl/recursos/documentos/
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q2000006
+    accessed: 2026-11-12

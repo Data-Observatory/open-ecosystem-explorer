@@ -1,0 +1,17 @@
+type: organization
+name: Google
+url: https://about.google/
+status: active
+governance: commercial
+orgKind: company
+country: US
+prominence: detail
+tags:
+  - region:north-america
+lastReviewed: 2026-11-12
+note: Subsidiary of Alphabet Inc.; the parent is not recorded as a node here.
+relations: []
+sources:
+  - url: https://www.w3.org/community/schemaorg/how-we-work
+    accessed: 2026-11-12
+    note: Says schema.org is run directly by Google, which owns its domain name.

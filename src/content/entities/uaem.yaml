@@ -2,18 +2,21 @@ type: organization
 name: UAEM
 aka:
   - Universidad Autónoma del Estado de México
-url: https://www.uaem.mx/
+url: https://www.uaemex.mx/
 status: active
 governance: academic
 orgKind: university
 country: MX
 outputLicence: open
+prominence: detail
 tags:
   - region:latam
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations: []
 sources:
-  - url: https://www.uaem.mx/
-    accessed: 2026-09-04
+  - url: https://en.wikipedia.org/wiki/Universidad_Aut%C3%B3noma_del_Estado_de_M%C3%A9xico
+    accessed: 2026-11-12
+    note: Gives uaemex.mx as the official site of the Universidad Autónoma del
+      Estado de México (uaem.mx is the Universidad Autónoma del Estado de Morelos).
   - url: https://www.redalyc.org/
     accessed: 2026-09-04

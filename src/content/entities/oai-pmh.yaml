@@ -7,6 +7,7 @@ status: active
 governance: community
 standardKind: protocol
 machineReadable: true
+prominence: core
 tags:
   - function:aggregation
 lastReviewed: 2026-09-04

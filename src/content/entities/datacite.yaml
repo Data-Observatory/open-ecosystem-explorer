@@ -14,10 +14,11 @@ registers:
   - sample
 feeModel: membership
 consortiumModel: true
+prominence: core
 tags:
   - function:registration
   - region:global
-lastReviewed: 2026-09-06
+lastReviewed: 2026-11-12
 relations:
   - predicate: issues
     target: doi
@@ -32,12 +33,6 @@ relations:
     verified:
       date: 2026-09-04
       url: https://openscholarlyinfrastructure.org/adopters/
-  - predicate: member-of
-    target: coara
-    note: Declared support for the CoARA Agreement on research assessment reform.
-    verified:
-      date: 2026-09-04
-      url: https://www.coara.org/
   - predicate: depends-on
     target: handle-system
     note: Operates its own Handle server infrastructure; a DOI in
@@ -45,6 +40,12 @@ relations:
     verified:
       date: 2026-09-06
       url: https://support.datacite.org/docs/doi-persistence
+  - predicate: member-of
+    target: barcelona-declaration
+    note: Listed as a supporter (infrastructure provider), not as a signatory.
+    verified:
+      date: 2026-11-12
+      url: https://barcelona-declaration.org/signatories/
 sources:
   - url: https://datacite.org/fees/
     accessed: 2026-09-03
@@ -52,3 +53,7 @@ sources:
     accessed: 2026-09-04
   - url: https://support.datacite.org/docs/doi-persistence
     accessed: 2026-09-06
+  - url: https://barcelona-declaration.org/signatories/
+    accessed: 2026-11-12
+    note: Lists the organisation under Supporters (providers of data, services
+      and infrastructure).

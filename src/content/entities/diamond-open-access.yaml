@@ -1,0 +1,24 @@
+type: concept
+name: Diamond open access
+url: https://en.wikipedia.org/wiki/Diamond_open_access
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q86623052
+tags:
+  - openness:open-content
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: is-a
+    target: open-access
+sources:
+  - url: https://en.wikipedia.org/wiki/Diamond_open_access
+    accessed: 2026-11-12
+  - url: https://amelica.org/
+    accessed: 2026-11-12
+  - url: https://zenodo.org/records/6282403
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q86623052
+    accessed: 2026-11-12

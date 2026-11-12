@@ -40,6 +40,8 @@ relations:
     verified:
       date: 2026-09-06
       url: https://guides.dataverse.org/en/latest/installation/config.html
+  - predicate: is-a
+    target: repository-software
 sources:
   - url: https://dataverse.org/about
     accessed: 2026-09-04

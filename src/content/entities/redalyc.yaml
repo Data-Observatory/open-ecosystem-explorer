@@ -32,6 +32,9 @@ relations:
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
+  - predicate: related-to
+    target: diamond-open-access
+    note: Operates journals on the diamond model.
 sources:
   - url: https://www.redalyc.org/
     accessed: 2026-09-04

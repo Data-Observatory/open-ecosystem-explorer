@@ -12,6 +12,7 @@ objectScope:
   - dataset
 geography:
   - global
+prominence: detail
 tags:
   - function:aggregation
   - openness:bulk-downloadable

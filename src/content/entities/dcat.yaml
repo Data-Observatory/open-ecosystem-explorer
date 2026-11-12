@@ -7,12 +7,15 @@ status: active
 governance: community
 standardKind: metadata-schema
 machineReadable: true
+prominence: detail
 tags:
   - function:registration
 lastReviewed: 2026-09-04
 relations:
   - predicate: developed-by
     target: w3c
+  - predicate: is-a
+    target: metadata-standard
 sources:
   - url: https://www.w3.org/TR/vocab-dcat-3/
     accessed: 2026-09-04

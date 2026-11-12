@@ -1,6 +1,7 @@
 summary: Alternativa abierta a los índices propietarios, gratuita y descargable
   completa; construida por OurResearch.
 relationNotes:
+  member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
   operated-by@ourresearch: Construida y mantenida por OurResearch, organización sin fines de lucro.
   interoperates-with@opencitations: OpenAlex incorpora los datos abiertos de citas
     de OpenCitations como una de sus fuentes.
@@ -8,5 +9,6 @@ relationNotes:
     reconcilia entidades contra los QID de Wikidata.
   indexes@zenodo: OpenAlex cosecha e indexa trabajos depositados en Zenodo.
   indexes@arxiv: OpenAlex cosecha e indexa preprints de arXiv.
+  related-to@citation-index: Catálogo abierto de obras que incluye enlaces de citas.
 body: |-
   OpenAlex es la alternativa abierta a los índices cerrados: gratuita, descargable en su totalidad y auditable. Cubre más objetos que los índices propietarios, aunque con menos limpieza editorial.

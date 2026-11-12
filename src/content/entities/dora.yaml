@@ -16,6 +16,9 @@ relations:
   - predicate: endorsed-by
     target: elsevier
     note: Elsevier signed DORA in December 2020.
+  - predicate: related-to
+    target: research-assessment
+    note: Declaration on how research should be assessed.
 sources:
   - url: https://sfdora.org/signers/
     accessed: 2026-09-04

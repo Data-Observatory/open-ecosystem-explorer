@@ -1,0 +1,18 @@
+type: concept
+name: Repository software
+url: https://www.wikidata.org/wiki/Q115249952
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q115249952
+tags:
+  - function:deposit
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://www.wikidata.org/wiki/Q115249952
+    accessed: 2026-11-12
+  - url: https://en.wikipedia.org/wiki/Institutional_repository
+    accessed: 2026-11-12

@@ -19,6 +19,8 @@ lastReviewed: 2026-09-04
 relations:
   - predicate: operated-by
     target: allen-institute-for-ai
+  - predicate: is-a
+    target: citation-index
 sources:
   - url: https://www.semanticscholar.org/about
     accessed: 2026-09-04

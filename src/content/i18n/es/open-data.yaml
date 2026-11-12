@@ -1,0 +1,8 @@
+summary: Los datos abiertos son datos publicados con una licencia libre que cualquiera
+  puede usar, modificar y compartir para cualquier fin.
+name: Datos abiertos
+relationNotes:
+  related-to@open-science: 'Un pilar de la ciencia abierta: el acceso abierto a los
+    datos de investigación.'
+body: |-
+  La Definición de Abierto dice que el conocimiento es abierto si cualquiera es libre de acceder a él, usarlo, modificarlo y compartirlo, sujeto como máximo a condiciones que preserven su origen y su apertura. Datos abiertos no es lo mismo que datos FAIR: los datos FAIR no tienen por qué ser abiertos, y los datos abiertos pueden estar mal descritos.

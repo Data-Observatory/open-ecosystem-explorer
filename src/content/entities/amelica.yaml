@@ -15,6 +15,9 @@ note: Latin American non-commercial open-access initiative built around Redalyc
 relations:
   - predicate: complies-with
     target: unesco-recommendation-open-science
+  - predicate: related-to
+    target: diamond-open-access
+    note: Promotes a non-commercial, diamond-style communication model.
 sources:
   - url: https://amelica.org/
     accessed: 2026-09-04

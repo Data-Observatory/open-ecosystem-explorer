@@ -8,6 +8,7 @@ governance: nonprofit
 identifies: object
 isoStandard: ISO 26324
 resolverUrl: https://doi.org/
+prominence: core
 tags:
   - function:identification
   - region:global
@@ -23,6 +24,8 @@ relations:
     verified:
       date: 2026-09-06
       url: https://www.dona.net/faq
+  - predicate: is-a
+    target: persistent-identifier
 sources:
   - url: https://www.doi.org/the-identifier/what-is-a-doi/
     accessed: 2026-09-03

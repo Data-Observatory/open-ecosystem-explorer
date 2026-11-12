@@ -1,13 +1,17 @@
 type: standard
 name: CARE Principles
-url: https://www.gida-global.org/care
+url: https://www.gida-global.org/careprinciples
 status: active
 governance: community
 standardKind: principles
 requiresOpenness: false
+prominence: core
 tags:
   - region:global
 lastReviewed: 2026-09-04
+note: Drafted by the Global Indigenous Data Alliance (GIDA), a US-based
+  nonprofit network, at a 2018 workshop co-hosted with RDA in Gaborone; GIDA
+  continues to host and steward the Principles.
 relations:
   - predicate: endorsed-by
     target: rda
@@ -16,14 +20,14 @@ relations:
     verified:
       date: 2026-09-04
       url: https://www.nature.com/articles/s41597-021-00892-0
-  - predicate: developed-by
-    target: gida
-    note: Drafted by GIDA at a 2018 workshop co-hosted with RDA in Gaborone.
-    verified:
-      date: 2026-09-04
-      url: https://www.gida-global.org/careprinciples
+  - predicate: related-to
+    target: indigenous-data-sovereignty
+    note: Principles for putting Indigenous data sovereignty into practice.
+  - predicate: related-to
+    target: open-data
+    note: Asks that opening data also respects collective benefit and control.
 sources:
-  - url: https://www.gida-global.org/care
-    accessed: 2026-09-04
+  - url: https://www.gida-global.org/careprinciples
+    accessed: 2026-11-12
   - url: https://www.nature.com/articles/s41597-021-00892-0
     accessed: 2026-09-04

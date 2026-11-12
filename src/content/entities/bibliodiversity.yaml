@@ -1,0 +1,26 @@
+type: concept
+name: Bibliodiversity
+url: https://en.wikipedia.org/wiki/Bibliodiversity
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q2742939
+tags:
+  - region:global
+lastReviewed: 2026-11-12
+relations:
+  - predicate: related-to
+    target: open-science
+    note: Diverse, multilingual publishing is part of the open science agenda.
+sources:
+  - url: https://en.wikipedia.org/wiki/Bibliodiversity
+    accessed: 2026-11-12
+  - url: https://es.wikipedia.org/wiki/Bibliodiversidad
+    accessed: 2026-11-12
+  - url: https://jussieucall.org/
+    accessed: 2026-11-12
+  - url: https://www.helsinki-initiative.org/en
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q2742939
+    accessed: 2026-11-12

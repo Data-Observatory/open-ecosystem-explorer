@@ -10,6 +10,7 @@ registers:
   - dataset
 feeModel: per-object
 consortiumModel: false
+prominence: detail
 tags:
   - function:registration
   - region:global

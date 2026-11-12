@@ -1,0 +1,20 @@
+type: concept
+name: Persistent identifier
+aka:
+  - PID
+url: https://en.wikipedia.org/wiki/Persistent_identifier
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q420330
+tags:
+  - function:identification
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Persistent_identifier
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q420330
+    accessed: 2026-11-12

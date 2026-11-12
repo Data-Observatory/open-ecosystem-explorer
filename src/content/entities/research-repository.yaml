@@ -1,0 +1,18 @@
+type: concept
+name: Research repository
+url: https://en.wikipedia.org/wiki/Open-access_repository
+status: active
+governance: not-applicable
+prominence: core
+identifiers:
+  wikidata: Q7096323
+tags:
+  - function:deposit
+  - region:global
+lastReviewed: 2026-11-12
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Open-access_repository
+    accessed: 2026-11-12
+  - url: https://www.wikidata.org/wiki/Q7096323
+    accessed: 2026-11-12

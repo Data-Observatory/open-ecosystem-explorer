@@ -14,6 +14,9 @@ lastReviewed: 2026-09-04
 relations:
   - predicate: developed-by
     target: niso
+  - predicate: related-to
+    target: metadata-standard
+    note: XML format for articles that includes their bibliographic description.
 sources:
   - url: https://www.niso.org/standards-committees/jats
     accessed: 2026-09-04

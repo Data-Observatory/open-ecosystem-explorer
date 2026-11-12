@@ -1,4 +1,8 @@
 summary: Vocabulario compartido que permite a los motores de búsqueda leer el
   contenido de las páginas web.
+relationNotes:
+  governed-by@google: Desde 2026 lo dirige Google; el grupo comunitario del W3C es solo un foro de discusión.
+  related-to@metadata-standard: Vocabulario compartido para marcar datos estructurados en
+    páginas web.
 body: |-
-  schema.org define un vocabulario común para que buscadores web interpreten el contenido de una página, incluidos datasets y repositorios.
+  schema.org define un vocabulario común para que buscadores web interpreten el contenido de una página, incluidos datasets y repositorios. No es una iniciativa del W3C: según su propio grupo comunitario, desde 2026 lo dirige directamente Google.

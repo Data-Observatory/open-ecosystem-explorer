@@ -13,20 +13,38 @@ inclusionCriteria: published
 bulkDownload: full
 coverageObjects:
   - journal
+prominence: core
 tags:
   - function:indexing
   - openness:open-content
   - openness:bulk-downloadable
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-12
 relations:
   - predicate: operated-by
+    target: doaj-foundation
+    note: Run and managed by the DOAJ Foundation, a Danish non-profit foundation.
+    verified:
+      date: 2026-11-12
+      url: https://doaj.org/about/
+  - predicate: operated-by
     target: is4oa
+    until: "2026"
+    note: Previous managing organisation; operations moved to the DOAJ
+      Foundation, and IS4OA was due to wind down by mid-2026.
+    verified:
+      date: 2026-11-12
+      url: https://doaj.org/about/
   - predicate: complies-with
     target: posi
     note: POSI adopter since 2022.
     verified:
       date: 2026-09-04
       url: https://openscholarlyinfrastructure.org/adopters/
+  - predicate: related-to
+    target: open-access
+    note: Directory of open access journals meeting its criteria.
 sources:
   - url: https://doaj.org/about/
-    accessed: 2026-09-04
+    accessed: 2026-11-12
+  - url: https://blog.doaj.org/2025/03/25/doaj-announces-its-move-to-the-doaj-foundation
+    accessed: 2026-11-12
