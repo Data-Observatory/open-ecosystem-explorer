@@ -13,8 +13,11 @@ import { test, expect } from '@playwright/test';
 test.describe('/map2 curated "essential concepts" explorer', () => {
   test('renders the curated subset, not the full ~130-node corpus', async ({ page }) => {
     await page.goto('/es/map2/');
-    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2?.nodes().length)).toBeGreaterThan(15);
-    const count = await page.evaluate(() => (window as any).__cyMap2.nodes().length);
+    // `:childless` — real entities only, excluding the compound tier-band
+    // AND nested sub-band (2026-09-08) container nodes, which aren't part of
+    // the curated entity count.
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2?.nodes(':childless').length)).toBeGreaterThan(15);
+    const count = await page.evaluate(() => (window as any).__cyMap2.nodes(':childless').length);
     expect(count).toBeLessThan(40);
   });
 
@@ -200,7 +203,10 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
     expect(before.width).toBeGreaterThan(100); // full class-box width once zoomed above the LOD threshold
 
     await page.evaluate(() => {
-      (window as any).__cyMap2.zoom(0.2); // below LOD_ZOOM_THRESHOLD -> dot mode
+      // LOD_ZOOM_THRESHOLD is 0.4 (the Card-size tripling that briefly
+      // changed this was reverted the same day — see hierarchy.ts's
+      // LABEL_CLEARANCE comment) — 0.1 stays comfortably below it.
+      (window as any).__cyMap2.zoom(0.1); // below LOD_ZOOM_THRESHOLD -> dot mode
     });
     await page.waitForTimeout(50);
     const duringDot = await page.evaluate(() => {
@@ -359,7 +365,21 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
           }
           const dx = Math.max(a.x1 - b.x2, b.x1 - a.x2, 0);
           const dy = Math.max(a.y1 - b.y2, b.y1 - a.y2, 0);
-          const gap = overlapX ? dy : overlapY ? dx : Math.min(dx, dy);
+          // On ONE shared axis, the true separation is the plain gap on the
+          // OTHER axis (dx or dy is exactly 0 there). When NEITHER axis
+          // overlaps (a genuinely diagonal pair — e.g. two cards in
+          // different Tiers/columns that happen to land at a similar
+          // on-screen row height purely by coincidence, 2026-09-09 tight-
+          // spacing retune surfaced this: such a pair can have a tiny `dy`
+          // while sitting well over 1000px apart in `dx`), the real nearest-
+          // corner distance is the Euclidean hypotenuse, NOT `min(dx, dy)` —
+          // the previous `min(dx, dy)` badly underestimated separation for
+          // any diagonal pair (reporting ~5px for two cards actually >1000px
+          // apart), which is what "a real, visible gap" is actually meant to
+          // rule out — two cards that read as touching/crowded on screen,
+          // not two cards that are merely at a similar height while
+          // nowhere near each other horizontally.
+          const gap = overlapX ? dy : overlapY ? dx : Math.sqrt(dx * dx + dy * dy);
           min = Math.min(min, gap);
         }
       }
@@ -443,6 +463,9 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
     await page.goto('/es/map2/');
     await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
     const zoom = await page.evaluate(() => (window as any).__cyMap2.zoom());
+    // MIN_DEFAULT_ZOOM is 0.45 (the Card-size tripling that briefly changed
+    // this was reverted the same day — see hierarchy.ts's LABEL_CLEARANCE
+    // comment for what "triple it" actually meant).
     expect(zoom).toBeGreaterThanOrEqual(0.45);
     const allBoxes = await page.evaluate(() => (window as any).__cyMap2.nodes(':childless').toArray().every((n: any) => n.hasClass('classbox')));
     expect(allBoxes).toBe(true);
@@ -603,5 +626,720 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
     const after = await page.locator('#map2-inspector').boundingBox();
     if (!after) throw new Error('inspector not found after resize');
     expect(after.width).toBeGreaterThan(before.width + 50);
+  });
+
+  // ---- Tight, automatic Cluster/Tier spacing (2026-09-09 follow-up, user:
+  // "the space between cluster and tiers is too high... can we achieve this
+  // in an automatic way?"). `hierarchy.ts`'s `LABEL_CLEARANCE`/
+  // `CLUSTER_LABEL_CLEARANCE` shrank from one flat, empirically-guessed
+  // 260px to a formula derived from the real label font-size/border/padding
+  // in this file's own Cytoscape stylesheet, plus the Cluster grid's cell
+  // sizing switched from one uniform max-of-all-Clusters cell to per-row/
+  // per-column sizing (see hierarchy.ts's `computeLayout` comment) — both
+  // changes only ever REDUCE reserved space, so the one thing that can
+  // regress is a real visual overlap between two Tier/Cluster compound
+  // boxes. This is the actual bounding-box check (like the existing Card-
+  // level "no two rendered node boxes are closer than a real, visible gap"
+  // test above, but for the grey compound bands, and run against BOTH the
+  // full `/map` corpus — the denser, more tier/cluster-populated case — and
+  // the sparser curated `/map2` subset, since "works when we add/remove
+  // cards" has to hold at both scales, not just one). ----
+  async function bandOverlaps(page: import('@playwright/test').Page): Promise<string[]> {
+    return page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      const bands = cy.nodes('.tier-band, .sub-band').toArray();
+      function isAncestor(x: any, y: any): boolean {
+        let p = y.parent();
+        while (p.nonempty()) {
+          if (p.id() === x.id()) return true;
+          p = p.parent();
+        }
+        return false;
+      }
+      const found: string[] = [];
+      for (let i = 0; i < bands.length; i++) {
+        for (let j = i + 1; j < bands.length; j++) {
+          const a = bands[i];
+          const b = bands[j];
+          // A Cluster (`.sub-band`) is expected to sit fully INSIDE its own
+          // Tier's box — that's containment, not the sibling-overlap bug
+          // this test is guarding against.
+          if (isAncestor(a, b) || isAncestor(b, a)) continue;
+          const ba = a.renderedBoundingBox();
+          const bb = b.renderedBoundingBox();
+          const overlapX = ba.x1 < bb.x2 && bb.x1 < ba.x2;
+          const overlapY = ba.y1 < bb.y2 && bb.y1 < ba.y2;
+          if (overlapX && overlapY) found.push(`${a.data('label')} <-> ${b.data('label')}`);
+        }
+      }
+      return found;
+    });
+  }
+
+  test('no two rendered Tier/Cluster boxes overlap on /map2 (curated subset)', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    // Wait for the initial ResizeObserver-driven fit/zoom-floor to actually
+    // settle (see `resetView`'s own comment in MapExplorerV2.astro) before
+    // measuring — `renderedBoundingBox()` is read mid-transition otherwise,
+    // an unrelated timing race this test doesn't need to also chase.
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+    expect(await bandOverlaps(page)).toEqual([]);
+  });
+
+  test('no two rendered Tier/Cluster boxes overlap on /map (full corpus)', async ({ page }) => {
+    await page.goto('/es/map/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+    expect(await bandOverlaps(page)).toEqual([]);
+  });
+
+  // Follow-up bug report (2026-09-09, round 3): "Tier text ... I want the
+  // title to start on the beginning of the box (left side), not ending
+  // there like is right now. And above the box" — a reversal of the
+  // immediately-preceding round's "inside the border" fix, for Tier ONLY
+  // (Cluster titles were separately confirmed correct and must stay
+  // untouched). Verified via `renderedBoundingBox({includeLabels})`
+  // before/after diffs — the same technique used to empirically discover
+  // Cytoscape's real halign/valign anchor behaviour for this fix (a
+  // standalone harness measurement, not guesswork): `includeLabels: false`
+  // strips just the label's own contribution to a node's rendered box, so
+  // comparing it against `includeLabels: true` isolates exactly how far (and
+  // in which direction) the label extends beyond the node's own border.
+  function measureLabelExtent(page: import('@playwright/test').Page, selector: string, labelSubstring: string) {
+    return page.evaluate(
+      ({ selector, labelSubstring }) => {
+        const cy = (window as any).__cyMap2;
+        const n = cy.nodes(selector).filter((el: any) => el.data('label').includes(labelSubstring)).first();
+        const withLabel = n.renderedBoundingBox({ includeLabels: true });
+        const withoutLabel = n.renderedBoundingBox({ includeLabels: false });
+        return {
+          label: n.data('label'),
+          // > 0 means the label pokes up ABOVE the box's own top border.
+          aboveExtension: withoutLabel.y1 - withLabel.y1,
+          // > 0 means the label sticks out past the box's LEFT border.
+          leftOvershoot: withoutLabel.x1 - withLabel.x1,
+          // > 0 means the label sticks out past the box's RIGHT border.
+          rightOvershoot: withLabel.x2 - withoutLabel.x2,
+        };
+      },
+      { selector, labelSubstring },
+    );
+  }
+
+  test('Tier titles float ABOVE their box (not inside), for both a short and a long label, on /map2', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+    for (const labelSubstring of ['Instrumentos y sistemas', 'Principios y políticas']) {
+      const extent = await measureLabelExtent(page, '.tier-band', labelSubstring);
+      // Floats above the border by a real, visible amount (not touching it,
+      // not pulled inside — a value near/below 0 here would mean the old
+      // "inside the border" behaviour regressed back).
+      expect(extent.aboveExtension, `${extent.label} aboveExtension`).toBeGreaterThan(10);
+      // Starts flush at (or just inside) the left border, growing RIGHT —
+      // must never stick out past either the left or right edge, regardless
+      // of the label's own length (this is exactly the bug being fixed: a
+      // fixed `text-margin-x` couldn't satisfy this for every label length,
+      // hence the dynamic per-label estimate in hierarchy.ts).
+      expect(extent.leftOvershoot, `${extent.label} leftOvershoot`).toBeLessThanOrEqual(2);
+      expect(extent.rightOvershoot, `${extent.label} rightOvershoot`).toBeLessThanOrEqual(2);
+    }
+  });
+
+  test('Cluster titles remain unchanged: fully inside their box, no external extension on any side, on /map2', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+    const extent = await measureLabelExtent(page, '.sub-band', '');
+    expect(extent.aboveExtension, `${extent.label} aboveExtension`).toBeLessThanOrEqual(1);
+    expect(extent.leftOvershoot, `${extent.label} leftOvershoot`).toBeLessThanOrEqual(1);
+    expect(extent.rightOvershoot, `${extent.label} rightOvershoot`).toBeLessThanOrEqual(1);
+  });
+
+  // Real Cytoscape-measured (canvas font metrics, not this suite's own
+  // guess) glyph height AND declared font-size must be identical between a
+  // Tier and a Cluster label — the user reported them reading as different
+  // sizes despite both style rules referencing the exact same
+  // `LABEL_FONT_SIZE` constant in source; this proves there is no residual
+  // runtime discrepancy (the perceived mismatch traced to the position bug
+  // fixed above — a label sitting outside the visible band read as
+  // smaller/harder to read, not an actual font-size difference).
+  test('Tier and Cluster labels render at the exact same font-size and glyph line-height', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    const metrics = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      function metricsOf(selector: string) {
+        const n = cy.nodes(selector).first();
+        const rs = n[0]._private.rscratch;
+        return { labelHeight: rs.labelHeight, fontSize: n.pstyle('font-size').pfValue };
+      }
+      return { tier: metricsOf('.tier-band'), cluster: metricsOf('.sub-band') };
+    });
+    expect(metrics.tier.fontSize).toBe(metrics.cluster.fontSize);
+    expect(metrics.tier.labelHeight).toBe(metrics.cluster.labelHeight);
+  });
+
+  // ---- Focus mode (user: "can we implement a focus, so once I select
+  // something (one or more cards), I can only see those (for if the
+  // distance is too high)"). A generic `#map2-focus-toggle`/
+  // `#map2-focus-exit` pair, always present (unlike the advanced
+  // `#map2-hops`/`#map2-focus-controls` UI, which stays `/map`-only — see
+  // the "facet filters and focus/hop controls are not present" test above,
+  // still correctly asserting `#map2-hops` is absent from `/map2`). ----
+  test('selecting a card reveals a Focus button; clicking it isolates the view to the selection + its neighbours', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    const focusToggle = page.locator('#map2-focus-toggle');
+    await expect(focusToggle).toBeHidden(); // nothing selected yet
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await expect(focusToggle).toBeVisible();
+    await focusToggle.click();
+    const result = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        doiDimmed: cy.$id('doi').hasClass('focus-dimmed'),
+        // 'handle-system' shares a real edge with 'doi' in the curated set
+        // (DOI depends-on Handle System) — a direct neighbour, must stay
+        // visible.
+        neighbourDimmed: cy.$id('handle-system').hasClass('focus-dimmed'),
+        // 'clarivate' has no relation to 'doi' at all — must be dimmed.
+        unrelatedDimmed: cy.$id('clarivate').hasClass('focus-dimmed'),
+      };
+    });
+    expect(result.doiDimmed).toBe(false);
+    expect(result.neighbourDimmed).toBe(false);
+    expect(result.unrelatedDimmed).toBe(true);
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    await expect(focusToggle).toBeHidden();
+  });
+
+  test('multi-selecting two cards and entering focus dims everything outside the union of their neighbourhoods', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    // Same layer-panel multi-select mechanism (shift-click) already proven
+    // by the "a multi-selection highlights a shared neighbour" test above —
+    // real Playwright modifier clicks, not a simulated Cytoscape event.
+    await page.locator('#map2-layers-toggle').click();
+    await page.locator('.map2-layer[data-layer="institutional-system"] summary').click();
+    await page.locator('.map2-entity-btn[data-select-id="zenodo"]').click();
+    await page.locator('.map2-entity-btn[data-select-id="dataverse"]').click({ modifiers: ['Shift'] });
+    const selectedIds = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return cy.nodes('.state-selected').map((n: any) => n.id());
+    });
+    expect(selectedIds.sort()).toEqual(['dataverse', 'zenodo']);
+    await page.locator('#map2-focus-toggle').click();
+    const result = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        zenodoDimmed: cy.$id('zenodo').hasClass('focus-dimmed'),
+        dataverseDimmed: cy.$id('dataverse').hasClass('focus-dimmed'),
+        // oai-pmh is a shared neighbour of both zenodo and dataverse.
+        sharedNeighbourDimmed: cy.$id('oai-pmh').hasClass('focus-dimmed'),
+        unrelatedDimmed: cy.$id('clarivate').hasClass('focus-dimmed'),
+      };
+    });
+    expect(result.zenodoDimmed).toBe(false);
+    expect(result.dataverseDimmed).toBe(false);
+    expect(result.sharedNeighbourDimmed).toBe(false);
+    expect(result.unrelatedDimmed).toBe(true);
+  });
+
+  test('the "Show all" button exits focus mode and restores every card', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-focus-toggle').click();
+    // Cytoscape renders to a `<canvas>`, not per-node DOM elements — a
+    // `.focus-dimmed` class lives in Cytoscape's own style-class system, not
+    // as a real HTML `class` attribute a DOM locator could find. Assert via
+    // Cytoscape's own API instead, same as this suite's other focus tests.
+    const dimmedBeforeExit = await page.evaluate(() => (window as any).__cyMap2.elements('.focus-dimmed').length);
+    expect(dimmedBeforeExit).toBeGreaterThan(0);
+    await page.locator('#map2-focus-exit').click();
+    const dimmedCount = await page.evaluate(() => (window as any).__cyMap2.elements('.focus-dimmed').length);
+    expect(dimmedCount).toBe(0);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+  });
+
+  test('pressing Escape exits an active focus session', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-focus-toggle').click();
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    await page.keyboard.press('Escape');
+    const dimmedCount = await page.evaluate(() => (window as any).__cyMap2.elements('.focus-dimmed').length);
+    expect(dimmedCount).toBe(0);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+  });
+
+  test('clicking the empty canvas background while focused clears the selection and exits focus', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-focus-toggle').click();
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    // A tap emitted directly on the core (no target override) defaults to
+    // `evt.target === cy` — the same "empty background" condition the
+    // production click handler checks — matching how this suite's own
+    // "tapping a tier band background" test above drives Cytoscape events
+    // directly rather than simulating real mouse coordinates.
+    await page.evaluate(() => (window as any).__cyMap2.emit('tap'));
+    const state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { dimmed: cy.elements('.focus-dimmed').length, selected: cy.nodes('.state-selected').length };
+    });
+    expect(state.dimmed).toBe(0);
+    expect(state.selected).toBe(0);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+    await expect(page.locator('#map2-focus-toggle')).toBeHidden();
+  });
+
+  // ---- "Aislar" / Isolate mode (2026-09-09 follow-up: "is is possible to
+  // make a new button called 'aislar', to hide all that is not being
+  // selected and related with what is selected?? I [s]hould be able to
+  // select multiple boxes and retain those and their relations"). A second,
+  // independent mode alongside Focus above, sharing the exact same
+  // selection/multi-select input and neighbourhood computation
+  // (`selectionNeighborhood()`), but HARD-hiding (`display:none`, via
+  // `.isolated-hidden`) everything outside that set instead of dimming it.
+  // The two modes are mutually exclusive and share the same
+  // `#map2-focus-exit` ("← Full map") exit button — see
+  // `enterFocus`/`enterIsolate` in MapExplorerV2.astro for the full
+  // rationale. ----
+  test('selecting a card reveals an Aislar button; clicking it hard-hides everything outside the selection + its neighbours', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    const isolateToggle = page.locator('#map2-isolate-toggle');
+    await expect(isolateToggle).toBeHidden(); // nothing selected yet
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await expect(isolateToggle).toBeVisible();
+    await isolateToggle.click();
+    const result = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        doiHidden: cy.$id('doi').hasClass('isolated-hidden'),
+        doiDisplay: cy.$id('doi').style('display'),
+        // 'handle-system' shares a real edge with 'doi' (DOI depends-on
+        // Handle System) — a direct neighbour, must stay visible.
+        neighbourHidden: cy.$id('handle-system').hasClass('isolated-hidden'),
+        // 'clarivate' has no relation to 'doi' at all — must be hard-hidden.
+        unrelatedHidden: cy.$id('clarivate').hasClass('isolated-hidden'),
+        unrelatedDisplay: cy.$id('clarivate').style('display'),
+      };
+    });
+    expect(result.doiHidden).toBe(false);
+    expect(result.doiDisplay).not.toBe('none');
+    expect(result.neighbourHidden).toBe(false);
+    expect(result.unrelatedHidden).toBe(true);
+    expect(result.unrelatedDisplay).toBe('none');
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    await expect(isolateToggle).toBeHidden();
+    // Focus's own toggle stays VISIBLE while Isolate is active — a direct
+    // "switch to Focus instead" affordance rather than forcing exit-then-
+    // re-enter (see the mutual-exclusion test below).
+    await expect(page.locator('#map2-focus-toggle')).toBeVisible();
+  });
+
+  test('multi-selecting two non-adjacent cards and isolating keeps the union of their neighbourhoods, not just the first', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.locator('#map2-layers-toggle').click();
+    await page.locator('.map2-layer[data-layer="institutional-system"] summary').click();
+    await page.locator('.map2-entity-btn[data-select-id="zenodo"]').click();
+    await page.locator('.map2-entity-btn[data-select-id="dataverse"]').click({ modifiers: ['Shift'] });
+    const selectedIds = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return cy.nodes('.state-selected').map((n: any) => n.id());
+    });
+    expect(selectedIds.sort()).toEqual(['dataverse', 'zenodo']);
+    await page.locator('#map2-isolate-toggle').click();
+    const result = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        zenodoHidden: cy.$id('zenodo').hasClass('isolated-hidden'),
+        dataverseHidden: cy.$id('dataverse').hasClass('isolated-hidden'),
+        // oai-pmh is a shared neighbour of both zenodo and dataverse — proves
+        // the kept set is the UNION of both selections' neighbourhoods, not
+        // just the first card selected.
+        sharedNeighbourHidden: cy.$id('oai-pmh').hasClass('isolated-hidden'),
+        unrelatedHidden: cy.$id('clarivate').hasClass('isolated-hidden'),
+      };
+    });
+    expect(result.zenodoHidden).toBe(false);
+    expect(result.dataverseHidden).toBe(false);
+    expect(result.sharedNeighbourHidden).toBe(false);
+    expect(result.unrelatedHidden).toBe(true);
+  });
+
+  test('isolating hides any Tier/Cluster band left with zero visible cards, and keeps every band that still has one', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    const bandState = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      const bands = cy.nodes('.tier-band, .sub-band').map((band: any) => {
+        const anyVisibleChild = band.children().some((c: any) => !c.hasClass('isolated-hidden'));
+        return { id: band.id(), hidden: band.hasClass('isolated-hidden'), anyVisibleChild };
+      });
+      return bands;
+    });
+    // Invariant that must hold for EVERY band regardless of curated-content
+    // changes: a band is isolated-hidden if and only if none of its children
+    // (Cards, or nested Cluster sub-bands) are currently visible.
+    for (const band of bandState) {
+      expect(band.hidden).toBe(!band.anyVisibleChild);
+    }
+    // Selecting a single, narrowly-connected card out of ~33 curated
+    // entities must leave at least one band empty (its Cards are all
+    // outside the 1-hop neighbourhood) — otherwise this test would trivially
+    // pass without ever exercising the empty-band-hiding code path at all.
+    expect(bandState.some((b: { hidden: boolean }) => b.hidden)).toBe(true);
+    // ...and at least one band (the one containing 'doi' itself) must stay
+    // visible.
+    expect(bandState.some((b: { hidden: boolean }) => !b.hidden)).toBe(true);
+  });
+
+  test('the shared "Show all" exit button restores every card and band after isolating', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    const hiddenBeforeExit = await page.evaluate(() => (window as any).__cyMap2.elements('.isolated-hidden').length);
+    expect(hiddenBeforeExit).toBeGreaterThan(0);
+    await page.locator('#map2-focus-exit').click();
+    const state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        hiddenCount: cy.elements('.isolated-hidden').length,
+        allDisplayed: cy.elements().every((e: any) => e.style('display') !== 'none'),
+      };
+    });
+    expect(state.hiddenCount).toBe(0);
+    expect(state.allDisplayed).toBe(true);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+  });
+
+  test('pressing Escape exits an active isolate session', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    await page.keyboard.press('Escape');
+    const hiddenCount = await page.evaluate(() => (window as any).__cyMap2.elements('.isolated-hidden').length);
+    expect(hiddenCount).toBe(0);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+  });
+
+  test('clicking the empty canvas background while isolated clears the selection and exits isolate', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    await expect(page.locator('#map2-focus-exit')).toBeVisible();
+    await page.evaluate(() => (window as any).__cyMap2.emit('tap'));
+    const state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { hidden: cy.elements('.isolated-hidden').length, selected: cy.nodes('.state-selected').length };
+    });
+    expect(state.hidden).toBe(0);
+    expect(state.selected).toBe(0);
+    await expect(page.locator('#map2-focus-exit')).toBeHidden();
+    await expect(page.locator('#map2-isolate-toggle')).toBeHidden();
+  });
+
+  test('entering Focus while Isolate is active exits Isolate (mutually exclusive modes), and vice versa', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    // Enter Isolate first.
+    await page.locator('#map2-isolate-toggle').click();
+    let state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { hidden: cy.elements('.isolated-hidden').length, dimmed: cy.elements('.focus-dimmed').length };
+    });
+    expect(state.hidden).toBeGreaterThan(0);
+    expect(state.dimmed).toBe(0);
+    // Focus's own toggle stays visible as a direct "switch instead"
+    // affordance while Isolate is active (see the button-visibility test
+    // above) — click it straight through, without exiting Isolate first.
+    await page.locator('#map2-focus-toggle').click();
+    state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { hidden: cy.elements('.isolated-hidden').length, dimmed: cy.elements('.focus-dimmed').length };
+    });
+    // Switching to Focus must have cleared every stray `.isolated-hidden`
+    // left over from Isolate — no element should ever carry both classes.
+    expect(state.hidden).toBe(0);
+    expect(state.dimmed).toBeGreaterThan(0);
+    // And switching back to Isolate (Isolate's own toggle is symmetrically
+    // visible again now that Focus, not Isolate, is the active mode) must
+    // clear Focus's dimming in turn.
+    await page.locator('#map2-isolate-toggle').click();
+    state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { hidden: cy.elements('.isolated-hidden').length, dimmed: cy.elements('.focus-dimmed').length };
+    });
+    expect(state.hidden).toBeGreaterThan(0);
+    expect(state.dimmed).toBe(0);
+  });
+
+  // ---- Real-canvas multi-select (2026-09-09 follow-up bug report: user,
+  // verbatim, "i cannot select more than 1 box"). EVERY multi-select test
+  // above (e.g. "a multi-selection highlights a shared neighbour...",
+  // "multi-selecting two cards and entering focus...") drives the Layers-
+  // panel `<button class="map2-entity-btn">` list via `.click({modifiers})`
+  // — real DOM buttons, not the actual rendered canvas Cards a user
+  // visually clicks on. Root-caused directly from Cytoscape's own
+  // interaction source (node_modules/cytoscape/dist/cytoscape.cjs.js), not
+  // guessed, then reproduced live (RED, before the fix in
+  // MapExplorerV2.astro's `cy = cytoscape({...})` constructor) with exactly
+  // this test's own gesture: Cytoscape's default `boxSelectionEnabled: true`
+  // + its default 4px `desktopTapThreshold` means a mousedown-on-a-node ->
+  // (a few px of real mouse/trackpad jitter) -> mouseup gesture, WITH a
+  // multi-select modifier held, gets reinterpreted mid-gesture as an
+  // additive BOX-SELECTION drag instead of firing 'tap' on the node — so
+  // this file's own `cy.on('tap', 'node', ...)` handler (which reads
+  // `evt.originalEvent.shiftKey/metaKey/ctrlKey`) never runs at all. Worse:
+  // the empty box-selection this opens typically ends over background,
+  // which ALSO fires a plain 'tap' on the core (`evt.target === cy`) — this
+  // file's own "click empty canvas to deselect" handler then wipes the
+  // selection entirely, so the observed bug wasn't just "the 2nd card
+  // doesn't get added", it was "the whole selection gets cleared". Fixed by
+  // `boxSelectionEnabled: false` (this app's ENTIRE selection model is its
+  // own `selected` Set driven by 'tap' events — Cytoscape's native
+  // box-select/`.selected()` API is never used anywhere in this file) plus
+  // raising `desktopTapThreshold` to 12 (absorbs realistic jitter without
+  // weakening the existing "a node can still be dragged" regression test's
+  // 60px+ deliberate drag).
+  test('a real mouse shift-click (with a few px of jitter, not a modifier-free synthetic click) on two rendered CANVAS cards multi-selects both, without losing the first', async ({
+    page,
+  }) => {
+    await page.goto('/es/map2/');
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    // Wait for the app's OWN one-time initial ResizeObserver-driven
+    // fit/zoom-floor (`resetView`, guarded by `initialFitDone` — see
+    // MapExplorerV2.astro) to actually settle before this test does its OWN
+    // `cy.fit()` below — the same real race the "no two rendered Tier/
+    // Cluster boxes overlap" test above already waits out. Without this,
+    // the app's own async re-fit can land AFTER this test reads its click
+    // coordinates but BEFORE it actually clicks, silently invalidating them
+    // (reproduced: an intermittent flake where even the FIRST, no-modifier
+    // click selected nothing at all — nothing to do with shift-click).
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+
+    const canvasBox = await page.locator('#map2-canvas').boundingBox();
+    if (!canvasBox) throw new Error('canvas not found');
+
+    // Bring both real, curated, connected nodes fully into view and read
+    // their REAL rendered (screen) coordinates — this test drives the mouse
+    // at real pixel positions on the `<canvas>`, not a DOM button or a
+    // synthetic Cytoscape event.
+    const coords = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      cy.fit(cy.nodes(':childless'), 60);
+      return { a: cy.$id('zenodo').renderedPosition(), b: cy.$id('dataverse').renderedPosition() };
+    });
+
+    async function realCanvasClick(x: number, y: number, opts: { shift?: boolean; jitterPx?: number } = {}): Promise<void> {
+      if (opts.shift) await page.keyboard.down('Shift');
+      await page.mouse.move(x, y);
+      await page.mouse.down();
+      const j = opts.jitterPx ?? 0;
+      if (j > 0) {
+        // A few pixels of movement between mousedown and mouseup — the
+        // jitter any real mouse/trackpad click has, and the exact gesture a
+        // frictionless `page.mouse.click()` (0 movement) or `.click()`
+        // locator helper (also 0 movement) never exercises, which is why
+        // every earlier canvas-tap test here passed despite the real bug.
+        await page.mouse.move(x + j, y + j, { steps: 3 });
+      }
+      await page.mouse.up();
+      if (opts.shift) await page.keyboard.up('Shift');
+    }
+
+    await realCanvasClick(canvasBox.x + coords.a.x, canvasBox.y + coords.a.y, { jitterPx: 3 });
+    const afterFirst = await page.evaluate(() => (window as any).__cyMap2.nodes('.state-selected').map((n: any) => n.id()));
+    expect(afterFirst).toEqual(['zenodo']);
+
+    await realCanvasClick(canvasBox.x + coords.b.x, canvasBox.y + coords.b.y, { shift: true, jitterPx: 6 });
+    const afterSecond = await page.evaluate(() => (window as any).__cyMap2.nodes('.state-selected').map((n: any) => n.id()).sort());
+    // Both cards selected — the first (zenodo) must NOT have been dropped by
+    // the second click (the observed "wipes the whole selection" failure
+    // mode), and the second (dataverse) must actually have been ADDED (the
+    // literal "cannot select more than 1 box" failure mode).
+    expect(afterSecond).toEqual(['dataverse', 'zenodo']);
+  });
+
+  // ---- Isolate re-layout (2026-09-09 follow-up: "'aislar' works
+  // perfectly, but I would like to re-arrange also, so I can reduce long
+  // distances"). `applyIsolate` used to hide out-of-scope elements but leave
+  // the KEPT ones at their original hierarchy.ts-computed absolute
+  // positions, so two kept Cards that started in different Tiers still read
+  // as far apart on screen. `runIsolateLayout` (MapExplorerV2.astro) now
+  // re-runs `fcose`, restricted to the currently-visible elements, on every
+  // `applyIsolate` call. ----
+  test('isolating pulls two kept-but-originally-far-apart cards (different Tiers) closer together', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+
+    // DataCite (T2) and DOI (T1) are in different Tiers (see the "hierarchical
+    // layout places DataCite above DOI" test above) — a real, direct edge
+    // connects them, so selecting DOI's 1-hop neighbourhood keeps both.
+    const before = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      const doi = cy.$id('doi').position();
+      const datacite = cy.$id('datacite').position();
+      return Math.hypot(doi.x - datacite.x, doi.y - datacite.y);
+    });
+
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    // fcose's own `animationDuration: 300` — give it real time to settle
+    // before measuring.
+    await page.waitForTimeout(600);
+
+    const after = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      const doi = cy.$id('doi').position();
+      const datacite = cy.$id('datacite').position();
+      return Math.hypot(doi.x - datacite.x, doi.y - datacite.y);
+    });
+
+    expect(after).toBeLessThan(before * 0.8); // a real, visible tightening, not a rounding-error difference
+  });
+
+  // Follow-up bug report (2026-09-09, same day): "'Aislar' should be more
+  // agresive, compact more, less space between cards (half the space it
+  // leaves now)" — the test above only checks a RELATIVE (model-space)
+  // shrink, which stayed true even before this round's retune. This pins
+  // the actual REAL, RENDERED (screen-pixel) distance between the same
+  // DOI/DataCite pair post-relayout, so a future change that drifts back
+  // toward the old, looser spacing gets caught even if it still happens to
+  // pass the relative check above. Empirically measured via a standalone
+  // Playwright harness driving this exact flow against a built preview
+  // (not guessed): the shipped-before-this-round options (`nodeRepulsion:
+  // 8000, idealEdgeLength: 120`) measured ~184px for this pair; a real
+  // bisection sweep over `nodeRepulsion`/`idealEdgeLength` (see
+  // `runIsolateLayout`'s own comment in MapExplorerV2.astro) found a stable
+  // low-distance plateau at ~129-130px (zero Card/Card or Card/band overlap
+  // anywhere in the swept range) — the tightest this specific cross-Tier
+  // pair gets without overlapping, given their real classbox footprint. The
+  // band below is centered on that measurement with real headroom for
+  // fonts/rendering variance across machines/CI, while still catching a
+  // reversion back toward the old ~184px spacing.
+  test('isolating renders the DOI/DataCite pair at a real, tightened on-screen pixel distance, with zero overlaps', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2.zoom())).toBeGreaterThanOrEqual(0.4);
+
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    await page.waitForTimeout(600);
+
+    const result = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      const a = cy.$id('doi').renderedPosition();
+      const b = cy.$id('datacite').renderedPosition();
+      const pixelDistance = Math.hypot(a.x - b.x, a.y - b.y);
+
+      const visible = cy.elements().not('.isolated-hidden');
+      const nodes = visible.nodes(':childless').toArray();
+      const cardOverlaps: string[] = [];
+      for (let i = 0; i < nodes.length; i++) {
+        const na = nodes[i].renderedBoundingBox();
+        for (let j = i + 1; j < nodes.length; j++) {
+          const nb = nodes[j].renderedBoundingBox();
+          if (na.x1 < nb.x2 && nb.x1 < na.x2 && na.y1 < nb.y2 && nb.y1 < na.y2) {
+            cardOverlaps.push(`${nodes[i].id()} <-> ${nodes[j].id()}`);
+          }
+        }
+      }
+      const spills: string[] = [];
+      for (const n of nodes) {
+        const parent = n.parent();
+        if (parent.empty() || parent.hasClass('isolated-hidden')) continue;
+        const bb = parent.renderedBoundingBox();
+        const nb = n.renderedBoundingBox();
+        if (nb.x1 < bb.x1 - 1 || nb.x2 > bb.x2 + 1 || nb.y1 < bb.y1 - 1 || nb.y2 > bb.y2 + 1) {
+          spills.push(`${n.id()} outside ${parent.data('label')}`);
+        }
+      }
+      return { pixelDistance, cardOverlaps, spills };
+    });
+
+    // Real, tightened spacing — well below the old ~184px baseline, with
+    // generous headroom either side of the ~130px measured plateau for
+    // cross-machine font/rendering variance.
+    expect(result.pixelDistance).toBeGreaterThan(50);
+    expect(result.pixelDistance).toBeLessThan(170);
+    expect(result.cardOverlaps).toEqual([]);
+    expect(result.spills).toEqual([]);
+  });
+
+  test('exiting isolate restores the exact original pre-isolate positions (not wherever fcose left them)', async ({ page }) => {
+    await page.goto('/es/map2/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+
+    const before = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { doi: cy.$id('doi').position(), datacite: cy.$id('datacite').position(), zenodo: cy.$id('zenodo').position() };
+    });
+
+    await page.evaluate(() => (window as any).__cyMap2.$id('doi').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    await page.waitForTimeout(600);
+    // Confirm the relayout actually moved something before exiting — a
+    // no-op relayout would make this test pass trivially.
+    const midway = await page.evaluate(() => (window as any).__cyMap2.$id('doi').position());
+    expect(midway).not.toEqual(before.doi);
+
+    await page.locator('#map2-focus-exit').click();
+    const after = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return { doi: cy.$id('doi').position(), datacite: cy.$id('datacite').position(), zenodo: cy.$id('zenodo').position() };
+    });
+    expect(after.doi).toEqual(before.doi);
+    expect(after.datacite).toEqual(before.datacite);
+    // `zenodo` was never part of DOI's isolated neighbourhood (hard-hidden,
+    // untouched by the fcose run entirely) — must also read back exactly the
+    // same, proving the restore isn't just accidentally right for the two
+    // nodes fcose actually moved.
+    expect(after.zenodo).toEqual(before.zenodo);
+  });
+
+  test('isolating a single card with zero curated relations does not hang or error (fcose on a near-trivial graph)', async ({ page }) => {
+    const pageErrors: string[] = [];
+    page.on('pageerror', (e) => pageErrors.push(String(e)));
+    // `coalition-s` has zero recorded relations anywhere in the corpus (the
+    // `noRelationsBadge` case) — only present on the full `/map` corpus, not
+    // curated `/map2` (every /map2 entity has >=1 curated relation).
+    await page.goto('/es/map/');
+    await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
+    await page.evaluate(() => (window as any).__cyMap2.$id('coalition-s').emit('tap'));
+    await page.locator('#map2-isolate-toggle').click();
+    await page.waitForTimeout(600);
+
+    const state = await page.evaluate(() => {
+      const cy = (window as any).__cyMap2;
+      return {
+        zoom: cy.zoom(),
+        coalitionHidden: cy.$id('coalition-s').hasClass('isolated-hidden'),
+      };
+    });
+    expect(state.coalitionHidden).toBe(false); // the selected card itself always stays visible
+    expect(Number.isFinite(state.zoom)).toBe(true); // fcose/fit didn't leave the camera in a broken state
+    expect(pageErrors).toEqual([]);
+
+    // Exiting must still work cleanly (position restore on a 1-node isolate
+    // session, not just the multi-node case above).
+    await page.locator('#map2-focus-exit').click();
+    expect(pageErrors).toEqual([]);
   });
 });

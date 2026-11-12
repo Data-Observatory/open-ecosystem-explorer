@@ -2,7 +2,17 @@ import { describe, it, expect } from 'vitest';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
-import { computeTier, computeRanks, computeXSlots, computeLayout, DEFAULT_LAYOUT_OPTIONS } from '../../../src/lib/map/hierarchy.js';
+import {
+  computeTier,
+  computeRanks,
+  computeXSlots,
+  computeLayout,
+  DEFAULT_LAYOUT_OPTIONS,
+  LABEL_CLEARANCE,
+  CLUSTER_PADDING,
+  CLUSTER_LABEL_CLEARANCE,
+  MIN_CLUSTER_CELL_WIDTH,
+} from '../../../src/lib/map/hierarchy.js';
 import { classBoxHeight, CLASS_BOX_WIDTH } from '../../../src/lib/map/node-svg.js';
 
 describe('computeTier', () => {
@@ -404,6 +414,118 @@ describe('computeRanks', () => {
   });
 });
 
+describe('row separation across governance/region subgroups (real full corpus)', () => {
+  // Regression test for a real bug: the 2026-09-08 groupKey split (T1 by
+  // governance, T2 by region tag) only gave COHESION — members of one
+  // subgroup snap to that subgroup's own mode depth — never SEPARATION
+  // between two different subgroups of the same type. Since real
+  // topological depth barely correlates with governance/region, most
+  // subgroups' independently-computed modes coincided anyway (e.g. every
+  // `organization` region bucket landed on the same depth), so the split
+  // was invisible on the actual site despite 282/282 tests passing — the
+  // suite above only ever asserted cohesion, never separation. Runs against
+  // the FULL corpus (matches /map, not just /map2's curated subset) since
+  // the bug lives in `computeRanks` itself, not in any one page's node list.
+  const ENTITIES_DIR = join(__dirname, '../../../src/content/entities');
+  const SUBTYPE_FIELD: Record<string, string> = {
+    standard: 'standardKind',
+    coalition: 'coalitionKind',
+    index: 'indexKind',
+    repository: 'repositoryKind',
+    cris: 'crisKind',
+    aggregator: 'aggregatorKind',
+    'publishing-platform': 'platformKind',
+    community: 'communityKind',
+    policy: 'policyKind',
+    organization: 'orgKind',
+  };
+
+  function loadFullGraph() {
+    const files = readdirSync(ENTITIES_DIR).filter((f) => f.endsWith('.yaml'));
+    const nodes: { id: string; type: string; subtype?: string; governance?: string; tags?: string[] }[] = [];
+    const edges: { from: string; to: string; predicate: string }[] = [];
+    for (const file of files) {
+      const id = file.replace(/\.yaml$/, '');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const data = parseYaml(readFileSync(join(ENTITIES_DIR, file), 'utf-8')) as any;
+      const field = SUBTYPE_FIELD[data.type as string];
+      nodes.push({ id, type: data.type, subtype: field ? data[field] : undefined, governance: data.governance, tags: data.tags ?? [] });
+      for (const rel of data.relations ?? []) {
+        edges.push({ from: id, to: rel.target, predicate: rel.predicate });
+      }
+    }
+    return { nodes, edges };
+  }
+
+  function regionOf(n: { tags?: string[] }): string {
+    const tag = (n.tags ?? []).find((t) => t.startsWith('region:'));
+    return tag ? tag.slice('region:'.length) : 'global';
+  }
+
+  it('every distinct governance value present within a T1 type gets its own composite, never shared with a sibling governance value of that same type', () => {
+    const { nodes, edges } = loadFullGraph();
+    const ranks = computeRanks(nodes, edges);
+    const byType = new Map<string, Map<string, Set<number>>>(); // type -> governance -> composites seen
+    for (const n of nodes) {
+      if (computeTier(n.type, n.subtype) !== 1) continue;
+      if (!byType.has(n.type)) byType.set(n.type, new Map());
+      const byGov = byType.get(n.type)!;
+      const gov = n.governance ?? '(none)';
+      if (!byGov.has(gov)) byGov.set(gov, new Set());
+      byGov.get(gov)!.add(ranks.get(n.id)!.composite);
+    }
+    for (const [type, byGov] of byType) {
+      if (byGov.size < 2) continue; // only one governance value present — nothing to separate
+      const compositeToGov = new Map<number, string>();
+      for (const [gov, composites] of byGov) {
+        for (const c of composites) {
+          const clash = compositeToGov.get(c);
+          expect(clash, `type "${type}": governance "${gov}" shares composite ${c} with governance "${clash}"`).toBeUndefined();
+          compositeToGov.set(c, gov);
+        }
+      }
+    }
+  });
+
+  it('every distinct region tag present within a T2 type gets its own composite, never shared with a sibling region of that same type', () => {
+    const { nodes, edges } = loadFullGraph();
+    const ranks = computeRanks(nodes, edges);
+    const byType = new Map<string, Map<string, Set<number>>>(); // type -> region -> composites seen
+    for (const n of nodes) {
+      if (computeTier(n.type, n.subtype) !== 2) continue;
+      if (!byType.has(n.type)) byType.set(n.type, new Map());
+      const byRegion = byType.get(n.type)!;
+      const region = regionOf(n);
+      if (!byRegion.has(region)) byRegion.set(region, new Set());
+      byRegion.get(region)!.add(ranks.get(n.id)!.composite);
+    }
+    for (const [type, byRegion] of byType) {
+      if (byRegion.size < 2) continue;
+      const compositeToRegion = new Map<number, string>();
+      for (const [region, composites] of byRegion) {
+        for (const c of composites) {
+          const clash = compositeToRegion.get(c);
+          expect(clash, `type "${type}": region "${region}" shares composite ${c} with region "${clash}"`).toBeUndefined();
+          compositeToRegion.set(c, region);
+        }
+      }
+    }
+  });
+
+  it('concrete anchor: the worst-reported case — organization region buckets (europe/north-america/latam/global) are all on different rows', () => {
+    const { nodes, edges } = loadFullGraph();
+    const ranks = computeRanks(nodes, edges);
+    const byRegion = new Map<string, number>();
+    for (const n of nodes) {
+      if (n.type !== 'organization') continue;
+      const region = regionOf(n);
+      if (!byRegion.has(region)) byRegion.set(region, ranks.get(n.id)!.composite);
+    }
+    const composites = [...byRegion.values()];
+    expect(new Set(composites).size, `organization region composites: ${JSON.stringify([...byRegion])}`).toBe(composites.length);
+  });
+});
+
 describe('computeXSlots', () => {
   it('assigns a distinct slot to every node in the same row', () => {
     const nodes = [
@@ -521,30 +643,92 @@ describe('computeLayout', () => {
     // difference and passed even with the rows inverted.
     expect(dataciteY).toBeLessThan(doiY);
     // Exactly one row apart (rowSpacing) plus the one tier-boundary gap
-    // crossed — NOT (200-100)=100 raw composite units apart.
-    expect(doiY - dataciteY).toBe(80 + 40);
+    // crossed (tierGap + LABEL_CLEARANCE, since T1 and T2 sit in the same
+    // grid-arrangement column — see `computeLayout`'s COLUMN_A) — NOT
+    // (200-100)=100 raw composite units apart. T1 ("doi") is a GRID_TIER —
+    // even a single member still nests inside its own governance Cluster
+    // box (see `MapExplorerV2.astro`'s `subBandKeyFor`), which itself
+    // auto-expands by `2 * CLUSTER_PADDING` beyond its one child (2026-09-09
+    // follow-up: this used to be silently absorbed by `LABEL_CLEARANCE`'s
+    // much larger pre-retune buffer; now that the buffer is tight, this
+    // module has to account for it explicitly — see `computeLayout`'s own
+    // `clusterPad` comment).
+    expect(doiY - dataciteY).toBe(80 + 2 * CLUSTER_PADDING + 40 + LABEL_CLEARANCE);
   });
 
-  it('is unaffected by how large the gap between the two composite values is — only their rank order matters', () => {
-    // A contrived case where depth alone (not just tier) would produce a
-    // huge composite gap if used directly: same tier, but a long dependency
-    // chain pushes one node's depth far above another's. Dense-rank spacing
-    // must still be uniform between adjacent occupied rows. Each node uses a
-    // DISTINCT T1 type so the unconditional same-(tier,type) row-cohesion
-    // rule (2026-09-07) has nothing to collapse here — this test is about
-    // dense-rank spacing across genuinely distinct rows, not row cohesion.
-    const types = ['identifier', 'index', 'repository', 'cris', 'aggregator'];
-    const nodes = Array.from({ length: 5 }, (_, i) => ({ id: `n${i}`, type: types[i]! }));
+  it('is unaffected by how large the gap between the two composite values is — only their rank order matters (single-column tiers)', () => {
+    // Dense-rank spacing must be uniform between adjacent occupied rows
+    // regardless of the underlying depth values. T4 is used deliberately —
+    // it's one of the two tiers that KEPT the original single-column stack
+    // (T1/T2 tile their buckets into a 2D grid instead, since 2026-09-08,
+    // and no longer make this uniform-gap guarantee across buckets — see the
+    // grid test below). Three distinct T4 types (`policy` is always T4;
+    // `standard`/`coalition` reach T4 only via their principles/declaration
+    // subtype) give 3 distinct `${tier}|${type}` groups to chain depths
+    // across — `standard`/`coalition` alone can't offer more than one group
+    // each since `groupKey` doesn't key on subtype.
+    const nodes = [
+      { id: 'n0', type: 'policy' },
+      { id: 'n1', type: 'standard', subtype: 'principles' },
+      { id: 'n2', type: 'coalition', subtype: 'declaration' },
+    ];
     const edges = [
       { from: 'n1', to: 'n0', predicate: 'depends-on' },
       { from: 'n2', to: 'n1', predicate: 'depends-on' },
-      { from: 'n3', to: 'n2', predicate: 'depends-on' },
-      { from: 'n4', to: 'n3', predicate: 'depends-on' },
     ];
     const positions = computeLayout(nodes, edges, { rowSpacing: 80, colSpacing: 190, tierGap: 40, maxPerRow: 5 });
-    const ys = ['n0', 'n1', 'n2', 'n3', 'n4'].map((id) => positions.get(id)!.y);
+    const ys = ['n0', 'n1', 'n2'].map((id) => positions.get(id)!.y);
     const gaps = ys.slice(1).map((y, i) => Math.abs((ys[i] ?? 0) - y));
     for (const gap of gaps) expect(gap).toBe(80); // same tier throughout -> no tierGap crossed
+  });
+
+  it('tiles multiple T1 governance buckets into a 2D grid instead of one tall column', () => {
+    // 2026-09-08 grid redesign (user: "the grey boxes can be side by side,
+    // not only top to bottom"): T1/T2 Clusters (governance/region buckets)
+    // no longer participate in the single-column stack at all — they tile
+    // row-major into a grid sized to their own count. 5 buckets -> ceil(√5)
+    // = 3 columns, 2 rows (3 in row 0, 2 in row 1), regardless of any real
+    // graph depth between them (dropped from the key on purpose — see
+    // `computeRanks`'s groupKey comment).
+    const types = ['identifier', 'index', 'repository', 'cris', 'aggregator'];
+    const governances = ['commercial', 'nonprofit', 'community', 'academic', 'public-agency'];
+    const nodes = Array.from({ length: 5 }, (_, i) => ({ id: `n${i}`, type: types[i]!, governance: governances[i]! }));
+    const positions = computeLayout(nodes, [], { rowSpacing: 80, colSpacing: 190, tierGap: 40, maxPerRow: 5 });
+    const ys = [...new Set([...positions.values()].map((p) => p.y))];
+    expect(ys.length).toBe(2); // 2 grid rows
+    const xsByY = new Map<number, number>();
+    for (const p of positions.values()) xsByY.set(p.y, (xsByY.get(p.y) ?? 0) + 1);
+    const counts = [...xsByY.values()].sort((a, b) => b - a);
+    expect(counts).toEqual([3, 2]); // 3 buckets in the fuller grid row, 2 in the other
+  });
+
+  // Follow-up bug report (2026-09-09, round 3): "there's too much empty
+  // space between them (horizontally primary)" — the grid's horizontal gap
+  // was built from `colSpacing` (tuned for spacing CARDS apart WITHIN one
+  // row, not for the gap between whole CLUSTER blocks), while the vertical
+  // gap already used the smaller `rowSpacing` — a real, measured asymmetry
+  // (356px horizontal vs. 250px vertical at production spacing) with no
+  // visual justification, since neither grid axis is "a row of cards". Both
+  // axes now share the same `rowSpacing`-based gap.
+  it('grids two single-card Clusters using the SAME rowSpacing-based gap on both axes, not colSpacing for the horizontal one', () => {
+    const nodes = [
+      { id: 'a', type: 'identifier', governance: 'commercial' },
+      { id: 'b', type: 'identifier', governance: 'nonprofit' },
+    ];
+    // ceil(√2) = 2 columns, 1 row -> the two single-card Clusters land side
+    // by side, so the x-distance between their centres is exactly one grid
+    // column gap plus both cells' own (floor-width-dominated, since a single
+    // card is far narrower than a Cluster's own label) half-widths.
+    const positions = computeLayout(nodes, [], { rowSpacing: 80, colSpacing: 190, tierGap: 40, maxPerRow: 5 });
+    const gapBetweenCenters = Math.abs(positions.get('a')!.x - positions.get('b')!.x);
+    // Each cell here is floored at MIN_CLUSTER_CELL_WIDTH (a single card's
+    // own `colSpacing`-wide block is narrower than the label needs), so the
+    // two equal-width cells' centre-to-centre distance is cellWidth + gap.
+    expect(gapBetweenCenters).toBeCloseTo(MIN_CLUSTER_CELL_WIDTH + (80 + CLUSTER_LABEL_CLEARANCE), 5);
+    // Regression guard: the OLD (colSpacing-based) gap would have produced a
+    // visibly larger distance — fail loudly if this ever drifts back.
+    const oldBuggyGap = MIN_CLUSTER_CELL_WIDTH + (190 + CLUSTER_LABEL_CLEARANCE);
+    expect(gapBetweenCenters).toBeLessThan(oldBuggyGap);
   });
 
   // Regression test for the second half of the same bug report: even after

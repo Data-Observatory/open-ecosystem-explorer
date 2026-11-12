@@ -19,7 +19,11 @@ export interface ClassBoxInput {
 }
 
 /** Exported so layout code (and its tests) can reason about a class box's
- *  real on-screen footprint instead of duplicating this literal. */
+ *  real on-screen footprint instead of duplicating this literal.
+ *
+ *  (2026-09-08: briefly tripled these, then reverted — the user's "triple
+ *  the box text" ask was about the grey Tier/Cluster band labels in
+ *  `MapExplorerV2.astro`, not these Cards. Back to original sizing.) */
 export const CLASS_BOX_WIDTH = 176;
 const WIDTH = CLASS_BOX_WIDTH;
 const TITLE_HEIGHT = 26;
