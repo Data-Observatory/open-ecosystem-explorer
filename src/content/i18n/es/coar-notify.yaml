@@ -1,5 +1,5 @@
-summary: Convenciones comunitarias que conectan repositorios con servicios
-  externos, como revisión por pares, mediante notificaciones de datos enlazados.
+summary: COAR Notify son convenciones comunitarias para que un repositorio avise a
+  servicios externos, como la revisión por pares, y reciba sus avisos.
 relationNotes:
   related-to@peer-review: Permite que repositorios y servicios de revisión intercambien
     notificaciones de revisión.

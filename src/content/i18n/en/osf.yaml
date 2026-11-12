@@ -1,4 +1,5 @@
-summary: Platform for projects, preprints and data run by the Center for Open Science.
+summary: OSF is a platform for managing research projects and sharing preprints and
+  data; the Center for Open Science runs it.
 relationNotes:
   depends-on@datacite: OSF mints DOIs for projects, components and registrations through DataCite.
   depends-on@ror: OSF sends ROR identifiers for institutional affiliation together with

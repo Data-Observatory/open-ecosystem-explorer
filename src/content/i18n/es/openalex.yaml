@@ -1,5 +1,5 @@
-summary: Alternativa abierta a los índices propietarios, gratuita y descargable
-  completa; construida por OurResearch.
+summary: OpenAlex es un catálogo abierto y gratuito de publicaciones científicas y
+  sus enlaces de citas, que cualquiera puede descargar completo.
 relationNotes:
   member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
   operated-by@ourresearch: Construida y mantenida por OurResearch, organización sin fines de lucro.
@@ -11,4 +11,4 @@ relationNotes:
   indexes@arxiv: OpenAlex cosecha e indexa preprints de arXiv.
   related-to@citation-index: Catálogo abierto de obras que incluye enlaces de citas.
 body: |-
-  OpenAlex es la alternativa abierta a los índices cerrados: gratuita, descargable en su totalidad y auditable. Cubre más objetos que los índices propietarios, aunque con menos limpieza editorial.
+  OpenAlex es gratuito, descargable en su totalidad y auditable. Lo construye y mantiene OurResearch, una organización sin fines de lucro, e incorpora datos abiertos de otras fuentes como OpenCitations y Wikidata.

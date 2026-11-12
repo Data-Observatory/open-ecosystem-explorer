@@ -1,4 +1,5 @@
-summary: Nonprofit infrastructure that publishes open citation data as linked data.
+summary: OpenCitations is a nonprofit infrastructure that publishes data on citations
+  between publications, open and downloadable by anyone.
 relationNotes:
   member-of@barcelona-declaration: Listed among the Declaration's supporters (not among its signatories).
   depends-on@doi: Citation records are identified by the DOIs of the citing and cited articles.

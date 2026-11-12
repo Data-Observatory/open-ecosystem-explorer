@@ -1,3 +1,4 @@
-summary: The common minimum of library metadata — 15 core elements for describing any resource.
+summary: Dublin Core is a list of 15 basic fields, such as title and author, for describing
+  any resource, used by libraries and repositories.
 body: |-
   Dublin Core is the floor on which many other schemas, including OpenAIRE's guidelines, build more specific application profiles.

@@ -1,6 +1,6 @@
-summary: Esquema de identificador persistente libre de costo, con registro de
-  NAAN y resolutor N2T estewardado por la ARK Alliance.
+summary: ARK es un identificador persistente gratuito de emitir, usado por bibliotecas,
+  archivos y repositorios de datos para enlazar de forma estable a sus objetos.
 relationNotes:
   funded-by@lyrasis: La ARK Alliance, gobernada por la comunidad, cuenta con el apoyo en parte de LYRASIS.
 body: |-
-  ARK es una alternativa al DOI sin costo de emisión, popular en bibliotecas, archivos y algunos repositorios de datos. Lo gobierna la ARK Alliance, una comunidad técnica que coordina a las instituciones emisoras y mantiene el registro de NAAN y el resolutor N2T.
+  ARK es una alternativa al DOI sin costo de emisión, popular en bibliotecas, archivos y algunos repositorios de datos. Lo gobierna la ARK Alliance, una comunidad técnica que coordina a las instituciones emisoras y mantiene el registro de prefijos de institución (NAAN) y el resolutor N2T, que redirige cada identificador a su objeto actual.

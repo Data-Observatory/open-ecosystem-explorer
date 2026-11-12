@@ -18,8 +18,7 @@ tags:
   - region:latam
 lastReviewed: 2026-09-04
 note: Chile's national access node, harvesting Chilean institutional
-  repositories and the ANID Repository into one discovery point (specs.md
-  Appendix A.1b).
+  repositories and the ANID Repository into one discovery point.
 relations:
   - predicate: operated-by
     target: anid

@@ -1,4 +1,5 @@
-summary: Preprint server for physics, mathematics and computer science; an independent nonprofit since July 2026.
+summary: arXiv is an online server where researchers in physics, mathematics, computer
+  science and other fields post preprints before peer review.
 relationNotes:
   funded-by@cornell: One of several funders until June 2026, alongside the Simons Foundation and a consortium of member institutions.
   implements@oai-pmh: arXiv is one of the first implementers of OAI-PMH; the protocol partly grew out of harvesting needs such as arXiv's.

@@ -1,5 +1,5 @@
-summary: Plataforma de proyectos, preprints y datos operada por el Center for
-  Open Science.
+summary: OSF es una plataforma para gestionar proyectos de investigación y compartir
+  preprints y datos; la opera el Center for Open Science.
 relationNotes:
   depends-on@datacite: OSF acuña DOI para proyectos, componentes y registros a través de DataCite.
   depends-on@ror: OSF envía identificadores ROR de afiliación institucional junto

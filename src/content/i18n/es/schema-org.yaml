@@ -1,5 +1,5 @@
-summary: Vocabulario compartido que permite a los motores de búsqueda leer el
-  contenido de las páginas web.
+summary: Schema.org es un vocabulario compartido de etiquetas que permite a los buscadores
+  web entender el contenido de una página.
 relationNotes:
   governed-by@google: Desde 2026 lo dirige Google; el grupo comunitario del W3C es solo un foro de discusión.
   related-to@metadata-standard: Vocabulario compartido para marcar datos estructurados en

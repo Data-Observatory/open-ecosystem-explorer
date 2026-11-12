@@ -1,6 +1,6 @@
-summary: Registry of research data repositories, widely used as a reference list when
-  choosing where to deposit.
+summary: re3data is a registry of research data repositories that helps people choose
+  where to deposit data.
 relationNotes:
   depends-on@datacite: Integrated as a DataCite service since 2022.
 body: |-
-  re3data is the reference registry of research data repositories. Funders and publishers widely cite it as a source for checking where to deposit data.
+  re3data is a registry of research data repositories that funders and publishers cite as a source for checking where to deposit data.

@@ -1,5 +1,5 @@
-summary: Principios que exigen que un dato pueda encontrarse, describirse,
-  conectarse y reutilizarse, dejando el nivel de acceso a quien lo custodia.
+summary: Los principios FAIR son pautas para que los datos sean fáciles de encontrar,
+  accesibles, compatibles entre sistemas y reutilizables, sin exigir que sean abiertos.
 relationNotes:
   related-to@research-data-management: Principios para gestionar datos de investigación
     de modo que puedan reutilizarse.
@@ -8,4 +8,4 @@ relationNotes:
   related-to@metadata: La localización y la interoperabilidad dependen de metadatos
     ricos.
 body: |-
-  FAIR no es una norma técnica ni exige apertura. Esa separación entre acceso y descripción es la herramienta más útil para hablar con instituciones públicas sobre datos sensibles sin pedirles que los abran.
+  FAIR no es una norma técnica ni exige apertura: separa el acceso, que decide quien custodia los datos, de su descripción. Por eso puede aplicarse también a datos sensibles que no se pueden abrir.

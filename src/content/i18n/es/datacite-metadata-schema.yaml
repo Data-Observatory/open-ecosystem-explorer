@@ -1,5 +1,5 @@
-summary: Esquema de metadatos de DataCite para objetos con DOI, legible por
-  máquina y sin exigir apertura del contenido.
+summary: El esquema de metadatos de DataCite define los campos para describir un objeto
+  con DOI de DataCite, en formato legible por programas.
 relationNotes:
   depends-on@orcid: ORCID es un valor documentado de nameIdentifierScheme
     soportado en las propiedades Creator/Contributor.

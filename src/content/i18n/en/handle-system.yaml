@@ -1,4 +1,5 @@
-summary: Resolution protocol and prefix registry underlying the DOI, managed globally by the DONA Foundation.
+summary: The Handle System is a protocol that assigns persistent identifiers and resolves
+  them to each object's current location; the DOI runs on top of it.
 relationNotes:
   related-to@persistent-identifier: Resolution system that underpins the DOI and other persistent identifiers.
 body: |-

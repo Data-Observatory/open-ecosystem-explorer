@@ -1,4 +1,5 @@
-summary: Shared vocabulary that lets search engines read the content of web pages.
+summary: Schema.org is a shared vocabulary of tags that lets web search engines understand
+  the content of a page.
 relationNotes:
   governed-by@google: Since 2026 Google runs it directly. The W3C community group is only a discussion forum.
   related-to@metadata-standard: Shared vocabulary for marking up structured data on web pages.

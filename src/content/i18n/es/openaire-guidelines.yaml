@@ -1,5 +1,6 @@
-summary: Perfiles de aplicación para que repositorios, revistas y CRIS expongan
-  metadatos de forma interoperable.
+summary: Las guías de OpenAIRE son reglas para que repositorios, revistas y sistemas
+  de información de investigación publiquen sus metadatos de forma que otros puedan
+  leerlos.
 relationNotes:
   is-a@metadata-standard: Perfil de aplicación de un estándar de metadatos.
 body: |-

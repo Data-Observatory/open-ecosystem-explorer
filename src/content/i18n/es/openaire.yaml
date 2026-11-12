@@ -1,8 +1,8 @@
-summary: Infraestructura europea que agrega repositorios y conecta publicaciones
-  con financiamiento.
+summary: OpenAIRE es una infraestructura europea que reúne el contenido de muchos
+  repositorios y lo vincula con sus financiadores, para facilitar su búsqueda.
 relationNotes:
   indexes@zenodo: OpenAIRE y Zenodo operan en colaboración estrecha desde el
     lanzamiento de Zenodo en 2013; OpenAIRE agrega y enlaza sus registros.
   member-of@barcelona-declaration: Figura como supporter en el sitio de la Declaración de Barcelona; OpenAIRE se presenta a sí misma como firmante.
 body: |-
-  OpenAIRE es el modelo de referencia de agregación abierta en Europa, conectando repositorios institucionales con datos de financiamiento.
+  OpenAIRE agrega contenido de repositorios institucionales en Europa y lo conecta con datos de financiamiento.

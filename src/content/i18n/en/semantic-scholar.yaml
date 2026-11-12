@@ -1,5 +1,5 @@
-summary: Index from the Allen Institute for AI, strong in text processing and semantic
-  links between publications.
+summary: Semantic Scholar is a search engine from the Allen Institute for AI that
+  analyses the text of articles to link them, not only through citations.
 relationNotes:
   operated-by@allen-institute-for-ai: Developed and operated by the Allen Institute for AI.
 body: |-

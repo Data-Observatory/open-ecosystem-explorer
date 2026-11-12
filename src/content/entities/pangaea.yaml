@@ -19,7 +19,7 @@ disciplines:
   - natural-sciences
 lastReviewed: 2026-09-04
 note: Data publisher for earth and environmental science, jointly run by AWI and
-  MARUM (specs.md Appendix A.1b).
+  MARUM.
 relations:
   - predicate: implements
     target: oai-pmh

@@ -1,3 +1,4 @@
-summary: Multidisciplinary academic search engine that harvests content from repositories via OAI-PMH.
+summary: BASE is an academic search engine that collects records from many repositories
+  through a standard protocol, so people can search them all at once.
 body: |-
-  BASE (Bielefeld Academic Search Engine) is one of the largest multidisciplinary aggregators based on OAI-PMH.
+  BASE (Bielefeld Academic Search Engine) is a multidisciplinary aggregator based on the OAI-PMH protocol.

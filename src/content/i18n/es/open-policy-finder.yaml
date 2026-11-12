@@ -1,8 +1,8 @@
-summary: Servicio de Jisc lanzado el 4 de noviembre de 2024 que fusiona Sherpa
-  Romeo, Juliet y Fact en un solo índice de políticas.
+summary: Open Policy Finder es un servicio de Jisc para consultar las políticas de
+  acceso abierto de editoriales y financiadores; reúne tres servicios Sherpa anteriores.
 relationNotes:
   operated-by@jisc: Operado por Jisc.
   supersedes@sherpa-romeo: Lanzado el 4 de noviembre de 2024, fusionando Sherpa
     Romeo, Juliet y Fact en un solo servicio.
 body: |-
-  Open Policy Finder reúne en un solo lugar las políticas de acceso abierto de editoriales y financiadores, reemplazando los tres servicios Sherpa independientes.
+  Open Policy Finder reúne en un solo lugar las políticas de acceso abierto de editoriales y financiadores, reemplazando los tres servicios Sherpa independientes. Se lanzó el 4 de noviembre de 2024.

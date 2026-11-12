@@ -1,4 +1,5 @@
-summary: Chile's national access node, run by ANID.
+summary: Espacio Ciencia is Chile's national portal that brings together content from
+  institutional repositories and the ANID repository; ANID runs it.
 relationNotes:
   part-of@la-referencia: Chile's national node within the federated LA Referencia network.
   related-to@research-repository: Harvests institutional repositories into a single national discovery point.

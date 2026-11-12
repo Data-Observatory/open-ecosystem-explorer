@@ -1,4 +1,5 @@
-summary: Community conventions that connect repositories to external services, such as peer review, through linked data notifications.
+summary: COAR Notify is a set of community conventions that lets repositories send
+  notices to external services, such as peer review, and receive theirs.
 relationNotes:
   related-to@peer-review: Lets repositories and review services exchange review notifications.
 body: |-

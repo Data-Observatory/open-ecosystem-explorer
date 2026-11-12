@@ -1,4 +1,4 @@
-summary: Especificación para empaquetar un objeto de investigación junto con su
-  contexto y procedencia.
+summary: RO-Crate es una especificación para empaquetar datos de investigación junto
+  con su contexto y su origen, en un formato autocontenido y reutilizable.
 body: |-
   RO-Crate empaqueta un objeto con su contexto y procedencia usando JSON-LD, facilitando compartir datos de forma autocontenida y reutilizable.

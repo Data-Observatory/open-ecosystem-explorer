@@ -1,7 +1,9 @@
-summary: Principles that require data to be findable, describable, connectable and reusable, leaving the level of access to whoever holds it.
+summary: The FAIR principles are guidelines for making data findable, accessible,
+  interoperable (able to work across systems) and reusable, without requiring them
+  to be open.
 relationNotes:
   related-to@research-data-management: Principles for managing research data so that it can be reused.
   related-to@open-data: FAIR data does not have to be open; openness is a separate decision.
   related-to@metadata: Findability and interoperability depend on rich metadata.
 body: |-
-  FAIR is neither a technical standard nor a requirement to open data. That separation between access and description is the most useful tool when talking to public institutions about sensitive data without asking them to open it.
+  FAIR is neither a technical standard nor a requirement to open data: it separates access, which is decided by whoever holds the data, from description. That is why it can also be applied to sensitive data that cannot be opened.

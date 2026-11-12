@@ -1,5 +1,5 @@
-summary: International standard identifier for books, issued by national agencies
-  coordinated by the International ISBN Agency.
+summary: The ISBN is the international standard number that identifies a book; national
+  agencies assign it, coordinated by the International ISBN Agency.
 relationNotes:
   related-to@persistent-identifier: Identifies books permanently, but does not resolve
     to a location on its own.

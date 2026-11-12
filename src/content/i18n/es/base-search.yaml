@@ -1,4 +1,4 @@
-summary: Motor de búsqueda académico multidisciplinario que cosecha contenido de
-  repositorios vía OAI-PMH.
+summary: BASE es un buscador académico que recopila los registros de muchos repositorios
+  mediante un protocolo estándar, para buscar en todos a la vez.
 body: |-
-  BASE (Bielefeld Academic Search Engine) es uno de los agregadores multidisciplinarios más grandes basados en OAI-PMH.
+  BASE (Bielefeld Academic Search Engine) es un agregador multidisciplinario basado en el protocolo OAI-PMH.

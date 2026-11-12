@@ -1,4 +1,6 @@
-summary: Nube europea de ciencia abierta, infraestructura federada con un nodo de la UE.
+summary: 'EOSC es la nube europea de ciencia abierta: una infraestructura federada,
+  formada por servicios independientes conectados entre sí, para compartir datos de
+  investigación.'
 relationNotes:
   interoperates-with@openaire: OpenAIRE es proveedor central de servicios de
     descubrimiento y catálogo de recursos para el Nodo UE de EOSC.

@@ -1,4 +1,5 @@
-summary: Curated registry of standards, databases and data policies, and of how they relate to one another.
+summary: FAIRsharing is a curated registry of standards, databases and data policies
+  that shows how they relate, to help people apply FAIR.
 relationNotes:
   complies-with@fair: Built explicitly to help align resources with the FAIR principles.
   interoperates-with@re3data: Both curate registries of repositories and standards, and cross-link their entries.

@@ -1,4 +1,5 @@
-summary: DataCite's machine-readable metadata schema for DOI objects, which does not require the content to be open.
+summary: The DataCite metadata schema defines the fields used to describe an object
+  registered with a DataCite DOI, in a machine-readable format.
 relationNotes:
   depends-on@orcid: ORCID is a documented nameIdentifierScheme value supported in the Creator and Contributor properties.
 body: |-

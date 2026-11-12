@@ -1,5 +1,5 @@
-summary: Protocolo de resolución y registro de prefijos subyacente al DOI,
-  administrado globalmente por la Fundación DONA.
+summary: El Handle System es un protocolo que asigna identificadores persistentes
+  y los resuelve a la ubicación actual de cada objeto; sobre él funciona el DOI.
 relationNotes:
   related-to@persistent-identifier: Sistema de resolución que sustenta al DOI y a otros
     identificadores persistentes.

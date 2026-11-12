@@ -11,7 +11,7 @@ tags:
   - theme:vertical-integration
 lastReviewed: 2026-09-04
 note: Ex Libris research-information platform; came to Clarivate via the 2021
-  ProQuest acquisition (specs.md A.4).
+  ProQuest acquisition.
 relations:
   - predicate: owned-by
     target: clarivate

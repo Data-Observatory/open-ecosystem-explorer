@@ -1,5 +1,5 @@
-summary: Registro curado de estándares, bases de datos y políticas de datos, y
-  sus interrelaciones.
+summary: FAIRsharing es un registro curado de estándares, bases de datos y políticas
+  de datos que muestra cómo se relacionan, para ayudar a aplicar FAIR.
 relationNotes:
   complies-with@fair: Construido explícitamente para ayudar a alinear recursos con
     los principios FAIR.

@@ -1,4 +1,4 @@
-summary: El mínimo común de metadatos de bibliotecas — 15 elementos base para
-  describir cualquier recurso.
+summary: Dublin Core es una lista de 15 campos básicos, como título y autor, para
+  describir cualquier recurso, usada por bibliotecas y repositorios.
 body: |-
   Dublin Core es el piso sobre el que muchos otros esquemas, incluidas las guías de OpenAIRE, construyen perfiles de aplicación más específicos.

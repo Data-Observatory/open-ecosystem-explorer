@@ -18,7 +18,7 @@ tags:
   - region:europe
 lastReviewed: 2026-09-04
 note: Federated infrastructure with an EU Node, re-procured in 2026 on a
-  four-year framework (specs.md Appendix A.1b). Governed by the EOSC Association,
+  four-year framework. Governed by the EOSC Association,
   a nonprofit confederation of research organisations and infrastructures.
 relations:
   - predicate: interoperates-with

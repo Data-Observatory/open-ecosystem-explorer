@@ -1,6 +1,7 @@
-summary: Global directory of open access repositories, in the process of separating from the merged Sherpa services.
+summary: OpenDOAR is a global directory of open access repositories, to help people
+  find where to deposit or look for content.
 relationNotes:
   operated-by@jisc: Operated by Jisc.
   member-of@coar: COAR and Jisc published a joint roadmap to move OpenDOAR towards an international repository directory with community governance.
 body: |-
-  OpenDOAR maintains a global directory of open access repositories, used as a reference for identifying where to deposit or find institutional content.
+  OpenDOAR maintains a global directory of open access repositories, used as a reference for identifying where to deposit or find institutional content. It is in the process of separating from the merged Sherpa services.

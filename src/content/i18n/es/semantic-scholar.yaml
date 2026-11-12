@@ -1,5 +1,5 @@
-summary: Índice del Allen Institute for AI, fuerte en procesamiento de texto y
-  enlaces semánticos entre publicaciones.
+summary: Semantic Scholar es un buscador del Allen Institute for AI que analiza el
+  texto de los artículos para relacionarlos, no solo por citas.
 relationNotes:
   operated-by@allen-institute-for-ai: Desarrollado y operado por el Allen Institute for AI.
 body: |-

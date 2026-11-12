@@ -1,4 +1,5 @@
-summary: From the Cambia foundation; links scientific literature with patents, useful for innovation and technology transfer.
+summary: The Lens is a search tool that brings scientific literature and patents together
+  in one place, useful for analysing innovation and technology transfer.
 relationNotes:
   operated-by@cambia: Operated by the Cambia foundation.
   depends-on@crossref: Lens records are built on Crossref metadata, supplemented by DataCite DOIs and ORCID iDs.

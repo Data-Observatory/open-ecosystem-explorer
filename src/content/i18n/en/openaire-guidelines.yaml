@@ -1,5 +1,5 @@
-summary: Application profiles that let repositories, journals and CRIS expose metadata in
-  an interoperable way.
+summary: The OpenAIRE guidelines are rules that let repositories, journals and research
+  information systems publish their metadata in a form others can read.
 relationNotes:
   is-a@metadata-standard: Application profile of a metadata standard.
 body: |-

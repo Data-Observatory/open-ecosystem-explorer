@@ -1,5 +1,5 @@
-summary: Servidor de preprints de física, matemáticas y ciencias de la
-  computación; organización sin fines de lucro independiente desde julio de 2026.
+summary: arXiv es un servidor en línea donde investigadores de física, matemáticas,
+  informática y otras ciencias publican preprints antes de la revisión por pares.
 relationNotes:
   funded-by@cornell: Uno de varios financiadores hasta junio de 2026, junto a la Simons Foundation y un consorcio de instituciones miembro.
   implements@oai-pmh: arXiv es uno de los primeros implementadores de OAI-PMH; el
