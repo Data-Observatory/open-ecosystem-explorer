@@ -126,7 +126,7 @@ function stylesheet(): cytoscape.StylesheetJson {
     { selector: 'node.anchor', style: { width: 17, height: 17, 'font-size': 14, 'font-weight': 600 } },
     { selector: 'node.lbl', style: { label: 'data(name)' } },
     { selector: 'node.hover, node.cursor', style: { 'underlay-opacity': 0.18, label: 'data(name)' } },
-    { selector: 'node.sel', style: { width: 22, height: 22, 'border-color': p.accent, 'border-width': 3, label: 'data(name)', 'font-weight': 700, 'z-index': 10 } },
+    { selector: 'node.sel', style: { width: 18, height: 18, 'underlay-opacity': 0.22, label: 'data(name)', 'font-weight': 700, 'z-index': 10 } },
     { selector: 'node.faded', style: { opacity: 0.1 } },
     { selector: '.gone', style: { display: 'none' } },
     {
@@ -251,7 +251,7 @@ function applyLabels() {
   const cur = current();
   const near = new Set(cur ? [cur.id, ...neighbourIds(cur.id)] : []);
   const z = cy.zoom();
-  const k = 1 / Math.min(Math.max(z, 0.4), 1.25);
+  const k = 1 / Math.min(Math.max(z, mode === 'expert' ? 0.5 : 0.4), 1.25);
   cy.batch(() =>
     cy.nodes().forEach((n) => {
       const node = byId.get(n.id())!;
@@ -262,9 +262,9 @@ function applyLabels() {
   lastK = k;
   const m = k ** 0.75;
   cy.style()
-    .selector('node').style({ width: 10 * m, height: 10 * m, 'font-size': 12.5 * k, 'text-margin-y': 4 * k, 'text-outline-width': 2.5 * k, 'text-max-width': `${150 * k}px`, 'underlay-padding': 7 * m })
+    .selector('node').style({ width: 10 * m, height: 10 * m, 'font-size': 12.5 * k, 'text-margin-y': 5 * k, 'text-outline-width': 2.5 * k, 'text-max-width': `${150 * k}px`, 'underlay-padding': 7 * m })
     .selector('node.anchor').style({ width: 15 * m, height: 15 * m, 'font-size': 14 * k })
-    .selector('node.sel').style({ width: 20 * m, height: 20 * m, 'font-size': 16 * k, 'border-width': 3 * m })
+    .selector('node.sel').style({ width: 18 * m, height: 18 * m, 'font-size': 16 * k, 'underlay-padding': 9 * m })
     .selector('edge').style({ width: 1 * k })
     .selector('edge.hl, edge.hover').style({ width: 1.6 * k, 'font-size': 10.5 * k, 'text-background-padding': `${2 * k}px` })
     .update();
@@ -276,7 +276,7 @@ function frame(eles: cytoscape.NodeCollection) {
   const w = cy.width();
   const h = cy.height();
   const card = $('m3-card');
-  let [x0, y0, x1, y1] = [0, 56, w, h];
+  let [x0, y0, x1, y1] = [0, 56, w, h - 36]; // below the search bar, above the hint
   if (!card.hidden) {
     const r = card.getBoundingClientRect();
     const c = $('m3-cy').getBoundingClientRect();
