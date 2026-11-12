@@ -2,7 +2,7 @@
 // Compact "what is what" key for a diagram — added per the user's
 // interactivity-pivot follow-up ("for dummies": the graph should be
 // self-explanatory without reading prose elsewhere). Shows only the types
-// actually present in the diagram it's attached to (never all 12 on a
+// actually present in the diagram it's attached to (never all 13 on a
 // 3-node focus view), with a small shape+colour swatch matching the exact
 // encoding used by both Mermaid diagrams (palette.ts) and the Cytoscape map
 // (map/index.astro's CYTO_SHAPE_BY_MERMAID_SHAPE) — one visual language,
@@ -33,7 +33,7 @@ const heading = locale === 'es' ? 'Leyenda' : 'Legend';
 const summaryLabel = locale === 'es' ? `Leyenda (${items.length})` : `Legend (${items.length})`;
 
 // >6 items would crowd a small diagram — collapse behind a <details> rather
-// than a flat row in that case. /map (up to 12 types) always collapses;
+// than a flat row in that case. /map (up to 13 types) always collapses;
 // most per-diagram legends (2-5 types) stay flat and always visible.
 const collapse = items.length > 6;
 
@@ -52,6 +52,8 @@ function shapeIcon(shape: MermaidShape, fill: string): string {
       return `<polygon points="5,3 19,3 15,17 1,17" fill="${fill}" stroke="${stroke}"/>`;
     case 'hexagon':
       return `<polygon points="5,3 15,3 19,10 15,17 5,17 1,10" fill="${fill}" stroke="${stroke}"/>`;
+    case 'rounded':
+      return `<rect x="1" y="3" width="18" height="14" rx="4" fill="${fill}" stroke="${stroke}"/>`;
   }
 }
 

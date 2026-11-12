@@ -296,8 +296,20 @@ export function ruleI9(ctx: RunContext): InvariantMessage[] {
         pairs.get(key)!.push({ file, entity });
       });
     }
+    // A symmetric predicate whose domain differs from its range (`related-to`:
+    // any type -> concept) has only one legal direction for a thing -> concept
+    // pair, so "authored on the smaller id" cannot apply to it. The smaller-id
+    // rule is enforced only where both endpoints could legally author the edge.
+    const def = ctx.predicatesVocab.get(predicate);
+    const typeOf = new Map(ctx.entityFiles.map((e) => [e.id, e.entity.type]));
+    const reversible = (a: string, b: string): boolean => {
+      const ta = typeOf.get(a);
+      const tb = typeOf.get(b);
+      if (!def || !ta || !tb) return true;
+      return def.domain.includes(ta) && def.range.includes(ta) && def.domain.includes(tb) && def.range.includes(tb);
+    };
     for (const [key, authors] of pairs) {
-      const [smaller] = key.split('|');
+      const [smaller, larger] = key.split('|') as [string, string];
       if (authors.length > 1) {
         out.push(
           err(
@@ -307,7 +319,7 @@ export function ruleI9(ctx: RunContext): InvariantMessage[] {
             `Author it exactly once, in the file of the lexicographically smaller id ('${smaller}').`,
           ),
         );
-      } else if (authors[0]!.entity.id !== smaller) {
+      } else if (authors[0]!.entity.id !== smaller && reversible(smaller, larger)) {
         out.push(
           err(
             'I9',
@@ -366,27 +378,53 @@ export function ruleI12(ctx: RunContext): InvariantMessage[] {
   const out: InvariantMessage[] = [];
   // computeStats pre-initialises byType/byPredicate for every declared
   // type/predicate (§5.4), so these are always numbers, never undefined.
+  // A vocab entry flagged `pending: true` is declared ahead of its first
+  // instance (e.g. `concept`, `is-a`): exempt while empty, and a WARN once it
+  // is populated so the stale flag gets removed.
   for (const type of ENTITY_TYPES) {
-    if (ctx.index.stats.byType[type] === 0) {
+    const count = ctx.index.stats.byType[type];
+    const pending = ctx.entityTypesVocab.get(type)?.pending === true;
+    if (count === 0 && !pending) {
       out.push(
         err(
           'I12',
           'src/content/vocab/entity-types.yaml',
           `Entity type '${type}' has zero instances.`,
-          'Add at least one entity of this type, or remove it from vocab/entity-types.yaml.',
+          'Add at least one entity of this type, or remove it from vocab/entity-types.yaml (or mark it `pending: true` while the first one is being written).',
+          type,
+        ),
+      );
+    } else if (count > 0 && pending) {
+      out.push(
+        warn(
+          'I12',
+          'src/content/vocab/entity-types.yaml',
+          `Entity type '${type}' is marked pending but has ${count} instance(s).`,
+          'Remove `pending: true` from this type in vocab/entity-types.yaml.',
           type,
         ),
       );
     }
   }
-  for (const id of ctx.predicatesVocab.keys()) {
-    if (ctx.index.stats.byPredicate[id] === 0) {
+  for (const [id, def] of ctx.predicatesVocab) {
+    const count = ctx.index.stats.byPredicate[id];
+    if (count === 0 && def.pending !== true) {
       out.push(
         err(
           'I12',
           'src/content/vocab/predicates.yaml',
           `Predicate '${id}' has zero edges.`,
-          'Author at least one relation using this predicate, or remove it from vocab/predicates.yaml.',
+          'Author at least one relation using this predicate, remove it from vocab/predicates.yaml, or mark it `pending: true` until its first edge lands.',
+          id,
+        ),
+      );
+    } else if (count > 0 && def.pending === true) {
+      out.push(
+        warn(
+          'I12',
+          'src/content/vocab/predicates.yaml',
+          `Predicate '${id}' is marked pending but has ${count} edge(s).`,
+          'Remove `pending: true` from this predicate in vocab/predicates.yaml.',
           id,
         ),
       );
@@ -673,7 +711,7 @@ export function ruleI24(ctx: RunContext): InvariantMessage[] {
       });
     }
     if (view.query.kind === 'predicate' && !ctx.predicatesVocab.has(view.query.predicate)) {
-      out.push(err('I24', file, `query.predicate '${view.query.predicate}' is not a known predicate.`, 'Use one of the 19 predicates in A.2.', 'query.predicate'));
+      out.push(err('I24', file, `query.predicate '${view.query.predicate}' is not a known predicate.`, 'Use one of the predicates in A.2.', 'query.predicate'));
     }
   }
   return out;
@@ -806,7 +844,21 @@ export function ruleI30(ctx: RunContext): InvariantMessage[] {
   for (const locale of nonDefaultLocales) {
     const present = new Set(ctx.proseFiles.filter((p) => p.locale === locale).map((p) => p.id));
     const missing = [...entityIds].filter((id) => !present.has(id));
-    if (missing.length > 0) {
+    if (missing.length > 0 && ctx.requireFullI18n) {
+      // Strict mode (config.ts REQUIRE_FULL_I18N): one ERROR per entity, on the
+      // entity's own file, so each gap is individually addressable.
+      const fileOf = new Map(ctx.entityFiles.map((e) => [e.id, e.file]));
+      for (const id of missing.sort()) {
+        out.push(
+          err(
+            'I30',
+            fileOf.get(id) ?? 'src/content/entities/',
+            `no '${locale}' prose file (REQUIRE_FULL_I18N is on: every locale must be complete).`,
+            `Create src/content/i18n/${locale}/${id}.yaml with a valid summary and body, or unset REQUIRE_FULL_I18N (src/lib/invariants/config.ts) to downgrade this to a WARN.`,
+          ),
+        );
+      }
+    } else if (missing.length > 0) {
       out.push(
         warn(
           'I30',
@@ -908,6 +960,27 @@ export function ruleI33(ctx: RunContext): InvariantMessage[] {
   return out;
 }
 
+/** Every predicate declares a `family` that exists in vocab/predicate-families.yaml. */
+export function ruleI35(ctx: RunContext): InvariantMessage[] {
+  const out: InvariantMessage[] = [];
+  const families = ctx.predicateFamiliesVocab;
+  if (!families) return out;
+  for (const [id, def] of ctx.predicatesVocab) {
+    if (!def.family || !families.has(def.family)) {
+      out.push(
+        err(
+          'I35',
+          'src/content/vocab/predicates.yaml',
+          `Predicate '${id}' has ${def.family ? `unknown family '${def.family}'` : 'no family'}.`,
+          `Set family to one of: ${[...families.keys()].join(', ')} (vocab/predicate-families.yaml).`,
+          id,
+        ),
+      );
+    }
+  }
+  return out;
+}
+
 function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 }
@@ -990,7 +1063,7 @@ export const RULES: RuleRunner[] = [
   { id: 'I9', level: 'ERROR', description: 'Symmetric predicates authored once per unordered pair, on the lexicographically smaller id.', run: (ctx) => ruleI9(ctx) },
   { id: 'I10', level: 'ERROR', description: 'Acyclic predicates form a DAG (part-of, supersedes, profile-of, depends-on, owned-by, member-of). Error prints the cycle path.', run: (ctx) => ruleI10(ctx) },
   { id: 'I11', level: 'ERROR', description: "No orphans: in-degree + out-degree ≥ 1 unless isolated: true with an explanatory note.", run: (ctx) => ruleI11(ctx) },
-  { id: 'I12', level: 'ERROR', description: 'Every declared EntityType has ≥1 instance and every declared predicate ≥1 edge. Unused vocabulary is removed or populated.', run: (ctx) => ruleI12(ctx) },
+  { id: 'I12', level: 'ERROR', description: 'Every declared EntityType has ≥1 instance and every declared predicate ≥1 edge. Unused vocabulary is removed or populated; an entry flagged `pending: true` is exempt until its first instance (WARN if the flag is then left behind).', run: (ctx) => ruleI12(ctx) },
   { id: 'I13', level: 'ERROR', description: 'Every tags[], disciplines[], status, governance value exists in the corresponding vocab file.', run: (ctx) => ruleI13(ctx) },
   { id: 'I14', level: 'ERROR', description: 'summary (in each locale file) is 40–200 chars, single-line, no Markdown syntax, not identical to name.', run: (ctx) => ruleI14(ctx) },
   { id: 'I15', level: 'ERROR', description: "sources.length ≥ 1; every Source.url is https:; accessed is a valid ISO date not in the future. Relations with confidence !== 'asserted' carry ≥1 source.", run: (ctx, extra) => ruleI15(ctx, extra.now) },
@@ -1008,11 +1081,12 @@ export const RULES: RuleRunner[] = [
   { id: 'I27', level: 'WARN', description: 'An identifier entity with no inbound issues edge.', run: (ctx) => ruleI27(ctx) },
   { id: 'I28', level: 'WARN', description: 'Any generated diagram exceeds its node/edge budget (§6.4) before overflow collapsing; or the graph has >1 weakly connected component (prints each component\'s size and members).', run: (ctx) => ruleI28(ctx) },
   { id: 'I29', level: 'ERROR', description: 'Every entity and every view has a prose file in the default locale, with a valid summary. A facts file without content/i18n/<default>/<id>.yaml fails the build (§5.7).', run: (ctx) => ruleI29(ctx) },
-  { id: 'I30', level: 'WARN / ERROR', description: "WARN per missing non-default-locale prose file, aggregated as one line per locale (e.g. 'en: 12 of 78 entities untranslated'). ERROR if a locale file declares a field outside the translatable set, or if a relationNotes key does not resolve to a relation authored in the facts file.", run: (ctx) => ruleI30(ctx) },
+  { id: 'I30', level: 'WARN / ERROR', description: "WARN per missing non-default-locale prose file, aggregated as one line per locale (e.g. 'en: 12 of 78 entities untranslated') — or, with REQUIRE_FULL_I18N on (src/lib/invariants/config.ts / env), one ERROR per missing file. ERROR if a locale file declares a field outside the translatable set, or if a relationNotes key does not resolve to a relation authored in the facts file.", run: (ctx) => ruleI30(ctx) },
   { id: 'I31', level: 'ERROR', description: 'An entity facts file has an empty Markdown body, and carries no summary or description. Prose exists only in content/i18n/** (C10).', run: (ctx, extra) => ruleI31(ctx, extra.entityBodies) },
   { id: 'I32', level: 'WARN', description: "Every edge of a governance predicate (owned-by, governed-by, operated-by, developed-by, funded-by) carries relations[].verified: { date, url } recording the primary source it was checked against.", run: (ctx) => ruleI32(ctx) },
   { id: 'I33', level: 'WARN', description: "Completeness floor: every repository/index/aggregator/publishing-platform has ≥1 of {operated-by, developed-by, governed-by}; every standard has ≥1 of {developed-by, governed-by}.", run: (ctx) => ruleI33(ctx) },
   { id: 'I34', level: 'WARN', description: "Heuristic: an entity's note/relationNote/source-note text mentions another entity by name with no relation connecting the two — a likely fact-recorded-as-prose gap.", run: (ctx) => ruleI34(ctx) },
+  { id: 'I35', level: 'ERROR', description: 'Every predicate declares a `family` that exists in vocab/predicate-families.yaml (display grouping, ≤5 families).', run: (ctx) => ruleI35(ctx) },
 ];
 
 export function runAllInvariants(ctx: RunContext, extra: { now: Date; entityBodies: Map<EntityId, string> }): InvariantMessage[] {

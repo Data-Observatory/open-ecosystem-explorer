@@ -1,0 +1,29 @@
+# Display families for the predicates (specs.md §5.3, Appendix A.2). Metadata
+# only: the fine-grained predicate stays authoritative in the YAML and is shown
+# on hover / in expert mode. Each predicate in predicates.yaml declares exactly
+# one `family:` from this file (I35). Keep this list to five or fewer.
+behind:
+  label: { es: Quién está detrás, en: Who is behind it }
+  definition:
+    es: Quién emite, posee, gobierna, opera, desarrolla o financia la cosa.
+    en: Who issues, owns, governs, operates, develops or funds the thing.
+builds-on:
+  label: { es: Se apoya en, en: Builds on }
+  definition:
+    es: Estándares, protocolos y servicios sobre los que la cosa se construye o contra los que se evalúa.
+    en: Standards, protocols and services the thing is built on or assessed against.
+connects:
+  label: { es: Se conecta con, en: Connects to }
+  definition:
+    es: Interoperabilidad, indexación, membresía y pertenencia entre infraestructuras.
+    en: Interoperability, indexing, membership and containment between infrastructures.
+shapes:
+  label: { es: Orienta, en: Shapes }
+  definition:
+    es: Políticas, mandatos, respaldos y reemplazos que orientan lo que se hace.
+    en: Policies, mandates, endorsements and replacements that steer what is done.
+kind:
+  label: { es: Es un/a, en: Is a }
+  definition:
+    es: Clasificación — a qué concepto pertenece la cosa, o con qué concepto se relaciona.
+    en: Classification — which concept the thing falls under, or is related to.

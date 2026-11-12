@@ -8,8 +8,9 @@ import { join, relative } from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { z } from 'zod';
 
-import { zEntity, zProseFile, zView, zViewProseFile, zEntityTypesVocab, zPredicatesVocab, zTagsVocab, zDisciplinesVocab, zStatusesVocab } from '../src/lib/model/schema.js';
-import { parseEntityTypesVocab, parsePredicatesVocab, parseSimpleVocab } from '../src/lib/model/vocab.js';
+import { zEntity, zProseFile, zView, zViewProseFile, zEntityTypesVocab, zPredicatesVocab, zTagsVocab, zDisciplinesVocab, zStatusesVocab, zPredicateFamiliesVocab } from '../src/lib/model/schema.js';
+import { parseEntityTypesVocab, parsePredicatesVocab, parseSimpleVocab, parsePredicateFamiliesVocab } from '../src/lib/model/vocab.js';
+import { resolveRequireFullI18n } from '../src/lib/invariants/config.js';
 import { runValidation } from '../src/lib/invariants/run.js';
 import type { InvariantMessage } from '../src/lib/invariants/types.js';
 import { fmt } from '../src/lib/invariants/types.js';
@@ -166,12 +167,14 @@ function loadVocab() {
   const tagsRaw = parseYaml(readFileSync(join(dir, 'tags.yaml'), 'utf-8'));
   const disciplinesRaw = parseYaml(readFileSync(join(dir, 'disciplines.yaml'), 'utf-8'));
   const statusesRaw = parseYaml(readFileSync(join(dir, 'statuses.yaml'), 'utf-8'));
+  const familiesRaw = parseYaml(readFileSync(join(dir, 'predicate-families.yaml'), 'utf-8'));
 
   zEntityTypesVocab.parse(entityTypesRaw);
   zPredicatesVocab.parse(predicatesRaw);
   zTagsVocab.parse(tagsRaw);
   zDisciplinesVocab.parse(disciplinesRaw);
   zStatusesVocab.parse(statusesRaw);
+  zPredicateFamiliesVocab.parse(familiesRaw);
 
   return {
     entityTypesVocab: parseEntityTypesVocab(entityTypesRaw),
@@ -179,6 +182,7 @@ function loadVocab() {
     tagsVocab: parseSimpleVocab(tagsRaw),
     disciplinesVocab: parseSimpleVocab(disciplinesRaw),
     statusesVocab: parseSimpleVocab(statusesRaw),
+    predicateFamiliesVocab: parsePredicateFamiliesVocab(familiesRaw),
   };
 }
 
@@ -202,6 +206,8 @@ function main(): void {
     viewFiles,
     viewProseFiles,
     ...vocab,
+    // REQUIRE_FULL_I18N: see src/lib/invariants/config.ts (env var overrides the constant).
+    requireFullI18n: resolveRequireFullI18n(process.env),
     locales: locales.map((l) => l.code),
     defaultLocale,
   });

@@ -6,7 +6,14 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { parse as parseYaml } from 'yaml';
-import { parseEntityTypesVocab, parseSimpleVocab, type EntityTypesVocab, type SimpleVocab } from '../lib/model/vocab.js';
+import {
+  parseEntityTypesVocab,
+  parsePredicateFamiliesVocab,
+  parseSimpleVocab,
+  type EntityTypesVocab,
+  type PredicateFamiliesVocab,
+  type SimpleVocab,
+} from '../lib/model/vocab.js';
 
 const ROOT = process.cwd();
 const VOCAB_DIR = join(ROOT, 'src/content/vocab');
@@ -14,6 +21,8 @@ const VOCAB_DIR = join(ROOT, 'src/content/vocab');
 let entityTypesCache: EntityTypesVocab | undefined;
 let tagsCache: SimpleVocab | undefined;
 let disciplinesCache: SimpleVocab | undefined;
+let statusesCache: SimpleVocab | undefined;
+let predicateFamiliesCache: PredicateFamiliesVocab | undefined;
 
 export async function getEntityTypesVocab(): Promise<EntityTypesVocab> {
   if (!entityTypesCache) {
@@ -37,4 +46,21 @@ export async function getDisciplinesVocab(): Promise<SimpleVocab> {
     disciplinesCache = parseSimpleVocab(raw);
   }
   return disciplinesCache;
+}
+
+export async function getStatusesVocab(): Promise<SimpleVocab> {
+  if (!statusesCache) {
+    const raw = parseYaml(readFileSync(join(VOCAB_DIR, 'statuses.yaml'), 'utf-8'));
+    statusesCache = parseSimpleVocab(raw);
+  }
+  return statusesCache;
+}
+
+/** Display families for predicates (vocab/predicate-families.yaml); `PredicateDef.family` keys into this. */
+export async function getPredicateFamiliesVocab(): Promise<PredicateFamiliesVocab> {
+  if (!predicateFamiliesCache) {
+    const raw = parseYaml(readFileSync(join(VOCAB_DIR, 'predicate-families.yaml'), 'utf-8'));
+    predicateFamiliesCache = parsePredicateFamiliesVocab(raw);
+  }
+  return predicateFamiliesCache;
 }

@@ -18,7 +18,9 @@ export const FOCUS_NEIGHBOUR_CAP = 40;
  *  judgment call, matches the existing edge cap, flagged for review. Edges
  *  still collapse by predicate maxOutDegree (§6.4) for legibility even
  *  though the node cap is relaxed. */
-export const MAP_NODE_CAP = 150;
+/** Bumped again from 150 to 200 (2026-11-12) when the 22 concept entities took the
+ *  corpus to 159; same judgment call, edge collapsing still applies. */
+export const MAP_NODE_CAP = 200;
 export const MAP_EDGE_CAP = 150;
 
 /** §6.4: "more than predicate.maxOutDegree (default 5) neighbours via one predicate". */

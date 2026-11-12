@@ -1,7 +1,7 @@
 // Zod mirror of types.ts (specs.md §5). ONE definition, imported by both
 // scripts/validate.ts and src/content.config.ts — never redefined twice.
 import { z } from 'zod';
-import { PREDICATE_IDS, type PredicateId } from './types.js';
+import { PREDICATE_IDS, PROMINENCE_LEVELS, PREDICATE_FAMILY_IDS, type PredicateId, type Prominence, type PredicateFamilyId } from './types.js';
 
 const isoDate = z.string().regex(/^\d{4}(-\d{2}(-\d{2})?)?$/, 'must be YYYY, YYYY-MM or YYYY-MM-DD');
 const fullIsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be YYYY-MM-DD');
@@ -20,6 +20,8 @@ export const zSource = z.object({
 });
 
 export const zPredicateId = z.enum(PREDICATE_IDS as [PredicateId, ...PredicateId[]]);
+
+export const zProminence = z.enum(PROMINENCE_LEVELS as [Prominence, ...Prominence[]]);
 
 export const zConfidence = z.enum(['asserted', 'reported', 'inferred']);
 
@@ -64,6 +66,7 @@ export const zGovernance = z.enum([
   'public-agency',
   'academic',
   'unknown',
+  'not-applicable',
 ]);
 export const zOutputLicence = z.enum(['open', 'partly-open', 'closed', 'not-applicable']);
 export const zCodebase = z.enum(['open-source', 'proprietary', 'mixed', 'not-applicable']);
@@ -80,6 +83,7 @@ const entityBaseShape = {
   codebase: zCodebase.optional(),
   since: isoDate.optional(),
   until: isoDate.optional(),
+  prominence: zProminence.optional(),
   tags: z.array(z.string()).min(1),
   disciplines: z.array(z.string()).optional(),
   geography: z.array(z.string()).optional(),
@@ -217,6 +221,11 @@ const zOrganizationEntity = z.object({
     .optional(),
 });
 
+const zConceptEntity = z.object({
+  ...entityBaseShape,
+  type: z.literal('concept'),
+});
+
 export const zEntity = z.discriminatedUnion('type', [
   zIdentifierEntity,
   zAgencyEntity,
@@ -230,6 +239,7 @@ export const zEntity = z.discriminatedUnion('type', [
   zCoalitionEntity,
   zPolicyEntity,
   zOrganizationEntity,
+  zConceptEntity,
 ]);
 
 export type ZEntity = z.infer<typeof zEntity>;
@@ -241,6 +251,9 @@ export const zProseFile = z.object({
   name: z.string().min(2).max(80).optional(),
   aka: z.array(z.string()).max(8).optional(),
   relationNotes: z.record(z.string(), z.string().max(280)).optional(),
+  // Optional 'In Chile' callout (<=30 words, ~240 chars): the only place a
+  // Chile-specific fact about a global concept may live. Per-locale like every prose field.
+  localNote: z.string().min(20).max(260).optional(),
   body: z.string(),
 });
 
@@ -283,13 +296,16 @@ export type ZView = z.infer<typeof zView>;
 const zLocaleMap = z.record(z.string(), z.string());
 
 export const zEntityTypeVocabEntry = z.object({
-  layer: z.enum(['identifier', 'agency', 'index', 'institutional-system', 'regional', 'cross-cutting']),
+  layer: z.enum(['identifier', 'agency', 'index', 'institutional-system', 'regional', 'cross-cutting', 'concept']),
   label: zLocaleMap,
   definition: zLocaleMap.optional(),
+  pending: z.boolean().optional(),
 });
 export const zEntityTypesVocab = z.record(z.string(), zEntityTypeVocabEntry);
 
 export const zPredicateVocabEntry = z.object({
+  family: z.enum(PREDICATE_FAMILY_IDS as [PredicateFamilyId, ...PredicateFamilyId[]]),
+  pending: z.boolean().optional(),
   label: zLocaleMap,
   inverseLabel: zLocaleMap,
   domain: z.array(z.string()).min(1),
@@ -312,6 +328,7 @@ export const zTagVocabEntry = z.object({
   definition: zLocaleMap.optional(),
 });
 export const zTagsVocab = z.record(z.string(), zTagVocabEntry);
+export const zPredicateFamiliesVocab = z.record(z.string(), zTagVocabEntry);
 
 export const zDisciplinesVocab = z.record(z.string(), z.object({ label: zLocaleMap }));
 export const zStatusesVocab = z.record(z.string(), z.object({ label: zLocaleMap }));

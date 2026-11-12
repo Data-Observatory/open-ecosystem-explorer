@@ -77,7 +77,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -105,6 +106,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -367,7 +376,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -395,6 +405,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -671,7 +689,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -699,6 +718,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -994,7 +1021,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -1022,6 +1050,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -1273,7 +1309,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -1301,6 +1338,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -1583,7 +1628,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -1611,6 +1657,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -1893,7 +1947,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -1921,6 +1976,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -2204,7 +2267,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -2232,6 +2296,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -2501,7 +2573,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -2529,6 +2602,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -2790,7 +2871,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -2818,6 +2900,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -3080,7 +3170,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -3108,6 +3199,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -3383,7 +3482,8 @@
                 "intergovernmental",
                 "public-agency",
                 "academic",
-                "unknown"
+                "unknown",
+                "not-applicable"
               ]
             },
             "outputLicence": {
@@ -3411,6 +3511,14 @@
             "until": {
               "type": "string",
               "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
             },
             "tags": {
               "type": "array",
@@ -3594,6 +3702,285 @@
             "lastReviewed",
             "type",
             "orgKind"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "name": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 80
+            },
+            "aka": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "maxItems": 8
+            },
+            "url": {
+              "type": "string",
+              "format": "uri",
+              "pattern": "^https\\:\\/\\/"
+            },
+            "identifiers": {
+              "type": "object",
+              "properties": {
+                "ror": {
+                  "type": "string",
+                  "pattern": "^0[a-z0-9]{6}\\d{2}$"
+                },
+                "doi": {
+                  "type": "string",
+                  "pattern": "^10\\.\\d{4,9}\\/\\S+$"
+                },
+                "wikidata": {
+                  "type": "string",
+                  "pattern": "^Q\\d+$"
+                },
+                "re3data": {
+                  "type": "string",
+                  "pattern": "^r3d\\d+$"
+                },
+                "fairsharing": {
+                  "type": "string"
+                },
+                "openaire": {
+                  "type": "string"
+                },
+                "spdx": {
+                  "type": "string"
+                },
+                "isni": {
+                  "type": "string",
+                  "pattern": "^\\d{4} \\d{4} \\d{4} \\d{3}[\\dX]$"
+                }
+              },
+              "additionalProperties": false
+            },
+            "status": {
+              "type": "string",
+              "enum": [
+                "active",
+                "deprecated",
+                "superseded",
+                "planned",
+                "unknown"
+              ]
+            },
+            "governance": {
+              "type": "string",
+              "enum": [
+                "commercial",
+                "nonprofit",
+                "community",
+                "intergovernmental",
+                "public-agency",
+                "academic",
+                "unknown",
+                "not-applicable"
+              ]
+            },
+            "outputLicence": {
+              "type": "string",
+              "enum": [
+                "open",
+                "partly-open",
+                "closed",
+                "not-applicable"
+              ]
+            },
+            "codebase": {
+              "type": "string",
+              "enum": [
+                "open-source",
+                "proprietary",
+                "mixed",
+                "not-applicable"
+              ]
+            },
+            "since": {
+              "type": "string",
+              "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "until": {
+              "type": "string",
+              "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+            },
+            "prominence": {
+              "type": "string",
+              "enum": [
+                "core",
+                "extended",
+                "detail"
+              ]
+            },
+            "tags": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            "disciplines": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "geography": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "relations": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "predicate": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "target": {
+                    "type": "string",
+                    "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
+                    "minLength": 2,
+                    "maxLength": 64
+                  },
+                  "note": {
+                    "type": "string",
+                    "maxLength": 140
+                  },
+                  "since": {
+                    "type": "string",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+                  },
+                  "until": {
+                    "type": "string",
+                    "pattern": "^\\d{4}(-\\d{2}(-\\d{2})?)?$"
+                  },
+                  "confidence": {
+                    "type": "string",
+                    "enum": [
+                      "asserted",
+                      "reported",
+                      "inferred"
+                    ]
+                  },
+                  "sources": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "url": {
+                          "type": "string",
+                          "format": "uri",
+                          "pattern": "^https\\:\\/\\/"
+                        },
+                        "title": {
+                          "type": "string"
+                        },
+                        "accessed": {
+                          "type": "string",
+                          "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                        },
+                        "note": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "url",
+                        "accessed"
+                      ],
+                      "additionalProperties": false
+                    }
+                  },
+                  "verified": {
+                    "type": "object",
+                    "properties": {
+                      "date": {
+                        "type": "string",
+                        "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                      },
+                      "url": {
+                        "type": "string",
+                        "format": "uri",
+                        "pattern": "^https\\:\\/\\/"
+                      }
+                    },
+                    "required": [
+                      "date",
+                      "url"
+                    ],
+                    "additionalProperties": false
+                  }
+                },
+                "required": [
+                  "predicate",
+                  "target"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "sources": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "url": {
+                    "type": "string",
+                    "format": "uri",
+                    "pattern": "^https\\:\\/\\/"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "accessed": {
+                    "type": "string",
+                    "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+                  },
+                  "note": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "url",
+                  "accessed"
+                ],
+                "additionalProperties": false
+              },
+              "minItems": 1
+            },
+            "lastReviewed": {
+              "type": "string",
+              "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+            },
+            "isolated": {
+              "type": "boolean",
+              "const": true
+            },
+            "note": {
+              "type": "string"
+            },
+            "type": {
+              "type": "string",
+              "const": "concept"
+            }
+          },
+          "required": [
+            "name",
+            "url",
+            "status",
+            "governance",
+            "tags",
+            "relations",
+            "sources",
+            "lastReviewed",
+            "type"
           ],
           "additionalProperties": false
         }

@@ -1,10 +1,11 @@
 // Layer-stack diagram (specs.md §6.3 "Layer stack" row): the memo's own
-// four-layer model plus the regional layer and the cross-cutting band
-// [M§1] — the site's primary orientation diagram. PURE (rule A1):
+// four-layer model plus the regional layer, the cross-cutting band [M§1]
+// and the concept layer (omitted while it has no entities) — the site's primary orientation diagram. PURE (rule A1):
 // structural only (layer -> type -> count), no individual entities or
 // edges, since this diagram answers "what lives where", not "who relates
 // to whom" (that's Focus/Predicate-map's job).
 import type { EntityType, GraphIndex, Layer, CrossCuttingLayer } from '../model/types.js';
+import { LAYERS } from '../model/types.js';
 import type { LocaleCode } from '../../i18n/locales.js';
 import { toNodeId, quoteLabel } from './ids.js';
 import { classDefLine, classNameForType } from './palette.js';
@@ -12,14 +13,20 @@ import type { EntityTypesVocab } from '../model/vocab.js';
 
 /** Display order matches the memo's own layer stack [M§1] plus regional and
  *  the cross-cutting band last, per §6.3. */
-export const LAYER_ORDER: readonly (Layer | CrossCuttingLayer)[] = [
-  'identifier',
-  'agency',
-  'index',
-  'institutional-system',
-  'regional',
-  'cross-cutting',
-];
+export const LAYER_ORDER: readonly (Layer | CrossCuttingLayer)[] = LAYERS;
+
+/** The memo's own name for each layer [M§1] — a grouping concept, not an
+ *  authorable vocabulary term, so it lives here rather than in a vocab file.
+ *  Single copy: taxonomy.ts and the pages import it. */
+export const LAYER_LABELS: Record<Layer | CrossCuttingLayer, Record<LocaleCode, string>> = {
+  identifier: { es: 'Identificadores', en: 'Identifiers' },
+  agency: { es: 'Agencias de registro', en: 'Registration agencies' },
+  index: { es: 'Índices', en: 'Indices' },
+  'institutional-system': { es: 'Sistemas institucionales', en: 'Institutional systems' },
+  regional: { es: 'Capa regional', en: 'Regional layer' },
+  'cross-cutting': { es: 'Banda transversal', en: 'Cross-cutting band' },
+  concept: { es: 'Conceptos', en: 'Concepts' },
+};
 
 export interface LayerRow {
   layer: Layer | CrossCuttingLayer;
@@ -30,17 +37,6 @@ export interface LayerRow {
 }
 
 function layerLabel(vocab: EntityTypesVocab, layer: Layer | CrossCuttingLayer, locale: LocaleCode, index: GraphIndex): string {
-  // entity-types.yaml only labels *types*, not layers directly — the layer
-  // label is the memo's own name for it [M§1], not vocab-driven, since a
-  // layer is a grouping concept, not an authorable/extensible vocabulary term.
-  const LAYER_LABELS: Record<Layer | CrossCuttingLayer, Record<LocaleCode, string>> = {
-    identifier: { es: 'Identificadores', en: 'Identifiers' },
-    agency: { es: 'Agencias de registro', en: 'Registration agencies' },
-    index: { es: 'Índices', en: 'Indices' },
-    'institutional-system': { es: 'Sistemas institucionales', en: 'Institutional systems' },
-    regional: { es: 'Capa regional', en: 'Regional layer' },
-    'cross-cutting': { es: 'Banda transversal', en: 'Cross-cutting band' },
-  };
   void vocab;
   void index;
   return LAYER_LABELS[layer][locale];
@@ -51,9 +47,8 @@ function typeLabel(vocab: EntityTypesVocab, type: EntityType, locale: LocaleCode
 }
 
 /** One row per (layer, type) that has ≥1 entity — types with zero instances
- *  are omitted (I12 guarantees every declared type has ≥1 by the time this
- *  runs against real content, but a diagram must still degrade if called
- *  against a smaller/test index). */
+ *  are omitted (I12 guarantees every non-`pending` type has ≥1 — `concept` may
+ *  have none yet — and a diagram must still degrade against a smaller/test index). */
 export function computeLayerRows(index: GraphIndex, vocab: EntityTypesVocab, locale: LocaleCode): LayerRow[] {
   const rows: LayerRow[] = [];
   for (const layer of LAYER_ORDER) {

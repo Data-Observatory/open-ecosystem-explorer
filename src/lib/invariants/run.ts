@@ -13,7 +13,7 @@ import type {
   ViewFileEntry,
   ViewProseFileEntry,
 } from './types.js';
-import type { EntityTypesVocab, PredicatesVocab, SimpleVocab } from '../model/vocab.js';
+import type { EntityTypesVocab, PredicateFamiliesVocab, PredicatesVocab, SimpleVocab } from '../model/vocab.js';
 
 export interface ValidationInput {
   entityFiles: EntityFileEntry[];
@@ -26,6 +26,9 @@ export interface ValidationInput {
   tagsVocab: SimpleVocab;
   disciplinesVocab: SimpleVocab;
   statusesVocab: SimpleVocab;
+  predicateFamiliesVocab?: PredicateFamiliesVocab;
+  /** Defaults to lenient (false); scripts/validate.ts passes the resolved policy from config.ts. */
+  requireFullI18n?: boolean;
   locales: readonly LocaleCode[];
   defaultLocale: LocaleCode;
   now?: Date;
@@ -53,6 +56,7 @@ function buildProseMap(
       name: p.prose.name,
       aka: p.prose.aka,
       relationNotes: p.prose.relationNotes,
+      localNote: p.prose.localNote,
       body: p.prose.body,
     });
   }
@@ -74,6 +78,9 @@ export function runValidation(input: ValidationInput): ValidationResult {
     tagsVocab: input.tagsVocab,
     disciplinesVocab: input.disciplinesVocab,
     statusesVocab: input.statusesVocab,
+    predicateFamiliesVocab: input.predicateFamiliesVocab,
+    // Programmatic callers opt in; scripts/validate.ts always passes the resolved policy (config.ts).
+    requireFullI18n: input.requireFullI18n ?? false,
     locales: input.locales,
     defaultLocale: input.defaultLocale,
     index,

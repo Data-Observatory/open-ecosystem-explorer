@@ -1,8 +1,11 @@
-# The 19 relation predicates (Appendix A.2). Canonical direction is
+# The 21 relation predicates (Appendix A.2: 19 original + `is-a` + `related-to`). Canonical direction is
 # subject -> object, subject being the entity described (C2). Inverses are
 # derived at build time, never authored (I7). Single source for I6-I10, the
-# /model erDiagram, and diagram edge styling.
+# /model erDiagram, and diagram edge styling. `family` (vocab/predicate-families.yaml)
+# is display metadata only. `pending: true` exempts a predicate from I12 (>=1 edge)
+# until its first edge is authored.
 issues:
+  family: behind
   label: { es: acuña, en: issues }
   inverseLabel: { es: acuñado por, en: issued by }
   domain: [agency]
@@ -14,6 +17,7 @@ issues:
   style: { color: '#1f6feb', line: solid, arrow: closed }
 
 implements:
+  family: builds-on
   label: { es: implementa, en: implements }
   inverseLabel: { es: implementado por, en: implemented by }
   domain: [repository, cris, index, aggregator, publishing-platform, agency]
@@ -25,6 +29,7 @@ implements:
   style: { color: '#1f6feb', line: solid, arrow: closed }
 
 complies-with:
+  family: builds-on
   label: { es: cumple con, en: complies with }
   inverseLabel: { es: cumplido por, en: complied with by }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
@@ -36,6 +41,7 @@ complies-with:
   style: { color: '#0e7070', line: solid, arrow: closed }
 
 depends-on:
+  family: builds-on
   label: { es: depende de, en: depends on }
   inverseLabel: { es: del que dependen, en: depended on by }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard]
@@ -47,6 +53,7 @@ depends-on:
   style: { color: '#57606a', line: solid, arrow: closed }
 
 interoperates-with:
+  family: connects
   label: { es: interopera con, en: interoperates with }
   inverseLabel: { es: interopera con, en: interoperates with }
   domain: [index, aggregator, repository, cris, publishing-platform]
@@ -67,6 +74,7 @@ interoperates-with:
   style: { color: '#57606a', line: dashed, arrow: open }
 
 owned-by:
+  family: behind
   label: { es: es propiedad de, en: owned by }
   inverseLabel: { es: propietario de, en: owns }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, organization]
@@ -78,6 +86,7 @@ owned-by:
   style: { color: '#bf8b00', line: thick, arrow: closed }
 
 governed-by:
+  family: behind
   label: { es: gobernado por, en: governed by }
   inverseLabel: { es: gobierna, en: governs }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy]
@@ -95,6 +104,7 @@ governed-by:
   style: { color: '#bf8b00', line: solid, arrow: closed }
 
 operated-by:
+  family: behind
   label: { es: operado por, en: operated by }
   inverseLabel: { es: opera, en: operates }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform]
@@ -112,6 +122,7 @@ operated-by:
   style: { color: '#8250df', line: solid, arrow: closed }
 
 developed-by:
+  family: behind
   label: { es: desarrollado por, en: developed by }
   inverseLabel: { es: desarrolla, en: develops }
   # Domain widened to include `index`: e.g. Wikidata's day-to-day development
@@ -130,6 +141,7 @@ developed-by:
   style: { color: '#8250df', line: solid, arrow: closed }
 
 funded-by:
+  family: behind
   label: { es: financiado por, en: funded by }
   inverseLabel: { es: financia, en: funds }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
@@ -141,6 +153,7 @@ funded-by:
   style: { color: '#1a7f37', line: solid, arrow: closed }
 
 member-of:
+  family: connects
   label: { es: miembro de, en: member of }
   inverseLabel: { es: tiene como miembro a, en: has member }
   # Domain widened beyond the original [organization, repository, aggregator,
@@ -159,10 +172,11 @@ member-of:
   style: { color: '#1a7f37', line: solid, arrow: closed }
 
 part-of:
+  family: connects
   label: { es: parte de, en: part of }
   inverseLabel: { es: tiene como parte a, en: has part }
-  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
-  range: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
+  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
+  range: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
   symmetric: false
   acyclic: true
   sameTypeOnly: true
@@ -170,10 +184,11 @@ part-of:
   style: { color: '#57606a', line: solid, arrow: closed }
 
 supersedes:
+  family: shapes
   label: { es: reemplaza a, en: supersedes }
   inverseLabel: { es: reemplazado por, en: superseded by }
-  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
-  range: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization]
+  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
+  range: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
   symmetric: false
   acyclic: true
   sameTypeOnly: true
@@ -181,6 +196,7 @@ supersedes:
   style: { color: '#57606a', line: dashed, arrow: closed }
 
 profile-of:
+  family: builds-on
   label: { es: perfil de, en: profile of }
   inverseLabel: { es: tiene el perfil, en: has profile }
   domain: [standard]
@@ -192,6 +208,7 @@ profile-of:
   style: { color: '#0e7070', line: solid, arrow: closed }
 
 indexes:
+  family: connects
   label: { es: indexa, en: indexes }
   inverseLabel: { es: indexado por, en: indexed by }
   domain: [index, aggregator, publishing-platform]
@@ -203,6 +220,7 @@ indexes:
   style: { color: '#1f6feb', line: solid, arrow: closed }
 
 certified-by:
+  family: builds-on
   label: { es: certificado por, en: certified by }
   inverseLabel: { es: certifica, en: certifies }
   domain: [repository, aggregator, publishing-platform]
@@ -214,6 +232,7 @@ certified-by:
   style: { color: '#0e7070', line: solid, arrow: closed }
 
 endorsed-by:
+  family: shapes
   label: { es: respaldado por, en: endorsed by }
   inverseLabel: { es: respalda, en: endorses }
   domain: [standard, policy, coalition]
@@ -225,6 +244,7 @@ endorsed-by:
   style: { color: '#1a7f37', line: dashed, arrow: open }
 
 mandates:
+  family: shapes
   label: { es: exige, en: mandates }
   inverseLabel: { es: exigido por, en: mandated by }
   domain: [policy, coalition]
@@ -236,6 +256,7 @@ mandates:
   style: { color: '#bf8b00', line: solid, arrow: closed }
 
 applies-to:
+  family: shapes
   label: { es: aplica a, en: applies to }
   inverseLabel: { es: sujeto a, en: subject to }
   domain: [policy]
@@ -245,3 +266,42 @@ applies-to:
   sameTypeOnly: false
   maxOutDegree: 8
   style: { color: '#bf8b00', line: solid, arrow: closed }
+
+is-a:
+  family: kind
+  label: { es: es un/a, en: is a }
+  inverseLabel: { es: incluye a, en: includes }
+  # Classification: any entity (or a more specific concept) is-a concept. The
+  # range is always `concept`; the domain is every type, so concept -> concept
+  # (subtype: 'diamond open access' is-a 'open access') and thing -> concept
+  # ('DOI' is-a 'persistent identifier') both type-check. Acyclic (a DAG, so a
+  # concept may have several parents); transitivity is NOT required — consumers
+  # follow the chain themselves, the validator never infers.
+  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
+  range: [concept]
+  symmetric: false
+  acyclic: true
+  sameTypeOnly: false
+  maxOutDegree: 3
+  style: { color: '#6e7781', line: solid, arrow: open }
+
+related-to:
+  family: kind
+  label: { es: se relaciona con, en: relates to }
+  inverseLabel: { es: se relaciona con, en: relates to }
+  # Association with a concept where `is-a` would be wrong (the thing operates,
+  # practises or addresses the idea but is not a kind of it: SciELO relates to
+  # diamond open access, FAIR relates to research data management). Range is
+  # always `concept`; the domain is every type, so thing -> concept and
+  # concept <-> concept both type-check. Symmetric: a concept <-> concept pair
+  # is authored once, on the lexicographically smaller id (I9); a thing ->
+  # concept edge is always authored on the thing (the reverse direction is not
+  # a legal edge, so I9 does not apply). Every edge carries a short `note`
+  # saying HOW the two relate; maxOutDegree 3 keeps it a curated pointer.
+  domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
+  range: [concept]
+  symmetric: true
+  acyclic: false
+  sameTypeOnly: false
+  maxOutDegree: 3
+  style: { color: '#8c959f', line: dashed, arrow: open }

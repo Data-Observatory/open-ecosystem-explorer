@@ -1,4 +1,4 @@
-// A synthetic graph covering all 12 entity types and all 19 predicates
+// A synthetic graph covering all 12 entity types and all 19 original predicates (is-a and related-to are exercised in concept-and-modes.test.ts)
 // (specs.md §11 "Fixtures"). Two locales; `en` is deliberately incomplete
 // (three entities untranslated) to exercise I30/translationCoverage.
 import type { Entity, ProseFile, ViewProseFile } from '../../src/lib/model/types.js';
@@ -292,6 +292,15 @@ export const viewProseFiles: ViewProseFileEntry[] = viewFiles.map((v) => ({
 
 export function buildFixtureInput() {
   const vocab = loadRealVocab();
+  // The synthetic graph has no concept entities (those tests build their own),
+  // so the real vocab's `concept`/`is-a`/`related-to` entries are marked pending
+  // here; the real content populates them, which is what I12 enforces there.
+  const typeEntry = vocab.entityTypesVocab.get('concept');
+  if (typeEntry) typeEntry.pending = true;
+  for (const id of ['is-a', 'related-to'] as const) {
+    const def = vocab.predicatesVocab.get(id);
+    if (def) def.pending = true;
+  }
   return {
     entityFiles,
     entityBodies,

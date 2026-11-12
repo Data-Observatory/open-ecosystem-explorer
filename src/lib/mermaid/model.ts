@@ -3,7 +3,7 @@
 // vocab/entity-types.yaml, so published documentation cannot drift from the
 // enforced validation rules. PURE (rule A1). No node/edge legibility budget
 // applies here (§6.4's caps are for relation-instance diagrams over real
-// content; this is the fixed 12-type schema itself, meant to be exhaustive).
+// content; this is the fixed 13-type schema itself, meant to be exhaustive).
 import type { EntityType, PredicateDef, PredicateId } from '../model/types.js';
 import { ENTITY_TYPES, PREDICATE_IDS } from '../model/types.js';
 

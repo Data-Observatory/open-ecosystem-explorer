@@ -5,7 +5,7 @@ import type { LocaleCode } from '../../i18n/locales.js';
 /** Unique across ALL types. /^[a-z0-9]+(?:-[a-z0-9]+)*$/, 2..64 chars, == filename stem. */
 export type EntityId = string;
 
-/** The 19 predicates of Appendix A.2. */
+/** The 21 predicates of Appendix A.2 (19 original + `is-a` + `related-to`). */
 export type PredicateId =
   | 'issues'
   | 'implements'
@@ -25,7 +25,9 @@ export type PredicateId =
   | 'certified-by'
   | 'endorsed-by'
   | 'mandates'
-  | 'applies-to';
+  | 'applies-to'
+  | 'is-a'
+  | 'related-to';
 
 export const PREDICATE_IDS: readonly PredicateId[] = [
   'issues',
@@ -47,6 +49,8 @@ export const PREDICATE_IDS: readonly PredicateId[] = [
   'endorsed-by',
   'mandates',
   'applies-to',
+  'is-a',
+  'related-to',
 ];
 
 /** Acyclic predicates per A.2 (also enforced from predicates.yaml at runtime, this is the static mirror). */
@@ -56,10 +60,11 @@ export const ACYCLIC_PREDICATES: ReadonlySet<PredicateId> = new Set([
   'part-of',
   'supersedes',
   'profile-of',
+  'is-a',
 ]);
 
 /** Symmetric predicates per A.2. */
-export const SYMMETRIC_PREDICATES: ReadonlySet<PredicateId> = new Set(['interoperates-with']);
+export const SYMMETRIC_PREDICATES: ReadonlySet<PredicateId> = new Set(['interoperates-with', 'related-to']);
 
 /**
  * M§2-M§6. Derived from `type`, never authored. `regional` is the memo's own
@@ -69,7 +74,39 @@ export const SYMMETRIC_PREDICATES: ReadonlySet<PredicateId> = new Set(['interope
  */
 export type Layer = 'identifier' | 'agency' | 'index' | 'institutional-system' | 'regional';
 
-export type CrossCuttingLayer = 'cross-cutting';
+/**
+ * The cross-cutting group: layers that are not a tier of the infrastructure
+ * stack. `cross-cutting` is the memo's band of rule-writers (standards,
+ * communities, coalitions, policies, organizations); `concept` is the layer
+ * of ideas and terms (persistent identifier, open access, metadata, ...) that
+ * the concrete things in every other layer are *instances of* (`is-a`). Both
+ * are derived from `type` via vocab/entity-types.yaml, never authored (I23).
+ */
+export type CrossCuttingLayer = 'cross-cutting' | 'concept';
+
+/** Every layer value, in display order (stack first, cross-cutting band, then concepts). */
+export const LAYERS: readonly (Layer | CrossCuttingLayer)[] = [
+  'identifier',
+  'agency',
+  'index',
+  'institutional-system',
+  'regional',
+  'cross-cutting',
+  'concept',
+];
+
+export type Prominence = 'core' | 'extended' | 'detail';
+
+/** Progressive-disclosure tiers, most prominent first. */
+export const PROMINENCE_LEVELS: readonly Prominence[] = ['core', 'extended', 'detail'];
+
+/** Applied when an entity file omits `prominence`. */
+export const DEFAULT_PROMINENCE: Prominence = 'extended';
+
+/** Effective prominence of an entity: authored value, else DEFAULT_PROMINENCE. */
+export function prominenceOf(entity: { prominence?: Prominence }): Prominence {
+  return entity.prominence ?? DEFAULT_PROMINENCE;
+}
 
 /** Definitions, subtype fields and examples per type: Appendix A.1. */
 export type EntityType =
@@ -84,7 +121,8 @@ export type EntityType =
   | 'community'
   | 'coalition'
   | 'policy'
-  | 'organization';
+  | 'organization'
+  | 'concept';
 
 export const ENTITY_TYPES: readonly EntityType[] = [
   'identifier',
@@ -99,9 +137,10 @@ export const ENTITY_TYPES: readonly EntityType[] = [
   'coalition',
   'policy',
   'organization',
+  'concept',
 ];
 
-/** Types that carry a derived `layer` (§5.1); the other five are cross-cutting. */
+/** Types that carry a derived `layer` (§5.1); the other six (community, coalition, policy, organization, standard, concept) are not. */
 export const LAYERED_TYPES: ReadonlySet<EntityType> = new Set([
   'identifier',
   'agency',
@@ -124,7 +163,9 @@ export type Governance =
   | 'intergovernmental'
   | 'public-agency'
   | 'academic'
-  | 'unknown';
+  | 'unknown'
+  /** For `concept` entities (an idea has no governing body). */
+  | 'not-applicable';
 
 /**
  * Separate from `governance`, which is what makes M§5's central distinction
@@ -189,6 +230,9 @@ export interface EntityBase {
   codebase?: Codebase;
   since?: string;
   until?: string;
+  /** Progressive disclosure (default 'extended'; read via `prominenceOf`). `core` = shown in the
+   *  default view, `extended` = shown on expand/search, `detail` = entity page and expert views only. */
+  prominence?: Prominence;
   tags: string[]; // >=1, from vocab/tags.yaml
   disciplines?: string[];
   geography?: string[]; // FORD; ISO 3166-1 alpha-2 / eu / latam / global
@@ -341,6 +385,13 @@ export interface OrganizationEntity extends EntityBase {
   country?: string; // ISO 3166-1 alpha-2
 }
 
+/** An idea or term (persistent identifier, open access, metadata, FAIR principles, repository ...).
+ *  Concepts form the `concept` layer; concrete entities point at them with `is-a`. `governance` is
+ *  required by the base shape and must be 'not-applicable'; `url` is the canonical reference page. */
+export interface ConceptEntity extends EntityBase {
+  type: 'concept';
+}
+
 export type Entity =
   | IdentifierEntity
   | AgencyEntity
@@ -353,14 +404,23 @@ export type Entity =
   | CommunityEntity
   | CoalitionEntity
   | PolicyEntity
-  | OrganizationEntity;
+  | OrganizationEntity
+  | ConceptEntity;
 
 // --- Predicate metadata (§5.3, A.2) -----------------------------------------
 
 export type LocaleMap = Partial<Record<LocaleCode, string>>;
 
+export type PredicateFamilyId = 'behind' | 'builds-on' | 'connects' | 'shapes' | 'kind';
+
+export const PREDICATE_FAMILY_IDS: readonly PredicateFamilyId[] = ['behind', 'builds-on', 'connects', 'shapes', 'kind'];
+
 export interface PredicateDef {
   id: PredicateId;
+  /** Display grouping (≤5 families, vocab/predicate-families.yaml). Metadata only. */
+  family: PredicateFamilyId;
+  /** True while the predicate has no authored edge yet; exempts it from I12 until the first one lands. */
+  pending?: boolean;
   label: LocaleMap; // active voice, drawn on the edge
   inverseLabel: LocaleMap; // passive, shown on the target's page
   domain: EntityType[];
@@ -408,6 +468,7 @@ export interface ResolvedProse {
   name?: string;
   aka?: string[];
   relationNotes?: Record<string, string>;
+  localNote?: string;
   body: string;
 }
 
@@ -447,6 +508,7 @@ export interface ProseFile {
   name?: string;
   aka?: string[];
   relationNotes?: Record<string, string>; // "<predicate>@<target>" -> note (I30)
+  localNote?: string; // optional 'In Chile' callout, <=30 words
   body: string; // Markdown body
 }
 

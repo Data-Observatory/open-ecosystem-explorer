@@ -28,6 +28,11 @@
             "maxLength": 280
           }
         },
+        "localNote": {
+          "type": "string",
+          "minLength": 20,
+          "maxLength": 260
+        },
         "body": {
           "type": "string"
         }

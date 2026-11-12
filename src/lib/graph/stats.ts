@@ -1,5 +1,5 @@
 import type { EntityId, EntityStats, EntityType, GraphEdge, Layer, CrossCuttingLayer, PredicateId } from '../model/types.js';
-import { ENTITY_TYPES } from '../model/types.js';
+import { ENTITY_TYPES, LAYERS } from '../model/types.js';
 import type { LocaleCode } from '../../i18n/locales.js';
 
 function compareIds(a: EntityId, b: EntityId): number {
@@ -26,14 +26,7 @@ export function computeStats(params: {
     number
   >;
 
-  const layerKeys: (Layer | CrossCuttingLayer)[] = [
-    'identifier',
-    'agency',
-    'index',
-    'institutional-system',
-    'regional',
-    'cross-cutting',
-  ];
+  const layerKeys = LAYERS;
   const byLayerCount = Object.fromEntries(layerKeys.map((l) => [l, byLayer.get(l)?.length ?? 0])) as Record<
     Layer | CrossCuttingLayer,
     number

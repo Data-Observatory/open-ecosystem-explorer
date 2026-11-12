@@ -1,6 +1,6 @@
 import type { Entity, EntityId, GraphIndex, ProseFile, View, ViewProseFile } from '../model/types.js';
 import type { LocaleCode } from '../../i18n/locales.js';
-import type { EntityTypesVocab, PredicatesVocab, SimpleVocab } from '../model/vocab.js';
+import type { EntityTypesVocab, PredicateFamiliesVocab, PredicatesVocab, SimpleVocab } from '../model/vocab.js';
 
 export type InvariantLevel = 'ERROR' | 'WARN';
 
@@ -50,6 +50,10 @@ export interface RunContext {
   tagsVocab: SimpleVocab;
   disciplinesVocab: SimpleVocab;
   statusesVocab: SimpleVocab;
+  /** Absent => I35 is skipped (kept optional so older callers/fixtures keep working). */
+  predicateFamiliesVocab?: PredicateFamiliesVocab;
+  /** Strict i18n (src/lib/invariants/config.ts): a missing locale prose file is an ERROR, not a WARN. */
+  requireFullI18n: boolean;
   locales: readonly LocaleCode[];
   defaultLocale: LocaleCode;
   index: GraphIndex;

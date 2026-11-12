@@ -1,6 +1,6 @@
 // Shape-by-layer, fill-by-type encoding (specs.md §6.4). Five colours
 // (repository/index/cris/standard/organization) are the exact values from
-// Appendix B.2's worked example and must not drift from it. All 12 were
+// Appendix B.2's worked example and must not drift from it. All 13 were
 // checked in Phase 7 (§9.2): every stroke colour is >=3:1 against the fixed
 // white diagram background (Diagram.astro pins this regardless of page
 // theme — see that file's comment) and every same-shape group (types
@@ -10,7 +10,7 @@
 // protanopia/deuteranopia (both hexagon-shaped, same orange/gold family).
 import type { EntityType, Layer, CrossCuttingLayer } from '../model/types.js';
 
-export type MermaidShape = 'stadium' | 'subroutine' | 'cylinder' | 'rect' | 'parallelogram' | 'hexagon';
+export type MermaidShape = 'stadium' | 'subroutine' | 'cylinder' | 'rect' | 'parallelogram' | 'hexagon' | 'rounded';
 
 const SHAPE_BY_LAYER: Record<Layer | CrossCuttingLayer, MermaidShape> = {
   identifier: 'stadium',
@@ -19,6 +19,9 @@ const SHAPE_BY_LAYER: Record<Layer | CrossCuttingLayer, MermaidShape> = {
   'institutional-system': 'rect',
   regional: 'parallelogram',
   'cross-cutting': 'hexagon',
+  // Concepts are ideas, not things: a plain rounded box, unique among shapes
+  // (so its fill never has to be colourblind-separated from another type).
+  concept: 'rounded',
 };
 
 export function shapeForLayer(layer: Layer | CrossCuttingLayer): MermaidShape {
@@ -39,6 +42,8 @@ export function wrapShape(shape: MermaidShape, nodeId: string, label: string): s
       return `${nodeId}[/${label}/]`;
     case 'hexagon':
       return `${nodeId}{{${label}}}`;
+    case 'rounded':
+      return `${nodeId}(${label})`;
   }
 }
 
@@ -77,6 +82,9 @@ export const TYPE_FILL: Record<EntityType, string> = {
   // teal hue, clearly separated from every other hexagon-shaped type;
   // 4.86:1 vs white / 4.33:1 vs black, both well above the 3:1 floor.
   policy: '#0a7d8c',
+  // Sole occupant of the 'rounded' shape (concept layer), so only needs >=3:1
+  // against white (6.1:1) and to be distinct from its neighbours in the legend.
+  concept: '#9a3412',
 };
 
 export function classDefLine(type: EntityType): string {

@@ -13,7 +13,7 @@
 // field (`identifier`, `agency` — §5.2) or an instance leaves it unset.
 import type { EntityType, GraphIndex } from '../model/types.js';
 import type { LocaleCode } from '../../i18n/locales.js';
-import { LAYER_ORDER } from './layers.js';
+import { LAYER_ORDER, LAYER_LABELS } from './layers.js';
 import type { EntityTypesVocab, SimpleVocab } from '../model/vocab.js';
 import { subtypeOf, humanizeSubtype } from '../model/subtypes.js';
 
@@ -45,15 +45,6 @@ export function computeTaxonomyRows(
   tagsVocab: SimpleVocab,
   locale: LocaleCode,
 ): TaxonomyRow[] {
-  const LAYER_LABELS: Record<string, Record<LocaleCode, string>> = {
-    identifier: { es: 'Identificadores', en: 'Identifiers' },
-    agency: { es: 'Agencias de registro', en: 'Registration agencies' },
-    index: { es: 'Índices', en: 'Indices' },
-    'institutional-system': { es: 'Sistemas institucionales', en: 'Institutional systems' },
-    regional: { es: 'Capa regional', en: 'Regional layer' },
-    'cross-cutting': { es: 'Banda transversal', en: 'Cross-cutting band' },
-  };
-
   const rows: TaxonomyRow[] = [];
   for (const layer of LAYER_ORDER) {
     const typesInLayer = [...typeVocab.entries()].filter(([, e]) => e.layer === layer).map(([t]) => t).sort();

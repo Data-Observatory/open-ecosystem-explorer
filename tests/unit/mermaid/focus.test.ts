@@ -88,9 +88,9 @@ describe('buildFocusDiagram — Appendix B.2 (real seed content, scoped to the 9
 describe('describeFocusEntity — A9.1/A9.2/A9.3 (accessible table parity)', () => {
   const index = appendixBIndex();
 
-  it('produces the 4 rows of Appendix B.3 plus 2 legitimate content-audit additions — figshare and its sibling Dimensions both gained a real operated-by->digital-science edge (Digital Science operates its portfolio brands directly, not just owns them); the Dimensions<->Symplectic Elements interoperates-with edge is real too but sits outside this figshare-focused diagram (neither node is figshare itself, so it is not a "sibling of figshare" edge) — subject/predicate/object matching', () => {
+  it('produces the 4 rows of Appendix B.3 plus 3 legitimate content-audit additions — figshare and its sibling Dimensions both gained a real operated-by->digital-science edge (Digital Science operates its portfolio brands directly, not just owns them); the Dimensions<->Symplectic Elements interoperates-with edge is real too but sits outside this figshare-focused diagram (neither node is figshare itself, so it is not a "sibling of figshare" edge); figshare also gained an `is-a research-repository` classification edge to the new concept layer — subject/predicate/object matching', () => {
     const { rows } = describeFocusEntity(index, 'figshare', 'es');
-    expect(rows).toHaveLength(6);
+    expect(rows).toHaveLength(7);
     const asStrings = rows.map((r) => `${r.subjectName} (${r.subjectType}) | ${r.predicateLabel} | ${r.objectName} (${r.objectType})`);
     expect(asStrings).toContain('Figshare (repository) | es propiedad de | Digital Science (organization)');
     expect(asStrings).toContain('Figshare (repository) | implementa | DataCite Metadata Schema (standard)');

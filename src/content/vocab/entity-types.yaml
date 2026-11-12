@@ -1,4 +1,4 @@
-# The 12 entity types (Appendix A.1) and the type -> layer map (§5.1).
+# The 13 entity types (Appendix A.1) and the type -> layer map (§5.1).
 # This is the ONLY place `layer` is stated. An entity file must never author
 # `layer` directly (I23) — it is derived from `type` via this file.
 identifier:
@@ -73,3 +73,9 @@ organization:
   definition:
     es: El actor detrás de la cosa — empresa, ONG, universidad, agencia, organismo intergubernamental.
     en: The actor behind the thing — company, non-profit, university, agency, intergovernmental body.
+concept:
+  layer: concept
+  label: { es: Concepto, en: Concept }
+  definition:
+    es: Una idea o término — identificador persistente, acceso abierto, metadatos — del que las cosas concretas son ejemplos.
+    en: An idea or term — persistent identifier, open access, metadata — of which concrete things are instances.
