@@ -13,6 +13,13 @@ tags:
   - region:global
 lastReviewed: 2026-09-04
 relations:
+  - predicate: related-to
+    target: care
+    note: Its International Indigenous Data Sovereignty Interest Group produced the CARE Principles.
+    sources:
+      - url: https://www.nature.com/articles/s41597-021-00892-0
+        accessed: 2026-11-13
+        note: Says the RDA International Indigenous Data Sovereignty Interest Group produced the CARE Principles.
   - predicate: member-of
     target: coara
     note: 'Listed among CoARA''s member organisations.'

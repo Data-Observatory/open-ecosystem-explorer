@@ -1,8 +1,6 @@
-summary: 'The CARE principles are a guide to handling data about Indigenous peoples:
-  collective benefit, authority to control, responsibility and ethics.'
+summary: 'The CARE Principles for Indigenous Data Governance are principles, not a standard: collective benefit, authority to control, responsibility and ethics.'
 relationNotes:
-  endorsed-by@rda: RDA formally affiliated with the Global Indigenous Data Alliance, which hosts CARE, and promotes the implementation of the Principles.
   related-to@indigenous-data-sovereignty: Principles for putting Indigenous data sovereignty into practice.
   related-to@open-data: Asks that opening data also respect collective benefit and control.
 body: |-
-  CARE was drafted by the Global Indigenous Data Alliance (GIDA) at a 2018 workshop co-organised with RDA in Gaborone, and GIDA still stewards it. CARE complements FAIR rather than replacing it: FAIR addresses findability and interoperability; CARE addresses who decides about data that involves Indigenous communities.
+  The CARE Principles for Indigenous Data Governance are principles for handling data about Indigenous peoples, not a technical standard or a certification. They were drafted at a workshop in Gaborone in 2018, held during International Data Week and an RDA Plenary, and released by the Global Indigenous Data Alliance (GIDA) in 2019. CARE complements FAIR rather than replacing it: FAIR addresses findability and interoperability; CARE addresses who decides about data that involves Indigenous communities.
