@@ -14,8 +14,14 @@
 		type Locale
 	} from '$lib/locale';
 	import * as m from '$lib/paraglide/messages';
+	import { consentState, initConsent } from '$lib/consent/state.svelte';
+	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
+	import ConsentChange from '$lib/components/ConsentChange.svelte';
 
 	let { children, data } = $props();
+
+	// The banner and the change controls exist only in the browser (see consent/state.svelte.ts).
+	onMount(initConsent);
 
 	const locale = $derived(data.locale);
 	const href = (path = '') => pagePath(base, locale, path) as ResolvedPathname;
@@ -105,6 +111,7 @@
 </a>
 
 <div class="flex min-h-screen flex-col bg-white">
+	<ConsentBanner />
 	<header
 		class="z-40 flex w-full flex-wrap items-center justify-center gap-2 px-4 py-3 sm:sticky sm:top-0 sm:py-6 print:hidden"
 	>
@@ -186,6 +193,11 @@
 						>{m.footer_feed()}</a
 					>
 				</li>
+				{#if consentState.ready}
+					<li>
+						<ConsentChange class={`${linkClass} cursor-pointer`} />
+					</li>
+				{/if}
 			</ul>
 			<p class="mt-4 text-sm">{m.footer_last_reviewed({ date: data.summary.lastReviewed })}</p>
 			<p class="mt-2 text-xs text-zinc-300">{m.footer_license()}</p>

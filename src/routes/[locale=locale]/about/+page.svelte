@@ -4,6 +4,7 @@
 	import { pagePath } from '$lib/locale';
 	import { fileHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
+	import ConsentChange from '$lib/components/ConsentChange.svelte';
 
 	let { data } = $props();
 	const about = $derived(data.about);
@@ -15,7 +16,8 @@
 		{ id: 'model', label: m.about_model_heading },
 		{ id: 'downloads', label: m.about_downloads_heading },
 		{ id: 'contribute', label: m.about_contribute_heading },
-		{ id: 'changelog', label: m.about_changelog_heading }
+		{ id: 'changelog', label: m.about_changelog_heading },
+		{ id: 'privacy', label: m.about_privacy_heading }
 	];
 
 	const h2 = 'scroll-mt-24 font-heading text-2xl font-semibold text-zinc-900';
@@ -224,6 +226,19 @@
 		</ul>
 		<p class="mt-4">
 			<a href={href('changelog')} class={linkClass}>{m.about_changelog_link()}</a>
+		</p>
+	</section>
+
+	<section aria-labelledby="privacy" class="mt-12" data-testid="privacy">
+		<h2 id="privacy" class={h2}>{m.about_privacy_heading()}</h2>
+		<p class="mt-3 leading-relaxed">{m.about_privacy_collected()}</p>
+		<p class="mt-3 leading-relaxed">{m.about_privacy_default()}</p>
+		<p class="mt-3 leading-relaxed">{m.about_privacy_off()}</p>
+		<p class="mt-3 leading-relaxed">{m.about_privacy_storage()}</p>
+		<p class="mt-4 min-h-11">
+			<ConsentChange
+				class="rounded-full border border-zinc-400 bg-white px-4 py-2 text-sm font-medium text-zinc-900 transition-colors hover:bg-zinc-100"
+			/>
 		</p>
 	</section>
 </div>
