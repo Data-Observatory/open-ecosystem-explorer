@@ -1,10 +1,8 @@
 {
 	"$schema": "https://inlang.com/schema/inlang-message-format",
-
-	"site_name": "Open Science Ecosystem Explorer",
-	"site_short_name": "Open science ecosystem",
-	"site_description": "A browsable map of identifiers, registration agencies, indices, institutional systems, standards and communities in open science, and of how they relate to each other.",
-
+	"site_name": "Open Ecosystem Explorer",
+	"site_short_name": "Open Ecosystem",
+	"site_description": "A map of open science, open data and good data practice, and of the open software and licences they depend on.",
 	"skip_to_content": "Skip to content",
 	"nav_primary": "Main",
 	"nav_explore": "Explore",
@@ -13,28 +11,21 @@
 	"nav_about": "About",
 	"language_switcher_label": "Language",
 	"opens_in_new_tab": "(opens in a new tab)",
-
 	"footer_license": "Code: MIT. Data: CC-BY-4.0. Fonts: SIL OFL 1.1.",
 	"footer_data": "Download the data",
 	"footer_contribute": "Contribute",
 	"footer_changelog": "Changelog",
 	"footer_feed": "RSS feed",
 	"footer_last_reviewed": "Data last reviewed: {date}",
-
 	"feed_description": "Recently reviewed entries",
-
 	"gateway_redirecting": "Redirecting to the Spanish version...",
 	"gateway_choose": "If the redirect does not happen, choose a language:",
-
-	"home_intro": "A browsable map of identifiers, registration agencies, indices, institutional systems, standards and communities in open science, and of how they relate to each other.",
+	"home_intro": "A map of open science, open data and good data practice, and of the open software and licences they depend on.",
 	"home_stats": "{entities} entries and {relations} relationships",
-	"home_questions_heading": "Questions to start with",
+	"home_questions_heading": "Start with a question",
 	"home_map_label": "Ecosystem map",
-	"home_map_placeholder_title": "The interactive map is being rebuilt",
-	"home_map_placeholder_body": "Meanwhile, the glossary lists every entry and the questions offer guided paths through the graph.",
 	"home_glossary_cta": "Browse the full glossary",
 	"home_questions_cta": "See all questions",
-
 	"glossary_title": "Glossary",
 	"glossary_intro": "Every entry on the map, A to Z, with its type and a one-sentence definition.",
 	"glossary_filter_label": "Filter the glossary",
@@ -44,23 +35,18 @@
 	"glossary_empty": "No entry matches the filter.",
 	"glossary_clear": "Clear filters",
 	"glossary_letters_label": "Alphabetical index",
-
 	"questions_title": "Questions",
 	"questions_intro": "Short answers to questions about how the ecosystem is organised, built from the same graph as the map and the glossary.",
 	"questions_back": "All questions",
 	"question_fallback_notice": "This question is not yet translated into English; showing the Spanish original.",
 	"question_entries_heading": "Entries",
 	"question_relations_heading": "Relationships",
-
 	"questions_stories_heading": "Guided paths",
 	"questions_stories_intro": "Each path answers one question in a few steps, from one entry to the next.",
 	"questions_views_heading": "Ecosystem analyses",
 	"story_steps": "{n} steps",
-	"story_map_soon": "Soon this path can be followed step by step on the map. For now, the steps read as a list.",
 	"story_step": "Step {n}",
-
 	"story_theme": "Theme: {theme}",
-
 	"col_name": "Name",
 	"col_type": "Type",
 	"col_governance": "Governance",
@@ -73,7 +59,6 @@
 	"col_rule": "Rule",
 	"col_level": "Level",
 	"sources_heading": "Sources",
-
 	"entity_relations_heading": "How it connects",
 	"entity_no_relations": "This entry has no recorded relationships yet.",
 	"entity_links_heading": "Links",
@@ -96,7 +81,6 @@
 	"entity_last_reviewed": "Last reviewed: {date}",
 	"entity_raw_json": "This entry as JSON",
 	"entity_fallback_notice": "This entry is not yet translated into English; showing the Spanish original.",
-
 	"governance_commercial": "Commercial",
 	"governance_nonprofit": "Nonprofit",
 	"governance_community": "Community",
@@ -105,7 +89,6 @@
 	"governance_academic": "Academic",
 	"governance_unknown": "Unknown",
 	"governance_not_applicable": "Not applicable",
-
 	"about_title": "About",
 	"about_toc_label": "On this page",
 	"about_scope_heading": "Scope",
@@ -140,24 +123,18 @@
 	"about_changelog_heading": "Changelog",
 	"about_changelog_body": "Changes to the data and to the site are recorded in the changelog.",
 	"about_changelog_link": "See the full changelog",
-
 	"changelog_title": "Changelog",
-
 	"redirect_title": "This page has moved",
 	"redirect_body": "Its content is now at:",
-
 	"not_found_title": "Page not found",
 	"not_found_body": "This page does not exist, or the link is out of date.",
 	"not_found_back": "Back to the home page",
-
-	"map_page_title": "Open science ecosystem map",
-	"map_heading": "Ecosystem map",
 	"map_canvas_label": "Interactive map: open science concepts and services",
 	"map_search_label": "Search the map",
-	"map_search_placeholder": "Search  ( / )",
+	"map_search_placeholder": "Search for an entry or a question",
 	"map_no_results": "No results",
-	"map_hint": "Tap a point to see what it connects to.",
-	"map_keys_help": "Keyboard: / searches, arrow keys move between points, Enter opens or shows more, Esc goes back.",
+	"map_hint": "Pick a point to see what it connects to.",
+	"map_keys_help": "Keyboard: slash opens search, arrow keys move between points, Enter opens a point and Escape goes back.",
 	"map_expert": "Expert mode",
 	"map_view_map": "Map",
 	"map_view_list": "List",
@@ -181,5 +158,31 @@
 	"map_family_identifier": "Identifier",
 	"map_family_service": "Service",
 	"map_family_rule": "Standard or policy",
-	"map_family_actor": "Organisation or community"
+	"map_family_actor": "Organisation or community",
+	"map_start_here": "Start here",
+	"map_back_to": "Back to {name}",
+	"map_trail_label": "Trail on the map",
+	"map_trail_start": "Starting view",
+	"map_story_label": "Guided path",
+	"map_story_prev": "Previous",
+	"map_story_next": "Next",
+	"map_story_progress": "Step {n} of {total}",
+	"map_story_exit": "Leave the path",
+	"map_story_continue": "Keep exploring from here",
+	"map_palette_stories": "Guided paths",
+	"map_palette_entries": "Entries",
+	"map_palette_hint": "Type to find an entry, or pick a question.",
+	"map_search_button": "Search",
+	"map_zoom_in": "Zoom in",
+	"map_zoom_out": "Zoom out",
+	"map_zoom_fit": "Fit to view",
+	"map_themes_heading": "Map themes",
+	"map_show_fewer": "Show fewer connections",
+	"map_list_caption": "Map entries",
+	"map_noscript": "Without JavaScript the map is a still picture: each point links to its entry and the questions read as step lists.",
+	"story_play_on_map": "Play this path on the map",
+	"story_list_note": "The same steps, as a list:",
+	"entity_minigraph_label": "Direct connections of {name}",
+	"entity_minigraph_more": "The main ones are shown; {n} more are in the list.",
+	"entity_see_on_map": "See on the map"
 }

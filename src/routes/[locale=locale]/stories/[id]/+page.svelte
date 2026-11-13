@@ -32,14 +32,18 @@
 		<p class="mt-3 text-sm text-zinc-700">{m.story_steps({ n: story.steps })}</p>
 	</header>
 
-	<p
-		class="mt-6 rounded-xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700 ring-1 ring-zinc-200"
-		data-testid="story-map-placeholder"
-	>
-		{m.story_map_soon()}
+	<p class="mt-6" data-requires-js>
+		<a
+			href={`${href()}?historia=${story.id}&paso=1` as ResolvedPathname}
+			class="inline-flex rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+			data-testid="story-play"
+		>
+			{m.story_play_on_map()} <span aria-hidden="true" class="ml-1.5">→</span>
+		</a>
 	</p>
+	<p class="mt-6 text-sm text-zinc-600">{m.story_list_note()}</p>
 
-	<ol class="mt-8 space-y-6" data-testid="story-steps">
+	<ol class="mt-4 space-y-6" data-testid="story-steps">
 		{#each story.stepList as step, i (i)}
 			<li class="flex gap-4">
 				<span
