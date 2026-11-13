@@ -1,7 +1,7 @@
 import { test, expect, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
 
-// specs.md §7 `/{loc}/map3` row: the minimal map. 14 anchors by default,
+// specs.md §7 `/{loc}/map3` row: the minimal map. 15 anchors by default,
 // detail on click, everything else behind the expert toggle.
 
 const visibleIds = (page: Page) =>
@@ -19,9 +19,9 @@ async function ready(page: Page, url: string) {
 }
 
 test.describe('/map3 minimal map', () => {
-  test('loads 14 anchors, no card, one search box, a hint', async ({ page }) => {
+  test('loads 15 anchors, no card, one search box, a hint', async ({ page }) => {
     await ready(page, '/es/map3/');
-    expect(await visibleIds(page)).toHaveLength(14);
+    expect(await visibleIds(page)).toHaveLength(15);
     expect(await visibleIds(page)).toContain('doi');
     await expect(page.locator('#m3-card')).toBeHidden();
     await expect(page.locator('#m3-q')).toBeVisible();
@@ -41,7 +41,7 @@ test.describe('/map3 minimal map', () => {
     await expect(card.locator('#m3-card-wp')).toHaveAttribute('href', /wikidata\.org\/wiki\/Special:GoToLinkedPage\/eswiki\/Q/);
     const words = (await card.locator('#m3-card-summary').innerText()).split(/\s+/).length;
     expect(words).toBeLessThanOrEqual(25);
-    expect((await visibleIds(page)).length).toBeGreaterThan(14);
+    expect((await visibleIds(page)).length).toBeGreaterThan(15);
     expect(page.url()).toContain('n=doi');
   });
 
@@ -67,7 +67,7 @@ test.describe('/map3 minimal map', () => {
     await expect(page.locator('#m3-card h2')).toHaveText('ORCID iD');
     await page.keyboard.press('Escape');
     await expect(page.locator('#m3-card')).toBeHidden();
-    expect(await visibleIds(page)).toHaveLength(14);
+    expect(await visibleIds(page)).toHaveLength(15);
     expect(page.url()).not.toContain('n=');
   });
 

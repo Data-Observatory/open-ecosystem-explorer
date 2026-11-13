@@ -5,5 +5,6 @@ relationNotes:
   related-to@preprint: 'Preprints are usually free to read, but many carry no reuse licence, so they are not always open access in full.'
   related-to@research-repository: 'Depositing a copy in an open repository is the ''green'' route to open access.'
   related-to@open-access-mandate: 'A mandate is a policy that requires research to be made open access.'
+  related-to@open-license: 'The Budapest Open Access Initiative recommends CC BY or an equivalent licence as the optimal licence for open access.'
 body: |-
   The Budapest Open Access Initiative (2002) describes it as free availability on the public internet, permitting anyone to read, download, copy and use the text without financial, legal or technical barriers beyond access to the internet itself. Reuse beyond reading normally depends on an open licence.

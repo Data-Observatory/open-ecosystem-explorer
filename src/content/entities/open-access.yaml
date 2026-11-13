@@ -40,6 +40,13 @@ relations:
       - url: https://www.coalition-s.org/principles-and-implementation/
         accessed: 2026-11-13
         note: 'Plan S requires funded publications to be open access: the best-known funder mandate.'
+  - predicate: related-to
+    target: open-license
+    note: 'The Budapest Open Access Initiative recommends CC BY or an equivalent licence as the optimal licence for open access.'
+    sources:
+      - url: https://www.budapestopenaccessinitiative.org/boai10/
+        accessed: 2026-11-13
+        note: 'Recommendation 2.1: CC-BY or an equivalent licence as the optimal licence for the publication, distribution, use and reuse of scholarly work.'
 sources:
   - url: https://www.budapestopenaccessinitiative.org/read/
     accessed: 2026-11-12
