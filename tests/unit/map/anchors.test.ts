@@ -1,14 +1,19 @@
 import { describe, it, expect } from 'vitest';
 import {
+  ANCHOR_THEME,
+  CENTRE_ANCHOR_ID,
   DEFAULT_ANCHOR_IDS,
   EDGE_FAMILY_STYLE,
+  MAP_THEMES,
   MAP_CANVAS_BG,
   NODE_FAMILIES,
   NODE_FAMILY_STYLE,
   clampWords,
   isAnchor,
+  isMapThemeId,
   nodeFamilyOf,
   rankNeighbours,
+  themeOf,
 } from '../../../src/lib/map/anchors.js';
 import { hexToRgb } from '../../../src/lib/map/color-distance.js';
 import { ENTITY_TYPES, PREDICATE_FAMILY_IDS } from '../../../src/lib/model/types.js';
@@ -54,6 +59,62 @@ describe('default anchors', () => {
     const coreConcepts = [...entities.values()].filter((e) => e.type === 'concept' && e.prominence === 'core').map((e) => e.id);
     for (const id of coreConcepts) expect(isAnchor(id), id).toBe(true);
     expect(isAnchor('zenodo')).toBe(false);
+  });
+});
+
+describe('anchor themes', () => {
+  const entities = new Map(loadRealEntities().map((e) => [e.id, e]));
+  const anchorEdges: [string, string][] = [];
+  for (const e of entities.values()) {
+    for (const r of e.relations) if (isAnchor(e.id) && isAnchor(r.target)) anchorEdges.push([e.id, r.target]);
+  }
+
+  it('gives every anchor exactly one known theme, with ES and EN labels', () => {
+    expect(Object.keys(ANCHOR_THEME).sort()).toEqual([...DEFAULT_ANCHOR_IDS]);
+    for (const id of DEFAULT_ANCHOR_IDS) {
+      const theme = themeOf(id);
+      expect(theme, id).toBeDefined();
+      expect(theme!.label.es.length).toBeGreaterThan(0);
+      expect(theme!.label.en.length).toBeGreaterThan(0);
+    }
+    expect(themeOf('zenodo')).toBeUndefined();
+    expect(isMapThemeId('data')).toBe(true);
+    expect(isMapThemeId('nope')).toBe(false);
+  });
+
+  it('uses 3-4 themes around one centre, each with at least two anchors', () => {
+    const counts = new Map<string, number>();
+    for (const t of Object.values(ANCHOR_THEME)) counts.set(t, (counts.get(t) ?? 0) + 1);
+    expect(counts.get('centre')).toBe(1);
+    expect(ANCHOR_THEME[CENTRE_ANCHOR_ID]).toBe('centre');
+    const clusters = MAP_THEMES.filter((t) => t.id !== 'centre');
+    expect(clusters.length).toBeGreaterThanOrEqual(3);
+    expect(clusters.length).toBeLessThanOrEqual(4);
+    for (const t of clusters) expect(counts.get(t.id) ?? 0, t.id).toBeGreaterThanOrEqual(2);
+  });
+
+  it('links every anchor to its own theme or to the centre, and the anchors form one component', () => {
+    for (const id of DEFAULT_ANCHOR_IDS) {
+      if (id === CENTRE_ANCHOR_ID) continue;
+      const ok = anchorEdges.some(([a, b]) => {
+        const other = a === id ? b : b === id ? a : undefined;
+        return other !== undefined && (other === CENTRE_ANCHOR_ID || ANCHOR_THEME[other] === ANCHOR_THEME[id]);
+      });
+      expect(ok, id).toBe(true);
+    }
+    const seen = new Set([CENTRE_ANCHOR_ID]);
+    let grew = true;
+    while (grew) {
+      grew = false;
+      for (const [a, b] of anchorEdges) {
+        if (seen.has(a) !== seen.has(b)) {
+          seen.add(a);
+          seen.add(b);
+          grew = true;
+        }
+      }
+    }
+    expect(seen.size).toBe(DEFAULT_ANCHOR_IDS.length);
   });
 });
 
