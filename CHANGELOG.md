@@ -7,6 +7,7 @@
 ### Wikidata cross-check follow-ups (2026-11-13)
 
 - Open access and open data are now `part-of` open science (was `related-to`), sourced to paras. 6 and 7(a)/(b) of the UNESCO Recommendation; the open-access story highlights the new edges.
+- New concept `open-science-infrastructure` (Wikidata Q108934881, extended, ES + EN): part of open science (UNESCO Recommendation paras. 6 and 9); DOAJ, Crossref, OpenCitations and Open Policy Finder are-a it (Wikidata P31 + para. 9); POSI relates to it. Layout regenerated.
 
 ### Map data: connected anchors, themes, short names, stories (2026-11-13)
 

@@ -1,3 +1,5 @@
 summary: Governance criteria that assess governance, sustainability and insurance — what would happen if the organisation disappeared, whether the code is open and whether the data can be replicated.
+relationNotes:
+  related-to@open-science-infrastructure: 'Principles for governing, sustaining and insuring the organisations that run this kind of infrastructure.'
 body: |-
   POSI is for deciding whom to depend on, not for declaring yourself trustworthy. Crossref adopted it by board vote and has published periodic self-assessments (2020, 2022 and 2024).

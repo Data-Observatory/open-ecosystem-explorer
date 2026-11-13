@@ -1,0 +1,28 @@
+type: concept
+name: Open science infrastructure
+url: https://www.wikidata.org/wiki/Q108934881
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q108934881
+tags:
+  - region:global
+lastReviewed: 2026-11-13
+relations:
+  - predicate: part-of
+    target: open-science
+    note: 'The UNESCO Recommendation names open science infrastructures as one of the pillars of open science.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, paras. 6 and 9.'
+sources:
+  - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+    accessed: 2026-11-13
+    note: 'Para. 9 defines open science infrastructures.'
+  - url: https://www.wikidata.org/wiki/Q108934881
+    accessed: 2026-11-13
+  - url: https://openscholarlyinfrastructure.org/
+    accessed: 2026-11-13
+    note: 'Principles for the organisations that run scholarly infrastructure.'
