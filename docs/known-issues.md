@@ -71,6 +71,17 @@ Labels: `sources`, `content`
 
 To do: cite a first-party source (for example dimensions.ai, which presents Dimensions as a Digital Science solution and is already in the entity sources, or a Digital Science page) as `verified.url`.
 
+### 1.7 Membership edges to check by hand (Jisc, Oxford, Lyrasis, CDL)
+
+Labels: `sources`, `unverified`
+
+The sites behind these memberships block scripted requests, so they could not be re-read automatically and need a manual check in a browser:
+- `jisc.yaml`: `member-of` CoARA (`https://www.coara.org/coalition/membership/`) and COAR (`https://coar-repositories.org/members/`).
+- `university-of-oxford.yaml`: `member-of` W3C (`https://www.w3.org/membership/list/`).
+- `lyrasis.yaml` and `california-digital-library.yaml`: `member-of` DataCite, which rest on DataCite's provider API and a Wikidata statement and have no `verified` record.
+
+To do: confirm each listing, then set or refresh `verified.date` and `verified.url`.
+
 ---
 
 ## 2. Unverified wording
@@ -166,6 +177,22 @@ Labels: `modelling`, `sources`
 None of the five CRIS entities (`pure`, `converis`, `esploro`, `symplectic-elements`, `interfolio`) has a relation to `orcid` or `ror`, although CRIS products are widely documented to support both. The edges are left out only because no source has been checked.
 
 To do: find first-party documentation for each product (for example ORCID member listings or vendor pages), then add `interoperates-with` or `depends-on` edges with `sources`.
+
+### 3.6 ILDA dropped from the scope expansion
+
+Labels: `modelling`, `unverified`
+
+The Latin American Open Data Initiative (ILDA, Uruguay) was drafted as an entity and then dropped: its legal form, founding year and the regional Barometer could not be confirmed on a readable first-party page, and it would have had one outgoing edge. The Carpentries was also left out (training, not infrastructure). arXiv-type items are not affected by this decision.
+
+To do: revisit if a Latin American open-data actor is wanted; re-check `ilda.la` for legal form, founding year and the Barometer first.
+
+### 3.7 I33 and I34 warnings added by the scope expansion
+
+Labels: `modelling`, `content`
+
+`codemeta`, `citation-file-format` and `datos-gob-cl` have no governing or developing organisation entity (I33): the CodeMeta community and the CFF supporters are not organisations in the graph, and there is no entity for Chile's Ministerio de Hacienda. Separately, I34 now flags existing notes that name SPDX or Creative Commons (`core`, `gbif`, `openaire`, `zenodo`, `wikidata`) because those entities now exist.
+
+To do: add a Ministerio de Hacienda organisation if it is in scope; reword the SPDX notes (for example "licence identifier") or accept the heuristic warnings.
 
 ---
 

@@ -1,4 +1,4 @@
-# Open Science Ecosystem Explorer — Technical Specification
+# Open Ecosystem Explorer — Technical Specification
 
 **Status:** Draft v0.4 — implemented and validated (`npm run validate`, typecheck, unit/e2e/a11y suites pass); the simplification work listed in §12 is still open. Supersedes v0.3, which was written before any code existed.
 **Format reference:** [`Data-Observatory/repository-crisis-scorecards-assesment`](https://github.com/Data-Observatory/repository-crisis-scorecards-assesment) `specs.md` — structure and rigour only. None of its content, scoring engine, or question bank carries over.
@@ -10,6 +10,8 @@
 ## 1. Overview & Goals
 
 A **static, read-only, browsable knowledge map** of the research-information ecosystem: identifiers, registration agencies, indexes, institutional systems, regional infrastructure, standards, communities and coalitions — and the relationships between them.
+
+**Scope:** a map of open science, open data and good data practice, and of the open software and licences they depend on. (Site name: *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*.)
 
 Individual entities are already catalogued elsewhere (re3data, FAIRsharing, ROR, OpenDOAR). What is poorly served is the **edge set**: who issues which identifier, who owns which index, which repository implements which schema, who governs what. This site makes the edge set legible.
 
@@ -49,6 +51,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 | N12 | Comments, annotations, discussion | Use the GitHub repository. |
 | N13 | Print/PDF report generation | Individual diagrams export as SVG/PNG (§6.7). |
 | N14 | Bulk import / ETL from any upstream register | Content is curated once and edited incrementally (§8.3). Confirmed by Q2. |
+| N15 | Open education, open hardware and open government (transparency, civic tech) | Outside the current scope (open science, open data, good data practice, and the open software and licences they depend on). Out of scope for now; revisit later. |
 
 ---
 
@@ -60,7 +63,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 - **C4 — Provenance required.** Every entity carries ≥1 `sources` entry with URL and `accessed` date. Relations whose truth is not self-evident from the target's homepage carry their own source.
 - **C5 — Freshness tracked.** Every entity carries `lastReviewed`. The build warns at >18 months and the UI badges it.
 - **C6 — Controlled vocabularies are closed.** Entity types, layers, predicates, tags, disciplines and statuses live in `src/content/vocab/*.yaml`. Adding a term requires a separate PR touching only vocabulary files.
-- **C7 — Neutral inclusion criteria** 🟡 (Q4): the entity (a) has a stable public URL, (b) is referenced by ≥1 other entity in the graph *or* is a recognised registry, standards body or coalition, and (c) is not a single project's internal tooling.
+- **C7 — Neutral inclusion criteria** 🟡 (Q4): the entity (a) has a stable public URL, (b) is referenced by ≥1 other entity in the graph *or* is a recognised registry, standards body or coalition, (c) is not a single project's internal tooling, and (d) falls within the stated scope (§1): open science, open data, good data practice, or the open software and licences they depend on, not open education, open hardware or open government (N15).
 - **C8 — No personal data** (N9).
 - **C9 — Corrections are first-class.** Every entity page links to a pre-filled GitHub issue for that entity ID. `CHANGELOG.md` records dataset changes by release.
 - **C10 — Structural facts are never duplicated per language.** IDs, types, relations, external identifiers and dates exist once, in the locale-independent facts file. Only prose is translated (§5.7). A translation can therefore be stale, but it can never disagree with the graph.

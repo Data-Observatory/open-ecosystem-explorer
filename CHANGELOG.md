@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Scope expansion: open data, licences and research software (2026-11-13)
+
+- Scope is now "a map of open science, open data and good data practice, and of the open software and licences they depend on"; site name *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*. Docs only on this branch (`specs.md` title, section 1 scope line, non-goal N15 for open education, open hardware and open government, C7 criterion (d); `README.md`); the UI strings are updated separately.
+- 20 new entities (ES + EN prose each, 149 -> 169): licences and definitions (`creative-commons`, `creative-commons-licences`, `open-definition`, `open-source-definition`, `open-source-initiative`, `spdx`, `linux-foundation`, `open-source-software`), open data (`open-data-charter`, `ckan`, `open-data-portal`, `data-management-plan`, `datos-gob-cl`), research software (`research-software`, `fair4rs`, `research-software-alliance`, `codemeta`, `citation-file-format`, `software-heritage`, `inria`). 43 new edges (314 -> 357), each with a fetched source; governance edges carry `verified` records. No new entity types, predicates or tags.
+- Creative Commons licences are one `standard` that is `related-to` (not `is-a`) `open-license`, because only CC0, CC BY and CC BY-SA are on the Open Definition's conformant list. Open Data Charter has governance `unknown` (no page names a host). `datos-gob-cl` is the single Chile open-data portal; dataset counts are left out.
+- Software Heritage facts re-checked on Internet Archive copies of softwareheritage.org (the live site fails TLS verification) and swhid.org: non-profit infrastructure launched by Inria in 2016 in collaboration with UNESCO. Claims that rested only on Wikipedia (2015 start, UNESCO headquarters opening in 2018) were dropped. The Carpentries and ILDA were considered and left out.
+- `open-license` is the 15th default anchor ("Publish openly") and `prominence: core`; new edge `open-access` `related-to` `open-license` (BOAI10 recommendation 2.1 names CC BY). `anchors.ts`, the anchors unit test, the `map3` e2e spec and specs section 7 now say 15 anchors. `anid-open-access-policy` relates to `data-management-plan`. Layout regenerated.
+- `npm run validate`: 0 errors, 87 warnings (was 80): I33 on `codemeta`, `citation-file-format` and `datos-gob-cl` (no governing organisation in the sources), plus I34 prose-mention hits on existing notes that name SPDX (`core`, `gbif`, `openaire`, `zenodo`) or Creative Commons (`wikidata`); the I28 disconnected-graph warning is gone (the Open Knowledge Foundation and FORCE11 are now connected).
+
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
 
 ### Wikidata cross-check follow-ups (2026-11-13)
