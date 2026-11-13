@@ -9,10 +9,9 @@
 		<link rel="icon" type="image/svg+xml" href="%sveltekit.assets%/favicon.svg" />
 
 		<meta name="text-scale" content="scale" />
-		<!-- No-JavaScript detection: `html:not(.js)` rules target browsers where this did not run. -->
-		<script>
-			document.documentElement.classList.add('js');
-		</script>
+		<!-- Adds the `js` class (`html:not(.js)` rules target browsers where this did not run), defines
+			the consent API and loads Google Tag Manager unless the visitor turned analytics off. -->
+		<script src="%sveltekit.assets%/consent-loader.js"></script>
 		%sveltekit.head%
 	</head>
 
