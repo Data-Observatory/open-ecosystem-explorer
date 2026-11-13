@@ -50,6 +50,19 @@ describe('computeLayout (minimal map, specs.md A3 determinism)', () => {
   });
 });
 
+function footprintClashes(pos: Record<string, [number, number]>): string[] {
+  const ids = Object.keys(pos);
+  const clashes: string[] = [];
+  for (let i = 0; i < ids.length; i++) {
+    for (let j = i + 1; j < ids.length; j++) {
+      const a = pos[ids[i]!]!;
+      const b = pos[ids[j]!]!;
+      if (((a[0] - b[0]) / 128) ** 2 + ((a[1] - b[1]) / 62) ** 2 < 0.95) clashes.push(`${ids[i]} / ${ids[j]}`);
+    }
+  }
+  return clashes;
+}
+
 describe('real corpus layout', () => {
   const { nodes: realNodes, edges: realEdges } = loadLayoutInput();
   const pos = computeLayout(realNodes, realEdges);
@@ -64,16 +77,20 @@ describe('real corpus layout', () => {
   });
 
   it('no two label footprints overlap', () => {
-    const ids = Object.keys(pos);
-    const clashes: string[] = [];
-    for (let i = 0; i < ids.length; i++) {
-      for (let j = i + 1; j < ids.length; j++) {
-        const a = pos[ids[i]!]!;
-        const b = pos[ids[j]!]!;
-        if (((a[0] - b[0]) / 128) ** 2 + ((a[1] - b[1]) / 62) ** 2 < 0.95) clashes.push(`${ids[i]} / ${ids[j]}`);
-      }
+    expect(footprintClashes(pos)).toEqual([]);
+  });
+
+  // The label-separation pass used to stall on some graphs, so any edge edit
+  // could break the committed layout. The spiral fallback must make the
+  // no-overlap guarantee hold for arbitrary edge sets, not just today's.
+  it('stays overlap-free when the edge set changes (robust to future edits)', () => {
+    for (let seed = 1; seed <= 8; seed++) {
+      // Seeded LCG: drop ~4% of the edges, differently per seed, reproducibly.
+      let state = seed * 7919;
+      const rnd = () => (state = (state * 1664525 + 1013904223) >>> 0) / 2 ** 32;
+      const perturbed = realEdges.filter(() => rnd() > 0.04);
+      expect(footprintClashes(computeLayout(realNodes, perturbed)), `seed ${seed}`).toEqual([]);
     }
-    expect(clashes).toEqual([]);
   });
 
   it('keeps the default anchors well apart', () => {
