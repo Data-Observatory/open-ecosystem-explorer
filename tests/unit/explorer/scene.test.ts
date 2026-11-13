@@ -57,7 +57,12 @@ describe('composition (starting view)', () => {
 		it(`${portrait ? 'portrait' : 'landscape'}: places exactly the anchors, centre at the origin`, () => {
 			expect(Object.keys(composed.nodes).sort()).toEqual([...DEFAULT_ANCHOR_IDS].sort());
 			expect(composed.nodes[CENTRE_ANCHOR_ID]).toMatchObject({ x: 0, y: 0, tier: 1 });
-			expect(Object.values(composed.nodes).filter((n) => n.tier === 1)).toHaveLength(1);
+			// Size marks entry points, not hierarchy: the three "open" concepts share the top size.
+			const top = Object.entries(composed.nodes)
+				.filter(([, n]) => n.tier === 1)
+				.map(([id]) => id)
+				.sort();
+			expect(top).toEqual(['open-access', 'open-data', 'open-science']);
 		});
 		it(`${portrait ? 'portrait' : 'landscape'}: no two nodes sit on top of each other`, () => {
 			const nodes = Object.values(composed.nodes);
@@ -104,7 +109,11 @@ describe('focus scene (ring)', () => {
 		const order = [...new Set(sentences.map((s) => s.other.id))];
 		const choice = chooseRing(index, 'doi', 100, false, 'es');
 		expect(choice.shown).toEqual(order);
-		expect(groupSentences(index, sentences).map((g) => g.family)[0]).toBe('kind');
+		const groups = groupSentences(index, sentences, 'Relacionado con');
+		expect(groups[0]?.group).toBe('kind');
+		// `related-to` is its own last group, not part of "what it is".
+		expect(groups.at(-1)).toMatchObject({ group: 'related', label: 'Relacionado con' });
+		expect(groups[0]?.sentences.every((s) => s.verb !== groups.at(-1)?.sentences[0]?.verb)).toBe(true);
 	});
 
 	it('puts the neighbours at one radius around the focus and the focus clear of the card', () => {

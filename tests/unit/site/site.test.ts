@@ -12,7 +12,7 @@ import {
 	wikipediaUrl
 } from '../../../src/lib/server/site.js';
 
-const words = { yes: 'yes', no: 'no', governance: (v: string) => v };
+const words = { yes: 'yes', no: 'no', related: 'Related to', governance: (v: string) => v };
 
 describe('glossary filter', () => {
 	const entry = { type: 'identifier', search: fold('Índice de citas DOI') };

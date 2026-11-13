@@ -23,7 +23,7 @@ shapes:
     es: Políticas, mandatos, respaldos y reemplazos que orientan lo que se hace.
     en: Policies, mandates, endorsements and replacements that steer what is done.
 kind:
-  label: { es: Es un/a, en: Is a }
+  label: { es: Qué es, en: What it is }
   definition:
     es: Clasificación — a qué concepto pertenece la cosa, o con qué concepto se relaciona.
     en: Classification — which concept the thing falls under, or is related to.

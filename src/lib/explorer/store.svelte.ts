@@ -23,6 +23,8 @@ const CARD_INSET = 392;
 export interface MapMessages {
 	selected: (name: string, n: number) => string;
 	cleared: () => string;
+	/** Heading of the `related-to` group on the card. */
+	related: () => string;
 }
 
 export class MapStore {
@@ -110,7 +112,7 @@ export class MapStore {
 			this.scene.kind === 'focus'
 				? this.sentences.filter((sentence) => onCanvas.has(sentence.other.id))
 				: this.sentences;
-		return groupSentences(this.index, visible);
+		return groupSentences(this.index, visible, this.#messages.related());
 	});
 
 	// -------------------------------------------------------------------------------------------

@@ -29,7 +29,8 @@
 		() =>
 			new MapStore(indexGraph(graph), locale, localeHref(locale), {
 				selected: (name, n) => m.map_selected({ name, n }),
-				cleared: () => m.map_cleared()
+				cleared: () => m.map_cleared(),
+				related: () => m.relations_related()
 			})
 	);
 
@@ -65,9 +66,13 @@
 	const trail = $derived(store.trail.flatMap((id) => store.index.byId.get(id) ?? []));
 
 	afterNavigate((navigation) => {
+		const before = store.url.story;
 		store.sync(window.location.search);
-		// A question chip was followed: bring the map and its caption to the reader.
-		if (navigation.type === 'link' && store.story) void revealStory();
+		// A question chip (or a "play on the map" link) started a story: bring the map and its
+		// caption to the reader. Not on Back/Forward, and not on the story's own step changes.
+		if (navigation.type !== 'popstate' && navigation.type !== 'enter' && store.story) {
+			if (store.url.story !== before || navigation.type === 'link') void revealStory();
+		}
 	});
 
 	async function revealStory() {
@@ -94,6 +99,39 @@
 		void revealStory();
 	}
 
+	// Full screen: the Fullscreen API where it exists, and in every case a fixed overlay that
+	// fills the viewport (iOS Safari has no element fullscreen). Local state, not in the URL.
+	let section: HTMLElement | undefined = $state();
+	let fullButton: HTMLButtonElement | undefined = $state();
+	let full = $state(false);
+
+	async function setFull(on: boolean) {
+		if (on === full) return;
+		full = on;
+		try {
+			if (on) await section?.requestFullscreen?.();
+			else if (document.fullscreenElement) await document.exitFullscreen();
+		} catch {
+			// Refused or unsupported: the overlay alone does the job.
+		}
+		if (!on) {
+			await tick();
+			fullButton?.focus();
+		}
+	}
+	// The browser's own Escape (or its exit control) leaves the Fullscreen API without telling us.
+	function onfullscreenchange() {
+		if (!document.fullscreenElement && full) void setFull(false);
+	}
+	// While the overlay is up the page behind it must not scroll.
+	$effect(() => {
+		if (!full) return;
+		const root = document.documentElement;
+		const before = root.style.overflow;
+		root.style.overflow = 'hidden';
+		return () => (root.style.overflow = before);
+	});
+
 	const inField = (target: EventTarget | null) =>
 		target instanceof HTMLElement &&
 		(target.isContentEditable || ['INPUT', 'TEXTAREA', 'SELECT'].includes(target.tagName));
@@ -105,6 +143,9 @@
 		if (event.key === '/') {
 			event.preventDefault();
 			store.paletteOpen = true;
+		} else if (event.key === 'Escape' && full) {
+			event.preventDefault();
+			void setFull(false);
 		} else if (event.key === 'Escape' && (store.story || store.selected)) {
 			event.preventDefault();
 			store.back();
@@ -173,15 +214,18 @@
 </script>
 
 <svelte:window {onkeydown} />
+<svelte:document {onfullscreenchange} />
 
 <section
+	bind:this={section}
 	aria-label={m.home_map_label()}
-	class="@container"
+	class={['@container bg-white', full && 'fixed inset-0 z-50 overflow-y-auto p-3']}
+	data-full={full ? '' : undefined}
 	data-testid="map-explorer"
 	data-ready={store.ready ? '' : undefined}
 	data-scene={store.scene.kind}
 >
-	<div bind:this={wrapper} class="relative scroll-mt-4">
+	<div bind:this={wrapper} class={['relative scroll-mt-4', full && '@3xl:h-full']}>
 		<div
 			class="pointer-events-none z-10 mb-2 flex flex-wrap items-start justify-between gap-2 @3xl:absolute @3xl:inset-x-3 @3xl:top-3 @3xl:mb-0"
 			data-requires-js
@@ -285,6 +329,37 @@
 					</div>
 				{/if}
 				<button
+					bind:this={fullButton}
+					type="button"
+					class={[pill, 'gap-2 px-3 hover:bg-zinc-50']}
+					aria-pressed={full}
+					onclick={() => setFull(!full)}
+					data-testid="map-fullscreen"
+				>
+					<svg viewBox="0 0 20 20" class="h-4 w-4 text-zinc-600" aria-hidden="true" fill="none">
+						{#if full}
+							<path
+								d="M7 3v4H3M13 3v4h4M7 17v-4H3M13 17v-4h4"
+								stroke="currentColor"
+								stroke-width="1.75"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						{:else}
+							<path
+								d="M3 7V3h4M17 7V3h-4M3 13v4h4M17 13v4h-4"
+								stroke="currentColor"
+								stroke-width="1.75"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+							/>
+						{/if}
+					</svg>
+					<span class="sr-only @3xl:not-sr-only"
+						>{full ? m.map_fullscreen_exit() : m.map_fullscreen()}</span
+					>
+				</button>
+				<button
 					type="button"
 					role="switch"
 					aria-checked={store.url.expert}
@@ -316,11 +391,15 @@
 			role="presentation"
 			class={[
 				'relative z-[5] overflow-hidden rounded-2xl bg-white ring-1 ring-zinc-200 @3xl:relative @3xl:top-0 @3xl:rounded-3xl',
-				// Expert mode shows the whole corpus: it gets most of the screen.
-				store.url.expert && !store.story
-					? '@3xl:h-[max(34rem,calc(100vh-9rem))]'
-					: '@3xl:h-[min(40rem,max(27rem,calc(100vh-25.5rem)))]',
-				listView ? '@3xl:overflow-y-auto' : 'sticky top-2 h-[38vh] min-h-[15rem]',
+				full
+					? '@3xl:h-full'
+					: // Expert mode shows the whole corpus: it gets most of the screen.
+						store.url.expert && !store.story
+						? '@3xl:h-[max(34rem,calc(100vh-9rem))]'
+						: '@3xl:h-[min(56rem,max(27rem,calc(100vh-25.5rem)))]',
+				listView
+					? '@3xl:overflow-y-auto'
+					: ['sticky min-h-[15rem]', full ? 'top-0 h-[52dvh]' : 'top-2 h-[38vh]'],
 				store.canPan && !listView && 'cursor-grab touch-none active:cursor-grabbing'
 			]}
 			{onpointerdown}

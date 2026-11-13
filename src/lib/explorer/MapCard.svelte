@@ -81,7 +81,7 @@
 			</h2>
 			<p class="mt-2 leading-relaxed text-zinc-700">{node.summary}</p>
 
-			{#each store.groups as group (group.family)}
+			{#each store.groups as group (group.group)}
 				<h3 class="mt-5 text-xs font-semibold tracking-wide text-zinc-600 uppercase">
 					{group.label}
 				</h3>

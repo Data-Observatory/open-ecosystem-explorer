@@ -5,14 +5,25 @@
 import { rankNeighbours } from '../map/anchors.js';
 import type { MapEdge, MapGraph, MapNode, PredicateFamilyId } from './types.js';
 
-/** Card and ring order: what it is first, then who is behind it (same as the entity page). */
-export const FAMILY_ORDER: readonly PredicateFamilyId[] = [
+/**
+ * How relations are grouped for reading, on the card and on the entity page: the five predicate
+ * families, with the loose `related-to` links split out of `kind` into a last, lighter group
+ * ("Related to"), so "what it is" holds only real classifications.
+ */
+export type RelationGroupId = PredicateFamilyId | 'related';
+
+/** Reading order: what it is first, then who is behind it ... loose links last. */
+export const GROUP_ORDER: readonly RelationGroupId[] = [
 	'kind',
 	'behind',
 	'builds-on',
 	'connects',
-	'shapes'
+	'shapes',
+	'related'
 ];
+
+export const relationGroupOf = (predicate: string, family: PredicateFamilyId): RelationGroupId =>
+	predicate === 'related-to' ? 'related' : family;
 
 /** Order-independent key of the pair of nodes an edge joins (one line per pair on the canvas). */
 export const pairKey = (a: string, b: string): string => (a < b ? `${a}|${b}` : `${b}|${a}`);
@@ -23,12 +34,12 @@ export interface Sentence {
 	/** True when the node the card is about is the grammatical subject. */
 	selfIsSubject: boolean;
 	verb: string;
-	family: PredicateFamilyId;
+	group: RelationGroupId;
 	pair: string;
 }
 
 export interface SentenceGroup {
-	family: PredicateFamilyId;
+	group: RelationGroupId;
 	label: string;
 	sentences: Sentence[];
 }
@@ -76,25 +87,30 @@ export function sentencesOf(index: MapIndex, id: string, locale: string): Senten
 			// A symmetric relation reads the same from both ends ("X relates to Y").
 			selfIsSubject: edge.s === id || (predicate?.symmetric ?? false),
 			verb: predicate?.label ?? edge.p,
-			family: edge.f,
+			group: relationGroupOf(edge.p, edge.f),
 			pair: pairKey(id, otherId)
 		});
 	}
 	return out.sort(
 		(a, b) =>
-			FAMILY_ORDER.indexOf(a.family) - FAMILY_ORDER.indexOf(b.family) ||
+			GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group) ||
 			Number(b.selfIsSubject) - Number(a.selfIsSubject) ||
 			compare(a.verb, b.verb) ||
 			compare(a.other.name, b.other.name)
 	);
 }
 
-export function groupSentences(index: MapIndex, sentences: readonly Sentence[]): SentenceGroup[] {
-	const labels = new Map(index.graph.families.map((f) => [f.id, f.label]));
-	return FAMILY_ORDER.map((family) => ({
-		family,
-		label: labels.get(family) ?? family,
-		sentences: sentences.filter((s) => s.family === family)
+export function groupSentences(
+	index: MapIndex,
+	sentences: readonly Sentence[],
+	relatedLabel: string
+): SentenceGroup[] {
+	const labels = new Map<RelationGroupId, string>(index.graph.families.map((f) => [f.id, f.label]));
+	labels.set('related', relatedLabel);
+	return GROUP_ORDER.map((group) => ({
+		group,
+		label: labels.get(group) ?? group,
+		sentences: sentences.filter((s) => s.group === group)
 	})).filter((group) => group.sentences.length > 0);
 }
 

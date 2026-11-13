@@ -173,10 +173,13 @@
 	"map_themes_heading": "Map themes",
 	"map_show_fewer": "Show fewer connections",
 	"map_list_caption": "Map entries",
-	"map_noscript": "Without JavaScript the map is a still picture: each point links to its entry and the questions read as step lists.",
+	"map_noscript": "Without JavaScript the map is a still picture: each point links to its entry and each question opens its list of steps.",
 	"story_play_on_map": "Play this path on the map",
 	"story_list_note": "The same steps, as a list:",
 	"entity_minigraph_label": "Direct connections of {name}",
 	"entity_minigraph_more": "The main ones are shown; {n} more are in the list.",
-	"entity_see_on_map": "See on the map"
+	"entity_see_on_map": "See on the map",
+	"map_fullscreen": "Full screen",
+	"map_fullscreen_exit": "Exit full screen",
+	"relations_related": "Related to"
 }

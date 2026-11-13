@@ -173,10 +173,13 @@
 	"map_themes_heading": "Temas del mapa",
 	"map_show_fewer": "Mostrar menos conexiones",
 	"map_list_caption": "Entradas del mapa",
-	"map_noscript": "Sin JavaScript el mapa es una imagen fija: cada punto enlaza a su ficha y las preguntas se leen como listas de pasos.",
+	"map_noscript": "Sin JavaScript el mapa es una imagen fija: cada punto enlaza a su ficha y cada pregunta abre su lista de pasos.",
 	"story_play_on_map": "Ver este recorrido en el mapa",
 	"story_list_note": "Los mismos pasos, como lista:",
 	"entity_minigraph_label": "Conexiones directas de {name}",
 	"entity_minigraph_more": "Se muestran las principales; hay {n} más en la lista.",
-	"entity_see_on_map": "Ver en el mapa"
+	"entity_see_on_map": "Ver en el mapa",
+	"map_fullscreen": "Pantalla completa",
+	"map_fullscreen_exit": "Salir de pantalla completa",
+	"relations_related": "Relacionado con"
 }

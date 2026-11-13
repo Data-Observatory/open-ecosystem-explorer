@@ -20,6 +20,7 @@ import { getStories, stepText } from '../../content/stories-index.js';
 import { MAP_THEMES } from '../map/anchors.js';
 import { resolveProse } from '../i18n/resolve.js';
 import { renderMarkdown } from '../markdown/render.js';
+import { GROUP_ORDER, relationGroupOf, type RelationGroupId } from '../explorer/graph.js';
 import { fold } from '../glossary-filter.js';
 import { RULES } from '../invariants/rules.js';
 import { activeOptionalColumns, describeEntitySet, resolveViewQuery } from '../views/query.js';
@@ -36,12 +37,6 @@ import type { Locale } from '../locale.js';
 
 // ---------------------------------------------------------------------------------------------
 // Small shared helpers
-
-/** Display order of predicate families on entity pages: what it is first, then who is behind it. */
-const FAMILY_ORDER: readonly PredicateFamilyId[] = [
-	'kind',
-	...PREDICATE_FAMILY_IDS.filter((f) => f !== 'kind')
-];
 
 function collator(locale: Locale): Intl.Collator {
 	return new Intl.Collator(locale, { sensitivity: 'base', numeric: true });
@@ -187,7 +182,8 @@ export interface RelationSentence {
 }
 
 export interface RelationGroup {
-	family: PredicateFamilyId;
+	/** A predicate family, or `related` for the loose `related-to` links (shown last). */
+	family: RelationGroupId;
 	label: string;
 	sentences: RelationSentence[];
 }
@@ -254,7 +250,7 @@ function relationGroups(
 	index: GraphIndex,
 	id: EntityId,
 	locale: Locale,
-	familyLabels: Map<PredicateFamilyId, string>
+	familyLabels: Map<RelationGroupId, string>
 ): RelationGroup[] {
 	const compare = collator(locale);
 	const prose = (entity: EntityId) => index.prose.get(locale)?.get(entity);
@@ -273,9 +269,12 @@ function relationGroups(
 		};
 	};
 
-	const byFamily = new Map<PredicateFamilyId, RelationSentence[]>();
+	const byFamily = new Map<RelationGroupId, RelationSentence[]>();
 	const push = (edge: GraphEdge, selfIsSubject: boolean) => {
-		const family = index.predicates.get(edge.predicate)?.family ?? 'connects';
+		const family = relationGroupOf(
+			edge.predicate,
+			index.predicates.get(edge.predicate)?.family ?? 'connects'
+		);
 		const list = byFamily.get(family) ?? [];
 		list.push(sentence(edge, selfIsSubject));
 		byFamily.set(family, list);
@@ -287,7 +286,7 @@ function relationGroups(
 		push(edge, false);
 	}
 
-	return FAMILY_ORDER.filter((family) => byFamily.has(family)).map((family) => ({
+	return GROUP_ORDER.filter((family) => byFamily.has(family)).map((family) => ({
 		family,
 		label: familyLabels.get(family) ?? family,
 		sentences: (byFamily.get(family) ?? []).sort(
@@ -314,7 +313,7 @@ function externalLinks(entity: Entity, locale: Locale): ExternalLink[] {
 export async function entityPage(
 	id: EntityId,
 	locale: Locale,
-	words: { yes: string; no: string; governance: (value: string) => string }
+	words: { yes: string; no: string; related: string; governance: (value: string) => string }
 ): Promise<EntityPageData | undefined> {
 	const index = await getSiteIndex();
 	const entity = index.entities.get(id);
@@ -322,9 +321,10 @@ export async function entityPage(
 
 	const labels = await typeLabels(locale);
 	const families = await getPredicateFamiliesVocab();
-	const familyLabels = new Map(
+	const familyLabels = new Map<RelationGroupId, string>(
 		[...families.entries()].map(([fid, f]) => [fid, f.label[locale] ?? f.label.en ?? fid])
 	);
+	familyLabels.set('related', words.related);
 	const tagsVocab = await getTagsVocab();
 	const disciplinesVocab = await getDisciplinesVocab();
 	const { prose, fallback, localeUsed } = resolveProse(index, id, locale);
