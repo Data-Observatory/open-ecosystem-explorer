@@ -38,12 +38,13 @@ export async function getStaticPaths() {
 //  - `ourresearch` — operates `openalex` (operated-by; already authored —
 //    removes the "OpenAlex has no institutional parent" asymmetry against
 //    Scopus/WoS/Dimensions, which all have one)
-//  - `trust-principles` + `coretrustseal` — a real 3-tier chain already in
-//    the full corpus: TRUST (T4 principles) `profile-of`-generalised by
-//    CoreTrustSeal (T3 certification-criteria) `certified-by`-held by
-//    `zenodo` (T1 repository, already in the set). This is the second T4
-//    worked example, and the clearest one: principles -> criteria ->
-//    instrument, three tiers, one real chain.
+//  - `trust-principles` + `coretrustseal` — TRUST was a T4 principles
+//    standard; it is now a concept (principles, not a standard), so it falls
+//    to the default tier, and CoreTrustSeal (T3 certification-criteria)
+//    stays `certified-by`-held by `zenodo` (T1 repository).
+//  - `fair4rs` — a still-standard principles entry (T4), added when FAIR,
+//    CARE, TRUST and POSI were retyped to `concept`; it relates to `fair`
+//    and is developed by `force11`, so it connects into the set.
 const { locale } = Astro.params as { locale: LocaleCode };
 
 const CORE_ENTITY_IDS = [
@@ -80,6 +81,7 @@ const CORE_ENTITY_IDS = [
   'ourresearch',
   'trust-principles',
   'coretrustseal',
+  'fair4rs',
 ] as const;
 
 const fullLinkCopy = { es: '← Ver el mapa completo', en: '← See the full map' } as const;

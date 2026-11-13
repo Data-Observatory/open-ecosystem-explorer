@@ -112,17 +112,17 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
     expect(positions.ror).toBe(positions.doi);
   });
 
-  test('TRUST principles and OAI-PMH land in different tiers/bands (4-tier follow-up: `type: standard` alone conflated principles with protocols)', async ({ page }) => {
+  test('FAIR4RS principles and OAI-PMH land in different tiers/bands (4-tier follow-up: `type: standard` alone conflated principles with protocols)', async ({ page }) => {
     await page.goto('/es/map2/');
     await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
     const positions = await page.evaluate(() => {
       const cy = (window as any).__cyMap2;
       const y = (id: string) => cy.$id(id).position('y');
       const parent = (id: string) => cy.$id(id).parent().id();
-      return { fairY: y('trust-principles'), oaiY: y('oai-pmh'), fairParent: parent('trust-principles'), oaiParent: parent('oai-pmh') };
+      return { fairY: y('fair4rs'), oaiY: y('oai-pmh'), fairParent: parent('fair4rs'), oaiParent: parent('oai-pmh') };
     });
     expect(positions.fairParent).not.toBe(positions.oaiParent);
-    expect(positions.fairY).toBeLessThan(positions.oaiY); // TRUST principles (T4) higher up than OAI-PMH (T3)
+    expect(positions.fairY).toBeLessThan(positions.oaiY); // FAIR4RS principles (T4) higher up than OAI-PMH (T3)
   });
 
   test('the T4 principles tier has more than one real member (not a one-off around FAIR alone)', async ({ page }) => {
@@ -130,10 +130,10 @@ test.describe('/map2 curated "essential concepts" explorer', () => {
     await expect.poll(async () => page.evaluate(() => (window as any).__cyMap2 != null)).toBe(true);
     const t4Count = await page.evaluate(() => {
       const cy = (window as any).__cyMap2;
-      const fairParent = cy.$id('trust-principles').parent().id();
+      const fairParent = cy.$id('fair4rs').parent().id();
       return cy.$id(fairParent).children().length;
     });
-    expect(t4Count).toBeGreaterThanOrEqual(2); // fair, posi, trust-principles, unesco-recommendation-open-science
+    expect(t4Count).toBeGreaterThanOrEqual(2); // fair4rs (principles standard) and unesco-recommendation-open-science (policy); FAIR, POSI and TRUST are concepts now
   });
 
   test("cytoscape's own width/height match the canvas container's real rendered size (regression: a real construction-time size race)", async ({

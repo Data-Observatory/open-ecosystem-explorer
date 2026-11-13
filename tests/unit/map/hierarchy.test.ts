@@ -102,8 +102,8 @@ describe('computeTier against the real corpus', () => {
     }
   });
 
-  it('a principles standard (TRUST) and OAI-PMH land in different tiers (originally the FAIR/OAI-PMH pair; FAIR is now a concept)', () => {
-    const raw = parseYaml(readFileSync(join(ENTITIES_DIR, 'trust-principles.yaml'), 'utf-8')) as { standardKind: string };
+  it('a principles standard (Open Definition) and OAI-PMH land in different tiers (originally the FAIR/OAI-PMH pair; FAIR, CARE, TRUST and POSI are now concepts)', () => {
+    const raw = parseYaml(readFileSync(join(ENTITIES_DIR, 'open-definition.yaml'), 'utf-8')) as { standardKind: string };
     const oai = parseYaml(readFileSync(join(ENTITIES_DIR, 'oai-pmh.yaml'), 'utf-8')) as { standardKind: string };
     expect(computeTier('standard', raw.standardKind)).not.toBe(computeTier('standard', oai.standardKind));
   });
@@ -324,7 +324,7 @@ describe('computeRanks', () => {
       'digital-science', 'holtzbrinck', 'fair', 'coar', 'posi',
       'datacite-metadata-schema', 'unesco-recommendation-open-science',
       'coar-notify', 'oai-pmh', 'dona-foundation', 'international-doi-foundation',
-      'force11', 'ourresearch', 'trust-principles', 'coretrustseal',
+      'force11', 'ourresearch', 'trust-principles', 'coretrustseal', 'fair4rs',
     ];
 
     function loadCuratedGraph() {
