@@ -20,7 +20,7 @@ tags:
   - openness:open-content
 lastReviewed: 2026-09-04
 relations:
-  - predicate: complies-with
+  - predicate: related-to
     target: fair
     note: Built explicitly to help resource owners describe and improve alignment
       with the FAIR principles.

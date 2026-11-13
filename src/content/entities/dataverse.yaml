@@ -28,7 +28,7 @@ relations:
     note: Mints DOIs via DataCite for deposited datasets.
   - predicate: complies-with
     target: dublin-core
-  - predicate: complies-with
+  - predicate: related-to
     target: fair
     note: Dataverse lists FAIR data support as a top platform feature.
     verified:

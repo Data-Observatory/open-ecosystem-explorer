@@ -1,24 +1,18 @@
-type: standard
+type: concept
 name: FAIR
 aka:
   - FAIR Principles
   - Findable, Accessible, Interoperable, Reusable
-url: https://www.go-fair.org/fair-principles/
+url: https://www.gofair.foundation/fair-principles/
 status: active
-governance: community
-standardKind: principles
-requiresOpenness: false
-prominence: core
+governance: not-applicable
+prominence: extended
 identifiers:
   wikidata: Q29032644
 tags:
   - region:global
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-13
 relations:
-  - predicate: developed-by
-    target: force11
-    note: FAIR Guiding Principles were drafted and disseminated within the FORCE11
-      community.
   - predicate: related-to
     target: research-data-management
     note: Principles for managing research data so it can be reused.
@@ -29,7 +23,15 @@ relations:
     target: metadata
     note: Findability and interoperability rely on rich metadata.
 sources:
-  - url: https://www.go-fair.org/fair-principles/
-    accessed: 2026-09-04
-    note: FAIR does not require openness; it separates findability/description from
-      the access-level decision, which stays with the data custodian.
+  - url: https://doi.org/10.1038/sdata.2016.18
+    accessed: 2026-11-13
+    note: Wilkinson et al. 2016, Scientific Data. First formal publication of the FAIR Guiding Principles, described as guidelines to improve the reusability of data.
+  - url: https://www.gofair.foundation/fair-principles/
+    accessed: 2026-11-13
+    note: Calls them the FAIR Guiding Principles, a reference for guiding implementation of findability, accessibility, interoperability and reusability.
+  - url: https://force11.org/info/the-fair-data-principles/
+    accessed: 2026-11-13
+    note: Describes them as a set of guiding principles, launched at a Lorentz workshop in 2014 and published in 2016.
+  - url: https://www.wikidata.org/wiki/Q29032644
+    accessed: 2026-11-13
+    note: The knowledge-base record types it as an initiative and a conceptual framework, subclass of principle; it is not typed as a standard.

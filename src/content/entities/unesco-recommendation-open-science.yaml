@@ -15,7 +15,7 @@ tags:
   - region:global
 lastReviewed: 2026-11-12
 relations:
-  - predicate: mandates
+  - predicate: related-to
     target: fair
     note: Advisory only; names FAIR (and CARE) as guiding principles for open
       research data and infrastructure, creating no binding duty.

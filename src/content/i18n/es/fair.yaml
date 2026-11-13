@@ -1,5 +1,5 @@
-summary: Los principios FAIR son pautas para que los datos sean fáciles de encontrar,
-  accesibles, compatibles entre sistemas y reutilizables, sin exigir que sean abiertos.
+summary: FAIR es un conjunto de principios orientadores para que los datos sean fáciles
+  de encontrar, accesibles, compatibles entre sistemas y reutilizables. No es un estándar.
 relationNotes:
   related-to@research-data-management: Principios para gestionar datos de investigación
     de modo que puedan reutilizarse.
@@ -8,4 +8,4 @@ relationNotes:
   related-to@metadata: La localización y la interoperabilidad dependen de metadatos
     ricos.
 body: |-
-  FAIR no es una norma técnica ni exige apertura: separa el acceso, que decide quien custodia los datos, de su descripción. Por eso puede aplicarse también a datos sensibles que no se pueden abrir.
+  FAIR es un conjunto de principios orientadores, no un estándar ni una certificación: los principios no definen una prueba de conformidad ni una certificación propia. Los redactó la comunidad FORCE11, se presentaron en un taller en 2014 y se publicaron en 2016; la iniciativa GO FAIR los promueve e interpreta. Estándares, repositorios y políticas pueden aplicar FAIR o remitir a él, pero FAIR es la idea con la que se relacionan. Tampoco exige abrir los datos: separa el acceso, que decide quien custodia los datos, de su descripción. Por eso puede aplicarse también a datos sensibles que no se pueden abrir.
