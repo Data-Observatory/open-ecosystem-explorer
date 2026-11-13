@@ -2,6 +2,7 @@
 	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
 	import ExternalLink from '$lib/components/ExternalLink.svelte';
+	import MiniGraph from '$lib/explorer/MiniGraph.svelte';
 	import { pagePath } from '$lib/locale';
 	import { fileHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
@@ -77,6 +78,9 @@
 		<h2 id="relations-h" class={sectionHeading}>{m.entity_relations_heading()}</h2>
 		{#if entity.relations.length === 0}
 			<p class="mt-3 text-zinc-700">{m.entity_no_relations()}</p>
+		{/if}
+		{#if data.graph}
+			<MiniGraph graph={data.graph} id={entity.id} name={entity.name} locale={data.locale} />
 		{/if}
 		{#each entity.relations as group (group.family)}
 			<h3 class="mt-6 text-sm font-semibold tracking-wide text-zinc-600 uppercase">

@@ -1,4 +1,5 @@
 import { error } from '@sveltejs/kit';
+import { miniGraph } from '$lib/server/map';
 import { entityPage } from '$lib/server/site';
 import { governanceLabel } from '$lib/labels';
 import type { Locale } from '$lib/locale';
@@ -11,5 +12,5 @@ export const load = async ({ params }) => {
 		governance: governanceLabel
 	});
 	if (!entity) error(404, 'Not found');
-	return { entity };
+	return { entity, graph: await miniGraph(params.id, params.locale as Locale) };
 };
