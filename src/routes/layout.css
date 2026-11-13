@@ -1,7 +1,7 @@
 @import 'tailwindcss';
 
-/* Self-hosted (not loaded from a CDN): the site makes no runtime requests to third
-   parties. Latin-subset variable fonts, one file per family (SIL OFL 1.1, see LICENSE-FONTS). */
+/* Self-hosted (not loaded from a CDN): the only runtime request to a third party is the
+   opt-out analytics container (see docs/analytics.md). Latin-subset variable fonts, one file per family (SIL OFL 1.1, see LICENSE-FONTS). */
 @font-face {
 	font-family: 'Inter';
 	font-style: normal;
