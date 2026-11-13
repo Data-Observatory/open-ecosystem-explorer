@@ -50,6 +50,41 @@ test.describe('starting view', () => {
 		await expect(node(page, 'cris')).toHaveAttribute('aria-label', /Sistema de información/);
 	});
 
+	test('size marks entry points, not hierarchy: the three open concepts share the top size', async ({
+		page
+	}) => {
+		await open(page, '/en/');
+		const sizes = await page.evaluate(() =>
+			Object.fromEntries(
+				[...document.querySelectorAll('[data-node-id]')].map((el) => [
+					el.getAttribute('data-node-id')!,
+					Math.round(el.querySelector('.glyph')!.getBoundingClientRect().width)
+				])
+			)
+		);
+		expect(sizes['open-data']).toBe(sizes['open-science']);
+		expect(sizes['open-access']).toBe(sizes['open-science']);
+		for (const [id, size] of Object.entries(sizes)) {
+			if (!['open-science', 'open-data', 'open-access'].includes(id))
+				expect(size, id).toBeLessThan(sizes['open-science']!);
+		}
+		// Open science keeps the centre and the tag.
+		await expect(page.locator('.start-tag')).toHaveCount(1);
+		await expect(node(page, 'open-science')).toContainText('Start here');
+		// No two labels overlap.
+		const boxes = await page
+			.locator('[data-node-id] .label')
+			.evaluateAll((labels) => labels.map((l) => l.getBoundingClientRect().toJSON()));
+		for (let i = 0; i < boxes.length; i++)
+			for (let j = i + 1; j < boxes.length; j++) {
+				const a = boxes[i]!;
+				const b = boxes[j]!;
+				const apart =
+					a.right <= b.left || b.right <= a.left || a.bottom <= b.top || b.bottom <= a.top;
+				expect(apart, `labels ${i} and ${j}`).toBe(true);
+			}
+	});
+
 	test('every node is a real link to its entry (works without the click handler)', async ({
 		page
 	}) => {
@@ -147,6 +182,64 @@ test.describe('selecting a node', () => {
 		await open(page, '/en/?n=doi');
 		await page.getByTestId('map-entry-link').click();
 		await page.waitForURL('**/en/entity/doi/');
+	});
+});
+
+test.describe('full screen', () => {
+	test('the map fills the viewport, keeps working, and Escape restores the page and focus', async ({
+		page
+	}) => {
+		await open(page, '/es/?n=doi');
+		const explorer = page.getByTestId('map-explorer');
+		const button = page.getByTestId('map-fullscreen');
+		await expect(button).toHaveAttribute('aria-pressed', 'false');
+		await expect(button).toContainText('Pantalla completa');
+		const before = (await page.getByTestId('map-stage').boundingBox())!;
+
+		await button.focus();
+		await page.keyboard.press('Enter');
+		await expect(explorer).toHaveAttribute('data-full', '');
+		await expect(button).toHaveAttribute('aria-pressed', 'true');
+		await expect(button).toContainText('Salir de pantalla completa');
+		const viewport = await page.evaluate(() => ({ w: innerWidth, h: innerHeight }));
+		await expect
+			.poll(async () => (await page.getByTestId('map-stage').boundingBox())!.height)
+			.toBeGreaterThan(viewport.h - 40);
+		const stage = (await page.getByTestId('map-stage').boundingBox())!;
+		expect(stage.width).toBeGreaterThan(viewport.w - 40);
+		expect(stage.height).toBeGreaterThan(before.height);
+
+		// Card, trail, search, stories and the expert toggle all work inside it.
+		await expect(page.getByTestId('map-card')).toBeVisible();
+		await page.locator('[data-pair="crossref|doi"]').click();
+		await expect(page.getByTestId('map-trail').locator('[aria-current]')).toHaveText('Crossref');
+		await page.keyboard.press('/');
+		await expect(page.getByTestId('map-palette')).toBeVisible();
+		await page.keyboard.type('FAIR');
+		await page.getByTestId('map-palette').locator('[data-option-kind=story]').first().click();
+		await expect(page.getByTestId('story-bar')).toBeVisible();
+		await expect(explorer).toHaveAttribute('data-full', '');
+		await page.getByTestId('story-exit').click();
+		await page.getByTestId('map-expert').click();
+		await expect(explorer).toHaveAttribute('data-scene', 'expert');
+		await page.getByTestId('map-expert').click();
+		await expectNoA11yViolations(page);
+
+		await page.keyboard.press('Escape');
+		await expect(explorer).not.toHaveAttribute('data-full', '');
+		await expect(button).toBeFocused();
+		await expect
+			.poll(async () => (await page.getByTestId('map-stage').boundingBox())!.height)
+			.toBeLessThan(viewport.h - 100);
+	});
+
+	test('the frame is wider than the text column on a large screen', async ({ page }) => {
+		await page.setViewportSize({ width: 1920, height: 1080 });
+		await open(page, '/en/');
+		const stage = (await page.getByTestId('map-stage').boundingBox())!;
+		expect(stage.width).toBeGreaterThan(1500);
+		expect(stage.width).toBeLessThanOrEqual(1600);
+		expect(stage.height).toBeGreaterThan(600);
 	});
 });
 
@@ -446,6 +539,23 @@ test.describe('phone 390x844: list first, map strip on top', () => {
 		await expect(card.getByRole('heading', { level: 2 })).toHaveText('DOI');
 	});
 
+	test('full screen: the strip grows, the card stays below it, nothing overflows', async ({
+		page
+	}) => {
+		await open(page, '/es/?n=doi');
+		const before = (await page.getByTestId('map-stage').boundingBox())!;
+		await page.getByTestId('map-fullscreen').click();
+		await expect(page.getByTestId('map-explorer')).toHaveAttribute('data-full', '');
+		await expect
+			.poll(async () => (await page.getByTestId('map-stage').boundingBox())!.height)
+			.toBeGreaterThan(before.height + 50);
+		await expect(page.getByTestId('map-card')).toBeVisible();
+		await expectNoHorizontalScroll(page);
+		await expectNoA11yViolations(page);
+		await page.getByTestId('map-fullscreen').click();
+		await expect(page.getByTestId('map-explorer')).not.toHaveAttribute('data-full', '');
+	});
+
 	for (const url of [
 		'/en/?historia=latin-america-indexing&paso=4',
 		'/es/?modo=experto',
@@ -489,6 +599,14 @@ test.describe('no JavaScript', () => {
 		await expect(page.locator('[data-node-id=doi]')).toHaveAttribute('href', '/es/entity/doi/');
 		await expect(page.getByTestId('map-search')).toBeHidden();
 		await expect(page.getByText('Sin JavaScript el mapa es una imagen fija')).toBeVisible();
+	});
+
+	test('the question chips are plain links to the step-list pages', async ({ page }) => {
+		await page.goto('/es/');
+		const chip = page.getByTestId('question-chips').locator('a').first();
+		await expect(chip).toHaveAttribute('href', /\/es\/stories\/[a-z-]+\/$/);
+		await chip.click();
+		await expect(page.getByTestId('story-steps')).toBeVisible();
 	});
 
 	test('the entity mini-graph is in the HTML', async ({ page }) => {

@@ -125,6 +125,13 @@ test.describe('entity page', () => {
 		await expect(page.getByTestId('entity-summary')).not.toBeEmpty();
 		await expect(page.getByTestId('local-note')).toBeVisible();
 		await expect(page.getByTestId('relation-sentences').first()).toContainText('DOI');
+		// Neutral group headings; loose `related-to` links are their own last group.
+		const headings = await page
+			.locator('section[aria-labelledby=relations-h] h3')
+			.allTextContents();
+		expect(headings[0]?.trim()).toBe('Qué es');
+		expect(headings.at(-1)?.trim()).toBe('Relacionado con');
+		expect(headings.join(' ')).not.toContain('Es un/a');
 		await expect(
 			page.getByTestId('relation-sentences').getByRole('link', { name: 'Crossref' })
 		).toHaveAttribute('href', '/es/entity/crossref/');
