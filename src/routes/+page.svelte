@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import { DEFAULT_LOCALE, LOCALES, LOCALE_NAMES, pagePath } from '$lib/locale';
+	import { localeHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
 
 	// The language gateway, as on the Astro site: `/` is never a content page. A 0-second meta
@@ -27,7 +28,8 @@
 		{#each LOCALES as locale (locale)}
 			<li>
 				<a
-					href={pagePath(base, locale)}
+					href={localeHref(locale)}
+					data-sveltekit-reload
 					hreflang={locale}
 					lang={locale}
 					class="inline-block rounded-full px-4 py-2 text-sm font-medium text-zinc-700 ring-1 ring-zinc-300 hover:bg-zinc-50"

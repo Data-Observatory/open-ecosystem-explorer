@@ -42,6 +42,8 @@ bun.lockb
 /src/lib/mermaid/
 /src/lib/model/
 /src/lib/views/
+/src/lib/stories/
+/.vscode/
 /src/i18n/
 /scripts/
 /tests/unit/

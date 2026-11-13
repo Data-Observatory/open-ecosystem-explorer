@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
+	import { fileHref } from '$lib/paths';
 	import {
 		LOCALES,
 		LOCALE_NAMES,
@@ -31,7 +32,11 @@
 		{
 			href: href('views'),
 			label: m.nav_questions(),
-			routes: ['/[locale=locale]/views', '/[locale=locale]/views/[id]']
+			routes: [
+				'/[locale=locale]/views',
+				'/[locale=locale]/views/[id]',
+				'/[locale=locale]/stories/[id]'
+			]
 		},
 		{
 			href: href('about'),
@@ -87,7 +92,7 @@
 		rel="alternate"
 		type="application/rss+xml"
 		title={m.footer_feed()}
-		href={`${base}/${locale}/feed.xml`}
+		href={fileHref(`/${locale}/feed.xml`)}
 	/>
 </svelte:head>
 
@@ -161,9 +166,15 @@
 	<footer class="mt-16 bg-zinc-900 py-10 text-zinc-300 print:hidden">
 		<div class="mx-auto max-w-5xl px-6">
 			<ul class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
-				<li><a href={`${href('about')}#downloads`} class={linkClass}>{m.footer_data()}</a></li>
 				<li>
-					<a href={`${href('about')}#contribute`} class={linkClass}>{m.footer_contribute()}</a>
+					<a href={`${href('about')}#downloads` as ResolvedPathname} class={linkClass}
+						>{m.footer_data()}</a
+					>
+				</li>
+				<li>
+					<a href={`${href('about')}#contribute` as ResolvedPathname} class={linkClass}
+						>{m.footer_contribute()}</a
+					>
 				</li>
 				<li>
 					<a href={href('changelog')} class={linkClass} data-testid="last-updated"
@@ -171,7 +182,7 @@
 					>
 				</li>
 				<li>
-					<a href={`${base}/${locale}/feed.xml`} class={linkClass} data-sveltekit-reload
+					<a href={fileHref(`/${locale}/feed.xml`)} class={linkClass} data-sveltekit-reload
 						>{m.footer_feed()}</a
 					>
 				</li>

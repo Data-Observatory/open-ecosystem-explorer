@@ -5,10 +5,7 @@
  * "indice" matches "Índice".
  */
 export function fold(text: string): string {
-	return text
-		.normalize('NFD')
-		.replace(/[̀-ͯ]/g, '')
-		.toLowerCase();
+	return text.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
 }
 
 export interface FilterableEntry {
@@ -34,7 +31,10 @@ export function isFilterActive(filter: GlossaryFilter): boolean {
 }
 
 /** Reads `?q=` and `?type=a,b` (unknown types are dropped). */
-export function filterFromQuery(params: URLSearchParams, knownTypes: readonly string[]): GlossaryFilter {
+export function filterFromQuery(
+	params: URLSearchParams,
+	knownTypes: readonly string[]
+): GlossaryFilter {
 	const types = (params.get('type') ?? '')
 		.split(',')
 		.map((t) => t.trim())

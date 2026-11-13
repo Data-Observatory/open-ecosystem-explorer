@@ -48,10 +48,8 @@
 
 	function syncUrl() {
 		const params = filterToQuery(filter).toString();
-		const url = new URL(page.url);
-		url.search = params;
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- same page, only the query changes
-		replaceState(url, page.state);
+		replaceState(`${page.url.pathname}${params ? `?${params}` : ''}${page.url.hash}`, page.state);
 	}
 
 	function toggleType(type: string) {

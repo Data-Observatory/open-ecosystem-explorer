@@ -19,7 +19,7 @@ export default defineConfig(
 			'src/layouts/**',
 			'astro.config.mjs',
 			// Pre-migration TypeScript, linted after the post-merge reformat (see MIGRATION.md).
-			'src/lib/{a11y,export,graph,i18n,invariants,map,markdown,mermaid,model,views}/**',
+			'src/lib/{a11y,export,graph,i18n,invariants,map,markdown,mermaid,model,stories,views}/**',
 			'src/i18n/**',
 			'scripts/**',
 			'tests/unit/**',

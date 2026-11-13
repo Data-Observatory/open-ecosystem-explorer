@@ -3,6 +3,7 @@
 	import type { ResolvedPathname } from '$app/types';
 	import ExternalLink from '$lib/components/ExternalLink.svelte';
 	import { pagePath } from '$lib/locale';
+	import { fileHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
 
 	let { data } = $props();
@@ -32,7 +33,10 @@
 
 <article class="mx-auto max-w-3xl px-4 pb-8 sm:px-6" data-testid="entity-page">
 	{#if entity.fallback}
-		<p role="note" class="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-zinc-800 ring-1 ring-amber-200">
+		<p
+			role="note"
+			class="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-zinc-800 ring-1 ring-amber-200"
+		>
 			{m.entity_fallback_notice()}
 		</p>
 	{/if}
@@ -46,7 +50,11 @@
 		>
 			{entity.name}
 		</h1>
-		<p class="mt-4 text-lg leading-relaxed text-zinc-800" lang={proseLang} data-testid="entity-summary">
+		<p
+			class="mt-4 text-lg leading-relaxed text-zinc-800"
+			lang={proseLang}
+			data-testid="entity-summary"
+		>
 			{entity.summary}
 		</p>
 	</header>
@@ -71,16 +79,22 @@
 			<p class="mt-3 text-zinc-700">{m.entity_no_relations()}</p>
 		{/if}
 		{#each entity.relations as group (group.family)}
-			<h3 class="mt-6 text-sm font-semibold tracking-wide text-zinc-600 uppercase">{group.label}</h3>
+			<h3 class="mt-6 text-sm font-semibold tracking-wide text-zinc-600 uppercase">
+				{group.label}
+			</h3>
 			<ul class="mt-2 space-y-2" data-testid="relation-sentences">
 				{#each group.sentences as sentence, i (i)}
 					<li class="leading-relaxed">
 						{#if sentence.selfIsSubject}
 							{entity.name}
 							{sentence.verb}
-							<a href={href(`entity/${sentence.other.id}`)} class={linkClass}>{sentence.other.name}</a>.
+							<a href={href(`entity/${sentence.other.id}`)} class={linkClass}
+								>{sentence.other.name}</a
+							>.
 						{:else}
-							<a href={href(`entity/${sentence.other.id}`)} class={linkClass}>{sentence.other.name}</a>
+							<a href={href(`entity/${sentence.other.id}`)} class={linkClass}
+								>{sentence.other.name}</a
+							>
 							{sentence.verb}
 							{entity.name}.
 						{/if}
@@ -114,7 +128,8 @@
 		<summary
 			class="cursor-pointer list-none rounded-2xl px-5 py-4 font-heading text-lg font-semibold text-zinc-900 hover:bg-zinc-50"
 		>
-			<span aria-hidden="true" class="mr-2 inline-block transition-transform group-open:rotate-90">›</span
+			<span aria-hidden="true" class="mr-2 inline-block transition-transform group-open:rotate-90"
+				>›</span
 			>{m.entity_details()}
 		</summary>
 		<div class="space-y-8 px-5 pt-2 pb-6">
@@ -180,7 +195,9 @@
 				<ul class="mt-2 list-disc space-y-1 pl-6 text-sm">
 					{#each entity.sources as source (source.url)}
 						<li class="break-words">
-							<ExternalLink href={source.url} class={linkClass}>{source.title ?? source.url}</ExternalLink>
+							<ExternalLink href={source.url} class={linkClass}
+								>{source.title ?? source.url}</ExternalLink
+							>
 							({m.entity_accessed({ date: source.accessed })}){#if source.note}: {source.note}{/if}
 						</li>
 					{/each}
@@ -189,7 +206,7 @@
 
 			<p class="text-sm text-zinc-700">{m.entity_last_reviewed({ date: entity.lastReviewed })}</p>
 			<p class="text-sm">
-				<a href={`${base}/entity/${entity.id}.json`} class={linkClass} data-sveltekit-reload
+				<a href={fileHref(`/entity/${entity.id}.json`)} class={linkClass} data-sveltekit-reload
 					>{m.entity_raw_json()}</a
 				>
 			</p>
