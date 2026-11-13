@@ -41,6 +41,18 @@ relations:
     verified:
       date: 2026-09-06
       url: https://support.datacite.org/docs/doi-persistence
+  - predicate: member-of
+    target: international-doi-foundation
+    note: 'Registration Agency member of the DOI Foundation.'
+    sources:
+      - url: https://www.doi.org/the-community/who-are-the-members-and-users/
+        accessed: 2026-11-13
+        note: 'Four classes of membership: General, Registration Agency, Charter and Affiliate.'
+      - url: https://www.doi.org/the-community/existing-registration-agencies/
+        accessed: 2026-11-13
+        note: 'Lists the existing Registration Agencies, among them this one.'
+      - url: https://www.wikidata.org/wiki/Q821542#P463
+        accessed: 2026-11-13
 sources:
   - url: https://datacite.org/fees/
     accessed: 2026-11-12

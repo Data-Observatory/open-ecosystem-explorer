@@ -13,7 +13,16 @@ identifiers:
 tags:
   - region:north-america
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/cornell
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q49115#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.cornell.edu/about/
     accessed: 2026-09-04

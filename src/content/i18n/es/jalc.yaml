@@ -1,6 +1,8 @@
 summary: JaLC es la organización japonesa autorizada para asignar DOI a publicaciones
   y datos de investigación.
 relationNotes:
+  member-of@international-doi-foundation: 'Miembro de la Fundación DOI como agencia de registro.'
+  member-of@datacite: 'Miembro de DataCite que lidera un consorcio.'
   issues@doi: Agencia nacional de DOI de Japón, que cubre publicaciones y datos de
     investigación.
 body: |-

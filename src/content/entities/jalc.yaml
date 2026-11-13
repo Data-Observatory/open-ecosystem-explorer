@@ -23,6 +23,27 @@ relations:
     target: doi
     note: Japan's national DOI registration agency, covering publications and
       research data.
+  - predicate: member-of
+    target: datacite
+    note: 'Member of DataCite that leads a consortium.'
+    sources:
+      - url: https://api.datacite.org/providers/jalcco
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType consortium.'
+      - url: https://www.wikidata.org/wiki/Q100319347#P463
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: international-doi-foundation
+    note: 'Registration Agency member of the DOI Foundation.'
+    sources:
+      - url: https://www.doi.org/the-community/who-are-the-members-and-users/
+        accessed: 2026-11-13
+        note: 'Four classes of membership: General, Registration Agency, Charter and Affiliate.'
+      - url: https://www.doi.org/the-community/existing-registration-agencies/
+        accessed: 2026-11-13
+        note: 'Lists the existing Registration Agencies, among them this one.'
+      - url: https://www.wikidata.org/wiki/Q100319347#P463
+        accessed: 2026-11-13
 sources:
   - url: https://japanlinkcenter.org/top/english.html
     accessed: 2026-09-04

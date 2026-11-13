@@ -16,7 +16,16 @@ tags:
   - region:north-america
   - openness:open-governance
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/cos
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q16972305#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.cos.io/about/mission
     accessed: 2026-09-04

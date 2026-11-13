@@ -1,5 +1,6 @@
 summary: Agencia regional europea de registro de DOI, orientada principalmente a publicaciones.
 relationNotes:
+  member-of@international-doi-foundation: 'Miembro de la Fundación DOI como agencia de registro.'
   issues@doi: Agencia regional de DOI para publicaciones, con foco en Europa multilingüe.
 body: |-
   mEDRA es la agencia europea multilingüe de registro de DOI; es una marca de ediSer, la empresa de servicios de la Asociación Italiana de Editores.

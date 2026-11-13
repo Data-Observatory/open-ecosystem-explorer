@@ -59,6 +59,15 @@ relations:
   - predicate: related-to
     target: preprint
     note: Server that hosts preprints; it is a platform, not a preprint.
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/arxiv
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q118398#P463
+        accessed: 2026-11-13
 sources:
   - url: https://info.arxiv.org/about/index.html
     accessed: 2026-11-12

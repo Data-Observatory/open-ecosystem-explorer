@@ -1,6 +1,7 @@
 summary: arXiv is an online server where researchers in physics, mathematics, computer
   science and other fields post preprints before peer review.
 relationNotes:
+  member-of@datacite: 'Direct member of DataCite.'
   funded-by@cornell: One of several funders until June 2026, alongside the Simons Foundation and a consortium of member institutions.
   implements@oai-pmh: arXiv exposes its metadata through OAI-PMH. Claims that it was an early implementer or that the protocol grew out of its harvesting needs are unverified here.
   related-to@preprint: A server that hosts preprints; it is a platform, not a preprint.

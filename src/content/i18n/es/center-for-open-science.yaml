@@ -1,4 +1,6 @@
 summary: El Center for Open Science es una organización sin fines de lucro que promueve
   la ciencia abierta y opera OSF, plataforma de proyectos y datos.
+relationNotes:
+  member-of@datacite: 'Miembro directo de DataCite.'
 body: |-
   El Center for Open Science (COS) desarrolla y opera OSF (Open Science Framework), y promueve prácticas de ciencia abierta en general.

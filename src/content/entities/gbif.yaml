@@ -28,6 +28,15 @@ relations:
     target: datacite
     note: GBIF's IPT mints dataset and derived-dataset DOIs through a DataCite
       account.
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/gbif
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q1531570#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.gbif.org/what-is-gbif
     accessed: 2026-09-04

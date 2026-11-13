@@ -45,3 +45,21 @@ describe('signatory convention: declarations and initiatives are endorsed-by the
     }
   });
 });
+
+describe('member-of range: membership organisations may be agencies or organisations', () => {
+  it('range covers community, coalition, aggregator, agency and organization', () => {
+    for (const t of ['community', 'coalition', 'aggregator', 'agency', 'organization']) expect(def('member-of').range, t).toContain(t);
+  });
+
+  it('an agency member-of an agency type-checks (I8), as Crossref in DataCite', () => {
+    const input = withEntity(freshInput(), 'fx-community', { relations: [{ predicate: 'member-of', target: 'fx-agency' }] });
+    expect(runValidation(input).messages.filter((m) => m.ruleId === 'I8')).toEqual([]);
+  });
+
+  it('real graph: DataCite and the International DOI Foundation have members', () => {
+    const entities = loadRealEntities();
+    const members = (target: string) => entities.filter((e) => (e.relations ?? []).some((r) => r.predicate === 'member-of' && r.target === target)).map((e) => e.id);
+    expect(members('datacite')).toEqual(expect.arrayContaining(['crossref', 'cern', 'arxiv']));
+    expect(members('international-doi-foundation')).toEqual(expect.arrayContaining(['crossref', 'datacite', 'medra', 'jalc']));
+  });
+});

@@ -46,6 +46,15 @@ relations:
       url: https://www.marum.de/en/PANGAEA-Data-Publisher-for-Earth-and-Environmental-Science-2.html
   - predicate: is-a
     target: research-repository
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/pangaea
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q947684#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.pangaea.de/
     accessed: 2026-09-04

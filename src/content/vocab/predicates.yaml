@@ -168,7 +168,14 @@ member-of:
   # same rationale as operated-by/developed-by/governed-by's earlier
   # widenings above. Judgment call, flagged for review.
   domain: [organization, repository, aggregator, publishing-platform, agency, index, community, coalition, standard]
-  range: [community, coalition, aggregator]
+  # Range widened (owner decision, from the Wikidata cross-check) to include
+  # `agency` and `organization`: membership organisations are routinely
+  # registration agencies or plain organisations, not only communities or
+  # coalitions. DataCite is an `agency` whose members include Crossref, CERN,
+  # arXiv and others; the International DOI Foundation is an `organization`
+  # whose members are the DOI registration agencies. Declaration signatories
+  # are not members: they are `endorsed-by` (see that predicate).
+  range: [community, coalition, aggregator, agency, organization]
   symmetric: false
   acyclic: true
   sameTypeOnly: false
