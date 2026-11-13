@@ -1,12 +1,14 @@
 <script lang="ts">
 	import type { ClassValue } from 'svelte/elements';
+	import { goto } from '$app/navigation';
 	import type { ResolvedPathname } from '$app/types';
 	import { localeHref } from '$lib/paths';
 	import type { Locale } from '$lib/locale';
 
-	// Question chips for the guided stories: each one plays its story on the home page's map
-	// (`?historia=<id>&paso=1`, read by the explorer after the navigation). The same steps are an
-	// ordered list on /{locale}/stories/{id}/ for readers without JavaScript.
+	// Question chips for the guided stories. Progressive enhancement: the link goes to the
+	// story's step list (/{locale}/stories/{id}/), which works without JavaScript; with
+	// JavaScript a plain click plays the story on the home page's map instead
+	// (`?historia=<id>&paso=1`, read by the explorer after the navigation).
 	let {
 		stories,
 		locale,
@@ -21,6 +23,13 @@
 	} = $props();
 
 	const play = (id: string) => `${localeHref(locale)}?historia=${id}&paso=1` as ResolvedPathname;
+
+	function onclick(event: MouseEvent, id: string) {
+		if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
+			return;
+		event.preventDefault();
+		void goto(play(id), { noScroll: true });
+	}
 </script>
 
 <ul
@@ -36,9 +45,9 @@
 	{#each stories as story (story.id)}
 		<li class="shrink-0 sm:shrink">
 			<a
-				href={play(story.id)}
+				href={localeHref(locale, `stories/${story.id}`)}
 				data-story-id={story.id}
-				data-sveltekit-noscroll
+				onclick={(event) => onclick(event, story.id)}
 				class="inline-block rounded-full bg-white px-4 py-2 text-sm text-zinc-800 ring-1 ring-zinc-300 transition-colors hover:bg-blue-50 hover:ring-blue-600"
 			>
 				{story.question}
