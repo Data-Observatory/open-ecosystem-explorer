@@ -2,6 +2,8 @@
 
 ## [Unreleased]
 
+- `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
+
 ### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
 
 - Stack of the Data Observatory sister sites: SvelteKit 2, Svelte 5, Tailwind 4, adapter-static, Paraglide UI strings (`messages/{es,en}.json`), self-hosted Inter and Space Grotesk. Same URL shape (`/es/...`, `/en/...`, trailing slash) and the same data export URLs; `SITE_URL` makes sitemap, feed and canonical URLs absolute.

@@ -9,11 +9,13 @@ identifiers:
   wikidata: Q595786
 outputLicence: not-applicable
 repositoryKind: software-platform
+persistentIdScheme:
+  - handle-system
 tags:
   - function:deposit
   - function:preservation
   - openness:open-source
-lastReviewed: 2026-09-06
+lastReviewed: 2026-11-13
 relations:
   - predicate: governed-by
     target: lyrasis
