@@ -1,6 +1,5 @@
 summary: Non-profit DOI registration agency focused on scholarly publications, the DataCite equivalent for articles.
 relationNotes:
-  member-of@barcelona-declaration: Listed as a supporter of the Declaration (not a signatory).
   issues@doi: DOI for scholarly publications, usually registered through the journal or publisher.
   complies-with@posi: Adopted by Crossref board vote in 2020; publishes periodic self-assessments against POSI.
 localNote: Chile is not among the countries eligible for Crossref's GEM programme.

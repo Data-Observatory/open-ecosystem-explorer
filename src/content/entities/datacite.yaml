@@ -41,12 +41,6 @@ relations:
     verified:
       date: 2026-09-06
       url: https://support.datacite.org/docs/doi-persistence
-  - predicate: member-of
-    target: barcelona-declaration
-    note: Listed as a supporter (infrastructure provider), not as a signatory.
-    verified:
-      date: 2026-11-12
-      url: https://barcelona-declaration.org/signatories/
 sources:
   - url: https://datacite.org/fees/
     accessed: 2026-11-12

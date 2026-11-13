@@ -240,7 +240,15 @@ endorsed-by:
   label: { es: respaldado por, en: endorsed by }
   inverseLabel: { es: respalda, en: endorses }
   domain: [standard, policy, coalition]
-  range: [organization, community, coalition]
+  # Range widened to every type that can publicly sign or support: this is
+  # also the signatory convention (owner decision). Declarations and
+  # initiatives (DORA, Barcelona Declaration, ...) are `endorsed-by` their
+  # signatories/supporters, authored on the declaration; `member-of` is kept
+  # for genuine organisational membership (CoARA, RDA, COAR, W3C, ...).
+  # Infrastructure signatories are agencies, aggregators and indexes (Crossref,
+  # DataCite, OpenAIRE, OpenAlex, OpenCitations on the Barcelona Declaration),
+  # which the narrower range made unauthorable.
+  range: [organization, community, coalition, agency, aggregator, index, repository, publishing-platform, cris]
   symmetric: false
   acyclic: false
   sameTypeOnly: false

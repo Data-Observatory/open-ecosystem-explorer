@@ -1,6 +1,5 @@
 summary: Nonprofit DOI registration agency focused on datasets, software, reports and research platforms.
 relationNotes:
-  member-of@barcelona-declaration: Listed as a supporter of the Declaration, not as a signatory.
   issues@doi: €2,000 membership plus an infrastructure fee of €200–700, scaled to context; no charge per DOI below 100,000 a year.
   issues@igsn: IGSNs for physical samples are issued as a DataCite record type.
 localNote: In Chile, DataCite consortia are led by Data Observatory and by the University of Chile library system (SISIB).

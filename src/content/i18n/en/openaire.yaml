@@ -3,8 +3,6 @@ summary: OpenAIRE is a European infrastructure that gathers content from many re
 relationNotes:
   indexes@zenodo: OpenAIRE and Zenodo have worked closely together since Zenodo launched
     in 2013; OpenAIRE aggregates and links its records.
-  member-of@barcelona-declaration: Listed as a supporter on the Barcelona Declaration
-    website; OpenAIRE presents itself as a signatory.
   related-to@research-repository: 'Gathers content from institutional and other repositories and links it to funding data.'
 body: |-
   OpenAIRE aggregates content from institutional repositories in Europe and connects it with funding data.
