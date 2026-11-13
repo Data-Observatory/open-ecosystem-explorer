@@ -2,6 +2,7 @@ summary: Un CRIS es un sistema de información que enlaza proyectos, personas, i
   y productos de investigación para que instituciones y financiadores los gestionen
   y reporten.
 name: Sistema de información de investigación (CRIS)
+shortName: CRIS
 aka:
   - Sistema de información de investigación
   - RIS

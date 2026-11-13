@@ -46,10 +46,11 @@ async function buildSiteIndex(): Promise<GraphIndex> {
   for (const entry of i18nEntries) {
     // id is `<locale>/<entityId>` (loaders.ts's localeAwareId).
     const [locale, id] = entry.id.split('/') as [LocaleCode, EntityId];
-    const data = entry.data as unknown as { summary: string; name?: string; aka?: string[]; relationNotes?: Record<string, string>; localNote?: string; body: string };
+    const data = entry.data as unknown as { summary: string; name?: string; shortName?: string; aka?: string[]; relationNotes?: Record<string, string>; localNote?: string; body: string };
     prose.get(locale)?.set(id, {
       summary: data.summary,
       name: data.name,
+      shortName: data.shortName,
       aka: data.aka,
       relationNotes: data.relationNotes,
       localNote: data.localNote,

@@ -1,6 +1,7 @@
 summary: La gestión de datos de investigación es el conjunto de prácticas para planificar,
   documentar, guardar y compartir datos de un proyecto y poder reutilizarlos.
 name: Gestión de datos de investigación
+shortName: Gestión de datos
 localNote: En Chile, la política de ANID exige un plan de gestión de datos a quien
   recibe su financiamiento y publicar los datos como máximo un año después del informe
   final.

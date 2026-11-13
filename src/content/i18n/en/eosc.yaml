@@ -1,5 +1,6 @@
 summary: 'EOSC is the European open science cloud: a federated infrastructure of independent
   services linked together, for sharing research data.'
+shortName: EOSC
 relationNotes:
   interoperates-with@openaire: OpenAIRE is a core service provider for discovery and resource-catalogue services for the EOSC EU Node.
 body: |-

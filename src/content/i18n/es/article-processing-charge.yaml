@@ -1,6 +1,7 @@
 summary: Un cargo por publicación (APC) es una tarifa que cobra una revista, pagada
   por autores o financiadores, para publicar un artículo en acceso abierto.
 name: Cargo por publicación (APC)
+shortName: APC
 aka:
   - APC
 relationNotes:

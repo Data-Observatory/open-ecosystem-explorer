@@ -694,6 +694,41 @@ describe('I30 — non-default-locale translation coverage and relationNotes', ()
     expect(msg).toBeUndefined();
   });
 
+  it('requires shortName in every locale that has a prose file, or in none', () => {
+    const input = freshInput();
+    const es = input.proseFiles.find((p) => p.locale === 'es' && input.proseFiles.some((q) => q.locale === 'en' && q.id === p.id))!;
+    const one = withProse(input, es.id, 'es', { shortName: 'Fx' });
+    const errs = runValidation(one).errors.filter((m) => m.ruleId === 'I30' && m.field === 'shortName');
+    expect(errs).toHaveLength(1);
+    expect(errs[0]!.message).toContain("missing in 'en'");
+    const both = withProse(one, es.id, 'en', { shortName: 'Fx' });
+    expect(runValidation(both).errors.filter((m) => m.field === 'shortName')).toEqual([]);
+  });
+
+  it('leaves shortName parity to the coverage warning when a locale has no prose file at all', () => {
+    const input = freshInput();
+    const esOnly = input.proseFiles.find((p) => p.locale === 'es' && !input.proseFiles.some((q) => q.locale === 'en' && q.id === p.id))!;
+    const result = runValidation(withProse(input, esOnly.id, 'es', { shortName: 'Fx' }));
+    expect(result.errors.filter((m) => m.field === 'shortName')).toEqual([]);
+  });
+
+  it('measures a stray prose file (no facts file) against its id', () => {
+    const input = freshInput();
+    const es = input.proseFiles.find((p) => p.locale === 'es')!;
+    input.proseFiles.push({ ...es, id: 'zz', file: 'src/content/i18n/es/zz.yaml', prose: { ...es.prose, name: undefined, shortName: 'Longer than zz' } });
+    const result = runValidation(input);
+    expect(result.errors.some((m) => m.file.endsWith('zz.yaml') && m.field === 'shortName')).toBe(true);
+  });
+
+  it('rejects a shortName longer than the name it abbreviates', () => {
+    const input = freshInput();
+    const es = input.proseFiles.find((p) => p.locale === 'es')!;
+    const name = es.prose.name ?? input.entityFiles.find((e) => e.id === es.id)!.entity.name;
+    const tooLong = `${name} extra`.slice(0, 24).padEnd(name.length + 1, 'x');
+    const result = runValidation(withProse(input, es.id, 'es', { shortName: tooLong }));
+    expect(result.errors.some((m) => m.ruleId === 'I30' && m.field === 'shortName' && m.message.includes('longer than'))).toBe(true);
+  });
+
   it('does not warn about a non-default locale once every entity is translated', () => {
     const input = freshInput();
     const esProse = input.proseFiles.filter((p) => p.locale === 'es');

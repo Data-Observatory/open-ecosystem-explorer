@@ -54,6 +54,7 @@ function buildProseMap(
     map.get(p.locale)!.set(p.id, {
       summary: p.prose.summary,
       name: p.prose.name,
+      shortName: p.prose.shortName,
       aka: p.prose.aka,
       relationNotes: p.prose.relationNotes,
       localNote: p.prose.localNote,

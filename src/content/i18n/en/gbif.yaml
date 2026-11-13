@@ -1,4 +1,5 @@
 summary: Intergovernmental infrastructure for biodiversity data, with global reach.
+shortName: GBIF
 relationNotes:
   depends-on@datacite: GBIF's IPT mints dataset and derived-dataset DOIs through a DataCite account.
 body: |-

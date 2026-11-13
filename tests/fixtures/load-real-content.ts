@@ -68,7 +68,7 @@ export function loadRealProseMap(onlyIds?: readonly EntityId[]): Map<LocaleCode,
       const raw = readFileSync(full, 'utf-8');
       const data = parseYaml(raw) as Record<string, unknown>;
       const parsed = zProseFile.parse(normalizeDates(data));
-      localeMap.set(id, { summary: parsed.summary, name: parsed.name, aka: parsed.aka, relationNotes: parsed.relationNotes, body: parsed.body });
+      localeMap.set(id, { summary: parsed.summary, name: parsed.name, shortName: parsed.shortName, aka: parsed.aka, relationNotes: parsed.relationNotes, body: parsed.body });
     }
     map.set(code, localeMap);
   }

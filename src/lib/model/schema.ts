@@ -249,6 +249,10 @@ export type ZEntity = z.infer<typeof zEntity>;
 export const zProseFile = z.object({
   summary: z.string().min(40).max(200),
   name: z.string().min(2).max(80).optional(),
+  // Optional short label for tight spaces (map nodes): 'Gestión de datos' for
+  // 'Gestión de datos de investigación'. Never longer than the name; if one
+  // locale sets it, every locale must (I30).
+  shortName: z.string().min(2).max(24).optional(),
   aka: z.array(z.string()).max(8).optional(),
   relationNotes: z.record(z.string(), z.string().max(280)).optional(),
   // Optional 'In Chile' callout (<=30 words, ~240 chars): the only place a

@@ -14,6 +14,11 @@
           "minLength": 2,
           "maxLength": 80
         },
+        "shortName": {
+          "type": "string",
+          "minLength": 2,
+          "maxLength": 24
+        },
         "aka": {
           "type": "array",
           "items": {
