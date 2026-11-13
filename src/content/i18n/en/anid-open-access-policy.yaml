@@ -7,6 +7,7 @@ relationNotes:
   mandates@oai-pmh: Repositories used for ANID-funded data must interoperate with
     the ANID repository via OAI-PMH.
   related-to@research-data-management: 'Requires grantees to submit a data management plan whose purpose is to make the data publicly available.'
+  related-to@data-management-plan: 'Requires grantees to submit a data management plan to guarantee public availability of the data.'
   related-to@research-repository: 'Funded articles go to the agency''s repository; data to the agency''s, an institutional or a disciplinary repository.'
   related-to@open-access: 'The policy''s subject: open access to publicly funded scientific information and research data.'
 body: |-

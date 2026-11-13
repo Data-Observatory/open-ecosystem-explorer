@@ -1,0 +1,6 @@
+summary: datos.gob.cl es el portal de datos abiertos del Estado de Chile, donde las instituciones públicas publican conjuntos de datos que cualquiera puede buscar y descargar.
+relationNotes:
+  is-a@open-data-portal: El portal nacional de datos abiertos del Estado.
+  related-to@open-data: Publica datos del sector público para reutilizarlos en aplicaciones e investigación.
+body: |-
+  Según su sitio, pertenece al Ministerio de Hacienda y ordena los conjuntos de datos por institución y categoría. Ofrece además casos de reutilización, guías, tutoriales y capacitación para instituciones públicas.

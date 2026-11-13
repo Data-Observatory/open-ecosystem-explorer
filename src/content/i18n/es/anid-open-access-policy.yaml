@@ -8,6 +8,7 @@ relationNotes:
   mandates@oai-pmh: Los repositorios usados para datos financiados por ANID deben
     ser interoperables con el repositorio de ANID mediante OAI-PMH.
   related-to@research-data-management: 'Exige a sus beneficiarios un plan de gestión de datos cuyo propósito es que los datos queden disponibles públicamente.'
+  related-to@data-management-plan: 'Exige a quien recibe financiamiento presentar un plan de gestión de datos para garantizar la disponibilidad pública de los datos.'
   related-to@research-repository: 'Los artículos financiados van al repositorio de la agencia; los datos, a ese, a uno institucional o a uno disciplinario.'
   related-to@open-access: 'El tema de la política: el acceso abierto a la información científica y a los datos de investigación financiados con fondos públicos.'
 body: |-
