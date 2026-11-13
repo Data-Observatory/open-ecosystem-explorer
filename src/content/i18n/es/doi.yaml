@@ -1,6 +1,7 @@
 summary: Identificador persistente de un objeto — artículo, dataset, informe, plataforma o software — que resuelve a su ubicación actual.
 relationNotes:
   depends-on@handle-system: Los nombres DOI son Handles; la resolución corre sobre el Handle System.
+  related-to@metadata: 'Cada DOI se registra con metadatos del objeto, que pueden actualizarse sin cambiar el DOI.'
 localNote: En Chile, Data Observatory lidera un consorcio de DataCite por el que sus miembros pueden registrar DOI.
 body: |-
   El DOI se asigna a través de agencias de registro como Crossref o DataCite y resuelve mediante el Handle System.

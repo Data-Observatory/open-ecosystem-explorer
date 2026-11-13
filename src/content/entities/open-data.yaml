@@ -14,6 +14,13 @@ relations:
   - predicate: related-to
     target: open-science
     note: 'A pillar of open science: free access to research data.'
+  - predicate: related-to
+    target: research-data-management
+    note: 'A data management plan sets out how and when research data will be made public.'
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+        note: 'Section TRES: the plan exists to guarantee public availability of the data.'
 sources:
   - url: https://opendefinition.org/od/2.1/en/
     accessed: 2026-11-12

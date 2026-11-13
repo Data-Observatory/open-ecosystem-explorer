@@ -12,6 +12,7 @@ import { join } from 'node:path';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import { zEntity, zProseFile } from '../src/lib/model/schema.js';
+import { zStory } from '../src/lib/stories/schema.js';
 
 const ROOT = join(import.meta.dirname, '..');
 const OUT_DIR = join(ROOT, 'schema');
@@ -42,7 +43,11 @@ function main(): void {
   const proseSchema = zodToJsonSchema(zProseFile, { name: 'Prose', $refStrategy: 'none' });
   writeFileSync(join(OUT_DIR, 'prose.schema.json'), JSON.stringify(proseSchema, null, 2) + '\n');
 
-  console.log('Wrote schema/entity.schema.json and schema/prose.schema.json');
+  // Stories carry their own id (checked against the filename, ST1), so nothing is stripped.
+  const storySchema = zodToJsonSchema(zStory, { name: 'Story', $refStrategy: 'none' });
+  writeFileSync(join(OUT_DIR, 'story.schema.json'), JSON.stringify(storySchema, null, 2) + '\n');
+
+  console.log('Wrote schema/entity.schema.json, schema/prose.schema.json and schema/story.schema.json');
 }
 
 main();

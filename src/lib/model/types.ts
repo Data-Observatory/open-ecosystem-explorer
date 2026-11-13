@@ -466,6 +466,7 @@ export interface EntityStats {
 export interface ResolvedProse {
   summary: string;
   name?: string;
+  shortName?: string;
   aka?: string[];
   relationNotes?: Record<string, string>;
   localNote?: string;
@@ -506,6 +507,7 @@ export interface View {
 export interface ProseFile {
   summary: string; // 40-200 chars (I14)
   name?: string;
+  shortName?: string; // <=24 chars, map label; set in every locale or none (I30)
   aka?: string[];
   relationNotes?: Record<string, string>; // "<predicate>@<target>" -> note (I30)
   localNote?: string; // optional 'In Chile' callout, <=30 words

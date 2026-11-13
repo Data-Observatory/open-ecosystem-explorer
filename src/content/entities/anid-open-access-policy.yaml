@@ -30,6 +30,20 @@ relations:
     target: oai-pmh
     note: Repositories used for ANID-funded data must interoperate with the ANID repository
       via OAI-PMH.
+  - predicate: related-to
+    target: research-data-management
+    note: 'Requires grantees to submit a data management plan whose purpose is to make the data publicly available.'
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+        note: 'Section TRES (research data).'
+  - predicate: related-to
+    target: research-repository
+    note: 'Funded articles go to the agency''s repository; data to the agency''s, an institutional or a disciplinary repository.'
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+        note: 'Sections DOS and TRES.'
 sources:
   - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
     accessed: 2026-11-12

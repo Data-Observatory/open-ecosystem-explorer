@@ -1,10 +1,13 @@
 summary: Política de la agencia chilena ANID que exige publicar en abierto los artículos
   y datos que financia, con un plan de gestión de datos.
 name: Política de acceso abierto de ANID
+shortName: Política de ANID
 relationNotes:
   governed-by@anid: Aprobada por ANID mediante la Resolución Exenta 3906/2022 del
     2 de mayo de 2022.
   mandates@oai-pmh: Los repositorios usados para datos financiados por ANID deben
     ser interoperables con el repositorio de ANID mediante OAI-PMH.
+  related-to@research-data-management: 'Exige a sus beneficiarios un plan de gestión de datos cuyo propósito es que los datos queden disponibles públicamente.'
+  related-to@research-repository: 'Los artículos financiados van al repositorio de la agencia; los datos, a ese, a uno institucional o a uno disciplinario.'
 body: |-
   Aprobada por ANID en 2022, exige a sus beneficiarios depositar la versión final de las publicaciones financiadas en el repositorio de ANID en un plazo no mayor a seis meses desde su publicación, presentar un plan de gestión de datos y publicar los datos de investigación en abierto.

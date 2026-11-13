@@ -7,6 +7,7 @@ import type { Entity, EntityId, PredicateId, Relation, View } from '../model/typ
 import { ACYCLIC_PREDICATES, ENTITY_TYPES, SYMMETRIC_PREDICATES } from '../model/types.js';
 import { findCycle } from '../graph/traverse.js';
 import type { InvariantMessage, RunContext } from './types.js';
+import type { LocaleCode } from '../../i18n/locales.js';
 
 const ID_RE = /^[a-z0-9]+(?:-[a-z0-9]+)*$/;
 const HTTPS_RE = /^https:\/\/[^\s]+$/;
@@ -890,6 +891,28 @@ export function ruleI30(ctx: RunContext): InvariantMessage[] {
       }
     }
   }
+
+  // shortName: a map label, so it must exist in every locale or in none, and
+  // never be longer than the name it abbreviates.
+  const withShort = new Map<EntityId, Set<LocaleCode>>();
+  for (const { file, id, locale, prose } of ctx.proseFiles) {
+    if (!prose.shortName) continue;
+    if (!withShort.has(id)) withShort.set(id, new Set());
+    withShort.get(id)!.add(locale);
+    const fullName = prose.name ?? byId.get(id)?.name ?? id;
+    if (prose.shortName.length > fullName.length) {
+      out.push(err('I30', file, `shortName '${prose.shortName}' is longer than the name '${fullName}'.`, 'Use a shorter label, or drop shortName.', 'shortName'));
+    }
+  }
+  for (const [id, have] of withShort) {
+    for (const locale of ctx.locales) {
+      if (have.has(locale)) continue;
+      // A locale with no prose file at all is the untranslated case above, not this one.
+      const file = ctx.proseFiles.find((p) => p.id === id && p.locale === locale)?.file;
+      if (!file) continue;
+      out.push(err('I30', file, `shortName is set in ${[...have].join(', ')} but missing in '${locale}'.`, 'Add shortName in every locale, or remove it from all of them.', 'shortName'));
+    }
+  }
   return out;
 }
 
@@ -1081,7 +1104,7 @@ export const RULES: RuleRunner[] = [
   { id: 'I27', level: 'WARN', description: 'An identifier entity with no inbound issues edge.', run: (ctx) => ruleI27(ctx) },
   { id: 'I28', level: 'WARN', description: 'Any generated diagram exceeds its node/edge budget (§6.4) before overflow collapsing; or the graph has >1 weakly connected component (prints each component\'s size and members).', run: (ctx) => ruleI28(ctx) },
   { id: 'I29', level: 'ERROR', description: 'Every entity and every view has a prose file in the default locale, with a valid summary. A facts file without content/i18n/<default>/<id>.yaml fails the build (§5.7).', run: (ctx) => ruleI29(ctx) },
-  { id: 'I30', level: 'WARN / ERROR', description: "WARN per missing non-default-locale prose file, aggregated as one line per locale (e.g. 'en: 12 of 78 entities untranslated') — or, with REQUIRE_FULL_I18N on (src/lib/invariants/config.ts / env), one ERROR per missing file. ERROR if a locale file declares a field outside the translatable set, or if a relationNotes key does not resolve to a relation authored in the facts file.", run: (ctx) => ruleI30(ctx) },
+  { id: 'I30', level: 'WARN / ERROR', description: "WARN per missing non-default-locale prose file, aggregated as one line per locale (e.g. 'en: 12 of 78 entities untranslated') — or, with REQUIRE_FULL_I18N on (src/lib/invariants/config.ts / env), one ERROR per missing file. ERROR if a locale file declares a field outside the translatable set, if a relationNotes key does not resolve to a relation authored in the facts file, or if shortName is longer than the name or set in some locales but not others.", run: (ctx) => ruleI30(ctx) },
   { id: 'I31', level: 'ERROR', description: 'An entity facts file has an empty Markdown body, and carries no summary or description. Prose exists only in content/i18n/** (C10).', run: (ctx, extra) => ruleI31(ctx, extra.entityBodies) },
   { id: 'I32', level: 'WARN', description: "Every edge of a governance predicate (owned-by, governed-by, operated-by, developed-by, funded-by) carries relations[].verified: { date, url } recording the primary source it was checked against.", run: (ctx) => ruleI32(ctx) },
   { id: 'I33', level: 'WARN', description: "Completeness floor: every repository/index/aggregator/publishing-platform has ≥1 of {operated-by, developed-by, governed-by}; every standard has ≥1 of {developed-by, governed-by}.", run: (ctx) => ruleI33(ctx) },

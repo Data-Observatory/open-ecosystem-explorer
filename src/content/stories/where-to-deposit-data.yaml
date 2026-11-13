@@ -1,0 +1,65 @@
+# Story: where to deposit research data. Facts come from the graph
+# (research-data-management, anid-open-access-policy, re3data, zenodo, ...).
+id: where-to-deposit-data
+theme: data
+title:
+  es: Dónde depositar tus datos
+  en: Where to deposit your data
+question:
+  es: ¿Dónde deposito mis datos?
+  en: Where do I deposit my data?
+steps:
+  - focus: research-data-management
+    text:
+      es: Empieza por un plan de gestión de datos. Indica qué datos producirás, cómo los describirás y dónde y cuándo los compartirás.
+      en: Start with a data management plan. It states what data you will produce, how you will describe them, and where and when you will share them.
+  - focus: anid-open-access-policy
+    edges:
+      - { source: anid-open-access-policy, predicate: related-to, target: research-data-management }
+    text:
+      es: En Chile, la política de ANID exige ese plan a quien recibe su financiamiento, y publicar los datos como máximo un año después del informe final.
+      en: In Chile, ANID's policy requires that plan from its grantees, and asks them to publish the data at most one year after the final report.
+  - focus: research-repository
+    edges:
+      - { source: research-data-management, predicate: related-to, target: research-repository }
+      - { source: anid-open-access-policy, predicate: related-to, target: research-repository }
+    text:
+      es: Los datos se depositan en un repositorio, un servicio que los guarda, los describe y los hace encontrables.
+      en: The data go into a repository, a service that keeps them, describes them and makes them findable.
+  - focus: institutional-repository
+    edges:
+      - { source: institutional-repository, predicate: is-a, target: research-repository }
+    text:
+      es: Muchas universidades tienen un repositorio institucional. La política de ANID acepta depositar los datos ahí o en el repositorio de la agencia.
+      en: Many universities run an institutional repository. ANID's policy accepts data deposits there or in the agency's own repository.
+  - focus: pangaea
+    edges:
+      - { source: pangaea, predicate: is-a, target: research-repository }
+    text:
+      es: Otra opción es un repositorio de tu disciplina. PANGAEA, por ejemplo, publica datos de ciencias de la Tierra y del ambiente.
+      en: Another option is a repository for your discipline. PANGAEA, for example, publishes earth and environmental science data.
+  - focus: re3data
+    edges:
+      - { source: re3data, predicate: related-to, target: research-repository }
+    text:
+      es: Para encontrar uno, busca en re3data, un registro de repositorios de datos de investigación.
+      en: To find one, search re3data, a registry of research data repositories.
+  - focus: zenodo
+    edges:
+      - { source: zenodo, predicate: is-a, target: research-repository }
+    text:
+      es: Si ninguno encaja, Zenodo es un repositorio general y gratuito operado por el CERN, que incluye un DOI para cada depósito.
+      en: If none fits, Zenodo is a free, general-purpose repository run by CERN, with a DOI included for each deposit.
+  - focus: metadata
+    edges:
+      - { source: metadata, predicate: related-to, target: research-repository }
+    text:
+      es: Describe bien tus datos. Los metadatos dicen quién, qué, cuándo y cómo, para que otros puedan encontrarlos y entenderlos.
+      en: Describe your data well. Metadata say who, what, when and how, so that others can find and understand them.
+  - focus: fair
+    edges:
+      - { source: fair, predicate: related-to, target: metadata }
+      - { source: fair, predicate: related-to, target: research-data-management }
+    text:
+      es: Los principios FAIR resumen la meta, datos encontrables, accesibles, interoperables y reutilizables.
+      en: The FAIR principles sum up the goal, data that are findable, accessible, interoperable and reusable.

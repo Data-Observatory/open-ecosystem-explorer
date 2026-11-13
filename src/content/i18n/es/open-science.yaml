@@ -1,5 +1,9 @@
 summary: La ciencia abierta es un conjunto de prácticas que hace accesibles y reutilizables
   el conocimiento, los datos y los métodos científicos para investigadores y sociedad.
 name: Ciencia abierta
+relationNotes:
+  related-to@persistent-identifier: 'Los servicios que identifican objetos de investigación con identificadores persistentes son parte clave de su infraestructura.'
+  related-to@preprint: 'Compartir preprints, marcados como aún no revisados por pares, es una forma de abrir la investigación desde el inicio.'
+  related-to@research-repository: 'Los repositorios abiertos de publicaciones, datos y código son infraestructura central de la ciencia abierta.'
 body: |-
   La Recomendación de la UNESCO de 2021 describe la ciencia abierta como un constructo inclusivo que reúne diversos movimientos y prácticas para que el conocimiento científico multilingüe esté disponible, sea accesible y reutilizable para todas las personas. Abarca el acceso abierto a las publicaciones, los datos abiertos y las infraestructuras abiertas, entre otras prácticas.

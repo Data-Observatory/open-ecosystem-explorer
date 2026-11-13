@@ -4,10 +4,14 @@
 # /model erDiagram, and diagram edge styling. `family` (vocab/predicate-families.yaml)
 # is display metadata only. `pending: true` exempts a predicate from I12 (>=1 edge)
 # until its first edge is authored.
+# Labels are read as the sentence "<subject> <label> <object>" (inverseLabel:
+# "<object> <inverseLabel> <subject>"), so each one carries its own verb and,
+# in Spanish, avoids gendered forms where a neutral one exists ("es un tipo de",
+# not "es un/a").
 issues:
   family: behind
-  label: { es: acuña, en: issues }
-  inverseLabel: { es: acuñado por, en: issued by }
+  label: { es: emite, en: issues }
+  inverseLabel: { es: emitido por, en: issued by }
   domain: [agency]
   range: [identifier]
   symmetric: false
@@ -76,7 +80,7 @@ interoperates-with:
 owned-by:
   family: behind
   label: { es: es propiedad de, en: owned by }
-  inverseLabel: { es: propietario de, en: owns }
+  inverseLabel: { es: posee, en: owns }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, organization]
   range: [organization]
   symmetric: false
@@ -154,7 +158,7 @@ funded-by:
 
 member-of:
   family: connects
-  label: { es: miembro de, en: member of }
+  label: { es: es miembro de, en: is a member of }
   inverseLabel: { es: tiene como miembro a, en: has member }
   # Domain widened beyond the original [organization, repository, aggregator,
   # publishing-platform, agency, index] to include `community`, `coalition`
@@ -173,7 +177,7 @@ member-of:
 
 part-of:
   family: connects
-  label: { es: parte de, en: part of }
+  label: { es: es parte de, en: is part of }
   inverseLabel: { es: tiene como parte a, en: has part }
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
   range: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
@@ -197,8 +201,8 @@ supersedes:
 
 profile-of:
   family: builds-on
-  label: { es: perfil de, en: profile of }
-  inverseLabel: { es: tiene el perfil, en: has profile }
+  label: { es: es un perfil de, en: is a profile of }
+  inverseLabel: { es: tiene como perfil a, en: has profile }
   domain: [standard]
   range: [standard]
   symmetric: false
@@ -269,7 +273,7 @@ applies-to:
 
 is-a:
   family: kind
-  label: { es: es un/a, en: is a }
+  label: { es: es un tipo de, en: is a kind of }
   inverseLabel: { es: incluye a, en: includes }
   # Classification: any entity (or a more specific concept) is-a concept. The
   # range is always `concept`; the domain is every type, so concept -> concept

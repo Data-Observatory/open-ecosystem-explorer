@@ -1,0 +1,65 @@
+# Story: what FAIR means. Facts come from the graph (fair, force11, care,
+# fairsharing, unesco-recommendation-open-science, ...) and go-fair.org (F1).
+id: what-is-fair
+theme: data
+title:
+  es: Qué significa FAIR
+  en: What FAIR means
+question:
+  es: ¿Qué significa FAIR?
+  en: What does FAIR mean?
+steps:
+  - focus: fair
+    text:
+      es: FAIR son cuatro principios para que los datos de investigación sirvan a personas y máquinas. Encontrables, accesibles, interoperables y reutilizables.
+      en: FAIR is four principles that make research data useful to people and machines. Findable, accessible, interoperable and reusable.
+  - focus: force11
+    edges:
+      - { source: fair, predicate: developed-by, target: force11 }
+    text:
+      es: Se redactaron y difundieron en FORCE11, una comunidad dedicada a la comunicación académica.
+      en: They were drafted and spread within FORCE11, a community working on scholarly communication.
+  - focus: metadata
+    edges:
+      - { source: fair, predicate: related-to, target: metadata }
+    text:
+      es: Encontrar y combinar datos depende de metadatos ricos, es decir, datos que describen los datos.
+      en: Finding and combining data depends on rich metadata, that is, data that describe the data.
+  - focus: doi
+    reveal: [persistent-identifier]
+    edges:
+      - { source: doi, predicate: related-to, target: metadata }
+      - { source: doi, predicate: is-a, target: persistent-identifier }
+    text:
+      es: Un identificador persistente, como un DOI, mantiene los datos encontrables en el tiempo. Es el primer principio de la F.
+      en: A persistent identifier, such as a DOI, keeps data findable over time. It is the first of the Findable principles.
+  - focus: research-data-management
+    edges:
+      - { source: fair, predicate: related-to, target: research-data-management }
+    text:
+      es: FAIR orienta la gestión de datos de investigación, para que los datos puedan reutilizarse después del proyecto.
+      en: FAIR guides research data management, so that data can be reused after the project ends.
+  - focus: open-data
+    edges:
+      - { source: fair, predicate: related-to, target: open-data }
+    text:
+      es: FAIR no es lo mismo que abierto. Datos FAIR pueden tener acceso restringido; abrirlos es una decisión aparte.
+      en: FAIR is not the same as open. FAIR data can have restricted access; opening them is a separate decision.
+  - focus: care
+    edges:
+      - { source: care, predicate: related-to, target: open-data }
+    text:
+      es: Los principios CARE complementan FAIR. Piden que los datos sobre pueblos indígenas los beneficien y respeten su autoridad para decidir.
+      en: The CARE principles complement FAIR. Data about Indigenous peoples should benefit them and respect their authority to decide.
+  - focus: fairsharing
+    edges:
+      - { source: fairsharing, predicate: complies-with, target: fair }
+    text:
+      es: FAIRsharing es un registro de estándares, bases de datos y políticas de datos que ayuda a aplicar FAIR.
+      en: FAIRsharing is a registry of standards, databases and data policies that helps people apply FAIR.
+  - focus: unesco-recommendation-open-science
+    edges:
+      - { source: unesco-recommendation-open-science, predicate: mandates, target: fair }
+    text:
+      es: La Recomendación de la UNESCO sobre la Ciencia Abierta (2021) propone FAIR como guía para datos e infraestructuras, sin hacerlo obligatorio.
+      en: UNESCO's 2021 Recommendation on Open Science points to FAIR as guidance for data and infrastructure, without making it binding.

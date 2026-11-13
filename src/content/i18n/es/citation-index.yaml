@@ -1,5 +1,7 @@
 summary: Un índice de citas es una base de datos que registra qué publicaciones citan
   a cuáles, para rastrear la influencia de un trabajo.
 name: Índice de citas
+relationNotes:
+  related-to@cris: 'Los sistemas de información de investigación importan registros de publicaciones desde índices de citas.'
 body: |-
   Como cada registro se define por sus enlaces de citas, un índice de citas puede mostrar qué trabajos se apoyan en cuáles. La cobertura y la apertura difieren mucho entre índices de citas comerciales y abiertos.

@@ -2,5 +2,6 @@ summary: re3data es un registro de repositorios de datos de investigación, que 
   a elegir dónde depositar datos.
 relationNotes:
   depends-on@datacite: Integrado como servicio de DataCite desde 2022.
+  related-to@research-repository: 'Un registro de repositorios de datos de investigación, que sirve para elegir dónde depositar datos.'
 body: |-
   re3data es un registro de repositorios de datos de investigación que financiadores y editoriales citan como fuente para verificar dónde depositar datos.

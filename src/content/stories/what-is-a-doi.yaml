@@ -1,0 +1,68 @@
+# Story: what a DOI is and who issues it. Every fact below is an edge, note,
+# summary or localNote already in the graph (doi, crossref, datacite, ...).
+id: what-is-a-doi
+theme: identify
+title:
+  es: Qué es un DOI y quién lo emite
+  en: What a DOI is and who issues it
+question:
+  es: ¿Qué es un DOI y quién lo emite?
+  en: What is a DOI and who issues it?
+steps:
+  - focus: doi
+    text:
+      es: Un DOI es un identificador permanente para un artículo, un conjunto de datos u otro objeto. Su enlace sigue funcionando aunque el objeto cambie de lugar.
+      en: A DOI is a permanent identifier for an article, a dataset or another object. Its link keeps working even if the object moves.
+  - focus: persistent-identifier
+    reveal: [orcid, ror]
+    edges:
+      - { source: doi, predicate: is-a, target: persistent-identifier }
+      - { source: orcid, predicate: is-a, target: persistent-identifier }
+      - { source: ror, predicate: is-a, target: persistent-identifier }
+    text:
+      es: Es un tipo de identificador persistente. ORCID iD cumple la misma función para personas, y ROR para organizaciones.
+      en: It is one kind of persistent identifier. ORCID iD does the same job for people, and ROR for organisations.
+  - focus: handle-system
+    edges:
+      - { source: doi, predicate: depends-on, target: handle-system }
+    text:
+      es: Por dentro, cada DOI es un Handle. Cuando abres un enlace doi.org, la resolución corre sobre el Handle System.
+      en: Underneath, every DOI is a Handle. When you open a doi.org link, resolution runs on the Handle System.
+  - focus: international-doi-foundation
+    edges:
+      - { source: doi, predicate: governed-by, target: international-doi-foundation }
+    text:
+      es: La International DOI Foundation fija las reglas del sistema DOI y es su autoridad de registro según la norma ISO 26324.
+      en: The International DOI Foundation sets the rules of the DOI system and is its registration authority under ISO 26324.
+  - focus: crossref
+    edges:
+      - { source: crossref, predicate: issues, target: doi }
+    text:
+      es: Los DOI se obtienen a través de agencias de registro. Crossref emite DOI para publicaciones académicas, registrados por la editorial o la revista.
+      en: You get a DOI through a registration agency. Crossref issues DOIs for scholarly publications, registered by the publisher or journal.
+  - focus: datacite
+    edges:
+      - { source: datacite, predicate: issues, target: doi }
+    text:
+      es: DataCite emite DOI sobre todo para datos, software e informes. En Chile, Data Observatory y SISIB (Universidad de Chile) lideran consorcios de DataCite.
+      en: DataCite issues DOIs mainly for datasets, software and reports. In Chile, Data Observatory and the University of Chile's SISIB lead DataCite consortia.
+  - focus: medra
+    reveal: [jalc]
+    edges:
+      - { source: medra, predicate: issues, target: doi }
+      - { source: jalc, predicate: issues, target: doi }
+    text:
+      es: Hay más agencias, como mEDRA en Europa y JaLC en Japón. Todas registran sus DOI en el mismo sistema de resolución.
+      en: There are more agencies, such as mEDRA in Europe and JaLC in Japan. All of them register their DOIs in the same resolution system.
+  - focus: metadata
+    edges:
+      - { source: doi, predicate: related-to, target: metadata }
+    text:
+      es: Cada DOI se registra con metadatos que describen el objeto. Se pueden corregir después sin cambiar el DOI.
+      en: Each DOI is registered with metadata describing the object. The metadata can be corrected later without changing the DOI.
+  - focus: opencitations
+    edges:
+      - { source: opencitations, predicate: depends-on, target: doi }
+    text:
+      es: Como los DOI son estables, servicios como OpenCitations los usan para enlazar qué trabajo cita a cuál.
+      en: Because DOIs are stable, services such as OpenCitations use them to link which work cites which.

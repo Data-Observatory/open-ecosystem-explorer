@@ -30,6 +30,59 @@ export function isAnchor(id: string): boolean {
   return DEFAULT_ANCHOR_IDS.includes(id);
 }
 
+/**
+ * Themes: the 3-4 named clusters the default view is composed around
+ * (map-ideas report, idea 2). `centre` holds only open science; every other
+ * anchor sits in one theme and has an edge to an anchor of its own theme or
+ * to the centre (tests/unit/map/anchors.test.ts). Labels live here, not in
+ * src/i18n/ui, as a deliberate exception to specs.md A4 (like the anchor ids
+ * themselves): they are tuning data for one view, kept next to the list they
+ * label.
+ */
+export type MapThemeId = 'centre' | 'identify' | 'publish' | 'data' | 'research-info';
+
+export interface MapTheme {
+  id: MapThemeId;
+  label: { es: string; en: string };
+}
+
+export const MAP_THEMES: readonly MapTheme[] = [
+  { id: 'centre', label: { es: 'Ciencia abierta', en: 'Open science' } },
+  { id: 'identify', label: { es: 'Identificar', en: 'Identify' } },
+  { id: 'publish', label: { es: 'Publicar y abrir', en: 'Publish openly' } },
+  { id: 'data', label: { es: 'Guardar y describir', en: 'Store and describe' } },
+  { id: 'research-info', label: { es: 'Medir y gestionar', en: 'Measure and manage' } },
+];
+
+export const CENTRE_ANCHOR_ID = 'open-science';
+
+export const ANCHOR_THEME: Readonly<Record<string, MapThemeId>> = {
+  'open-science': 'centre',
+  'persistent-identifier': 'identify',
+  doi: 'identify',
+  orcid: 'identify',
+  ror: 'identify',
+  'open-access': 'publish',
+  'diamond-open-access': 'publish',
+  preprint: 'publish',
+  'open-data': 'data',
+  'research-data-management': 'data',
+  metadata: 'data',
+  'research-repository': 'data',
+  'citation-index': 'research-info',
+  cris: 'research-info',
+};
+
+/** The theme of an anchor, or undefined for a non-anchor. */
+export function themeOf(id: string): MapTheme | undefined {
+  const themeId = ANCHOR_THEME[id];
+  return themeId ? MAP_THEMES.find((t) => t.id === themeId) : undefined;
+}
+
+export function isMapThemeId(value: string): value is MapThemeId {
+  return MAP_THEMES.some((t) => t.id === value);
+}
+
 /** Five node families instead of 13 types (review report §3.3). */
 export type NodeFamily = 'concept' | 'identifier' | 'service' | 'rule' | 'actor';
 

@@ -28,6 +28,12 @@ relations:
       url: https://www.dona.net/faq
   - predicate: is-a
     target: persistent-identifier
+  - predicate: related-to
+    target: metadata
+    note: 'Each DOI is registered with metadata about the object; the metadata can be updated without changing the DOI.'
+    sources:
+      - url: https://www.doi.org/the-identifier/what-is-a-doi/
+        accessed: 2026-11-13
 sources:
   - url: https://portalinnova.cl/biblioteca-del-congreso-nacional-firma-convenio-con-data-observatory-para-integrar-el-consorcio-datacite/
     accessed: 2026-11-12

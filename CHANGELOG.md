@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Map data: connected anchors, themes, short names, stories (2026-11-13)
+
+- 16 new sourced `related-to` edges (UNESCO Recommendation, ANID policy, doi.org, ASAPbio, BOAI, Wikipedia): the 14 default anchors now form one connected graph around open science. Layout regenerated. The A9.1 focus-table test now counts a collapsed cluster as the rows it expands to.
+- Spanish predicate labels read as sentences: `is-a` "es un tipo de" (was "es un/a"), `issues` "emite", "es parte de", "es miembro de", "es un perfil de", inverse of `owned-by` "posee".
+- Optional per-locale `shortName` (<=24 chars) in prose files for map labels, filled for 18 entities; I30 checks it is not longer than the name and is set in every locale or none.
+- `anchors.ts`: each anchor has a theme (`centre`, `identify`, `publish`, `data`, `research-info`) with ES/EN labels, kept in code as a noted exception to A4.
+- New `src/content/stories/` collection (schema and ST1-ST6 checks in `src/lib/stories/`, run by `npm run validate`, `schema/story.schema.json`) with 5 stories: DOI, depositing data, FAIR, open access, indexing in Latin America.
+
 ### Phase 2: minimal map at `/{loc}/map3` (2026-11-12, for owner review)
 
 - New route `/{loc}/map3` (`MapExplorer.astro` + `MapExplorer.client.ts`): 14 anchor nodes by default, detail on click (card with summary, relations as sentences, entry and Wikipedia links), `+N` expand, keyboard navigation, `?n=` / `?modo=experto` URL state, expert mode with full corpus, filters and list view. Dark mode, reduced motion and a mobile bottom sheet. `/map` and `/map2` are unchanged.

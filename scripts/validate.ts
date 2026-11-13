@@ -17,6 +17,8 @@ import { fmt } from '../src/lib/invariants/types.js';
 import { locales, defaultLocale } from '../src/i18n/locales.js';
 import type { Entity, EntityId } from '../src/lib/model/types.js';
 import type { EntityFileEntry, ProseFileEntry, ViewFileEntry, ViewProseFileEntry } from '../src/lib/invariants/types.js';
+import { zStory, type StoryFileEntry } from '../src/lib/stories/schema.js';
+import { checkStories } from '../src/lib/stories/check.js';
 
 const ROOT = join(import.meta.dirname, '..');
 
@@ -160,6 +162,23 @@ function loadViews(): { viewFiles: ViewFileEntry[]; viewProseFiles: ViewProseFil
   return { viewFiles, viewProseFiles, schemaErrors };
 }
 
+function loadStories(): { storyFiles: StoryFileEntry[]; schemaErrors: InvariantMessage[] } {
+  const storyFiles: StoryFileEntry[] = [];
+  const schemaErrors: InvariantMessage[] = [];
+  for (const full of listFiles(join(ROOT, 'src/content/stories'), '.yaml')) {
+    const file = relPath(full);
+    const data = parseYaml(readFileSync(full, 'utf-8')) as Record<string, unknown>;
+    const result = zStory.safeParse(normalizeDates(data));
+    if (!result.success) {
+      schemaErrors.push(...zodIssuesToMessages(file, result.error));
+      continue;
+    }
+    const id = full.split('/').pop()!.replace(/\.yaml$/, '');
+    storyFiles.push({ id, file, story: result.data });
+  }
+  return { storyFiles, schemaErrors };
+}
+
 function loadVocab() {
   const dir = join(ROOT, 'src/content/vocab');
   const entityTypesRaw = parseYaml(readFileSync(join(dir, 'entity-types.yaml'), 'utf-8'));
@@ -195,9 +214,10 @@ function main(): void {
   const { entityFiles, entityBodies, schemaErrors: entitySchemaErrors } = loadEntities();
   const { proseFiles, schemaErrors: proseSchemaErrors } = loadProse();
   const { viewFiles, viewProseFiles, schemaErrors: viewSchemaErrors } = loadViews();
+  const { storyFiles, schemaErrors: storySchemaErrors } = loadStories();
   const vocab = loadVocab();
 
-  const schemaErrors = [...entitySchemaErrors, ...proseSchemaErrors, ...viewSchemaErrors];
+  const schemaErrors = [...entitySchemaErrors, ...proseSchemaErrors, ...viewSchemaErrors, ...storySchemaErrors];
 
   const result = runValidation({
     entityFiles,
@@ -212,7 +232,8 @@ function main(): void {
     defaultLocale,
   });
 
-  let messages = [...schemaErrors, ...result.messages];
+  // Stories (src/lib/stories/check.ts) run against the same index as the I-series.
+  let messages = [...schemaErrors, ...result.messages, ...checkStories(storyFiles, result.index)];
   if (fileFilter) {
     messages = messages.filter((m) => m.file === fileFilter || m.file.endsWith(fileFilter));
   }
@@ -225,6 +246,7 @@ function main(): void {
         {
           entityCount: result.entityCount,
           edgeCount: result.edgeCount,
+          storyCount: storyFiles.length,
           errorCount: errors.length,
           warningCount: warnings.length,
           translationCoverage: result.translationCoverage,
@@ -240,7 +262,7 @@ function main(): void {
       .map(([locale, c]) => `${locale}: ${c.present} present, ${c.missing.length} missing`)
       .join(' · ');
     console.log(
-      `${result.entityCount} entities, ${result.edgeCount} edges, ${errors.length} errors, ${warnings.length} warnings, translation coverage — ${coverageStr}`,
+      `${result.entityCount} entities, ${result.edgeCount} edges, ${storyFiles.length} stories, ${errors.length} errors, ${warnings.length} warnings, translation coverage — ${coverageStr}`,
     );
   }
 

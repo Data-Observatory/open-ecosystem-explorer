@@ -1,4 +1,5 @@
 summary: A research repository is an online service that stores, describes and gives
   access to publications or data so others can find and reuse them.
+shortName: Repository
 body: |-
   Research repositories keep deposited objects over time and expose descriptive metadata, usually with a persistent identifier for each record. They differ in who runs them (an institution, a discipline, a company) and in what they accept.

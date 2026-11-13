@@ -4,5 +4,7 @@ name: Metadatos
 relationNotes:
   related-to@metadata-standard: Los estándares acuerdan cómo se estructuran y nombran
     los metadatos.
+  related-to@research-data-management: 'Gestionar bien los datos incluye describirlos con los metadatos que otros necesitan para encontrarlos y reutilizarlos.'
+  related-to@research-repository: 'Los repositorios describen cada depósito con metadatos que los servicios de búsqueda recolectan.'
 body: |-
   Los metadatos descriptivos, administrativos y técnicos permiten que buscadores, índices y repositorios encuentren, conecten y reutilicen un registro sin abrirlo. La mayoría de los principios FAIR dependen de buenos metadatos.

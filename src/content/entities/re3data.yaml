@@ -29,6 +29,12 @@ relations:
     verified:
       date: 2026-09-04
       url: https://www.re3data.org/about
+  - predicate: related-to
+    target: research-repository
+    note: 'A registry of research data repositories, used to choose where to deposit data.'
+    sources:
+      - url: https://www.re3data.org/about
+        accessed: 2026-11-13
 sources:
   - url: https://www.re3data.org/about
     accessed: 2026-09-04

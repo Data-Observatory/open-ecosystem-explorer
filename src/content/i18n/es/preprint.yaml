@@ -1,6 +1,7 @@
 summary: Un preprint es un manuscrito que sus autores publican en un servidor abierto
   antes de la revisión por pares, para compartir resultados más rápido.
 name: Preprint (prepublicación)
+shortName: Preprint
 aka:
   - Prepublicación
 body: |-

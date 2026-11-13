@@ -1,0 +1,70 @@
+# Story: how science is indexed in Latin America. Facts come from the graph
+# (latindex, redalyc, scielo, la-referencia, espacio-ciencia, amelica, ...).
+id: latin-america-indexing
+title:
+  es: Cómo se indexa la ciencia en América Latina
+  en: How science is indexed in Latin America
+question:
+  es: ¿Cómo se indexa la ciencia en América Latina?
+  en: How is science indexed in Latin America?
+steps:
+  - focus: latindex
+    reveal: [unam]
+    edges:
+      - { source: latindex, predicate: operated-by, target: unam }
+    text:
+      es: Latindex es una red de centros nacionales que, desde 1997, evalúa y da visibilidad a revistas científicas de Iberoamérica. La UNAM la alberga.
+      en: Latindex is a network of national centres that, since 1997, has assessed and given visibility to Ibero-American journals. UNAM hosts it.
+  - focus: redalyc
+    edges:
+      - { source: latindex, predicate: interoperates-with, target: redalyc }
+    text:
+      es: Redalyc, de una universidad mexicana, publica revistas latinoamericanas en acceso abierto sin cobrar a los autores.
+      en: Redalyc, run by a Mexican university, publishes Latin American journals in open access without charging authors.
+  - focus: diamond-open-access
+    edges:
+      - { source: redalyc, predicate: related-to, target: diamond-open-access }
+    text:
+      es: Su modelo es el acceso abierto diamante, sin costo para quien lee ni para quien publica. Es el más extendido en la región.
+      en: Its model is diamond open access, free for readers and authors. It is the most widespread model in the region.
+  - focus: scielo
+    edges:
+      - { source: scielo, predicate: related-to, target: diamond-open-access }
+    text:
+      es: SciELO aloja, marca y publica el texto completo de dieciséis colecciones nacionales de revistas, con sus propios criterios de admisión.
+      en: SciELO hosts, marks up and publishes the full text of sixteen national journal collections, under its own admission criteria.
+  - focus: fapesp
+    reveal: [bireme]
+    edges:
+      - { source: scielo, predicate: funded-by, target: fapesp }
+      - { source: scielo, predicate: developed-by, target: bireme }
+    text:
+      es: SciELO nació en Brasil en 1997, creado por FAPESP con la metodología técnica de BIREME.
+      en: SciELO began in Brazil in 1997, created by FAPESP with BIREME's technical methodology.
+  - focus: la-referencia
+    edges:
+      - { source: la-referencia, predicate: indexes, target: scielo }
+    text:
+      es: LA Referencia reúne artículos y tesis de repositorios de once países latinoamericanos y España, e indexa las colecciones de SciELO.
+      en: LA Referencia gathers articles and theses from repositories in eleven Latin American countries and Spain, and indexes SciELO's collections.
+  - focus: espacio-ciencia
+    reveal: [anid]
+    edges:
+      - { source: espacio-ciencia, predicate: part-of, target: la-referencia }
+      - { source: espacio-ciencia, predicate: operated-by, target: anid }
+    text:
+      es: En Chile, Espacio Ciencia, operado por ANID, reúne los repositorios institucionales y es el nodo nacional de LA Referencia.
+      en: In Chile, Espacio Ciencia, run by ANID, brings institutional repositories together and is the national node of LA Referencia.
+  - focus: openaire
+    edges:
+      - { source: la-referencia, predicate: interoperates-with, target: openaire }
+    text:
+      es: Desde 2016 LA Referencia usa las directrices de OpenAIRE, la infraestructura europea, e interopera con ella.
+      en: Since 2016 LA Referencia has used the guidelines of OpenAIRE, the European infrastructure, and interoperates with it.
+  - focus: amelica
+    reveal: [redalyc]
+    edges:
+      - { source: redalyc, predicate: member-of, target: amelica }
+    text:
+      es: AmeliCA, vinculada a Redalyc, la UNESCO y CLACSO, impulsa un modelo de comunicación científica no comercial para la región.
+      en: AmeliCA, linked to Redalyc, UNESCO and CLACSO, promotes a non-commercial model of scholarly communication for the region.
