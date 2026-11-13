@@ -1,0 +1,41 @@
+type: standard
+name: Creative Commons licences
+aka:
+  - CC licences
+url: https://creativecommons.org/share-your-work/cclicenses/
+status: active
+governance: nonprofit
+standardKind: framework
+requiresOpenness: false
+prominence: extended
+identifiers:
+  wikidata: Q284742
+tags:
+  - region:global
+  - openness:open-content
+lastReviewed: 2026-11-13
+relations:
+  - predicate: developed-by
+    target: creative-commons
+    note: Published and maintained by Creative Commons.
+    verified:
+      date: 2026-11-13
+      url: https://creativecommons.org/share-your-work/cclicenses/
+    sources:
+      - url: https://creativecommons.org/share-your-work/cclicenses/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-license
+    note: Only CC0, CC BY and CC BY-SA are on the conformant-licence list, so a CC licence is not always open.
+    sources:
+      - url: https://opendefinition.org/licenses/
+        accessed: 2026-11-13
+sources:
+  - url: https://creativecommons.org/share-your-work/cclicenses/
+    accessed: 2026-11-13
+    note: Six licence types; BY, SA, NC and ND conditions.
+  - url: https://opendefinition.org/licenses/
+    accessed: 2026-11-13
+    note: "Conformant: CC0 1.0, CC BY 4.0, CC BY-SA 4.0 (+ older BY / BY-SA); NC/ND not named on the page."
+  - url: https://www.wikidata.org/wiki/Q284742
+    accessed: 2026-11-13

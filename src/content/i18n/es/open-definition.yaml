@@ -1,0 +1,8 @@
+summary: La Definición de Abierto, de la Open Knowledge Foundation, fija cuándo el conocimiento, el contenido o los datos son abiertos y qué licencias la cumplen.
+name: Definición de Abierto
+relationNotes:
+  developed-by@open-knowledge-foundation: La Definición de Abierto es un proyecto de la Open Knowledge Foundation.
+  related-to@open-data: Define qué hace abiertos a los datos.
+  related-to@open-license: Mantiene la lista de licencias que la cumplen.
+body: |-
+  La versión 2.1 dice que el conocimiento es abierto si cualquiera es libre de acceder a él, usarlo, modificarlo y compartirlo, sujeto como máximo a medidas que preserven su origen y su apertura. Su lista de licencias conformes incluye CC0, CC BY y CC BY-SA.

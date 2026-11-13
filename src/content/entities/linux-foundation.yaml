@@ -1,0 +1,31 @@
+type: organization
+name: Linux Foundation
+url: https://www.linuxfoundation.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+prominence: detail
+identifiers:
+  ror: 02krvw113
+  wikidata: Q858851
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: open-source-software
+    note: Neutral host for open technology projects.
+    sources:
+      - url: https://www.linuxfoundation.org/about
+        accessed: 2026-11-13
+sources:
+  - url: https://www.linuxfoundation.org/about
+    accessed: 2026-11-13
+    note: '"a 501(c)(6) non-profit"; "neutral, trusted hub ... open technology projects". Page does not mention SPDX; SPDX hosting is from spdx.dev/about.'
+  - url: https://spdx.dev/about/
+    accessed: 2026-11-13
+    note: '"an open source project hosted by the Linux Foundation".'
+  - url: https://www.wikidata.org/wiki/Q858851
+    accessed: 2026-11-13

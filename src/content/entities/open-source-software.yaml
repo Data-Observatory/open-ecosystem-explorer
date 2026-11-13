@@ -1,0 +1,21 @@
+type: concept
+name: Open-source software
+url: https://en.wikipedia.org/wiki/Open-source_software
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q1130645
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Open-source_software
+    accessed: 2026-11-13
+    note: Definition; relation to the OSD and OSI; free software overlap (first 100,000 characters read).
+  - url: https://opensource.org/osd
+    accessed: 2026-11-13
+  - url: https://www.wikidata.org/wiki/Q1130645
+    accessed: 2026-11-13

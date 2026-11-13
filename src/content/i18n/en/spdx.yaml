@@ -1,0 +1,8 @@
+summary: SPDX is an open standard, ISO/IEC 5962:2021, for describing software components and their licences, with a list of short licence identifiers.
+relationNotes:
+  developed-by@linux-foundation: An open source project hosted by the Linux Foundation.
+  is-a@metadata-standard: Shared formats for data about software origin and licensing.
+  related-to@open-license: Its License List gives open and other licences standard identifiers.
+  related-to@open-source-software: Its licence list covers free, open and collaborative software.
+body: |-
+  SPDX is hosted by the Linux Foundation. Its License List gives each common licence a short identifier such as MIT or Apache-2.0 and covers software, data, hardware and documentation licences. It records facts and makes no legal interpretation.

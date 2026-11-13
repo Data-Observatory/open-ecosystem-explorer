@@ -1,0 +1,47 @@
+type: standard
+name: Open Source Definition
+aka:
+  - OSD
+url: https://opensource.org/osd
+status: active
+governance: nonprofit
+standardKind: certification-criteria
+specVersion: "1.9"
+prominence: extended
+identifiers:
+  wikidata: Q2367020
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: governed-by
+    target: open-source-initiative
+    note: Published and maintained by the Open Source Initiative.
+    verified:
+      date: 2026-11-13
+      url: https://opensource.org/about
+    sources:
+      - url: https://opensource.org/osd
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-source-software
+    note: The usual definition of open-source software.
+    sources:
+      - url: https://en.wikipedia.org/wiki/Open-source_software
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-license
+    note: OSI-approved licences are licences that comply with it.
+    sources:
+      - url: https://opensource.org/licenses
+        accessed: 2026-11-13
+sources:
+  - url: https://opensource.org/osd
+    accessed: 2026-11-13
+    note: Version 1.9, last modified 22 March 2007; 10 criteria.
+  - url: https://opensource.org/licenses
+    accessed: 2026-11-13
+    note: An OSI-approved licence must comply with the OSD.
+  - url: https://www.wikidata.org/wiki/Q2367020
+    accessed: 2026-11-13

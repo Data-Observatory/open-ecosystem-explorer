@@ -1,0 +1,7 @@
+summary: Familia de seis licencias públicas estándar que combinan condiciones como atribución (BY), compartir igual (SA), no comercial (NC) y sin derivadas (ND).
+name: Licencias Creative Commons
+relationNotes:
+  developed-by@creative-commons: Publicadas y mantenidas por Creative Commons.
+  related-to@open-license: Solo CC0, CC BY y CC BY-SA figuran en la lista de licencias conformes, así que una licencia CC no siempre es abierta.
+body: |-
+  La lista de licencias conformes con la Definición de Abierto incluye CC0, CC BY y CC BY-SA; las variantes NC y ND no figuran en ella. Por eso una licencia CC no es automáticamente una licencia abierta.

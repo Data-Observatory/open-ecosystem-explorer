@@ -1,0 +1,6 @@
+summary: A family of six standard public licences that combine conditions such as attribution (BY), share-alike (SA), non-commercial (NC) and no-derivatives (ND).
+relationNotes:
+  developed-by@creative-commons: Published and maintained by Creative Commons.
+  related-to@open-license: Only CC0, CC BY and CC BY-SA are on the conformant-licence list, so a CC licence is not always open.
+body: |-
+  The Open Definition's list of conformant licences includes CC0, CC BY and CC BY-SA; the NC and ND variants are not on it. A CC licence is therefore not automatically an open licence. CC0 is a separate public-domain dedication.
