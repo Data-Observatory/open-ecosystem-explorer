@@ -2,5 +2,6 @@ summary: Global instrument adopted in 2021 by UNESCO member states (193 countrie
 shortName: UNESCO Recommendation
 relationNotes:
   mandates@fair: Advisory only. It names FAIR (and CARE) as guiding principles for open data and infrastructure, without creating a binding obligation.
+  related-to@open-science: 'The global framework that sets out what open science is and recommends how states should support it.'
 body: |-
   It is advisory, not binding: the countries that adopted it agreed to be guided by common standards for open science.

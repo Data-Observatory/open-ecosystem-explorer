@@ -2,5 +2,6 @@ summary: The DataCite metadata schema defines the fields used to describe an obj
   registered with a DataCite DOI, in a machine-readable format.
 relationNotes:
   depends-on@orcid: ORCID is a documented nameIdentifierScheme value supported in the Creator and Contributor properties.
+  depends-on@ror: 'ROR is a documented supported affiliationIdentifierScheme value for creator and contributor affiliations.'
 body: |-
   The DataCite metadata schema is the descriptive basis of every DOI the agency issues, and it depends on the DOI itself as an identifier.

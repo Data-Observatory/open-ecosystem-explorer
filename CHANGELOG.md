@@ -11,6 +11,7 @@
 ### Map data: connected anchors, themes, short names, stories (2026-11-13)
 
 - 16 new sourced `related-to` edges (UNESCO Recommendation, ANID policy, doi.org, ASAPbio, BOAI, Wikipedia): the 14 default anchors now form one connected graph around open science. Layout regenerated. The A9.1 focus-table test now counts a collapsed cluster as the rows it expands to.
+- 14 more sourced edges from a missing-relation audit: metadata now relates to ORCID, ROR and OAI-PMH (as it already did to DOI), the DataCite schema depends on ROR (as on ORCID), OpenDOAR, LA Referencia, OpenAIRE and repository software relate to research repositories, APC to diamond open access, peer review to preprints, Plan S and the ANID policy to open access, the UNESCO Recommendation to open science, Wikidata funded by Google. Layout regenerated.
 - Spanish predicate labels read as sentences: `is-a` "es un tipo de" (was "es un/a"), `issues` "emite", "es parte de", "es miembro de", "es un perfil de", inverse of `owned-by` "posee".
 - Optional per-locale `shortName` (<=24 chars) in prose files for map labels, filled for 18 entities; I30 checks it is not longer than the name and is set in every locale or none.
 - `anchors.ts`: each anchor has a theme (`centre`, `identify`, `publish`, `data`, `research-info`) with ES/EN labels, kept in code as a noted exception to A4.

@@ -10,7 +10,14 @@ tags:
   - function:deposit
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: research-repository
+    note: 'Repository software is the program that runs a repository; choosing a platform is an early step in setting one up.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Institutional_repository
+        accessed: 2026-11-13
+        note: 'Choosing a software platform as part of developing an institutional repository; DSpace as an example.'
 sources:
   - url: https://www.wikidata.org/wiki/Q115249952
     accessed: 2026-11-12

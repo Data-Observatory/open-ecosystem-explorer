@@ -31,6 +31,13 @@ relations:
       national research agency.
   - predicate: is-a
     target: open-science-policy
+  - predicate: related-to
+    target: open-science
+    note: 'The global framework that sets out what open science is and recommends how states should support it.'
+    sources:
+      - url: https://www.unesco.org/en/open-science
+        accessed: 2026-11-13
+        note: 'Open science aims at making scientific knowledge openly available, accessible and reusable; adopted in 2021 as the first global framework of its kind.'
 sources:
   - url: https://www.unesco.org/en/open-science/about
     accessed: 2026-11-12

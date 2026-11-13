@@ -13,7 +13,14 @@ identifiers:
 tags:
   - function:aggregation
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: metadata
+    note: 'The protocol exists to harvest metadata: a repository exposes its records and other services collect them.'
+    sources:
+      - url: https://www.openarchives.org/pmh/
+        accessed: 2026-11-13
+        note: 'Open Archives Initiative Protocol for Metadata Harvesting.'
 sources:
   - url: https://www.openarchives.org/pmh/
     accessed: 2026-11-12

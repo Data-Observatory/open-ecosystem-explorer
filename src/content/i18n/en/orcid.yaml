@@ -1,3 +1,5 @@
 summary: Persistent identifier that solves the problem of the same researcher appearing under different written forms of their name.
+relationNotes:
+  related-to@metadata: 'An ORCID record is structured metadata about a researcher: identity details, affiliations, works and funding.'
 body: |-
   The ORCID iD unambiguously links a researcher to their publications, datasets and funding. It is issued and run by ORCID, Inc., a global not-for-profit organisation governed by a board representative of its membership and sustained by fees from member organisations. It offers APIs that enable interoperability between an ORCID record and member organisations.

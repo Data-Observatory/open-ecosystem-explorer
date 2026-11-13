@@ -25,6 +25,13 @@ relations:
     verified:
       date: 2026-11-12
       url: https://www.coalition-s.org/about/
+  - predicate: related-to
+    target: open-access
+    note: 'Requires funded publications to be open access immediately, in open journals or in repositories without embargo.'
+    sources:
+      - url: https://www.coalition-s.org/principles-and-implementation/
+        accessed: 2026-11-13
+        note: 'Funded publications made immediately available through open access repositories without embargo, preferably under CC BY.'
 sources:
   - url: https://www.coalition-s.org/principles-and-implementation/
     accessed: 2026-11-12

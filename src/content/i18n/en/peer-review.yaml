@@ -1,4 +1,6 @@
 summary: Peer review is a process in which independent specialists evaluate a scientific
   work before publication, to help editors decide whether it is sound.
+relationNotes:
+  related-to@preprint: 'A preprint is a version of a paper that precedes formal peer review.'
 body: |-
   Peer review is the contrast term for preprints: evaluation by specialists happens before, not after, formal publication. Review models vary, from anonymous to open reports.

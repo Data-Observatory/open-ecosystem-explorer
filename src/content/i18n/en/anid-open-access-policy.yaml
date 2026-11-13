@@ -8,5 +8,6 @@ relationNotes:
     the ANID repository via OAI-PMH.
   related-to@research-data-management: 'Requires grantees to submit a data management plan whose purpose is to make the data publicly available.'
   related-to@research-repository: 'Funded articles go to the agency''s repository; data to the agency''s, an institutional or a disciplinary repository.'
+  related-to@open-access: 'The policy''s subject: open access to publicly funded scientific information and research data.'
 body: |-
   Approved by ANID in 2022, it requires beneficiaries to deposit the final version of their funded publications in the ANID repository within six months of publication, to submit a data management plan, and to publish research data openly.

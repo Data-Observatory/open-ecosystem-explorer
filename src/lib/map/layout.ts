@@ -12,7 +12,9 @@
 //  2. Every other node is seeded next to its already-placed neighbours and
 //     relaxed with a small force simulation (springs + repulsion + weak
 //     gravity) while the anchors stay pinned. A final pass separates label
-//     boxes so no two nodes' labels overlap at 1:1 zoom.
+//     boxes so no two nodes' labels overlap at 1:1 zoom; if that local push
+//     stalls, a deterministic spiral fallback relocates the stragglers, so the
+//     no-overlap guarantee does not depend on the particular graph.
 
 export interface LayoutNode {
   id: string;
@@ -76,6 +78,53 @@ function separateBoxes(pos: P[], anchor: boolean[], pinned: boolean[], passes: n
         a.y -= uy * push * sy * shareI;
         b.x += ux * push * sx * (1 - shareI);
         b.y += uy * push * sy * (1 - shareI);
+      }
+    }
+    if (!moved) break;
+  }
+}
+
+/** True when two nodes' combined label footprints overlap (same metric as `separateBoxes`). */
+function overlaps(a: P, b: P, anchorA: boolean, anchorB: boolean, margin: number): boolean {
+  const ba = anchorA ? BOX.anchor : BOX.node;
+  const bb = anchorB ? BOX.anchor : BOX.node;
+  const ux = (b.x - a.x) / ((ba.w + bb.w) / 2);
+  const uy = (b.y - a.y) / ((ba.h + bb.h) / 2);
+  return ux * ux + uy * uy < margin * margin;
+}
+
+/**
+ * Deterministic last resort. `separateBoxes` is a local push-apart and can stall
+ * in a crowded pocket between pinned anchors (a push resolves one pair and
+ * creates another), so it cannot guarantee convergence. Any non-pinned node
+ * still overlapping another node is moved to the nearest free spot on a
+ * golden-angle spiral around where it is. Nodes are visited in sorted-id order
+ * and each move leaves the moved node overlap-free without touching any other,
+ * so the overlap count strictly falls and the loop terminates (the spiral
+ * eventually leaves any finite cluster). Does nothing when the pass converged.
+ */
+function resolveResidual(pos: P[], anchor: boolean[], pinned: boolean[]): void {
+  const n = pos.length;
+  const clashes = (i: number, at: P, margin: number): boolean => {
+    for (let j = 0; j < n; j++) {
+      if (j !== i && overlaps(at, pos[j]!, anchor[i]!, anchor[j]!, margin)) return true;
+    }
+    return false;
+  };
+  for (let round = 0; round < n; round++) {
+    let moved = false;
+    for (let i = 0; i < n; i++) {
+      if (pinned[i] || !clashes(i, pos[i]!, 1)) continue;
+      const home = pos[i]!;
+      for (let k = 1; ; k++) {
+        const t = Math.sqrt(k) * 24;
+        const angle = (k + i) * GOLDEN_ANGLE;
+        const cand: P = { x: home.x + t * Math.cos(angle) * 2, y: home.y + t * Math.sin(angle) };
+        if (!clashes(i, cand, 1.02)) {
+          pos[i] = cand;
+          moved = true;
+          break;
+        }
       }
     }
     if (!moved) break;
@@ -234,6 +283,7 @@ export function computeLayout(nodes: readonly LayoutNode[], edges: readonly Layo
     if (iter > ITER / 3) separateBoxes(pos, anchor, anchor, 1);
   }
   separateBoxes(pos, anchor, anchor, 2000);
+  resolveResidual(pos, anchor, anchor);
 
   const out: LayoutPositions = {};
   sorted.forEach((node, i) => {

@@ -57,6 +57,13 @@ relations:
     verified:
       date: 2026-09-04
       url: https://digital-strategy.ec.europa.eu/en/funding/implementing-european-open-science-cloud
+  - predicate: related-to
+    target: research-repository
+    note: 'Gathers content from institutional and other repositories and links it to funding data.'
+    sources:
+      - url: https://www.openaire.eu/la-referencia-openaire-and-coar-committed-to-a-shared-vision-of-a-global-network-of-repositories
+        accessed: 2026-11-13
+        note: 'Describes OpenAIRE as one of the most advanced regional networks of repositories.'
 sources:
   - url: https://www.openaire.eu/about
     accessed: 2026-09-04

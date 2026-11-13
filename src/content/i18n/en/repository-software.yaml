@@ -1,4 +1,6 @@
 summary: Repository software is a program that lets an institution set up and run
   its own digital repository without building it from scratch.
+relationNotes:
+  related-to@research-repository: 'Repository software is the program that runs a repository; choosing a platform is an early step in setting one up.'
 body: |-
   Repository software is the program, such as DSpace or InvenioRDM, as opposed to a hosted service that runs it for you. The same software can power many separate repositories.

@@ -1,3 +1,5 @@
 summary: Base de conocimiento abierta y multilingüe; cobertura bibliográfica vía WikiCite, descargable completa, CC0.
+relationNotes:
+  funded-by@google: 'Uno de los tres donantes (con el Allen Institute for AI y la Gordon and Betty Moore Foundation) que financiaron la creación de Wikidata.'
 body: |-
   Wikidata la aloja la Wikimedia Foundation (infraestructura) y su desarrollo diario lo lidera Wikimedia Deutschland. Sus datos estructurados se publican bajo CC0, y su cobertura bibliográfica llega a través de WikiCite.

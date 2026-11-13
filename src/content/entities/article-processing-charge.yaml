@@ -15,6 +15,13 @@ relations:
   - predicate: related-to
     target: open-access
     note: A fee-based way to fund open access publishing.
+  - predicate: related-to
+    target: diamond-open-access
+    note: 'Diamond open access journals charge no APC to authors or readers.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Diamond_open_access
+        accessed: 2026-11-13
+        note: 'Diamond OA is publishing with no fees to either reader or author; the lack of APCs is the core of the definition.'
 sources:
   - url: https://en.wikipedia.org/wiki/Article_processing_charge
     accessed: 2026-11-12

@@ -26,6 +26,13 @@ relations:
     target: coar
     note: COAR and Jisc released a joint roadmap for OpenDOAR's transition to an
       international, community-governed repository directory.
+  - predicate: related-to
+    target: research-repository
+    note: 'A directory of repositories, used to find where to deposit or look for content.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/OpenDOAR
+        accessed: 2026-11-13
+        note: 'UK-based website that lists repositories.'
 sources:
   - url: https://v2.sherpa.ac.uk/opendoar/
     accessed: 2026-09-04

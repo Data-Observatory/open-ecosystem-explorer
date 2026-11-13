@@ -16,7 +16,14 @@ tags:
 lastReviewed: 2026-09-04
 note: Inbound edge (developed-by, from coar-notify) authored on coar-notify's
   own file per canonical-direction authoring (I7).
-relations: []
+relations:
+  - predicate: related-to
+    target: research-repository
+    note: 'COAR brings repositories and repository networks together to build capacity and align policies.'
+    sources:
+      - url: https://coar-repositories.org/about-coar/
+        accessed: 2026-11-13
+        note: 'COAR describes itself as a global voice for the repository community.'
 sources:
   - url: https://coar-repositories.org/
     accessed: 2026-09-04
