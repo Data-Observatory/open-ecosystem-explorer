@@ -11,12 +11,14 @@ identifiers:
   wikidata: Q18691678
 outputLicence: partly-open
 repositoryKind: hosted-service
+persistentIdScheme:
+  - doi
 accessModel: mixed
 tags:
   - function:deposit
   - function:preservation
   - openness:open-source
-lastReviewed: 2026-09-04
+lastReviewed: 2026-11-13
 relations:
   - predicate: operated-by
     target: center-for-open-science
@@ -30,6 +32,9 @@ relations:
   - predicate: is-a
     target: research-repository
 sources:
+  - url: https://help.osf.io/article/353-welcome-to-projects
+    accessed: 2026-11-13
+    note: 'FAQ: DOIs are minted for preprints and registrations when made public, by DataCite; public projects can be assigned one.'
   - url: https://www.cos.io/products/osf
     accessed: 2026-09-04
   - url: https://ror.org/blog/2022-11-28-case-study-osf/
