@@ -44,12 +44,10 @@ describe('messages', () => {
 		expect(inlang.baseLocale).toBe(defaultLocale);
 	});
 
-	it('every message is used as m.<key>( under src/ (map_* are kept for the map port)', () => {
+	it('every message is used as m.<key>( under src/', () => {
 		const sources = sourceFiles(join(ROOT, 'src')).map((file) => readFileSync(file, 'utf8'));
 		const unused = keysOf(es).filter(
-			(key) =>
-				!key.startsWith('map_') &&
-				!sources.some((text) => new RegExp(`\\bm\\.${key}\\b`).test(text))
+			(key) => !sources.some((text) => new RegExp(`\\bm\\.${key}\\b`).test(text))
 		);
 		expect(unused).toEqual([]);
 	});

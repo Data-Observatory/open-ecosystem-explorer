@@ -2,20 +2,21 @@ import { expect, test } from '@playwright/test';
 import { pathOf } from './helpers';
 
 test.describe('home', () => {
-	test('/es/ has the title, intro, story chips and the map placeholder', async ({ page }) => {
+	test('/es/ has the title, intro, story chips and the map', async ({ page }) => {
 		await page.goto('/es/');
 		await expect(page.locator('html')).toHaveAttribute('lang', 'es');
-		await expect(page.locator('h1')).toHaveText('Explorador del ecosistema de ciencia abierta');
+		await expect(page.locator('h1')).toHaveText('Explorador del ecosistema abierto');
 		await expect(page.getByTestId('home-stats')).toContainText('entradas');
 		await expect(page.getByTestId('question-chips').locator('a')).toHaveCount(5);
-		await expect(page.getByTestId('map-placeholder')).toBeVisible();
+		await expect(page.getByTestId('map-canvas')).toBeVisible();
 	});
 
-	test('a question chip opens the story step list', async ({ page }) => {
-		await page.goto('/en/');
-		await page.getByRole('link', { name: 'What is a DOI and who issues it?' }).click();
-		await page.waitForURL('**/en/stories/what-is-a-doi/');
+	test('the story page lists the steps and offers to play them on the map', async ({ page }) => {
+		await page.goto('/en/stories/what-is-a-doi/');
 		await expect(page.getByTestId('story-steps').locator('> li').first()).toBeVisible();
+		await page.getByTestId('story-play').click();
+		await page.waitForURL('**/en/?historia=what-is-a-doi&paso=1');
+		await expect(page.getByTestId('story-bar')).toBeVisible();
 	});
 
 	test('/ redirects to the default locale', async ({ page }) => {
@@ -33,7 +34,7 @@ test.describe('navigation', () => {
 			['Glosario', '/es/glossary', 'Glosario'],
 			['Preguntas', '/es/views', 'Preguntas'],
 			['Acerca de', '/es/about', 'Acerca de'],
-			['Explorar', '/es', 'Explorador del ecosistema de ciencia abierta']
+			['Explorar', '/es', 'Explorador del ecosistema abierto']
 		] as const;
 		for (const [label, path, heading] of items) {
 			await nav.getByRole('link', { name: label, exact: true }).click();

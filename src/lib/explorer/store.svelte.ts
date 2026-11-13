@@ -119,13 +119,14 @@ export class MapStore {
 	/** Reads the query string after a navigation (and on mount). */
 	sync(search: string): void {
 		const parsed = parseMapUrl(search);
-		const first = !this.ready;
-		if (first) this.instant = true;
+		const before = this.url;
 		if (!parsed.expert && this.#remembered() === 'experto') {
 			this.#go({ ...parsed, expert: true }, true);
 		} else {
 			this.#apply(parsed);
 		}
+		// A deep link is shown as it is, without a transition from the starting view.
+		if (!this.ready && this.url !== before) this.instant = true;
 		this.ready = true;
 	}
 
