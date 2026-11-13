@@ -1,0 +1,69 @@
+# Story: what open access is, with the diamond model, Latin America and the
+# ANID policy. Facts come from the graph (open-access, diamond-open-access,
+# scielo, redalyc, amelica, anid-open-access-policy, doaj, ...).
+id: what-is-open-access
+theme: publish
+title:
+  es: Qué es el acceso abierto
+  en: What open access is
+question:
+  es: ¿Qué es el acceso abierto?
+  en: What is open access?
+steps:
+  - focus: open-access
+    text:
+      es: Acceso abierto significa que cualquier persona puede leer y reutilizar la investigación en internet, sin pagar ni pedir permiso.
+      en: Open access means anyone can read and reuse research online, without paying or asking permission.
+  - focus: open-science
+    reveal: [open-data]
+    edges:
+      - { source: open-access, predicate: related-to, target: open-science }
+      - { source: open-data, predicate: related-to, target: open-science }
+    text:
+      es: Es un pilar de la ciencia abierta, junto con los datos abiertos.
+      en: It is a pillar of open science, alongside open data.
+  - focus: research-repository
+    edges:
+      - { source: open-access, predicate: related-to, target: research-repository }
+    text:
+      es: La ruta verde consiste en depositar una copia del trabajo en un repositorio abierto.
+      en: The green route is to deposit a copy of the work in an open repository.
+  - focus: article-processing-charge
+    edges:
+      - { source: article-processing-charge, predicate: related-to, target: open-access }
+    text:
+      es: Otra vía son las revistas de acceso abierto. Algunas cobran a autores o financiadores un cargo por publicación (APC).
+      en: Another route is open access journals. Some charge authors or funders an article processing charge (APC).
+  - focus: diamond-open-access
+    edges:
+      - { source: diamond-open-access, predicate: is-a, target: open-access }
+    text:
+      es: El acceso abierto diamante no cobra ni a quien lee ni a quien publica. Lo financian instituciones, consorcios o fondos públicos.
+      en: Diamond open access charges neither readers nor authors. Institutions, consortia or public funds pay for it.
+  - focus: scielo
+    reveal: [redalyc]
+    edges:
+      - { source: scielo, predicate: related-to, target: diamond-open-access }
+      - { source: redalyc, predicate: related-to, target: diamond-open-access }
+    text:
+      es: En América Latina es el modelo más extendido. SciELO y Redalyc publican revistas de la región con este modelo.
+      en: In Latin America it is the most widespread model. SciELO and Redalyc publish the region's journals this way.
+  - focus: amelica
+    edges:
+      - { source: amelica, predicate: related-to, target: diamond-open-access }
+      - { source: redalyc, predicate: member-of, target: amelica }
+    text:
+      es: AmeliCA, vinculada a Redalyc, la UNESCO y CLACSO, impulsa un modelo de comunicación científica no comercial.
+      en: AmeliCA, linked to Redalyc, UNESCO and CLACSO, promotes a non-commercial model of scholarly communication.
+  - focus: anid-open-access-policy
+    edges:
+      - { source: anid-open-access-policy, predicate: related-to, target: research-repository }
+    text:
+      es: En Chile, la política de ANID exige depositar los artículos que financia en su repositorio, como máximo seis meses después de publicarlos.
+      en: In Chile, ANID's policy requires the articles it funds to be deposited in its repository within six months of publication.
+  - focus: doaj
+    edges:
+      - { source: doaj, predicate: related-to, target: open-access }
+    text:
+      es: Para saber si una revista de acceso abierto cumple criterios editoriales claros, búscala en DOAJ, un índice curado por su comunidad.
+      en: To check whether an open access journal meets clear editorial criteria, look it up in DOAJ, a community-curated index.
