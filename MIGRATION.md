@@ -62,17 +62,21 @@ Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" r
   family; hovering or focusing a sentence highlights its edge; no edge labels on the canvas). The
   camera centres the selected node in the area the card leaves free. One 280 ms ease-out tween
   moves camera and nodes together; under `prefers-reduced-motion` changes are immediate.
-- **Encoding**: three node sizes (centre, theme hub, member), five node families with shape and
+- **Encoding**: three node sizes (entry point, theme hub, member; size marks where to start, not hierarchy: open science, open data and open access share the largest), five node families with shape and
   colour (`palette.ts`, `NodeGlyph.svelte`), one accent (blue-600), labels from `shortName` when
   present. No legend, no physics, no minimap.
-- **Stories**: the question chips link to `/{loc}/?historia=<id>&paso=1`. `/{loc}/stories/<id>/`
-  keeps the ordered step list (no-JS and screen-reader version) with a "play on the map" link.
+- **Stories**: the question chips are links to `/{loc}/stories/<id>/` (the ordered step list: the
+  no-JS and screen-reader version, with a "play on the map" link); with JavaScript a click plays
+  the story on the map instead (`/{loc}/?historia=<id>&paso=1`).
 - **Phone** (container narrower than 768 px): list first. A 38vh sticky map strip, and under it
   the themes as rows, or the card, or the story caption, as the page itself.
 - **Accessibility**: every node is a real `<a>` to its entity page (so the map is a static picture
   of links without JavaScript, and the entity mini-graph needs no JavaScript at all); the canvas is
   one tab stop with arrow-key movement between nodes; `/` opens search, Escape steps back; a live
   region announces selections; axe WCAG 2.2 AA in `tests/e2e/map.e2e.ts`.
+- **Full screen**: a button on the frame (Fullscreen API plus a fixed overlay, which is also the
+  fallback where the API is missing); Escape leaves it and focus returns to the button. Local state,
+  not in the URL. The frame is up to 1600 px wide on large screens.
 - **Expert mode**: type and relation-family filters, list (table) view, drag to pan, Ctrl + wheel
   or the buttons to zoom (a plain wheel keeps scrolling the page), labels by zoom, off-canvas
   nodes culled.
@@ -92,8 +96,7 @@ Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" r
    so the merge with content/schema work on `main` stays conflict-free. Reformat in one commit after
    that work lands, then remove the exclusions.
 3. **Smaller gaps.** The 404 near-match suggestions of the Astro 404 page (static `404.html` now
-   links to both homes and glossaries); attribute keys in "Detalles" are raw field names; specs.md
-   still describes the Astro routes (§7) and needs a pass.
+   links to both homes and glossaries); attribute keys in "Detalles" are raw field names.
 
 ## Commands
 

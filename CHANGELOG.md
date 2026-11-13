@@ -13,6 +13,15 @@
 
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
 
+### Map: full screen, wider frame, entry-point sizes, clearer relation groups (2026-11-13, branch feat/sveltekit)
+
+- Full screen button on the map frame (Fullscreen API with a fixed-overlay fallback; Escape exits, focus returns to the button). The frame is up to 1600 px wide and taller on large screens; the phone layout is unchanged.
+- Node size marks entry points, not hierarchy: open science, open data and open access share the largest size. Open science keeps the centre and the "start here" tag.
+- Relations are grouped for reading with neutral headings: the `kind` family is "Qué es" / "What it is" (was "Es un/a" / "Is a"), and `related-to` is its own last group, "Relacionado con" / "Related to", on the map card and the entity page.
+- Question chips are links to the step-list pages; with JavaScript a click plays the story on the map.
+- Removed the pre-migration map helpers nothing imports (`hierarchy`, `curated`, `facets`, `graph-state`, `node-svg`, `palette-overrides`, `url-state`, `search-score`) and their tests.
+- `specs.md` §7 route table rewritten for the SvelteKit routes.
+
 ### Interactive map rebuilt as Svelte-native SVG (2026-11-13, branch feat/sveltekit)
 
 - The home page is the map: the anchors composed around open science in four named themes, three node sizes, visible quiet edges, a "start here" tag and the question chips above it. No Cytoscape, no layout library; positions come from a hand composition (start), a fixed-radius ring (selection), a radial tree (stories) and the committed `graph-layout.json` (expert mode).
@@ -21,7 +30,6 @@
 - Search palette on `/` (entries and stories). Expert mode (`?modo=experto`, remembered): whole corpus, type and relation filters, list view, pan and zoom.
 - Phones: list first, with a 38vh map strip on top. Entity pages get a static 1-hop mini-graph (same renderer, no JavaScript needed).
 - Site renamed in the UI: *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*, with the new one-line scope as intro and meta description.
-- `endorsed-by` is `lateral` in `src/lib/map/hierarchy.ts`: supporters of a declaration are not ranked above it.
 - Removed `cytoscape`, `cytoscape-fcose` and `src/components/`. New unit tests (`tests/unit/explorer/`) and e2e suite (`tests/e2e/map.e2e.ts`). Details in `MIGRATION.md`.
 
 ### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
