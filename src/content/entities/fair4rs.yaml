@@ -1,0 +1,66 @@
+type: standard
+name: FAIR4RS Principles
+aka:
+  - FAIR Principles for Research Software
+url: https://zenodo.org/records/6623556
+status: active
+governance: community
+standardKind: principles
+specVersion: "1.0"
+since: 2022-05-24
+prominence: extended
+identifiers:
+  doi: 10.15497/RDA00068
+  wikidata: Q123370742
+tags:
+  - region:global
+lastReviewed: 2026-11-13
+relations:
+  - predicate: developed-by
+    target: rda
+    note: Working group jointly convened by RDA, FORCE11 and ReSA.
+    verified:
+      date: 2026-11-13
+      url: https://zenodo.org/records/6623556
+    sources:
+      - url: https://zenodo.org/records/6623556
+        accessed: 2026-11-13
+  - predicate: developed-by
+    target: force11
+    note: Co-convener of the working group.
+    verified:
+      date: 2026-11-13
+      url: https://zenodo.org/records/6623556
+    sources:
+      - url: https://zenodo.org/records/6623556
+        accessed: 2026-11-13
+  - predicate: developed-by
+    target: research-software-alliance
+    note: Co-convener of the working group.
+    verified:
+      date: 2026-11-13
+      url: https://zenodo.org/records/6623556
+    sources:
+      - url: https://zenodo.org/records/6623556
+        accessed: 2026-11-13
+  - predicate: profile-of
+    target: fair
+    note: Adapts the FAIR Guiding Principles from data to software.
+    sources:
+      - url: https://zenodo.org/records/6623556
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: research-software
+    note: Defines how research software should be findable and reusable.
+    sources:
+      - url: https://www.researchsoft.org/about/
+        accessed: 2026-11-13
+sources:
+  - url: https://zenodo.org/records/6623556
+    accessed: 2026-11-13
+    note: FAIR Principles for Research Software v1.0; published 24 May 2022; identifier 10.15497/RDA00068; jointly convened by RDA, FORCE11 and ReSA.
+  - url: https://www.researchsoft.org/about/
+    accessed: 2026-11-13
+    note: Definition of research software.
+  - url: https://www.wikidata.org/wiki/Q123370742
+    accessed: 2026-11-13

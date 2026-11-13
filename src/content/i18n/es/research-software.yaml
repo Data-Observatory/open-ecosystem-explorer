@@ -1,0 +1,4 @@
+summary: El software de investigación es el código fuente, los algoritmos, scripts, flujos de trabajo y ejecutables creados durante la investigación o con fines de investigación.
+name: Software de investigación
+body: |-
+  Esta es la definición de los principios FAIR4RS, que adaptan los principios FAIR al software. Archivos de metadatos como CodeMeta y CITATION.cff existen para que el software pueda describirse y citarse.

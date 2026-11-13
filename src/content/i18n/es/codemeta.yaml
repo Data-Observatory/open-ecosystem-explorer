@@ -1,0 +1,8 @@
+summary: CodeMeta es un vocabulario de metadatos compartido para software, basado en schema.org y JSON-LD, con equivalencias entre formatos de repositorios y de disciplinas.
+relationNotes:
+  depends-on@schema-org: Se construye sobre los términos de schema.org.
+  depends-on@json-ld: Se expresa en JSON-LD.
+  is-a@metadata-standard: Un vocabulario compartido para describir software.
+  related-to@research-software: Ayuda a que el software de investigación sea encontrable, reutilizable y citable.
+body: |-
+  Lo fundó en 2016 un consorcio de investigadores para apoyar el descubrimiento, la citación y la interoperabilidad del software de investigación. La comunidad CodeMeta supervisa el vocabulario, la tabla de equivalencias y el generador.

@@ -1,0 +1,44 @@
+type: standard
+name: CodeMeta
+url: https://codemeta.github.io/
+status: active
+governance: community
+standardKind: metadata-schema
+since: "2016"
+prominence: detail
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: depends-on
+    target: schema-org
+    note: Builds on schema.org terms.
+    sources:
+      - url: https://codemeta.github.io/
+        accessed: 2026-11-13
+  - predicate: depends-on
+    target: json-ld
+    note: Expressed as JSON-LD.
+    sources:
+      - url: https://codemeta.github.io/
+        accessed: 2026-11-13
+  - predicate: is-a
+    target: metadata-standard
+    note: A shared vocabulary for describing software.
+    sources:
+      - url: https://codemeta.github.io/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: research-software
+    note: Helps research software be findable, reusable and citable.
+    sources:
+      - url: https://codemeta.github.io/
+        accessed: 2026-11-13
+sources:
+  - url: https://codemeta.github.io/
+    accessed: 2026-11-13
+    note: Shared minimal vocabulary for describing software; schema.org terms and JSON-LD; founded in 2016 by a consortium of researchers.
+  - url: https://codemeta.github.io/governance/
+    accessed: 2026-11-13
+    note: '"The CodeMeta community oversees development".'

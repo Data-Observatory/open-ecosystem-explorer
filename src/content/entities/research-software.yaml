@@ -1,0 +1,22 @@
+type: concept
+name: Research software
+url: https://www.wikidata.org/wiki/Q95001953
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q95001953
+tags:
+  - region:global
+lastReviewed: 2026-11-13
+relations: []
+sources:
+  - url: https://www.researchsoft.org/about/
+    accessed: 2026-11-13
+    note: 'Quotes Barker et al. 2022: source code, algorithms, scripts, workflows, executables "created during the research process or for a research purpose".'
+  - url: https://zenodo.org/records/6623556
+    accessed: 2026-11-13
+    note: FAIR4RS Principles v1.0 record.
+  - url: https://www.wikidata.org/wiki/Q95001953
+    accessed: 2026-11-13
+    note: 'Label: research software; "software written for the purpose of research"; no Wikipedia sitelinks.'

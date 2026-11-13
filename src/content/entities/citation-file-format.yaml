@@ -1,0 +1,36 @@
+type: standard
+name: Citation File Format (CITATION.cff)
+aka:
+  - CITATION.cff
+  - CFF
+url: https://citation-file-format.github.io/
+status: active
+governance: community
+standardKind: metadata-schema
+prominence: detail
+identifiers:
+  wikidata: Q108218387
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: is-a
+    target: metadata-standard
+    note: A file format for citation details of software.
+    sources:
+      - url: https://citation-file-format.github.io/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: research-software
+    note: Lets research software be cited correctly.
+    sources:
+      - url: https://citation-file-format.github.io/
+        accessed: 2026-11-13
+sources:
+  - url: https://citation-file-format.github.io/
+    accessed: 2026-11-13
+    note: Purpose of the format; tool support; acknowledgments of the institutions supporting its development.
+  - url: https://www.wikidata.org/wiki/Q108218387
+    accessed: 2026-11-13
+    note: "Label: Citation File Format; official website citation-file-format.github.io."
