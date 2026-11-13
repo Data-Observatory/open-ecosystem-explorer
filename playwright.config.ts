@@ -8,6 +8,15 @@ const port = Number(process.env.PW_PORT ?? 4173);
 // Machines without Playwright's bundled browser can point at a system Chrome.
 const executablePath = process.env.PLAYWRIGHT_CHROME_PATH;
 
+// Safety net: the site loads Google Tag Manager by default, so no test run may ever reach Google.
+// These hosts resolve to nothing; the requests still happen (and can be observed) but fail at once.
+// The consent tests also stub the hosts with page.route.
+const NO_GOOGLE = [
+	'MAP *.googletagmanager.com ~NOTFOUND',
+	'MAP *.google-analytics.com ~NOTFOUND',
+	'MAP *.analytics.google.com ~NOTFOUND'
+].join(', ');
+
 export default defineConfig({
 	testDir: './tests/e2e',
 	testMatch: '**/*.e2e.ts',
@@ -33,7 +42,10 @@ export default defineConfig({
 			name: 'chromium',
 			use: {
 				...devices['Desktop Chrome'],
-				...(executablePath ? { launchOptions: { executablePath, args: ['--no-sandbox'] } } : {})
+				launchOptions: {
+					...(executablePath ? { executablePath } : {}),
+					args: [`--host-resolver-rules=${NO_GOOGLE}`, ...(executablePath ? ['--no-sandbox'] : [])]
+				}
 			}
 		}
 	]

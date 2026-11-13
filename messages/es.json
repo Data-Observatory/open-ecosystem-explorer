@@ -181,5 +181,15 @@
 	"entity_see_on_map": "Ver en el mapa",
 	"map_fullscreen": "Pantalla completa",
 	"map_fullscreen_exit": "Salir de pantalla completa",
-	"relations_related": "Relacionado con"
+	"relations_related": "Relacionado con",
+	"consent_title": "Aviso de analítica",
+	"consent_text": "Usamos analítica para entender cómo se usa el sitio, mediante Google Tag Manager, con cookies. No pedimos datos personales. Puede desactivarla en cualquier momento; su elección se guarda solo en este navegador.",
+	"consent_keep": "Mantener la analítica",
+	"consent_disable": "Desactivar la analítica",
+	"consent_change": "Ajustes de analítica",
+	"about_privacy_heading": "Privacidad y cookies",
+	"about_privacy_collected": "Para entender cómo se usa el sitio, se mide la actividad de las visitas mediante Google Tag Manager, un servicio de Google que carga las herramientas de analítica configuradas para este sitio (por ejemplo, Google Analytics). Se reciben datos técnicos de uso, como las páginas visitadas, el tipo de navegador y dispositivo y la ubicación aproximada, junto con una cookie que identifica al navegador con un código aleatorio. El sitio no pide nombre, correo ni ningún otro dato personal, y la analítica no se usa para publicidad.",
+	"about_privacy_default": "La analítica está activada por defecto. El aviso que aparece en la primera visita permite mantenerla o desactivarla, con el mismo peso, y se vuelve a mostrar pasado un año.",
+	"about_privacy_off": "Puede desactivarla o volver a activarla en cualquier momento con el botón de ajustes de analítica de esta página o del pie de página. Al desactivarla se deja de cargar Google Tag Manager en las visitas siguientes y se borran las cookies de Google Analytics de este sitio.",
+	"about_privacy_storage": "Su elección se guarda únicamente en este navegador (localStorage, clave oee-consent), junto con la fecha. No se envía a ningún servidor. Fuera de eso, el sitio solo recuerda en el navegador su preferencia de modo del mapa."
 }

@@ -38,6 +38,12 @@ sitemap, feeds, canonical links) and `BASE_PATH=/sub-path`.
   (`PW_PORT` sets the port, `PLAYWRIGHT_CHROME_PATH` a system Chrome)
 - `npm run schema:generate`, `npm run layout:generate`, `npm run layout:check`
 
+## Analytics
+
+The site loads Google Tag Manager (container `GTM-M9NXQLBC`) by default, with a notice that lets
+the visitor turn it off; nothing else leaves the site. How it works, what the container must
+respect and the legal note for the owner are in `docs/analytics.md`.
+
 ## Licences
 
 Code: MIT (`LICENSE`). Data: CC-BY-4.0 (`LICENSE-DATA`). Fonts: SIL OFL 1.1 (`LICENSE-FONTS`).

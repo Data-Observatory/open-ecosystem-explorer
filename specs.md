@@ -130,7 +130,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 - **A4 — Content is the single source of truth.** No entity name, count, label or relation appears as a literal in a component, page or stylesheet. No UI string is hardcoded either: chrome text comes from `src/i18n/ui/<locale>.json`, vocabulary labels from the vocab files.
 - **A5 — The `GraphIndex` is built once and frozen**, then passed down. Components never recompute neighbours or re-derive inverses. The index is locale-independent; locale is applied at render time.
 - **A6 — Zero client JS is the default.** Budget: ≤50 KB gz on any route except `/map` (≤400 KB gz).
-- **A7 — No network at runtime.** No CDN fonts, no analytics, no browser API calls.
+- **A7 — No third-party network at runtime, except opt-out analytics.** No CDN fonts, no browser API calls. The one exception is Google Tag Manager (container `GTM-M9NXQLBC`), loaded by `static/consent-loader.js`: on by default, announced in a notice, off for good once the visitor turns it off (stored choice `oee-consent`; see `docs/analytics.md`). With analytics off the site makes no third-party request.
 - **A8 — Validation runs first.** `npm run build` invokes `npm run validate`; failure exits non-zero and produces no output.
 - **A9 — Adding a locale touches no schema and no component.** It is one entry in `src/i18n/locales.ts`, one `ui/<code>.json`, one label per vocabulary term, and prose files. Anything that would need a code change to support a third language is a design defect (§5.7).
 
@@ -669,7 +669,7 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 - **Build:** `npm ci && npm run validate && npm run build` on Node 22. Target <60 s cold for ~200 entities × 2 locales excluding Mermaid rendering; <15 s incremental with content-hash diagram caching (locale in the key, §5.7).
 - **Config:** `astro.config.mjs` sets `site`, `base` and `i18n` (the last read from `src/i18n/locales.ts`); all internal links use Astro path helpers and are locale-aware, so a project-page base path, a custom domain and a new language all work unedited. 🟡 Custom domain is Q7.
 - **Trigger:** push to `main` deploys; PRs build and validate but do not deploy. 🟡 Per-PR previews recommended once external contributors arrive — a reviewer seeing the rendered page catches editorial problems a YAML diff hides, and this matters more now that the diff's author is usually an agent (§8.4d).
-- **Caching:** fingerprinted assets `immutable, max-age=31536000`; HTML `max-age=0, must-revalidate` so corrections propagate immediately. No runtime telemetry (A7).
+- **Caching:** fingerprinted assets `immutable, max-age=31536000`; HTML `max-age=0, must-revalidate` so corrections propagate immediately. No runtime telemetry other than the opt-out analytics container (A7, `docs/analytics.md`).
 - **Failure mode:** a failing validate or a11y gate blocks deployment; the previous site stays live. Bad data cannot replace good data.
 - **Versioning:** each deploy stamps dataset version and build timestamp into the footer and `graph.json`, so an export traces to a specific build and commit.
 

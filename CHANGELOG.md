@@ -13,6 +13,12 @@
 - `fair` is `prominence: extended`, not `core`: every core concept is a default map anchor (`anchors.test.ts`), and the 15 anchors are a deliberate set. The real-corpus tier test and the `map2` e2e spec used FAIR as the example of a principles standard; they now use `trust-principles` (in the legacy `map2` view FAIR, as a concept, falls to the default tier).
 - `npm run validate`: 169 entities, 357 edges (unchanged), 0 errors, 87 warnings (unchanged), 100% EN/ES.
 
+### Analytics and cookie notice (2026-11-13)
+
+- Google Tag Manager (container `GTM-M9NXQLBC`) loads by default from `static/consent-loader.js`, with Consent Mode v2 (analytics follows the visitor's choice; ad storage, ad user data and ad personalization always denied). A stored "denied" choice (key `oee-consent`) loads nothing. Same design as the sister site "fairness".
+- Notice with two equal buttons ("keep" / "turn off"), shown after mount only, again after 365 days; an "Analytics settings" control in the footer and in the new "Privacy and cookies" section of About (ES and EN). Turning off expires the Google Analytics cookies on the exact host.
+- Spec rule A7 now allows this one opt-out third-party request. The map e2e test and the quality e2e test account for it; `playwright.config.ts` makes the Google hosts unresolvable so tests never reach Google. Details in `docs/analytics.md`.
+
 ### Scope expansion: open data, licences and research software (2026-11-13)
 
 - Scope is now "a map of open science, open data and good data practice, and of the open software and licences they depend on"; site name *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*. Docs only on this branch (`specs.md` title, section 1 scope line, non-goal N15 for open education, open hardware and open government, C7 criterion (d); `README.md`); the UI strings are updated separately.

@@ -181,5 +181,15 @@
 	"entity_see_on_map": "See on the map",
 	"map_fullscreen": "Full screen",
 	"map_fullscreen_exit": "Exit full screen",
-	"relations_related": "Related to"
+	"relations_related": "Related to",
+	"consent_title": "Analytics notice",
+	"consent_text": "We use analytics to understand how the site is used, through Google Tag Manager, with cookies. We do not ask for personal data. You can turn it off at any time; your choice is stored only in this browser.",
+	"consent_keep": "Keep analytics on",
+	"consent_disable": "Turn off analytics",
+	"consent_change": "Analytics settings",
+	"about_privacy_heading": "Privacy and cookies",
+	"about_privacy_collected": "To understand how the site is used, visit activity is measured through Google Tag Manager, a Google service that loads the analytics tools configured for this site (for example, Google Analytics). It receives technical usage data, such as the pages visited, the browser and device type and the approximate location, together with a cookie that identifies the browser with a random code. The site asks for no name, email or other personal data, and analytics are not used for advertising.",
+	"about_privacy_default": "Analytics are on by default. The notice shown on the first visit lets you keep them on or turn them off, with equal weight, and it is shown again after one year.",
+	"about_privacy_off": "You can turn them off or on again at any time with the analytics settings button on this page or in the footer. Turning them off stops Google Tag Manager from loading on later visits and deletes the Google Analytics cookies of this site.",
+	"about_privacy_storage": "Your choice is stored only in this browser (localStorage, key oee-consent), with its date. It is not sent to any server. Apart from that, the site only remembers in the browser your map mode preference."
 }
