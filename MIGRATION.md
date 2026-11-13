@@ -17,11 +17,11 @@ self-hosted Inter and Space Grotesk. The Astro site remains in git history (last
   `/data/relations.csv`, `/data/graph.json`, `/entity/<id>.json`, `/sitemap.xml`, `/robots.txt`,
   `/search-index-<locale>.json`, `/<locale>/feed.xml`.
 - **Information architecture** (review report §3.1): four nav items.
-  - Explorar `/{loc}/`: intro, story question chips, map placeholder.
+  - Explorar `/{loc}/`: one-line intro, story question chips, the map (see "The map").
   - Glosario `/{loc}/glossary/`: A-Z list, text filter, type chips (`?q=`, `?type=`), full list
     without JavaScript.
-  - Preguntas `/{loc}/views/`: the five stories (`/{loc}/stories/<id>/`, an ordered step list for
-    now) and the existing views (`/{loc}/views/<id>/`).
+  - Preguntas `/{loc}/views/`: the five stories (`/{loc}/stories/<id>/`, the ordered step
+    list) and the existing views (`/{loc}/views/<id>/`).
   - Acerca de `/{loc}/about/`: scope, how to read the map, data model and predicates, downloads,
     contribute, changelog (full changelog at `/{loc}/changelog/`).
   - Entity page `/{loc}/entity/<id>/`: type, one-sentence definition, local note, relations as
@@ -31,36 +31,68 @@ self-hosted Inter and Space Grotesk. The Astro site remains in git history (last
   `/search`, `/relations`, `/relations/<predicate>`, `/model`, `/contribute`, `/map`, `/map2`,
   `/map3`) are prerendered redirect pages (`src/lib/legacy-routes.ts`).
 - **UI strings.** `src/i18n/ui/{es,en}.json` moved to `messages/{es,en}.json` (Paraglide, flat
-  snake_case keys). Map strings are kept as `map_*` for the port. `tests/unit/i18n/messages.test.ts`
-  checks ES/EN key and placeholder parity, that every non-`map_` key is used, and that Paraglide and
+  snake_case keys). `tests/unit/i18n/messages.test.ts`
+  checks ES/EN key and placeholder parity, that every key is used, and that Paraglide and
   `src/i18n/locales.ts` agree. Entity, view and story prose stays in YAML.
 - **Site URL** is configurable: `SITE_URL=https://... npm run build` makes sitemap, feed, robots
   and canonical/hreflang URLs absolute. `BASE_PATH` sets a sub-path, as on the sisters.
 - **Light theme only**, like the sister sites (they do not ship a dark mode).
 
+## The map
+
+The home page (`/{loc}/`) is the interactive map: `src/lib/explorer/`, Svelte-native SVG, no
+Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" report (v1 package).
+
+- **One renderer, four scenes** (`scene.ts`, pure): *start* (the anchors of `src/lib/map/anchors.ts`
+  hand-composed around open science, `compose.ts`, landscape and portrait), *focus* (a selected
+  node with its neighbours on a fixed-radius ring, `geometry.ts`), *story* (a radial tree of the
+  path revealed so far, `story.ts`) and *expert* (the whole corpus at the build-time positions of
+  `src/generated/graph-layout.json`, format unchanged). Adding an anchor to `anchors.ts` requires
+  placing it in `compose.ts` (a unit test fails otherwise).
+- **Components**: `MapExplorer.svelte` (shell, keyboard, pan/zoom), `MapCanvas.svelte` (the SVG;
+  also used statically by `MiniGraph.svelte` on the entity page), `MapCard.svelte`,
+  `StoryBar.svelte`, `MapPalette.svelte`, `MapList.svelte`, `NodeGlyph.svelte`, and the state in
+  `store.svelte.ts`. Payload built at build time in `src/lib/server/map.ts`.
+- **The URL is the state** (`url.ts`): `?n=<id>` selected node, `?historia=<id>&paso=<n>` story
+  step, `?modo=experto` (`&vista=lista`, `&tipo=`, `&rel=`). Every action is a SvelteKit navigation
+  to the next URL: selections and story starts push a history entry (Back works, the breadcrumb
+  trail follows), story steps, filters and the expert toggle replace it. Expert mode is also
+  remembered in `localStorage` (`ose:map-mode`, inside try/catch).
+- **Reading**: the card is the primary reading mode (relations as sentences grouped by predicate
+  family; hovering or focusing a sentence highlights its edge; no edge labels on the canvas). The
+  camera centres the selected node in the area the card leaves free. One 280 ms ease-out tween
+  moves camera and nodes together; under `prefers-reduced-motion` changes are immediate.
+- **Encoding**: three node sizes (centre, theme hub, member), five node families with shape and
+  colour (`palette.ts`, `NodeGlyph.svelte`), one accent (blue-600), labels from `shortName` when
+  present. No legend, no physics, no minimap.
+- **Stories**: the question chips link to `/{loc}/?historia=<id>&paso=1`. `/{loc}/stories/<id>/`
+  keeps the ordered step list (no-JS and screen-reader version) with a "play on the map" link.
+- **Phone** (container narrower than 768 px): list first. A 38vh sticky map strip, and under it
+  the themes as rows, or the card, or the story caption, as the page itself.
+- **Accessibility**: every node is a real `<a>` to its entity page (so the map is a static picture
+  of links without JavaScript, and the entity mini-graph needs no JavaScript at all); the canvas is
+  one tab stop with arrow-key movement between nodes; `/` opens search, Escape steps back; a live
+  region announces selections; axe WCAG 2.2 AA in `tests/e2e/map.e2e.ts`.
+- **Expert mode**: type and relation-family filters, list (table) view, drag to pan, Ctrl + wheel
+  or the buttons to zoom (a plain wheel keeps scrolling the page), labels by zoom, off-canvas
+  nodes culled.
+- **Removed**: `cytoscape`, `cytoscape-fcose`, `src/components/` (the Astro map sources),
+  `src/types/cytoscape-fcose.d.ts`. Still present but unused by the site: the pre-migration helpers
+  `src/lib/map/{hierarchy,curated,facets,graph-state,node-svg,palette-overrides,url-state,search-score,color-distance}.ts`
+  and their unit tests (only `anchors.ts` and `layout.ts` are used); remove them together with the
+  post-merge reformat below.
+- **Not built** (by design or deferred): hover tooltip (idea 9), entrance animation (idea 10),
+  copy-link/print (idea 12), touch pinch-zoom (buttons instead), autoplay of stories.
+
 ## Not ported yet
 
-1. **The interactive map.** Sources kept untouched for the port: `src/components/MapExplorer.astro`,
-   `src/components/MapExplorer.client.ts`, `src/components/MapExplorerV2.astro` (not compiled, not
-   linted; `MapExplorer.astro` still imports the removed `src/i18n/ui.ts`), `src/lib/map/**`
-   (unit-tested), `src/generated/graph-layout.json` (`npm run layout:check` runs before every build).
-   What the port needs:
-   - a Svelte-native SVG component on the home route (`src/routes/[locale=locale]/+page.svelte`
-     has the placeholder `data-testid="map-placeholder"`), positions from `graph-layout.json`;
-   - its strings from `m.map_*`;
-   - stories played on the map (`?historia=<id>&paso=<n>`); the chips (`QuestionChips.svelte`) then
-     link there instead of `/{loc}/stories/<id>/`, which can stay as the no-JS/screen-reader view;
-   - a 1-hop mini-graph on the entity page (review report §3.1);
-   - its own e2e suite (the Cytoscape-based `tests/e2e/map2|map3|keyboard` specs were removed);
-   - then drop `cytoscape`, `cytoscape-fcose`, `src/types/cytoscape-fcose.d.ts` and the
-     `src/components` ignores in `eslint.config.js` / `.prettierignore`.
-2. **Infra, deploy and domain** (`infra/`, CDK, DNS). Domain undecided (idea:
+1. **Infra, deploy and domain** (`infra/`, CDK, DNS). Domain undecided (idea:
    `open-ecosystem.dataobservatory.net`); set `SITE_URL` at build time when decided.
-3. **Formatting of pre-migration TypeScript.** `src/lib/**` (except new files), `scripts/`,
+2. **Formatting of pre-migration TypeScript.** `src/lib/**` (except new files), `scripts/`,
    `tests/unit`, `tests/fixtures` keep their 2-space style and are excluded from Prettier and ESLint
    so the merge with content/schema work on `main` stays conflict-free. Reformat in one commit after
    that work lands, then remove the exclusions.
-4. **Smaller gaps.** The 404 near-match suggestions of the Astro 404 page (static `404.html` now
+3. **Smaller gaps.** The 404 near-match suggestions of the Astro 404 page (static `404.html` now
    links to both homes and glossaries); attribute keys in "Detalles" are raw field names; specs.md
    still describes the Astro routes (§7) and needs a pass.
 
@@ -75,5 +107,5 @@ npm test               # vitest (unit)
 npm run validate       # content schema and invariants
 npm run build          # validate + layout:check, then static build into build/
 npm run preview        # serves build/
-PW_PORT=4991 PLAYWRIGHT_CHROME_PATH=/usr/bin/google-chrome npm run test:e2e
+PW_PORT=4993 PLAYWRIGHT_CHROME_PATH=/usr/bin/google-chrome npm run test:e2e
 ```

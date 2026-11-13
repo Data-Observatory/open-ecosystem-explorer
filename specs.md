@@ -81,7 +81,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 | Content layer | Astro Content Collections (glob loader) | built-in |
 | Schema validation | Zod (via `astro:content`) + custom graph invariants | 3.x |
 | Diagrams | Mermaid, rendered **to static SVG at build time** | 11.x |
-| Interactive graph | Cytoscape.js + `fcose`, one island on `/{locale}/map` (§6.2) | 3.x |
+| Interactive graph | Svelte-native SVG on the home page (`src/lib/explorer/`, §7.0); positions from a hand composition, a ring, and the build-time `graph-layout.json`. Cytoscape.js was removed with the SvelteKit migration. | — |
 | Styling | Plain CSS with custom properties, no framework | — |
 | Tests | Vitest (unit + invariants), Playwright + axe-core | — |
 | Runtime / hosting | Node 22 LTS, npm; GitHub Pages via Actions | — |
@@ -495,6 +495,20 @@ Every diagram carries "download SVG" and "copy Mermaid source". The source is ex
 ---
 
 ## 7. Pages / Navigation
+
+### 7.0 The map explorer (SvelteKit site, home page)
+
+On the SvelteKit site (`MIGRATION.md`) the map lives on `/{loc}/` and replaces `/map`, `/map2` and `/map3` (which redirect to it). The route table below still describes the Astro routes and needs a pass.
+
+- **Starting view.** The anchors of `src/lib/map/anchors.ts`, hand-composed (`src/lib/explorer/compose.ts`): open science in the centre, the four themes around it with a small-caps caption each, three node sizes (centre, theme hub, member), every anchor connected, a "start here" tag on the centre, the story question chips above the map.
+- **Selection** (`?n=<id>`). The node keeps its place, its neighbours move onto a ring of fixed radius (the 8 most relevant, 6 on phones; "show N more" puts all of them on two side arcs), everything else leaves. A card lists the relations as sentences grouped by predicate family; a sentence highlights its edge on hover or focus and selects the other node on click. The camera centres the node in the area the card leaves free. A breadcrumb trail of the last five nodes; selections are history entries.
+- **Stories** (`?historia=<id>&paso=<n>`). A question chip plays its story: nodes appear step by step in a fixed radial layout, the step's edges are highlighted, a caption bar shows the sentence with previous / next (arrow keys too). Nothing autoplays. `/{loc}/stories/<id>/` is the same content as an ordered list.
+- **Expert mode** (`?modo=experto`, remembered in `localStorage`). The whole corpus at the positions of `src/generated/graph-layout.json`, filters by entity type and predicate family, a table view, pan and zoom, labels by zoom.
+- **Search.** `/` opens a palette over entries (name, short name, aliases, summary) and stories.
+- **Encoding.** Five node families (`nodeFamilyOf`) with a shape and a colour each; one accent colour; no legend, no edge labels on the canvas, labels from `shortName` when present.
+- **Motion.** One 280 ms ease-out transition for camera and nodes together; none under `prefers-reduced-motion`. No simulation runs in the browser (A3).
+- **Accessibility.** Every node is a link to its entity page (the map works as a picture of links without JavaScript); the canvas is one tab stop, arrow keys move between nodes, Enter selects, Escape steps back; selections are announced in a live region. On phones the page is list-first: a 38vh map strip above the themes, the card or the story caption.
+- **Entity page.** A static 1-hop mini-graph drawn with the same renderer, laid out at build time.
 
 Every content route is locale-prefixed (§7.2). `{loc}` below stands for a code from `src/i18n/locales.ts`.
 

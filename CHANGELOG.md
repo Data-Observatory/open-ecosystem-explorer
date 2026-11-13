@@ -13,11 +13,21 @@
 
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
 
+### Interactive map rebuilt as Svelte-native SVG (2026-11-13, branch feat/sveltekit)
+
+- The home page is the map: the anchors composed around open science in four named themes, three node sizes, visible quiet edges, a "start here" tag and the question chips above it. No Cytoscape, no layout library; positions come from a hand composition (start), a fixed-radius ring (selection), a radial tree (stories) and the committed `graph-layout.json` (expert mode).
+- The card is the reading mode: relations as sentences grouped by family, hover or focus highlights the edge, the camera keeps the selected node clear of the card. Breadcrumb trail on real history entries (`?n=<id>`), Escape and Back step back.
+- Question chips play the stories on the map (`?historia=<id>&paso=<n>`, previous/next, arrow keys); `/{loc}/stories/<id>/` keeps the step list with a "play on the map" link.
+- Search palette on `/` (entries and stories). Expert mode (`?modo=experto`, remembered): whole corpus, type and relation filters, list view, pan and zoom.
+- Phones: list first, with a 38vh map strip on top. Entity pages get a static 1-hop mini-graph (same renderer, no JavaScript needed).
+- Site renamed in the UI: *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*, with the new one-line scope as intro and meta description.
+- `endorsed-by` is `lateral` in `src/lib/map/hierarchy.ts`: supporters of a declaration are not ranked above it.
+- Removed `cytoscape`, `cytoscape-fcose` and `src/components/`. New unit tests (`tests/unit/explorer/`) and e2e suite (`tests/e2e/map.e2e.ts`). Details in `MIGRATION.md`.
+
 ### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
 
 - Stack of the Data Observatory sister sites: SvelteKit 2, Svelte 5, Tailwind 4, adapter-static, Paraglide UI strings (`messages/{es,en}.json`), self-hosted Inter and Space Grotesk. Same URL shape (`/es/...`, `/en/...`, trailing slash) and the same data export URLs; `SITE_URL` makes sitemap, feed and canonical URLs absolute.
 - New information architecture with four nav items: Explorar (home with story chips and a map placeholder), Glosario (A-Z list with filter and type chips), Preguntas (stories as step lists plus the existing views), Acerca de (scope, reading guide, data model, downloads, contribute, changelog). Slim entity page with relations as sentences and a collapsed "Detalles". Old routes redirect.
-- The interactive map is not ported yet; see `MIGRATION.md`.
 
 ### Wikidata cross-check follow-ups (2026-11-13)
 
