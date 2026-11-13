@@ -1,11 +1,8 @@
-summary: 'Los principios CARE son una guía para gestionar datos de pueblos indígenas:
-  beneficio colectivo, autoridad para controlar, responsabilidad y ética.'
+summary: 'Los principios CARE para la gobernanza de datos indígenas son principios, no un estándar: beneficio colectivo, autoridad para controlar, responsabilidad y ética.'
 relationNotes:
-  endorsed-by@rda: RDA se afilió formalmente a la Global Indigenous Data Alliance,
-    que aloja CARE, y promueve la implementación de los Principios.
   related-to@indigenous-data-sovereignty: Principios para llevar a la práctica la soberanía
     de datos indígenas.
   related-to@open-data: Pide que abrir datos respete también el beneficio colectivo
     y el control.
 body: |-
-  CARE fue redactado por la Global Indigenous Data Alliance (GIDA) en un taller de 2018 coorganizado con RDA en Gaborone, y GIDA sigue custodiándolo. CARE complementa a FAIR, no lo reemplaza: FAIR resuelve findability e interoperabilidad; CARE resuelve quién decide sobre datos que involucran a comunidades indígenas.
+  Los principios CARE para la gobernanza de datos indígenas son principios para gestionar datos de pueblos indígenas, no una norma técnica ni una certificación. Se redactaron en un taller en Gaborone en 2018, celebrado durante la Semana Internacional de los Datos y una Plenaria de RDA, y la Global Indigenous Data Alliance (GIDA) los publicó en 2019. CARE complementa a FAIR, no lo reemplaza: FAIR resuelve findability e interoperabilidad; CARE resuelve quién decide sobre datos que involucran a comunidades indígenas.

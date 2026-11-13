@@ -1,4 +1,3 @@
-summary: 'The TRUST principles define five qualities of a trustworthy repository:
-  transparency, responsibility, user focus, sustainability and technology.'
+summary: 'TRUST is a set of guiding principles, not a certification: transparency, responsibility, user focus, sustainability and technology for trustworthy repositories.'
 body: |-
-  TRUST defines what a trustworthy repository is; CoreTrustSeal is the seal that certifies a repository against those criteria.
+  The TRUST Principles for digital repositories are guiding principles for demonstrating that a repository is trustworthy, not a technical standard or a certification. They came out of an RDA community effort and were published in Scientific Data in 2020, as a common framework for discussing and putting best practice in digital preservation into practice. Certifications such as CoreTrustSeal are separate: the paper cites CoreTrustSeal as an example of how repositories attain the properties the principles describe.

@@ -17,7 +17,7 @@ note: Also directly certifies member data repositories (certified-by), once
   repository entities exist in a later batch — e.g. PANGAEA, a self-described
   WDS regular member.
 relations:
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter, self-audit published 2026.
     verified:

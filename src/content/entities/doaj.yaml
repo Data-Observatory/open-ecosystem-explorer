@@ -36,7 +36,7 @@ relations:
     verified:
       date: 2026-11-12
       url: https://doaj.org/about/
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter since 2022.
     verified:

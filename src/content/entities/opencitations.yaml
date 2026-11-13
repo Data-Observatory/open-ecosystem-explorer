@@ -24,7 +24,7 @@ relations:
   - predicate: depends-on
     target: doi
     note: Citation records are keyed on the DOIs of citing and cited works.
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter since 2021.
     verified:

@@ -1,30 +1,20 @@
-type: standard
+type: concept
 name: POSI
 aka:
   - Principles of Open Scholarly Infrastructure
 url: https://openscholarlyinfrastructure.org/
 status: active
-governance: community
-standardKind: governance-criteria
-specVersion: "2.0"
+governance: not-applicable
 tags:
   - theme:vertical-integration
-lastReviewed: 2026-11-12
-relations:
-  - predicate: related-to
-    target: open-science-infrastructure
-    note: 'Principles for governing, sustaining and insuring the organisations that run this kind of infrastructure.'
-    sources:
-      - url: https://openscholarlyinfrastructure.org/
-        accessed: 2026-11-13
-        note: 'Governance, sustainability and insurance principles for scholarly infrastructure organisations.'
+lastReviewed: 2026-11-13
+relations: []
 sources:
   - url: https://openscholarlyinfrastructure.org/adopters/
-    accessed: 2026-11-12
-    note: Adopters commit by publishing a self-audit; lists Crossref self-audits for 2020, 2022 and 2024.
+    accessed: 2026-11-13
+    note: Adopters "formally adopted the POSI principles by publishing an initial self-audit" and committed to routinely demonstrating evidence of following them in practice; lists Crossref self-audits for 2020, 2022 and 2024.
   - url: https://openscholarlyinfrastructure.org/
-    accessed: 2026-09-04
-    note: Current release v2.0 (Oct 2025), 20 principles across
-      governance/sustainability/insurance, superseding v1's 16 commitments.
+    accessed: 2026-11-13
+    note: Version 2.0 (October 2025) is the current release; 20 principles in three groups (governance, sustainability, insurance). Earlier versions are 1.1 (2023) and 1.0 (2015). Described as principles, not a standard or certification.
   - url: https://www.crossref.org/blog/crossrefs-board-votes-to-adopt-the-principles-of-open-scholarly-infrastructure/
     accessed: 2026-09-04

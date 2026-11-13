@@ -1,27 +1,20 @@
-type: standard
+type: concept
 name: CARE Principles
+aka:
+  - CARE Principles for Indigenous Data Governance
 url: https://www.gida-global.org/careprinciples
 status: active
-governance: community
-standardKind: principles
-requiresOpenness: false
-prominence: core
+governance: not-applicable
+prominence: extended
 identifiers:
   wikidata: Q108558452
 tags:
   - region:global
-lastReviewed: 2026-09-04
-note: Drafted by the Global Indigenous Data Alliance (GIDA), a US-based
-  nonprofit network, at a 2018 workshop co-hosted with RDA in Gaborone; GIDA
-  continues to host and steward the Principles.
+lastReviewed: 2026-11-13
+note: Drafted at a workshop in Gaborone on 8 November 2018, held during International
+  Data Week and an RDA Plenary; released by the Global Indigenous Data Alliance
+  (GIDA) in September 2019.
 relations:
-  - predicate: endorsed-by
-    target: rda
-    note: RDA formally affiliated with the Global Indigenous Data Alliance, which
-      hosts CARE, and promotes the Principles' implementation.
-    verified:
-      date: 2026-09-04
-      url: https://www.nature.com/articles/s41597-021-00892-0
   - predicate: related-to
     target: indigenous-data-sovereignty
     note: Principles for putting Indigenous data sovereignty into practice.
@@ -30,6 +23,8 @@ relations:
     note: Asks that opening data also respects collective benefit and control.
 sources:
   - url: https://www.gida-global.org/careprinciples
-    accessed: 2026-11-12
+    accessed: 2026-11-13
+    note: Calls them the CARE Principles for Indigenous Data Governance, people- and purpose-oriented principles that complement FAIR; drafted at the Gaborone workshop of 8 November 2018 (International Data Week, RDA Plenary).
   - url: https://www.nature.com/articles/s41597-021-00892-0
-    accessed: 2026-09-04
+    accessed: 2026-11-13
+    note: Operationalizing the CARE and FAIR Principles for Indigenous data futures (Scientific Data, 2021; read via Europe PMC, PMC8052430). Names the four principles (collective benefit, authority to control, responsibility, ethics), says GIDA released them in September 2019 and that the RDA International Indigenous Data Sovereignty Interest Group produced them.

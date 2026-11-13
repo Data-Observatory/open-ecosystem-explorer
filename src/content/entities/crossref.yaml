@@ -23,7 +23,7 @@ relations:
   - predicate: issues
     target: doi
     note: DOIs for scholarly publications, registered via the publisher or journal.
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: Adopted by Crossref board vote in 2020; publishes periodic POSI
       self-assessments.

@@ -1,4 +1,3 @@
-summary: 'Los principios TRUST definen cinco cualidades de un repositorio confiable:
-  transparencia, responsabilidad, enfoque en el usuario, sostenibilidad y tecnología.'
+summary: 'TRUST es un conjunto de principios orientadores, no una certificación: transparencia, responsabilidad, enfoque en el usuario, sostenibilidad y tecnología para repositorios confiables.'
 body: |-
-  TRUST define qué es un repositorio confiable; CoreTrustSeal es el sello que certifica contra ese criterio.
+  Los principios TRUST para repositorios digitales son principios orientadores para demostrar que un repositorio es confiable, no una norma técnica ni una certificación. Surgieron de un esfuerzo comunitario de RDA y se publicaron en Scientific Data en 2020, como marco común para discutir y aplicar buenas prácticas de preservación digital. Las certificaciones como CoreTrustSeal son aparte: el artículo cita CoreTrustSeal como ejemplo de cómo los repositorios alcanzan las propiedades que describen los principios.
