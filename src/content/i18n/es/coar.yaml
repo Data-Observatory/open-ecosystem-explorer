@@ -1,4 +1,6 @@
 summary: COAR es una confederación mundial de repositorios de acceso abierto que promueve
   buenas prácticas y estándares comunes entre ellos.
+relationNotes:
+  related-to@research-repository: 'COAR reúne repositorios y redes de repositorios para fortalecer capacidades y alinear políticas.'
 body: |-
   COAR agrupa repositorios y sus redes a nivel global para coordinar buenas prácticas y estándares comunes, incluido el desarrollo de COAR Notify.
