@@ -2,7 +2,7 @@
  * What the canvas shows for a given state ("scene"), and how one scene turns into the next.
  *
  * Four scenes, one renderer:
- *  - start:  the composed 14 anchors (compose.ts);
+ *  - start:  the composed anchors (compose.ts);
  *  - focus:  a selected node with its neighbours on a ring (default mode);
  *  - story:  the path revealed so far (story.ts);
  *  - expert: the whole corpus at its build-time positions, filtered.
