@@ -77,10 +77,9 @@ Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" r
   or the buttons to zoom (a plain wheel keeps scrolling the page), labels by zoom, off-canvas
   nodes culled.
 - **Removed**: `cytoscape`, `cytoscape-fcose`, `src/components/` (the Astro map sources),
-  `src/types/cytoscape-fcose.d.ts`. Still present but unused by the site: the pre-migration helpers
-  `src/lib/map/{hierarchy,curated,facets,graph-state,node-svg,palette-overrides,url-state,search-score,color-distance}.ts`
-  and their unit tests (only `anchors.ts` and `layout.ts` are used); remove them together with the
-  post-merge reformat below.
+  `src/types/cytoscape-fcose.d.ts`, and the pre-migration map helpers nothing imported any more
+  (`src/lib/map/{hierarchy,curated,facets,graph-state,node-svg,palette-overrides,url-state,search-score}.ts`
+  with their unit tests). `src/lib/map/` keeps `anchors.ts`, `layout.ts` and `color-distance.ts`.
 - **Not built** (by design or deferred): hover tooltip (idea 9), entrance animation (idea 10),
   copy-link/print (idea 12), touch pinch-zoom (buttons instead), autoplay of stories.
 
