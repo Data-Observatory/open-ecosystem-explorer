@@ -103,7 +103,11 @@ export const ORIENTATION: Record<string, Orientation> = {
   'part-of': 'target-higher',
   'profile-of': 'target-higher',
   'certified-by': 'target-higher',
-  'endorsed-by': 'target-higher',
+  // Endorsement is not a parent relation: a supporter (Crossref, DataCite, ...)
+  // neither contains nor governs the declaration it signs, and with the
+  // signatory convention (declaration `endorsed-by` supporter) `target-higher`
+  // ranked every supporter above the declaration. Peers, like `supersedes`.
+  'endorsed-by': 'lateral',
   'interoperates-with': 'lateral',
   supersedes: 'lateral',
 };
