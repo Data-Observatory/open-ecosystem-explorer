@@ -25,9 +25,6 @@ bun.lockb
 # Legacy Astro sources kept only until the map is ported (see MIGRATION.md).
 /src/components/
 /src/types/
-/src/pages/
-/src/layouts/
-/astro.config.mjs
 
 # Pre-migration TypeScript (2-space style). Reformatted in one separate commit after the
 # content/schema work on main is merged, to keep that merge free of whitespace conflicts

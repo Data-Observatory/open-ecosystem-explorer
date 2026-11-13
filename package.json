@@ -54,17 +54,9 @@
 		"zod-to-json-schema": "^3.25.2"
 	},
 	"dependencies": {
-		"astro": "^5.18.2",
 		"cytoscape": "^3.34.2",
 		"cytoscape-fcose": "^2.2.0",
-		"gray-matter": "^4.0.3",
-		"mermaid": "^11.17.2",
-		"rehype-mermaid": "^3.0.0",
-		"rehype-parse": "^9.0.1",
-		"rehype-stringify": "^10.0.1",
 		"spdx-license-ids": "^3.0.23",
-		"svg-pan-zoom": "^3.6.2",
-		"unified": "^11.0.5",
 		"yaml": "^2.9.0",
 		"zod": "^3.25.76"
 	}

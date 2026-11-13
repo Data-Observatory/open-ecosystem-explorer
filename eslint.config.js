@@ -15,9 +15,6 @@ export default defineConfig(
 			// Legacy Astro map sources, kept only for the later map port (see MIGRATION.md).
 			'src/components/**',
 			'src/types/**',
-			'src/pages/**',
-			'src/layouts/**',
-			'astro.config.mjs',
 			// Pre-migration TypeScript, linted after the post-merge reformat (see MIGRATION.md).
 			'src/lib/{a11y,export,graph,i18n,invariants,map,markdown,mermaid,model,stories,views}/**',
 			'src/i18n/**',
