@@ -5,5 +5,6 @@ relationNotes:
   member-of@coar: COAR y Jisc publicaron una hoja de ruta conjunta para
     transicionar OpenDOAR hacia un directorio internacional de repositorios con
     gobernanza comunitaria.
+  related-to@research-repository: 'Un directorio de repositorios, que sirve para encontrar dónde depositar o buscar contenido.'
 body: |-
   OpenDOAR mantiene un directorio global de repositorios de acceso abierto, usado como referencia para identificar dónde depositar o buscar contenido institucional. Está en proceso de separarse de los servicios Sherpa fusionados.

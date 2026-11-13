@@ -1,4 +1,6 @@
 summary: Protocolo de baja barrera para la interoperabilidad entre repositorios, basado en la cosecha de sus metadatos.
+relationNotes:
+  related-to@metadata: 'El protocolo existe para cosechar metadatos: un repositorio expone sus registros y otros servicios los recolectan.'
 localNote: En Chile, la política de acceso abierto de ANID exige que los repositorios de datos financiados por ANID sean interoperables con el repositorio de ANID mediante OAI-PMH.
 body: |-
   OAI-PMH permite que un repositorio exponga sus metadatos para que otros servicios los cosechen.

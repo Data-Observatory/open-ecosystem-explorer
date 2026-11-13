@@ -2,6 +2,7 @@ summary: Red federada de once países latinoamericanos más España, que agrega 
 relationNotes:
   interoperates-with@openaire: Cosecha desde nodos nacionales bajo las directrices de OpenAIRE desde 2016.
   indexes@scielo: LA Referencia indexa las colecciones nacionales de SciELO.
+  related-to@research-repository: 'Una red federada que agrega registros de repositorios institucionales.'
 localNote: En Chile, ANID es una de las instituciones afiliadas a LA Referencia.
 body: |-
   LA Referencia reúne más de cinco millones de registros de metadatos. Se financia sobre todo con aportes anuales de los países miembros e interopera con OpenAIRE.

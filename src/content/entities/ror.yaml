@@ -42,6 +42,16 @@ relations:
       url: https://scoss.org/what-is-scoss/
   - predicate: is-a
     target: persistent-identifier
+  - predicate: related-to
+    target: metadata
+    note: 'Each ROR record is a structured metadata record about an organisation, and ROR IDs identify affiliations in the metadata of other records.'
+    sources:
+      - url: https://github.com/ror-community/ror-schema
+        accessed: 2026-11-13
+        note: 'JSON Schema used to generate and validate ROR records.'
+      - url: https://datacite-metadata-schema.readthedocs.io/en/4.6/properties/creator/
+        accessed: 2026-11-13
+        note: 'ROR identifiers carried in creator affiliation metadata (affiliationIdentifierScheme ROR).'
 sources:
   - url: https://ror.org/about/
     accessed: 2026-09-04

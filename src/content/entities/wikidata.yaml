@@ -30,6 +30,13 @@ relations:
     target: allen-institute-for-ai
     note: One of three funders (with the Gordon and Betty Moore Foundation and
       Google) of Wikidata's 2012 creation via a €1.3M grant.
+  - predicate: funded-by
+    target: google
+    note: 'One of three donors (with the Allen Institute for AI and the Gordon and Betty Moore Foundation) that funded Wikidata''s creation.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Wikidata
+        accessed: 2026-11-13
+        note: 'Creation funded by donations from the Allen Institute for AI, the Gordon and Betty Moore Foundation and Google, about EUR 1.3 million.'
 sources:
   - url: https://www.wikidata.org/wiki/Wikidata:Introduction
     accessed: 2026-11-12

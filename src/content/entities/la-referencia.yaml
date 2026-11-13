@@ -57,6 +57,13 @@ relations:
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
+  - predicate: related-to
+    target: research-repository
+    note: 'A federated network that aggregates records from institutional repositories.'
+    sources:
+      - url: https://www.openaire.eu/la-referencia-openaire-and-coar-committed-to-a-shared-vision-of-a-global-network-of-repositories
+        accessed: 2026-11-13
+        note: 'Describes LA Referencia as one of the most advanced regional networks of repositories.'
 sources:
   - url: https://infrafinder.investinopen.org/solutions/la-referencia
     accessed: 2026-11-12

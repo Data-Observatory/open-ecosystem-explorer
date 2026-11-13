@@ -23,6 +23,13 @@ relations:
       Creator/Contributor properties.
   - predicate: is-a
     target: metadata-standard
+  - predicate: depends-on
+    target: ror
+    note: 'ROR is a documented supported affiliationIdentifierScheme value for creator and contributor affiliations.'
+    sources:
+      - url: https://datacite-metadata-schema.readthedocs.io/en/4.6/properties/creator/
+        accessed: 2026-11-13
+        note: 'Creator affiliationIdentifier example https://ror.org/04aj4c181; affiliationIdentifierScheme lists ROR.'
 sources:
   - url: https://schema.datacite.org/
     accessed: 2026-09-03

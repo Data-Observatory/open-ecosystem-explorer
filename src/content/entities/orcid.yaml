@@ -24,6 +24,13 @@ relations:
       per a 2014 ORCID-ISNI memorandum of understanding.
   - predicate: is-a
     target: persistent-identifier
+  - predicate: related-to
+    target: metadata
+    note: 'An ORCID record is structured metadata about a researcher: identity details, affiliations, works and funding.'
+    sources:
+      - url: https://info.orcid.org/documentation/integration-guide/orcid-record/
+        accessed: 2026-11-13
+        note: 'What an ORCID record contains (person, employment, works, funding), each item with its own source and date metadata.'
 sources:
   - url: https://info.orcid.org/what-is-orcid/
     accessed: 2026-11-12

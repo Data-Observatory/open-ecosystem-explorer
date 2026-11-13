@@ -1,4 +1,6 @@
 summary: Low-barrier protocol for interoperability between repositories, based on harvesting their metadata.
+relationNotes:
+  related-to@metadata: 'The protocol exists to harvest metadata: a repository exposes its records and other services collect them.'
 localNote: In Chile, ANID's open access policy requires repositories holding ANID-funded data to be interoperable with the ANID repository through OAI-PMH.
 body: |-
   OAI-PMH lets a repository expose its metadata so that other services can harvest it.

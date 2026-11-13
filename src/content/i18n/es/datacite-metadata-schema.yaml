@@ -3,5 +3,6 @@ summary: El esquema de metadatos de DataCite define los campos para describir un
 relationNotes:
   depends-on@orcid: ORCID es un valor documentado de nameIdentifierScheme
     soportado en las propiedades Creator/Contributor.
+  depends-on@ror: 'ROR es un valor documentado de affiliationIdentifierScheme para las afiliaciones de creadores y colaboradores.'
 body: |-
   El esquema de metadatos de DataCite es la base descriptiva de cada DOI acuñado por la agencia y depende del propio DOI como identificador.

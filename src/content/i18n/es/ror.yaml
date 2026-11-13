@@ -3,5 +3,6 @@ relationNotes:
   operated-by@datacite: Uno de los tres socios operadores fundadores, junto con Crossref y California Digital Library.
   operated-by@crossref: Socio operador fundador; su equipo de contabilidad administra las finanzas de ROR.
   operated-by@california-digital-library: Socio operador fundador.
+  related-to@metadata: 'Cada registro ROR es un registro de metadatos estructurado sobre una organización, y los ROR ID identifican afiliaciones en los metadatos de otros registros.'
 body: |-
   ROR es un registro abierto: sus datos se publican bajo CC0 y se pueden consultar por buscador, API REST y volcado de datos. Lo operan California Digital Library, Crossref y DataCite.

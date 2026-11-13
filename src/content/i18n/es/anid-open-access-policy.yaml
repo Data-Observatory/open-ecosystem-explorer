@@ -9,5 +9,6 @@ relationNotes:
     ser interoperables con el repositorio de ANID mediante OAI-PMH.
   related-to@research-data-management: 'Exige a sus beneficiarios un plan de gestión de datos cuyo propósito es que los datos queden disponibles públicamente.'
   related-to@research-repository: 'Los artículos financiados van al repositorio de la agencia; los datos, a ese, a uno institucional o a uno disciplinario.'
+  related-to@open-access: 'El tema de la política: el acceso abierto a la información científica y a los datos de investigación financiados con fondos públicos.'
 body: |-
   Aprobada por ANID en 2022, exige a sus beneficiarios depositar la versión final de las publicaciones financiadas en el repositorio de ANID en un plazo no mayor a seis meses desde su publicación, presentar un plan de gestión de datos y publicar los datos de investigación en abierto.

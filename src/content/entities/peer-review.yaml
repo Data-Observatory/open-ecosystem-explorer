@@ -10,7 +10,14 @@ tags:
   - function:evaluation
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: preprint
+    note: 'A preprint is a version of a paper that precedes formal peer review.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Preprint
+        accessed: 2026-11-13
+        note: 'A preprint precedes formal peer review and publication in a peer-reviewed journal.'
 sources:
   - url: https://en.wikipedia.org/wiki/Peer_review
     accessed: 2026-11-12
