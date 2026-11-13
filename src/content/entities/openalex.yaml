@@ -40,7 +40,7 @@ relations:
   - predicate: indexes
     target: arxiv
     note: OpenAlex harvests and indexes arXiv preprints.
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter since 2021.
     verified:

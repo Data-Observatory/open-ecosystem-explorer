@@ -1,5 +1,6 @@
 summary: Shared services and platforms, such as repositories, indexes and identifier systems, that research needs in order to be open.
 relationNotes:
+  related-to@posi: POSI sets out principles for governing, sustaining and insuring the organisations that run this kind of infrastructure.
   part-of@open-science: 'The UNESCO Recommendation names open science infrastructures as one of the pillars of open science.'
 body: |-
   The UNESCO Recommendation describes them as shared research infrastructures, virtual or physical, that support open science and serve different communities, and says they should be not-for-profit and give permanent, unrestricted access. Repositories, open publication platforms and services that assign persistent identifiers are listed among the critical components.

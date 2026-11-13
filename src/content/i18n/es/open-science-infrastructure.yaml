@@ -1,6 +1,7 @@
 summary: Servicios y plataformas compartidos, como repositorios, índices y sistemas de identificadores, que la investigación necesita para ser abierta.
 name: Infraestructura de ciencia abierta
 relationNotes:
+  related-to@posi: POSI fija principios para gobernar, sostener y asegurar las organizaciones que operan este tipo de infraestructura.
   part-of@open-science: 'La Recomendación de la UNESCO nombra las infraestructuras de ciencia abierta como uno de los pilares de la ciencia abierta.'
 body: |-
   La Recomendación de la UNESCO las describe como infraestructuras de investigación compartidas, virtuales o físicas, que apoyan la ciencia abierta y atienden a distintas comunidades, y señala que deberían ser sin fines de lucro y garantizar un acceso permanente e irrestricto. Entre los componentes críticos menciona repositorios, plataformas abiertas de publicación y servicios que asignan identificadores persistentes.

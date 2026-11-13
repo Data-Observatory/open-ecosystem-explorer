@@ -10,6 +10,13 @@ tags:
   - region:global
 lastReviewed: 2026-11-13
 relations:
+  - predicate: related-to
+    target: posi
+    note: 'POSI sets out principles for governing, sustaining and insuring the organisations that run this kind of infrastructure.'
+    sources:
+      - url: https://openscholarlyinfrastructure.org/
+        accessed: 2026-11-13
+        note: 'Governance, sustainability and insurance principles for scholarly infrastructure organisations.'
   - predicate: part-of
     target: open-science
     note: 'The UNESCO Recommendation names open science infrastructures as one of the pillars of open science.'

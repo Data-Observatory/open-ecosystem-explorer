@@ -3,7 +3,7 @@ relationNotes:
   member-of@international-doi-foundation: 'Registration Agency member of the DOI Foundation.'
   member-of@datacite: 'Member of DataCite (membership only).'
   issues@doi: DOI for scholarly publications, usually registered through the journal or publisher.
-  complies-with@posi: Adopted by Crossref board vote in 2020; publishes periodic self-assessments against POSI.
+  related-to@posi: Adopted by Crossref board vote in 2020; publishes periodic self-assessments against POSI.
 localNote: Chile is not among the countries eligible for Crossref's GEM programme.
 body: |-
   Crossref runs the GEM programme, which waives membership and content registration fees for organisations in eligible countries (79 on the 2026 list).

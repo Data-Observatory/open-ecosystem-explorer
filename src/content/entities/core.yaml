@@ -25,7 +25,7 @@ relations:
     target: open-university
   - predicate: implements
     target: oai-pmh
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter since 2022.
     verified:

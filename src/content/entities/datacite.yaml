@@ -28,7 +28,7 @@ relations:
   - predicate: issues
     target: igsn
     note: IGSNs for physical samples are issued as a DataCite record type.
-  - predicate: complies-with
+  - predicate: related-to
     target: posi
     note: POSI adopter since 2021.
     verified:
