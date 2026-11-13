@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
+
+- Stack of the Data Observatory sister sites: SvelteKit 2, Svelte 5, Tailwind 4, adapter-static, Paraglide UI strings (`messages/{es,en}.json`), self-hosted Inter and Space Grotesk. Same URL shape (`/es/...`, `/en/...`, trailing slash) and the same data export URLs; `SITE_URL` makes sitemap, feed and canonical URLs absolute.
+- New information architecture with four nav items: Explorar (home with story chips and a map placeholder), Glosario (A-Z list with filter and type chips), Preguntas (stories as step lists plus the existing views), Acerca de (scope, reading guide, data model, downloads, contribute, changelog). Slim entity page with relations as sentences and a collapsed "Detalles". Old routes redirect.
+- The interactive map is not ported yet; see `MIGRATION.md`.
+
 ### Map data: connected anchors, themes, short names, stories (2026-11-13)
 
 - 16 new sourced `related-to` edges (UNESCO Recommendation, ANID policy, doi.org, ASAPbio, BOAI, Wikipedia): the 14 default anchors now form one connected graph around open science. Layout regenerated. The A9.1 focus-table test now counts a collapsed cluster as the rows it expands to.

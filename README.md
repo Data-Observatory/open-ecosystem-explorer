@@ -1,54 +1,38 @@
 # openscience-ecosystem
 
-Static Astro site mapping the open-science research-information ecosystem
+Static SvelteKit site mapping the open-science research-information ecosystem
 (identifiers, registration agencies, indices, institutional systems,
 standards, communities/coalitions) as a validated, navigable knowledge graph.
-See `specs.md` for the full spec.
+See `specs.md` for the full spec and `MIGRATION.md` for the move from Astro
+(what changed, what is not ported yet).
 
 ## Running locally
 
 ```bash
 npm install
-npm run dev
+npm run dev -- --port 4991
 ```
 
-Serves at **http://localhost:4321** with hot reload.
-
-To serve a production build instead (matches what Playwright/e2e tests run
-against):
+To serve a production build instead (what the e2e tests run against):
 
 ```bash
-npm run build     # validates content, then builds to dist/
-npm run preview   # serves dist/ at http://127.0.0.1:4321
+npm run build     # validates content and the map layout, then builds to build/
+npm run preview   # serves build/
 ```
 
-If port 4321 is already in use (e.g. a stale preview server), free it first:
-
-```bash
-fuser -k 4321/tcp
-```
-
-## Testing from another device on the local network
-
-By default the dev server only binds to localhost. To reach it from another
-device on your LAN:
-
-```bash
-npm run dev -- --host
-```
-
-Then, from the other device, open `http://<this-machine's-LAN-IP>:4321`
-(find the IP with `hostname -I` or `ip addr`).
-
-Alternatively, if this machine is on a Tailscale network, `astro.config.mjs`
-already whitelists its Tailscale hostname (and any `*.ts.net` host) in Vite's
-`allowedHosts` — a plain `npm run dev` (no `--host` needed) is reachable at
-`http://<tailscale-hostname>:4321` from any device on the tailnet, including
-via Tailscale Funnel if you want it reachable outside the tailnet too.
+Optional build-time settings: `SITE_URL=https://example.org` (absolute URLs in
+sitemap, feeds, canonical links) and `BASE_PATH=/sub-path`.
 
 ## Other scripts
 
-- `npm run validate` — standalone content/graph validator (invariants I1-I34), no build needed
-- `npm run typecheck` — `astro check` + `tsc --noEmit`
-- `npx vitest run` — unit tests
-- `npx playwright test` — e2e + accessibility tests (spins up `npm run preview` itself)
+- `npm run validate` — standalone content/graph validator (invariants, stories), no build needed
+- `npm run check` — svelte-check (TypeScript strict)
+- `npm run lint` / `npm run format` — Prettier + ESLint
+- `npm test` — unit tests (vitest)
+- `npm run test:e2e` — Playwright e2e and accessibility tests against the build
+  (`PW_PORT` sets the port, `PLAYWRIGHT_CHROME_PATH` a system Chrome)
+- `npm run schema:generate`, `npm run layout:generate`, `npm run layout:check`
+
+## Licences
+
+Code: MIT (`LICENSE`). Data: CC-BY-4.0 (`LICENSE-DATA`). Fonts: SIL OFL 1.1 (`LICENSE-FONTS`).
