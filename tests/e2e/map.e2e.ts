@@ -347,8 +347,8 @@ test.describe('motion', () => {
 	});
 
 	test.describe('without the preference', () => {
-		test.use({ reducedMotion: 'no-preference' });
 		test('the camera and nodes glide and settle in about 300 ms', async ({ page }) => {
+			await page.emulateMedia({ reducedMotion: 'no-preference' });
 			await open(page, '/es/');
 			// Sample one neighbour's position on every frame after the click.
 			const samples = await page.evaluate(async () => {
