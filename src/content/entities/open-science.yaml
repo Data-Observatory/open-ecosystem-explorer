@@ -31,6 +31,13 @@ relations:
       - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
         accessed: 2026-11-13
         note: 'Recommendation text, paras. 7(a) and 9.'
+  - predicate: related-to
+    target: open-science-policy
+    note: 'The UNESCO Recommendation asks states and institutions to adopt open science policies.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, para. 17(a): developing institutional and national open science policies.'
 sources:
   - url: https://www.unesco.org/en/open-science/about
     accessed: 2026-11-12

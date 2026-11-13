@@ -301,11 +301,11 @@ related-to:
   # is authored once, on the lexicographically smaller id (I9); a thing ->
   # concept edge is always authored on the thing (the reverse direction is not
   # a legal edge, so I9 does not apply). Every edge carries a short `note`
-  # saying HOW the two relate; maxOutDegree 3 keeps it a curated pointer.
+  # saying HOW the two relate; maxOutDegree 5 keeps it a curated pointer.
   domain: [identifier, agency, index, cris, repository, aggregator, publishing-platform, standard, community, coalition, policy, organization, concept]
   range: [concept]
   symmetric: true
   acyclic: false
   sameTypeOnly: false
-  maxOutDegree: 3
+  maxOutDegree: 5
   style: { color: '#8c959f', line: dashed, arrow: open }

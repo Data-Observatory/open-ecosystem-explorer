@@ -29,6 +29,13 @@ relations:
         note: 'Names self-archiving as one of its two strategies.'
       - url: https://en.wikipedia.org/wiki/Open-access_repository
         accessed: 2026-11-13
+  - predicate: related-to
+    target: open-access-mandate
+    note: 'A mandate is a policy that requires research to be made open access.'
+    sources:
+      - url: https://www.coalition-s.org/principles-and-implementation/
+        accessed: 2026-11-13
+        note: 'Plan S requires funded publications to be open access: the best-known funder mandate.'
 sources:
   - url: https://www.budapestopenaccessinitiative.org/read/
     accessed: 2026-11-12
