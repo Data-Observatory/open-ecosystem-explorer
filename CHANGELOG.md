@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### FAIR retyped from `standard` to `concept` (2026-11-13)
+
+- FAIR is a set of guiding principles, not a specification with conformance testing or certification. Sources fetched: Wilkinson et al. 2016, *Scientific Data* (doi 10.1038/sdata.2016.18, "FAIR Guiding Principles", guidelines to improve reuse of data); the FORCE11 page (a set of guiding principles, launched at a Lorentz workshop in 2014); GO FAIR (the FAIR Guiding Principles, a reference for guiding implementation); Wikidata Q29032644 (instance of initiative and conceptual framework, subclass of principle, not a standard). `fair` is now `type: concept`, `governance: not-applicable`; `standardKind` and `requiresOpenness` are gone; `url` points to the GO FAIR principles page (the old go-fair.org address redirects there); the ES/EN summary and body now say plainly that FAIR is not a standard or a certification.
+- Edges: `developed-by` is not allowed from or to a concept, so `fair developed-by force11` became `force11 related-to fair` (authored on the community, same note and a FORCE11 source). Four inbound edges no longer type-check against a concept (`complies-with`, `mandates` and `profile-of` have `standard`/`policy` ranges) and are now `related-to`: `dataverse`, `fairsharing`, `fair4rs` (was `profile-of`) and `unesco-recommendation-open-science` (was `mandates`; the note already said it is advisory). The `what-is-fair` story follows the new edges and says FAIR is "not a standard" in its first step.
+- `npm run validate`: 169 entities, 357 edges (unchanged), 0 errors, 87 warnings (unchanged), 100% EN/ES.
+
 ### Scope expansion: open data, licences and research software (2026-11-13)
 
 - Scope is now "a map of open science, open data and good data practice, and of the open software and licences they depend on"; site name *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*. Docs only on this branch (`specs.md` title, section 1 scope line, non-goal N15 for open education, open hardware and open government, C7 criterion (d); `README.md`); the UI strings are updated separately.

@@ -1,7 +1,7 @@
 summary: Instrumento global adoptado en 2021 por los estados miembro de UNESCO (193 países); de carácter asesor, no vinculante.
 shortName: Recomendación UNESCO
 relationNotes:
-  mandates@fair: Solo asesor; nombra FAIR (y CARE) como principios orientadores para los datos y la infraestructura abiertos, sin crear una obligación vinculante.
+  related-to@fair: Solo asesor; nombra FAIR (y CARE) como principios orientadores para los datos y la infraestructura abiertos, sin crear una obligación vinculante.
   related-to@open-science: 'El marco global que establece qué es la ciencia abierta y recomienda cómo deben apoyarla los Estados.'
 body: |-
   Es asesor, no vinculante: los países que lo adoptaron acordaron guiarse por estándares comunes de ciencia abierta.

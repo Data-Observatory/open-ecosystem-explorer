@@ -14,7 +14,14 @@ identifiers:
 tags:
   - region:global
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: related-to
+    target: fair
+    note: The FAIR Guiding Principles were drafted and disseminated within this community.
+    sources:
+      - url: https://force11.org/info/the-fair-data-principles/
+        accessed: 2026-11-13
+        note: Launched at a Lorentz workshop in 2014 and published in 2016.
 sources:
   - url: https://force11.org/
     accessed: 2026-09-04

@@ -11,11 +11,11 @@ question:
 steps:
   - focus: fair
     text:
-      es: FAIR son cuatro principios para que los datos de investigación sirvan a personas y máquinas. Encontrables, accesibles, interoperables y reutilizables.
-      en: FAIR is four principles that make research data useful to people and machines. Findable, accessible, interoperable and reusable.
+      es: FAIR son cuatro principios orientadores, no un estándar, para que los datos de investigación sirvan a personas y máquinas. Encontrables, accesibles, interoperables y reutilizables.
+      en: FAIR is four guiding principles, not a standard, that make research data useful to people and machines. Findable, accessible, interoperable and reusable.
   - focus: force11
     edges:
-      - { source: fair, predicate: developed-by, target: force11 }
+      - { source: force11, predicate: related-to, target: fair }
     text:
       es: Se redactaron y difundieron en FORCE11, una comunidad dedicada a la comunicación académica.
       en: They were drafted and spread within FORCE11, a community working on scholarly communication.
@@ -53,13 +53,13 @@ steps:
       en: The CARE principles complement FAIR. Data about Indigenous peoples should benefit them and respect their authority to decide.
   - focus: fairsharing
     edges:
-      - { source: fairsharing, predicate: complies-with, target: fair }
+      - { source: fairsharing, predicate: related-to, target: fair }
     text:
       es: FAIRsharing es un registro de estándares, bases de datos y políticas de datos que ayuda a aplicar FAIR.
       en: FAIRsharing is a registry of standards, databases and data policies that helps people apply FAIR.
   - focus: unesco-recommendation-open-science
     edges:
-      - { source: unesco-recommendation-open-science, predicate: mandates, target: fair }
+      - { source: unesco-recommendation-open-science, predicate: related-to, target: fair }
     text:
       es: La Recomendación de la UNESCO sobre la Ciencia Abierta (2021) propone FAIR como guía para datos e infraestructuras, sin hacerlo obligatorio.
       en: UNESCO's 2021 Recommendation on Open Science points to FAIR as guidance for data and infrastructure, without making it binding.

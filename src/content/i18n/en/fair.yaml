@@ -1,9 +1,8 @@
-summary: The FAIR principles are guidelines for making data findable, accessible,
-  interoperable (able to work across systems) and reusable, without requiring them
-  to be open.
+summary: FAIR is a set of guiding principles for making data findable, accessible,
+  interoperable (able to work across systems) and reusable. It is not a standard.
 relationNotes:
   related-to@research-data-management: Principles for managing research data so that it can be reused.
   related-to@open-data: FAIR data does not have to be open; openness is a separate decision.
   related-to@metadata: Findability and interoperability depend on rich metadata.
 body: |-
-  FAIR is neither a technical standard nor a requirement to open data: it separates access, which is decided by whoever holds the data, from description. That is why it can also be applied to sensitive data that cannot be opened.
+  FAIR is a set of guiding principles, not a standard or a certification: the principles define no conformance test or certification of their own. They were drafted by the FORCE11 community, launched at a workshop in 2014 and published in 2016; the GO FAIR initiative promotes and interprets them. Standards, repositories and policies can implement or point to FAIR, but FAIR itself is the idea they relate to. It is also not a requirement to open data: it separates access, which is decided by whoever holds the data, from description. That is why it can also be applied to sensitive data that cannot be opened.
