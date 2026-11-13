@@ -25,6 +25,7 @@ const yamlIds = (dir: string) =>
 		.sort();
 const entityIds = yamlIds('src/content/entities');
 const viewIds = yamlIds('src/content/views');
+const storyIds = yamlIds('src/content/stories');
 
 const perLocale = (paths: string[]): `/${string}`[] =>
 	LOCALES.flatMap((locale) => paths.map((path) => `/${locale}${path}` as `/${string}`));
@@ -56,6 +57,7 @@ export default defineConfig({
 						'/about/',
 						'/changelog/',
 						...viewIds.map((id) => `/views/${id}/`),
+						...storyIds.map((id) => `/stories/${id}/`),
 						...entityIds.map((id) => `/entity/${id}/`)
 					])
 				]

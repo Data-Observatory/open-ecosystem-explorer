@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
+	import QuestionChips from '$lib/components/QuestionChips.svelte';
 	import { pagePath } from '$lib/locale';
 	import * as m from '$lib/paraglide/messages';
 
@@ -25,8 +26,8 @@
 		</p>
 	</section>
 
-	<!-- Question chips: today they open the guided questions; the map port turns each into a
-	     story played on the map (see MIGRATION.md). -->
+	<!-- Question chips: today they open each story's step list; the map port plays them on the
+	     map (see MIGRATION.md). -->
 	<section aria-labelledby="questions-heading" class="mx-auto max-w-4xl">
 		<h2
 			id="questions-heading"
@@ -34,18 +35,7 @@
 		>
 			{m.home_questions_heading()}
 		</h2>
-		<ul class="mt-4 flex flex-wrap justify-center gap-2" data-testid="question-chips">
-			{#each data.questions as question (question.id)}
-				<li>
-					<a
-						href={href(`views/${question.id}`)}
-						class="inline-block rounded-full bg-white px-4 py-2 text-sm text-zinc-800 ring-1 ring-zinc-300 transition-colors hover:bg-blue-50 hover:ring-blue-600"
-					>
-						{question.question}
-					</a>
-				</li>
-			{/each}
-		</ul>
+		<QuestionChips stories={data.stories} locale={data.locale} class="mt-4 justify-center" />
 	</section>
 
 	<!-- Placeholder for the interactive map (ported later from src/components/MapExplorer*). -->

@@ -16,6 +16,8 @@ import {
 	getTagsVocab
 } from '../../content/vocab-index.js';
 import { ROOT } from '../../content/loaders.js';
+import { getStories, stepText } from '../../content/stories-index.js';
+import { MAP_THEMES } from '../map/anchors.js';
 import { resolveProse } from '../i18n/resolve.js';
 import { renderMarkdown } from '../markdown/render.js';
 import { fold } from '../glossary-filter.js';
@@ -52,17 +54,16 @@ function entityName(index: GraphIndex, id: EntityId, locale: Locale): string {
 async function typeLabels(locale: Locale): Promise<Map<EntityType, string>> {
 	const vocab = await getEntityTypesVocab();
 	return new Map(
-		ENTITY_TYPES.map((type) => [type, vocab.get(type)?.label[locale] ?? vocab.get(type)?.label.en ?? type])
+		ENTITY_TYPES.map((type) => [
+			type,
+			vocab.get(type)?.label[locale] ?? vocab.get(type)?.label.en ?? type
+		])
 	);
 }
 
 /** First letter for the A-Z index: accents folded, anything else grouped under '#'. */
 export function indexLetter(name: string): string {
-	const first = name
-		.normalize('NFD')
-		.replace(/[̀-ͯ]/g, '')
-		.charAt(0)
-		.toUpperCase();
+	const first = name.normalize('NFD').replace(/[̀-ͯ]/g, '').charAt(0).toUpperCase();
 	return /^[A-Z]$/.test(first) ? first : '#';
 }
 
@@ -237,7 +238,17 @@ function formatAttribute(value: unknown, yes: string, no: string): string {
 }
 
 /** Fields shown elsewhere on the page (or structural), not repeated in the attribute table. */
-const HIDDEN_ATTRIBUTES = new Set(['id', 'name', 'relations', 'sources', 'aka', 'tags', 'disciplines', 'geography', 'lastReviewed']);
+const HIDDEN_ATTRIBUTES = new Set([
+	'id',
+	'name',
+	'relations',
+	'sources',
+	'aka',
+	'tags',
+	'disciplines',
+	'geography',
+	'lastReviewed'
+]);
 
 function relationGroups(
 	index: GraphIndex,
@@ -375,7 +386,13 @@ export interface QuestionPageData extends QuestionSummary {
 	/** `predicate` views: the relations the question is about, as sentences. */
 	sentences: { subject: EntityRef; verb: string; object: EntityRef }[];
 	/** `entities` / `explicit` views: the matching entries. */
-	entries: { id: EntityId; name: string; typeLabel: string; governance: string; optional: string[] }[];
+	entries: {
+		id: EntityId;
+		name: string;
+		typeLabel: string;
+		governance: string;
+		optional: string[];
+	}[];
 	optionalColumns: string[];
 	sources: { url: string; title?: string }[];
 }
@@ -394,7 +411,10 @@ export async function questionPage(
 	const labels = await typeLabels(locale);
 	const compare = collator(locale);
 
-	const ref = (entity: EntityId): EntityRef => ({ id: entity, name: entityName(index, entity, locale) });
+	const ref = (entity: EntityId): EntityRef => ({
+		id: entity,
+		name: entityName(index, entity, locale)
+	});
 	const sentences =
 		view.query.kind === 'predicate'
 			? resolved.edges.map((edge) => {
@@ -407,7 +427,8 @@ export async function questionPage(
 				})
 			: [];
 
-	const optionalColumns = view.query.kind === 'predicate' ? [] : activeOptionalColumns(index, resolved.entityIds);
+	const optionalColumns =
+		view.query.kind === 'predicate' ? [] : activeOptionalColumns(index, resolved.entityIds);
 	const entries =
 		view.query.kind === 'predicate'
 			? []
@@ -513,4 +534,59 @@ export async function about(locale: Locale): Promise<AboutData> {
 
 export function changelogHtml(): string {
 	return renderMarkdown(readRepoFile('CHANGELOG.md'));
+}
+
+// ---------------------------------------------------------------------------------------------
+// Stories (guided question paths, src/content/stories)
+
+export interface StorySummary {
+	id: string;
+	title: string;
+	question: string;
+	theme?: string;
+	steps: number;
+}
+
+export async function storyIds(): Promise<string[]> {
+	return [...(await getStories()).keys()];
+}
+
+export async function stories(locale: Locale): Promise<StorySummary[]> {
+	return [...(await getStories()).values()].map((story) => ({
+		id: story.id,
+		title: story.title[locale],
+		question: story.question[locale],
+		...(story.theme
+			? { theme: MAP_THEMES.find((t) => t.id === story.theme)?.label[locale] ?? story.theme }
+			: {}),
+		steps: story.steps.length
+	}));
+}
+
+export interface StoryPageData extends StorySummary {
+	/** One entry per step: the caption and the entities it brings in (focus first). */
+	stepList: { text: string; entities: EntityRef[] }[];
+}
+
+export async function storyPage(id: string, locale: Locale): Promise<StoryPageData | undefined> {
+	const story = (await getStories()).get(id);
+	if (!story) return undefined;
+	const index = await getSiteIndex();
+	const ref = (entity: EntityId): EntityRef => ({
+		id: entity,
+		name: entityName(index, entity, locale)
+	});
+	return {
+		id: story.id,
+		title: story.title[locale],
+		question: story.question[locale],
+		...(story.theme
+			? { theme: MAP_THEMES.find((t) => t.id === story.theme)?.label[locale] ?? story.theme }
+			: {}),
+		steps: story.steps.length,
+		stepList: story.steps.map((step) => ({
+			text: stepText(step, locale),
+			entities: [...new Set([step.focus, ...step.reveal])].map(ref)
+		}))
+	};
 }

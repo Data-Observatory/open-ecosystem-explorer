@@ -24,7 +24,10 @@
 	</p>
 
 	{#if question.fallback}
-		<p role="note" class="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-zinc-800 ring-1 ring-amber-200">
+		<p
+			role="note"
+			class="mt-4 rounded-xl bg-amber-50 px-4 py-3 text-sm text-zinc-800 ring-1 ring-amber-200"
+		>
 			{m.question_fallback_notice()}
 		</p>
 	{/if}
@@ -47,9 +50,13 @@
 			<ul class="mt-3 space-y-2">
 				{#each question.sentences as sentence, i (i)}
 					<li>
-						<a href={href(`entity/${sentence.subject.id}`)} class={linkClass}>{sentence.subject.name}</a>
+						<a href={href(`entity/${sentence.subject.id}`)} class={linkClass}
+							>{sentence.subject.name}</a
+						>
 						{sentence.verb}
-						<a href={href(`entity/${sentence.object.id}`)} class={linkClass}>{sentence.object.name}</a>.
+						<a href={href(`entity/${sentence.object.id}`)} class={linkClass}
+							>{sentence.object.name}</a
+						>.
 					</li>
 				{/each}
 			</ul>
@@ -76,7 +83,9 @@
 					<tbody>
 						{#each question.entries as entry (entry.id)}
 							<tr class="border-b border-zinc-100 align-top">
-								<td class="py-2 pr-4"><a href={href(`entity/${entry.id}`)} class={linkClass}>{entry.name}</a></td>
+								<td class="py-2 pr-4"
+									><a href={href(`entity/${entry.id}`)} class={linkClass}>{entry.name}</a></td
+								>
 								<td class="py-2 pr-4">{entry.typeLabel}</td>
 								<td class="py-2 pr-4">{entry.governance}</td>
 								{#each entry.optional as value, i (i)}
@@ -92,11 +101,15 @@
 
 	{#if question.sources.length > 0}
 		<section aria-labelledby="q-sources-h" class="mt-10">
-			<h2 id="q-sources-h" class="font-heading text-xl font-semibold text-zinc-900">{m.sources_heading()}</h2>
+			<h2 id="q-sources-h" class="font-heading text-xl font-semibold text-zinc-900">
+				{m.sources_heading()}
+			</h2>
 			<ul class="mt-2 list-disc space-y-1 pl-6 text-sm">
 				{#each question.sources as source (source.url)}
 					<li class="break-words">
-						<ExternalLink href={source.url} class={linkClass}>{source.title ?? source.url}</ExternalLink>
+						<ExternalLink href={source.url} class={linkClass}
+							>{source.title ?? source.url}</ExternalLink
+						>
 					</li>
 				{/each}
 			</ul>

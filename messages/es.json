@@ -21,6 +21,8 @@
 	"footer_feed": "Fuente RSS",
 	"footer_last_reviewed": "Última revisión de los datos: {date}",
 
+	"feed_description": "Entradas revisadas recientemente",
+
 	"gateway_redirecting": "Redirigiendo a la versión en español...",
 	"gateway_choose": "Si la redirección no ocurre, elija un idioma:",
 
@@ -51,6 +53,14 @@
 	"question_entries_heading": "Entradas",
 	"question_relations_heading": "Relaciones",
 
+	"questions_stories_heading": "Recorridos guiados",
+	"questions_stories_intro": "Cada recorrido responde una pregunta en pocos pasos, de una entrada a la siguiente.",
+	"questions_views_heading": "Análisis del ecosistema",
+	"story_steps": "{n} pasos",
+	"story_map_soon": "Pronto este recorrido se podrá seguir paso a paso en el mapa. Por ahora, los pasos se leen como una lista.",
+	"story_step": "Paso {n}",
+	"story_theme": "Tema: {theme}",
+
 	"col_name": "Nombre",
 	"col_type": "Tipo",
 	"col_governance": "Gobernanza",
@@ -62,6 +72,7 @@
 	"col_predicate": "Relación",
 	"col_inverse": "Lectura inversa",
 	"col_family": "Familia",
+	"col_count": "Entradas",
 	"col_edges": "Usos",
 	"col_definition": "Definición",
 	"col_rule": "Regla",
@@ -127,7 +138,7 @@
 	"download_entities": "Entradas (CSV)",
 	"download_relations": "Relaciones (CSV)",
 	"download_graph": "Grafo completo con textos en todos los idiomas (JSON)",
-	"download_entity_json": "Cada entrada por separado, por ejemplo {example}",
+	"download_entity_json": "Cada entrada por separado en JSON, por ejemplo:",
 	"download_feed": "Fuente RSS de entradas revisadas recientemente",
 	"download_sitemap": "Mapa del sitio (XML)",
 	"about_contribute_heading": "Contribuir",
