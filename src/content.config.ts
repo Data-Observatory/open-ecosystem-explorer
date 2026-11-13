@@ -5,6 +5,7 @@
 // filename (I1).
 import { defineCollection } from 'astro:content';
 import { zEntity, zProseFile, zView, zViewProseFile } from './lib/model/schema.js';
+import { zStory } from './lib/stories/schema.js';
 import { frontmatterLoader } from './content/loaders.js';
 
 const entities = defineCollection({
@@ -41,4 +42,11 @@ const views = defineCollection({
   schema: zView.omit({ id: true }),
 });
 
-export const collections = { entities, i18n, i18nViews, views };
+// Stories: guided question paths (src/lib/stories). Each file carries its own
+// `id`; ST1 (scripts/validate.ts) checks it equals the filename.
+const stories = defineCollection({
+  loader: frontmatterLoader({ base: './src/content/stories' }),
+  schema: zStory,
+});
+
+export const collections = { entities, i18n, i18nViews, views, stories };

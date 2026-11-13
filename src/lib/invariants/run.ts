@@ -2,7 +2,7 @@
 // already-parsed content, no file IO (rule A1). scripts/validate.ts does the
 // loading and printing.
 import { buildIndex } from '../graph/build-index.js';
-import type { Entity, EntityId, ResolvedProse } from '../model/types.js';
+import type { Entity, EntityId, GraphIndex, ResolvedProse } from '../model/types.js';
 import type { LocaleCode } from '../../i18n/locales.js';
 import { runAllInvariants } from './rules.js';
 import type {
@@ -41,6 +41,8 @@ export interface ValidationResult {
   entityCount: number;
   edgeCount: number;
   translationCoverage: Record<LocaleCode, { present: number; missing: readonly EntityId[] }>;
+  /** The index the rules ran against, for follow-up checks (e.g. stories) that need the same graph. */
+  index: GraphIndex;
 }
 
 function buildProseMap(
@@ -99,5 +101,6 @@ export function runValidation(input: ValidationInput): ValidationResult {
     entityCount: index.stats.entityCount,
     edgeCount: index.stats.edgeCount,
     translationCoverage: index.stats.translationCoverage,
+    index,
   };
 }
