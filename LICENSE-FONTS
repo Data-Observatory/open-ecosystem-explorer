@@ -1,0 +1,14 @@
+Fonts bundled in src/lib/assets/fonts/
+
+- inter-latin-variable.woff2: Inter, by Rasmus Andersson and the Inter project authors.
+  https://github.com/rsms/inter
+- space-grotesk-latin-variable.woff2: Space Grotesk, by Florian Karsten and the Space Grotesk
+  project authors. https://github.com/floriankarsten/space-grotesk
+
+Both fonts are licensed under the SIL Open Font License, Version 1.1:
+https://openfontlicense.org/open-font-license-official-text/
+
+The files are Latin-subset variable builds, copied from the Data Observatory sister sites
+(Data-Observatory/fairness). They are self-hosted: the site makes no runtime request to a font
+CDN. The OFL applies to the font files only; site code is MIT (LICENSE) and data is CC-BY-4.0
+(LICENSE-DATA).

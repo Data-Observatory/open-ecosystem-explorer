@@ -81,7 +81,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 | Content layer | Astro Content Collections (glob loader) | built-in |
 | Schema validation | Zod (via `astro:content`) + custom graph invariants | 3.x |
 | Diagrams | Mermaid, rendered **to static SVG at build time** | 11.x |
-| Interactive graph | Cytoscape.js + `fcose`, one island on `/{locale}/map` (§6.2) | 3.x |
+| Interactive graph | Svelte-native SVG on the home page (`src/lib/explorer/`, §7.0); positions from a hand composition, a ring, and the build-time `graph-layout.json`. Cytoscape.js was removed with the SvelteKit migration. | — |
 | Styling | Plain CSS with custom properties, no framework | — |
 | Tests | Vitest (unit + invariants), Playwright + axe-core | — |
 | Runtime / hosting | Node 22 LTS, npm; GitHub Pages via Actions | — |
@@ -130,7 +130,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 - **A4 — Content is the single source of truth.** No entity name, count, label or relation appears as a literal in a component, page or stylesheet. No UI string is hardcoded either: chrome text comes from `src/i18n/ui/<locale>.json`, vocabulary labels from the vocab files.
 - **A5 — The `GraphIndex` is built once and frozen**, then passed down. Components never recompute neighbours or re-derive inverses. The index is locale-independent; locale is applied at render time.
 - **A6 — Zero client JS is the default.** Budget: ≤50 KB gz on any route except `/map` (≤400 KB gz).
-- **A7 — No network at runtime.** No CDN fonts, no analytics, no browser API calls.
+- **A7 — No third-party network at runtime, except opt-out analytics.** No CDN fonts, no browser API calls. The one exception is Google Tag Manager (container `GTM-M9NXQLBC`), loaded by `static/consent-loader.js`: on by default, announced in a notice, off for good once the visitor turns it off (stored choice `oee-consent`; see `docs/analytics.md`). With analytics off the site makes no third-party request.
 - **A8 — Validation runs first.** `npm run build` invokes `npm run validate`; failure exits non-zero and produces no output.
 - **A9 — Adding a locale touches no schema and no component.** It is one entry in `src/i18n/locales.ts`, one `ui/<code>.json`, one label per vocabulary term, and prose files. Anything that would need a code change to support a third language is a design defect (§5.7).
 
@@ -496,28 +496,40 @@ Every diagram carries "download SVG" and "copy Mermaid source". The source is ex
 
 ## 7. Pages / Navigation
 
+### 7.0 The map explorer (SvelteKit site, home page)
+
+The map lives on `/{loc}/` and replaces `/map`, `/map2` and `/map3` (which redirect to it).
+
+- **Starting view.** The anchors of `src/lib/map/anchors.ts`, hand-composed (`src/lib/explorer/compose.ts`): open science in the centre, the four themes around it with a small-caps caption each, three node sizes (entry point, theme hub, member; size marks where to start reading, not hierarchy: open science, open data and open access share the largest), every anchor connected, a "start here" tag on the centre, the story question chips above the map.
+- **Selection** (`?n=<id>`). The node keeps its place, its neighbours move onto a ring of fixed radius (the 8 most relevant, 6 on phones; "show N more" puts all of them on two side arcs), everything else leaves. A card lists the relations as sentences grouped by predicate family; a sentence highlights its edge on hover or focus and selects the other node on click. The camera centres the node in the area the card leaves free. A breadcrumb trail of the last five nodes; selections are history entries.
+- **Stories** (`?historia=<id>&paso=<n>`). A question chip plays its story: nodes appear step by step in a fixed radial layout, the step's edges are highlighted, a caption bar shows the sentence with previous / next (arrow keys too). Nothing autoplays. `/{loc}/stories/<id>/` is the same content as an ordered list.
+- **Full screen.** A button on the map frame fills the viewport (Fullscreen API, with a fixed overlay as the fallback); Escape leaves it and returns focus to the button. The frame itself is up to 1600 px wide on large screens.
+- **Expert mode** (`?modo=experto`, remembered in `localStorage`). The whole corpus at the positions of `src/generated/graph-layout.json`, filters by entity type and predicate family, a table view, pan and zoom, labels by zoom.
+- **Search.** `/` opens a palette over entries (name, short name, aliases, summary) and stories.
+- **Encoding.** Five node families (`nodeFamilyOf`) with a shape and a colour each; one accent colour; no legend, no edge labels on the canvas, labels from `shortName` when present.
+- **Motion.** One 280 ms ease-out transition for camera and nodes together; none under `prefers-reduced-motion`. No simulation runs in the browser (A3).
+- **Accessibility.** Every node is a link to its entity page (the map works as a picture of links without JavaScript); the canvas is one tab stop, arrow keys move between nodes, Enter selects, Escape steps back; selections are announced in a live region. On phones the page is list-first: a 38vh map strip above the themes, the card or the story caption.
+- **Entity page.** A static 1-hop mini-graph drawn with the same renderer, laid out at build time.
+
 Every content route is locale-prefixed (§7.2). `{loc}` below stands for a code from `src/i18n/locales.ts`.
 
-| Route | Purpose | Client JS |
+| Route | Purpose | Without JavaScript |
 |---|---|---|
-| `/` | **Language gateway only.** A static page listing the available languages as plain links, with `<link rel="alternate" hreflang>` for each and an immediate (`0`-second) meta refresh to the default locale. No content of its own, so nothing is duplicated and nothing is hidden from a no-JS or screen-reader user. | none |
-| `/{loc}/` | What this is, how to read it, live counts from `GraphIndex.stats`, the layer-stack diagram as the entry point, latest dataset changes. | none |
-| `/{loc}/layers` | The memo's four-layer model plus the regional layer and the cross-cutting band: diagram, one section per layer, entity lists. The orientation page. | none |
-| `/{loc}/map` | Global explorer (§6.2). Degrades to `/{loc}/entities` without JS. | island only |
-| `/{loc}/map2` | "Essential concepts": a curated ~33-entity subset, for a first-time visitor before the full ~130-entity map. Rendered by its own component (`MapExplorerV2.astro`, separate from `/map`'s), not the same explorer restricted — a 2026-09-06 follow-up pass gave it a hierarchical tier+depth layout (4 tiers — principles/policies, then standards/specs, then institutions/agencies, then instruments, top to bottom, per the predicates' own real-world meaning and each `standard`/`coalition` entity's own subtype rather than `type` alone — replacing force-directed layer bands), class-box node rendering, tier-band groupings, an app-shell viewport (no page scroll), restored search, and a map2-only palette/shape tweak. Cross-links to/from `/{loc}/map`. | island only |
-| `/{loc}/map3` | **Minimal map (Phase 2 candidate for `/map`, under owner review).** Plain nodes and labels on a Cytoscape `preset` layout computed at build time (`scripts/layout-graph.ts` → committed `src/generated/graph-layout.json`; anchors by stress minimisation on hop distance, the rest by a seeded force pass with anchors pinned and label-footprint separation; deterministic per A3, `npm run layout:check` guards staleness). Default view: the 15 anchors of `src/lib/map/anchors.ts` (12 core concepts + DOI, ORCID, ROR; defined in code, not in entity YAML), thin grey edges, one search box, a one-line hint, no panel or legend. A click centres the node, grows up to 6 ranked neighbours out of it, fades the rest to ~10% and opens a card (type chip, summary ≤25 words, up to 5 relations as sentences using predicate labels, "Ver ficha", and a Wikipedia link derived from the Wikidata QID when present); a `+N` badge reveals the remaining neighbours. Five node families (concept, identifier, service, rule, organisation/community) with one shape each, five predicate families as edge colour + line style shown only for the selection or on hover; labels by zoom. Keyboard: `/` search, arrows move between neighbours, Enter follows (or expands), Esc steps back. URL state `?n=<id>`, `?modo=experto`. Expert mode (also remembered in `localStorage`) shows the whole corpus with a type filter, a relation-family filter and a list view. Honours `prefers-reduced-motion` and `prefers-color-scheme` (colours from CSS tokens); the card becomes a bottom sheet under 640 px and the layout is transposed on portrait screens. `/map` and `/map2` are unchanged until the owner approves a swap. | island only |
-| `/{loc}/entities` | Master index: sortable, filterable table of every entity (name, type, layer, governance, status, degree, `lastReviewed`). **Also the site-wide accessible equivalent of the global map** (§9). | ≤20 KB |
-| `/{loc}/entities/[type]` | One page per entity type: type map + list + type-specific facets. 13 pages per locale (the `concept` page is empty until the first concept lands). | ≤20 KB |
-| `/{loc}/entity/[id]` | **The core page.** Header, summary, prose (or the untranslated-fallback notice, §5.7), attribute table, focus diagram, relations grouped by predicate (outgoing then incoming) each with its accessible table, external identifiers, sources, `lastReviewed` badge, correction link, JSON/embed links. Layered per §7.1. | ≤5 KB |
-| `/{loc}/relations` | The predicate vocabulary: definition, inverse label, domain/range, edge count. | none |
-| `/{loc}/relations/[predicate]` | All edges of one predicate as diagram + table. 20 pages per locale. | none |
-| `/{loc}/views`, `/{loc}/views/[id]` | The fault-line analyses (§5.6): prose, resolved query, diagram or table, sources. | none |
-| `/{loc}/taxonomy`, `/{loc}/tags/[tag]` | Mindmap of layer → type → subtype → tags; per-tag entity sets with their interconnections. | none |
-| `/{loc}/model` | The data model: `erDiagram`, field reference, and I1–I31 generated from `rules.ts` metadata, so published documentation cannot drift from enforced rules. | none |
-| `/{loc}/search` | Full search UI; also a header widget everywhere. | ≤80 KB |
-| `/{loc}/about`, `/{loc}/contribute`, `/{loc}/changelog` | Scope, inclusion criteria (C7), editorial policy (§3), source attribution, licence (Q5), how to cite; rendered `CONTRIBUTING.md` including the §8.4 prompt template; dataset releases. | none |
-| `/data/graph.json`, `/data/entities.csv`, `/data/relations.csv`, `/entity/[id].json` | Exports — **locale-free**, carrying all locales' prose in a `prose: { es: …, en: … }` map. Stable, documented shape; per-entity JSON includes derived inverses. | — |
-| `/404`, `/sitemap.xml`, `/robots.txt`, `/{loc}/feed.xml` | Near-match suggestions; sitemap lists every locale with `hreflang` alternates; one feed per locale carrying dataset changes. | — |
+| `/` | **Language gateway only.** Links to each language, `hreflang` alternates and an immediate meta refresh to the default locale. No content of its own. | works |
+| `/{loc}/` | **Explorar.** Title, one-line scope, the story question chips and the map explorer (§7.0). Query state: `?n=<id>`, `?historia=<id>&paso=<n>`, `?modo=experto` (`&vista=lista`, `&tipo=`, `&rel=`). Entry and relation counts with links to the glossary and the questions. | The map is a static picture whose nodes link to their entity pages; the chips link to the step-list pages. |
+| `/{loc}/glossary/` | **Glosario.** Every entity, A-Z, with a text filter and entity-type chips (`?q=`, `?type=`). The site-wide accessible equivalent of the map. | Full list; the filter controls are hidden. |
+| `/{loc}/entity/[id]/` | **The core page.** Type, one-sentence definition, local note, the 1-hop mini-graph, relations as sentences grouped for reading (the predicate families, with `related-to` as its own last group), external links (official site, Wikipedia via the Wikidata QID, Wikidata, ROR), and everything else in a collapsed "Details" (aliases, description, attribute table, tags, sources, last review, raw JSON). An untranslated entry shows the fallback notice (§5.7). | works (`<details>` is native, the mini-graph is static SVG) |
+| `/{loc}/views/` | **Preguntas.** The guided stories (as chips) and the fault-line views (§5.6). | works |
+| `/{loc}/views/[id]/` | One view: prose, the resolved query as sentences or a table, sources. | works |
+| `/{loc}/stories/[id]/` | One story as an ordered list of steps with the entities each step brings in, and a "play on the map" link (hidden without JavaScript). The no-JavaScript and screen-reader form of a story. | works |
+| `/{loc}/about/` | **Acerca de.** Scope, how to read the map, the data model (types, predicate families, predicates, invariants generated from `rules.ts`), downloads, how to contribute (rendered `CONTRIBUTING.md` and the §8.4 prompt template), latest changelog headings. Anchors: `#scope`, `#reading`, `#model`, `#downloads`, `#contribute`, `#changelog`. | works |
+| `/{loc}/changelog/` | The full `CHANGELOG.md`. | works |
+| `/{loc}/[...legacy]/` | Redirect pages for the Astro routes folded into the pages above (`src/lib/legacy-routes.ts`): `entities`, `entities/<type>`, `layers`, `taxonomy`, `tags`, `tags/<tag>`, `search` (keeps `?q=`) go to the glossary; `relations`, `relations/<predicate>`, `model` to `about/#model`; `contribute` to `about/#contribute`; `map`, `map2`, `map3` to the home page. | meta refresh |
+| `/data/graph.json`, `/data/entities.csv`, `/data/relations.csv`, `/entity/[id].json` | Exports, **locale-free**, carrying all locales' prose in a `prose: { es: …, en: … }` map. Stable, documented shape; per-entity JSON includes derived inverses. | — |
+| `/search-index-{loc}.json` | Per-locale search index (name, aliases, summary per entity), kept for external consumers. | — |
+| `/404.html`, `/sitemap.xml`, `/robots.txt`, `/{loc}/feed.xml` | Static not-found page linking to both homes and glossaries; sitemap listing every locale with `hreflang` alternates; one feed per locale carrying dataset changes. | — |
+
+Every page URL ends in a slash (`trailingSlash: 'always'`) and is prerendered (`@sveltejs/adapter-static`). The primary navigation has four items: Explorar, Glosario, Preguntas, Acerca de.
 
 **Global chrome:** skip-to-content link; header with search, nav (Layers / Map / Entities / Relations / Views / About) and the **language switcher**; breadcrumbs (`Inicio › Índices › OpenAlex`); footer with licence, build timestamp, dataset version, repository link.
 
@@ -657,7 +669,7 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 - **Build:** `npm ci && npm run validate && npm run build` on Node 22. Target <60 s cold for ~200 entities × 2 locales excluding Mermaid rendering; <15 s incremental with content-hash diagram caching (locale in the key, §5.7).
 - **Config:** `astro.config.mjs` sets `site`, `base` and `i18n` (the last read from `src/i18n/locales.ts`); all internal links use Astro path helpers and are locale-aware, so a project-page base path, a custom domain and a new language all work unedited. 🟡 Custom domain is Q7.
 - **Trigger:** push to `main` deploys; PRs build and validate but do not deploy. 🟡 Per-PR previews recommended once external contributors arrive — a reviewer seeing the rendered page catches editorial problems a YAML diff hides, and this matters more now that the diff's author is usually an agent (§8.4d).
-- **Caching:** fingerprinted assets `immutable, max-age=31536000`; HTML `max-age=0, must-revalidate` so corrections propagate immediately. No runtime telemetry (A7).
+- **Caching:** fingerprinted assets `immutable, max-age=31536000`; HTML `max-age=0, must-revalidate` so corrections propagate immediately. No runtime telemetry other than the opt-out analytics container (A7, `docs/analytics.md`).
 - **Failure mode:** a failing validate or a11y gate blocks deployment; the previous site stays live. Bad data cannot replace good data.
 - **Versioning:** each deploy stamps dataset version and build timestamp into the footer and `graph.json`, so an export traces to a specific build and commit.
 

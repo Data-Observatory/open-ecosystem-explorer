@@ -20,6 +20,12 @@
 - `fair` is `prominence: extended`, not `core`: every core concept is a default map anchor (`anchors.test.ts`), and the 15 anchors are a deliberate set. The real-corpus tier test and the `map2` e2e spec used FAIR as the example of a principles standard; they now use `trust-principles` (in the legacy `map2` view FAIR, as a concept, falls to the default tier).
 - `npm run validate`: 169 entities, 357 edges (unchanged), 0 errors, 87 warnings (unchanged), 100% EN/ES.
 
+### Analytics and cookie notice (2026-11-13)
+
+- Google Tag Manager (container `GTM-M9NXQLBC`) loads by default from `static/consent-loader.js`, with Consent Mode v2 (analytics follows the visitor's choice; ad storage, ad user data and ad personalization always denied). A stored "denied" choice (key `oee-consent`) loads nothing. Same design as the sister site "fairness".
+- Notice with two equal buttons ("keep" / "turn off"), shown after mount only, again after 365 days; an "Analytics settings" control in the footer and in the new "Privacy and cookies" section of About (ES and EN). Turning off expires the Google Analytics cookies on the exact host.
+- Spec rule A7 now allows this one opt-out third-party request. The map e2e test and the quality e2e test account for it; `playwright.config.ts` makes the Google hosts unresolvable so tests never reach Google. Details in `docs/analytics.md`.
+
 ### Scope expansion: open data, licences and research software (2026-11-13)
 
 - Scope is now "a map of open science, open data and good data practice, and of the open software and licences they depend on"; site name *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*. Docs only on this branch (`specs.md` title, section 1 scope line, non-goal N15 for open education, open hardware and open government, C7 criterion (d); `README.md`); the UI strings are updated separately.
@@ -30,6 +36,30 @@
 - `npm run validate`: 0 errors, 87 warnings (was 80): I33 on `codemeta`, `citation-file-format` and `datos-gob-cl` (no governing organisation in the sources), plus I34 prose-mention hits on existing notes that name SPDX (`core`, `gbif`, `openaire`, `zenodo`) or Creative Commons (`wikidata`); the I28 disconnected-graph warning is gone (the Open Knowledge Foundation and FORCE11 are now connected).
 
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
+
+### Map: full screen, wider frame, entry-point sizes, clearer relation groups (2026-11-13, branch feat/sveltekit)
+
+- Full screen button on the map frame (Fullscreen API with a fixed-overlay fallback; Escape exits, focus returns to the button). The frame is up to 1600 px wide and taller on large screens; the phone layout is unchanged.
+- Node size marks entry points, not hierarchy: open science, open data and open access share the largest size. Open science keeps the centre and the "start here" tag.
+- Relations are grouped for reading with neutral headings: the `kind` family is "Qué es" / "What it is" (was "Es un/a" / "Is a"), and `related-to` is its own last group, "Relacionado con" / "Related to", on the map card and the entity page.
+- Question chips are links to the step-list pages; with JavaScript a click plays the story on the map.
+- Removed the pre-migration map helpers nothing imports (`hierarchy`, `curated`, `facets`, `graph-state`, `node-svg`, `palette-overrides`, `url-state`, `search-score`) and their tests.
+- `specs.md` §7 route table rewritten for the SvelteKit routes.
+
+### Interactive map rebuilt as Svelte-native SVG (2026-11-13, branch feat/sveltekit)
+
+- The home page is the map: the anchors composed around open science in four named themes, three node sizes, visible quiet edges, a "start here" tag and the question chips above it. No Cytoscape, no layout library; positions come from a hand composition (start), a fixed-radius ring (selection), a radial tree (stories) and the committed `graph-layout.json` (expert mode).
+- The card is the reading mode: relations as sentences grouped by family, hover or focus highlights the edge, the camera keeps the selected node clear of the card. Breadcrumb trail on real history entries (`?n=<id>`), Escape and Back step back.
+- Question chips play the stories on the map (`?historia=<id>&paso=<n>`, previous/next, arrow keys); `/{loc}/stories/<id>/` keeps the step list with a "play on the map" link.
+- Search palette on `/` (entries and stories). Expert mode (`?modo=experto`, remembered): whole corpus, type and relation filters, list view, pan and zoom.
+- Phones: list first, with a 38vh map strip on top. Entity pages get a static 1-hop mini-graph (same renderer, no JavaScript needed).
+- Site renamed in the UI: *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*, with the new one-line scope as intro and meta description.
+- Removed `cytoscape`, `cytoscape-fcose` and `src/components/`. New unit tests (`tests/unit/explorer/`) and e2e suite (`tests/e2e/map.e2e.ts`). Details in `MIGRATION.md`.
+
+### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
+
+- Stack of the Data Observatory sister sites: SvelteKit 2, Svelte 5, Tailwind 4, adapter-static, Paraglide UI strings (`messages/{es,en}.json`), self-hosted Inter and Space Grotesk. Same URL shape (`/es/...`, `/en/...`, trailing slash) and the same data export URLs; `SITE_URL` makes sitemap, feed and canonical URLs absolute.
+- New information architecture with four nav items: Explorar (home with story chips and a map placeholder), Glosario (A-Z list with filter and type chips), Preguntas (stories as step lists plus the existing views), Acerca de (scope, reading guide, data model, downloads, contribute, changelog). Slim entity page with relations as sentences and a collapsed "Detalles". Old routes redirect.
 
 ### Wikidata cross-check follow-ups (2026-11-13)
 

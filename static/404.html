@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="es">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="robots" content="noindex" />
+		<title>Página no encontrada / Page not found</title>
+		<style>
+			body {
+				margin: 0;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				font-family:
+					ui-sans-serif,
+					system-ui,
+					-apple-system,
+					sans-serif;
+				background: #fff;
+				color: #27272a;
+				text-align: center;
+				padding: 1.5rem;
+			}
+			main {
+				max-width: 28rem;
+			}
+			section + section {
+				margin-top: 2.5rem;
+				padding-top: 2rem;
+				border-top: 1px solid #e4e4e7;
+			}
+			h1 {
+				font-size: 1.5rem;
+				font-weight: 600;
+				margin: 0 0 0.5rem;
+			}
+			p {
+				color: #52525b;
+				font-size: 0.9375rem;
+				margin: 0 0 1.5rem;
+			}
+			a {
+				display: inline-block;
+				background: #2563eb;
+				color: #fff;
+				text-decoration: none;
+				font-size: 0.875rem;
+				font-weight: 500;
+				padding: 0.625rem 1.5rem;
+				border-radius: 9999px;
+				margin: 0.25rem;
+			}
+			a:hover {
+				background: #1d4ed8;
+			}
+			a:focus-visible {
+				outline: 2px solid #2563eb;
+				outline-offset: 2px;
+			}
+		</style>
+	</head>
+	<body>
+		<!--
+			Served as is for any missing URL by a static host. Links are relative: the build step
+			(scripts/postbuild.mjs) adds a <base> element set to the deploy base path.
+		-->
+		<main>
+			<section lang="es">
+				<h1>Página no encontrada</h1>
+				<p>Esta página no existe o el enlace está desactualizado.</p>
+				<a href="es/">Ir al inicio</a>
+				<a href="es/glossary/">Ver el glosario</a>
+			</section>
+			<section lang="en">
+				<h1>Page not found</h1>
+				<p>This page does not exist, or the link is out of date.</p>
+				<a href="en/">Go to the home page</a>
+				<a href="en/glossary/">Browse the glossary</a>
+			</section>
+		</main>
+	</body>
+</html>
