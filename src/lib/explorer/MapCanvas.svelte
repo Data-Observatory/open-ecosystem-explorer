@@ -141,7 +141,11 @@
 	function labelLayout(spec: SceneNode, text: string) {
 		const size = sizeOf(spec.tier);
 		const font = fontOf(spec.tier);
-		const linesOf = wrapLabel(text, compact ? 16 : 18);
+		const linesOf = wrapLabel(
+			text,
+			// On phones side labels have the least room: wrap them sooner.
+			compact ? (spec.side === 'left' || spec.side === 'right' ? 13 : 16) : 18
+		);
 		const lh = Math.round(font * 1.18);
 		const gap = size / 2 + (spec.tone === 'focus' ? 14 : 7);
 		const n = linesOf.length;
