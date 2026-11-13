@@ -1,6 +1,7 @@
 summary: Elsevier es una editorial científica comercial que también ofrece software
   para universidades, como el índice Scopus y el sistema de investigación Pure.
 relationNotes:
+  member-of@rda: 'Figura como miembro organizacional de RDA.'
   owned-by@relx: Elsevier es una división de RELX.
 body: |-
   Elsevier es un ejemplo de integración vertical: posee el índice (Scopus), el CRIS (Pure) y plataformas de repositorio (Interfolio, Digital Commons) que muchas instituciones usan para registrar y evaluar su propia investigación.

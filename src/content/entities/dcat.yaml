@@ -18,6 +18,15 @@ relations:
     target: w3c
   - predicate: is-a
     target: metadata-standard
+  - predicate: governed-by
+    target: w3c
+    note: 'Published as a W3C Recommendation by the Dataset Exchange Working Group.'
+    verified:
+      date: 2026-11-13
+      url: https://www.w3.org/TR/vocab-dcat-3/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q16892890#P1462
+        accessed: 2026-11-13
 sources:
   - url: https://www.w3.org/TR/vocab-dcat-3/
     accessed: 2026-09-04

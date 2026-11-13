@@ -12,7 +12,16 @@ identifiers:
 tags:
   - region:europe
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: member-of
+    target: w3c
+    note: 'Listed among W3C''s current members.'
+    verified:
+      date: 2026-11-13
+      url: https://www.w3.org/membership/list/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q34433#P463
+        accessed: 2026-11-13
 sources:
   - url: https://datareadiness.eng.ox.ac.uk/
     accessed: 2026-11-12

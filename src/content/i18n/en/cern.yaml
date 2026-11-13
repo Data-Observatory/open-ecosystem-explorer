@@ -1,6 +1,8 @@
 summary: CERN is a European research organisation that operates the Zenodo repository
   with OpenAIRE and leads the InvenioRDM repository software.
 relationNotes:
+  member-of@w3c: 'Listed among W3C''s current members.'
+  member-of@coara: 'Listed among CoARA''s member organisations.'
   member-of@datacite: 'Direct member of DataCite.'
 body: |-
   CERN operates and develops two core pieces of the repository layer: Zenodo, the general-purpose repository that assigns DOIs, and InvenioRDM, the software that runs it.

@@ -1,4 +1,6 @@
 summary: La Universidad de Bielefeld es una universidad alemana que mantiene BASE,
   un buscador académico multidisciplinario.
+relationNotes:
+  member-of@coar: 'Figura en la página de miembros de COAR.'
 body: |-
   Bielefeld University opera BASE, un agregador multidisciplinario basado en el protocolo OAI-PMH.

@@ -1,4 +1,6 @@
 summary: Bielefeld University is a German university that maintains BASE, a multidisciplinary
   academic search engine.
+relationNotes:
+  member-of@coar: 'Listed on COAR''s members page.'
 body: |-
   Bielefeld University operates BASE, a multidisciplinary aggregator based on the OAI-PMH protocol.

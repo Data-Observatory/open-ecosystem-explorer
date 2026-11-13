@@ -1,6 +1,7 @@
 summary: ANID is the Chilean agency that funds and coordinates research and development,
   and takes part in regional networks such as LA Referencia.
 relationNotes:
+  member-of@coara: 'Listed among CoARA''s member organisations as the National Research and Development Agency (Chile).'
   member-of@la-referencia: Chile participates in LA Referencia through ANID.
 body: |-
   ANID is the Chilean agency that funds and coordinates research, and Chile's point of participation in regional networks such as LA Referencia.

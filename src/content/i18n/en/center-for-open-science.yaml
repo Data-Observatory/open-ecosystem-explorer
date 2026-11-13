@@ -1,6 +1,7 @@
 summary: The Center for Open Science is a nonprofit that promotes open science and
   runs OSF, a platform for projects, preprints and data.
 relationNotes:
+  member-of@coara: 'Listed among CoARA''s member organisations.'
   member-of@datacite: 'Direct member of DataCite.'
 body: |-
   The Center for Open Science (COS) develops and operates OSF (Open Science Framework), and promotes open science practices more broadly.

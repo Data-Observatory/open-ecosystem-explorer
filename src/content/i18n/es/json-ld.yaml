@@ -1,4 +1,6 @@
 summary: Serialización de datos enlazados del W3C que sustenta el marcado de
   schema.org y RO-Crate.
+relationNotes:
+  governed-by@w3c: 'Publicado como Recomendación del W3C por el JSON-LD Working Group.'
 body: |-
   JSON-LD permite expresar datos enlazados en formato JSON, y es la base técnica sobre la que se construyen schema.org y RO-Crate.

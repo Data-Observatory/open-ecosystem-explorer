@@ -53,6 +53,15 @@ relations:
         note: 'Lists the existing Registration Agencies, among them this one.'
       - url: https://www.wikidata.org/wiki/Q821542#P463
         accessed: 2026-11-13
+  - predicate: member-of
+    target: rda
+    note: 'Listed as an affiliate member of RDA.'
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/organisation/datacite/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q821542#P463
+        accessed: 2026-11-13
 sources:
   - url: https://datacite.org/fees/
     accessed: 2026-11-12

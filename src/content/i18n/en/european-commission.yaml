@@ -1,4 +1,6 @@
 summary: The European Commission is the executive body of the European Union and funds
   open science infrastructure such as EOSC and OpenAIRE.
+relationNotes:
+  member-of@coara: 'Listed among CoARA''s member organisations.'
 body: |-
   The European Commission directly funds EOSC and OpenAIRE as part of its open science strategy, without running them day to day.
