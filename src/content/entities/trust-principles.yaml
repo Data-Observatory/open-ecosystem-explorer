@@ -1,19 +1,16 @@
-type: standard
+type: concept
 name: TRUST Principles
 url: https://www.nature.com/articles/s41597-020-0486-7
 status: active
-governance: community
-standardKind: principles
+governance: not-applicable
 tags:
   - function:certification
-lastReviewed: 2026-09-04
-relations:
-  - predicate: developed-by
-    target: rda
-    note: Published in Scientific Data (2020) as an RDA community effort.
-    verified:
-      date: 2026-09-04
-      url: https://www.rd-alliance.org/trust-principles-rda-community-effort
+lastReviewed: 2026-11-13
+relations: []
 sources:
   - url: https://www.nature.com/articles/s41597-020-0486-7
-    accessed: 2026-09-04
+    accessed: 2026-11-13
+    note: Lin et al. 2020, Scientific Data (text read via Europe PMC, PMC7224370). "A set of guiding principles to demonstrate digital repository trustworthiness", "a common framework to facilitate discussion and implementation of best practice in digital preservation".
+  - url: https://www.rd-alliance.org/news/the-trust-principles-an-rda-community-effort
+    accessed: 2026-11-13
+    note: RDA news item of 18 May 2020. Says an RDA community effort led to the principles, which "offer guidance for maintaining the trustworthiness of digital repositories", and that they were launched for community discussion at the RDA 13th Plenary (4 April 2019).

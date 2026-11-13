@@ -20,6 +20,12 @@ relations:
       - url: https://www.nature.com/articles/s41597-021-00892-0
         accessed: 2026-11-13
         note: Says the RDA International Indigenous Data Sovereignty Interest Group produced the CARE Principles.
+  - predicate: related-to
+    target: trust-principles
+    note: Published in Scientific Data (2020) as an RDA community effort.
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/news/the-trust-principles-an-rda-community-effort
   - predicate: member-of
     target: coara
     note: 'Listed among CoARA''s member organisations.'

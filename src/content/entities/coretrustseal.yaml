@@ -14,10 +14,13 @@ note: Maintained by the CoreTrustSeal Foundation (Stichting CoreTrustSeal, NL), 
   independent Dutch foundation since 2018 whose 12-member elected Board keeps the
   certification requirements.
 relations:
-  - predicate: profile-of
+  - predicate: related-to
     target: trust-principles
-    note: CoreTrustSeal operationalises the TRUST principles as a certifiable
-      requirements set.
+    note: The TRUST paper cites CoreTrustSeal as an example of how repositories
+      attain the TRUST properties.
+    sources:
+      - url: https://www.nature.com/articles/s41597-020-0486-7
+        accessed: 2026-11-13
   - predicate: endorsed-by
     target: wds
     note: Formed in 2017 by harmonising WDS's Regular Member certification with the

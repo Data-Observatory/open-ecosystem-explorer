@@ -1,6 +1,6 @@
 summary: CoreTrustSeal es una certificación que acredita que un repositorio cumple
   requisitos para guardar y conservar datos de forma confiable.
 relationNotes:
-  profile-of@trust-principles: CoreTrustSeal convierte los principios TRUST en requisitos certificables.
+  related-to@trust-principles: El artículo de TRUST cita CoreTrustSeal como ejemplo de cómo los repositorios alcanzan las propiedades TRUST.
 body: |-
   CoreTrustSeal permite que un tercero valide la fiabilidad de un repositorio sin construir una certificación propia desde cero. Sus requisitos los mantiene la CoreTrustSeal Foundation, una fundación neerlandesa (Stichting) independiente desde 2018, con una junta electa de 12 miembros.
