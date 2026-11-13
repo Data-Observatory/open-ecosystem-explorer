@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Map hierarchy: endorsed-by is lateral (2026-11-13)
+
+- `endorsed-by` goes from `target-higher` to `lateral` in `src/lib/map/hierarchy.ts`: a supporter neither contains nor governs the declaration it signs, and with the signatory convention the old orientation ranked Crossref, DataCite, OpenAIRE, OpenAlex and OpenCitations above the Barcelona Declaration. Same change as on the `feat/sveltekit` branch, applied by hand. The SVG map does not use this ranking; only the legacy layered view does. New unit test.
+
 ### FAIR retyped from `standard` to `concept` (2026-11-13)
 
 - FAIR is a set of guiding principles, not a specification with conformance testing or certification. Sources fetched: Wilkinson et al. 2016, *Scientific Data* (doi 10.1038/sdata.2016.18, "FAIR Guiding Principles", guidelines to improve reuse of data); the FORCE11 page (a set of guiding principles, launched at a Lorentz workshop in 2014); GO FAIR (the FAIR Guiding Principles, a reference for guiding implementation); Wikidata Q29032644 (instance of initiative and conceptual framework, subclass of principle, not a standard). `fair` is now `type: concept`, `governance: not-applicable`; `standardKind` and `requiresOpenness` are gone; `url` points to the GO FAIR principles page (the old go-fair.org address redirects there); the ES/EN summary and body now say plainly that FAIR is not a standard or a certification.

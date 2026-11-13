@@ -173,6 +173,17 @@ describe('computeRanks', () => {
     expect(ranks.get('unesco')!.composite).toBeGreaterThan(ranks.get('fair')!.composite);
   });
 
+  it('treats endorsed-by as lateral: a supporter does not rank above the declaration it signs', () => {
+    const nodes = [
+      { id: 'barcelona', type: 'coalition', subtype: 'declaration' },
+      { id: 'crossref', type: 'agency' },
+    ];
+    const edges = [{ from: 'barcelona', to: 'crossref', predicate: 'endorsed-by' }];
+    const ranks = computeRanks(nodes, edges);
+    expect(ranks.get('barcelona')!.depth).toBe(0);
+    expect(ranks.get('crossref')!.depth).toBe(0);
+  });
+
   it('excludes lateral predicates (interoperates-with, supersedes) from ranking', () => {
     const nodes = [
       { id: 'a', type: 'index' },
