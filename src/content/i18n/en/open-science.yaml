@@ -1,4 +1,8 @@
 summary: Open science is a set of practices that makes research knowledge, data and
   methods accessible and reusable for researchers and society.
+relationNotes:
+  related-to@persistent-identifier: 'Services that identify research objects with persistent identifiers are a critical part of open science infrastructure.'
+  related-to@preprint: 'Sharing preprints, clearly marked as not yet peer reviewed, is one way to open research early.'
+  related-to@research-repository: 'Open repositories for publications, data and code are central open science infrastructure.'
 body: |-
   UNESCO's 2021 Recommendation describes open science as an inclusive construct that combines various movements and practices aiming to make multilingual scientific knowledge openly available, accessible and reusable for everyone. It covers open access to publications, open data and open infrastructures, among other practices.

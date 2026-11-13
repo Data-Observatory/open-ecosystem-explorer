@@ -2,5 +2,6 @@ summary: Open data is data published under an open licence that anyone can use, 
   and share for any purpose.
 relationNotes:
   related-to@open-science: 'A pillar of open science: free access to research data.'
+  related-to@research-data-management: 'A data management plan sets out how and when research data will be made public.'
 body: |-
   The Open Definition says knowledge is open if anyone is free to access, use, modify and share it, subject at most to conditions that preserve provenance and openness. Open data is not the same as FAIR data: FAIR data need not be open, and open data need not be well described.

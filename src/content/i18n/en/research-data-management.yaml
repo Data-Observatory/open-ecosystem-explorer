@@ -2,5 +2,7 @@ summary: Research data management is the set of practices to plan, document, sto
   and share a project's data so that they can be reused.
 localNote: In Chile, ANID's policy requires a data management plan from its grantees
   and publication of the data at most one year after the final report.
+relationNotes:
+  related-to@research-repository: 'Data management usually ends with depositing the data in an institutional or disciplinary repository.'
 body: |-
   Its core document is the data management plan, which states what data a project will produce, how they are described and stored, and when and where they are shared. Good management is what makes later reuse possible.

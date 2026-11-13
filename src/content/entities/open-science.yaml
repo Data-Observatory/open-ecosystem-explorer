@@ -9,7 +9,28 @@ identifiers:
 tags:
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: persistent-identifier
+    note: 'Services that identify research objects with persistent identifiers are a critical part of open science infrastructure.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, para. 9 (open science infrastructures).'
+  - predicate: related-to
+    target: preprint
+    note: 'Sharing preprints, clearly marked as not yet peer reviewed, is one way to open research early.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, section on openness at every stage of research.'
+  - predicate: related-to
+    target: research-repository
+    note: 'Open repositories for publications, data and code are central open science infrastructure.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, paras. 7(a) and 9.'
 sources:
   - url: https://www.unesco.org/en/open-science/about
     accessed: 2026-11-12

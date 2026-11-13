@@ -9,7 +9,14 @@ identifiers:
 tags:
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: research-repository
+    note: 'Data management usually ends with depositing the data in an institutional or disciplinary repository.'
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+        note: 'Section TRES: grantees deposit research data in institutional or disciplinary repositories.'
 sources:
   - url: https://en.wikipedia.org/wiki/Research_data_management
     accessed: 2026-11-12

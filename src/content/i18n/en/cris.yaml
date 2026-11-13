@@ -1,4 +1,7 @@
 summary: A CRIS is an information system that links projects, people, organisations
   and outputs so institutions and funders can manage and report research.
+relationNotes:
+  related-to@open-science: 'Research information systems are listed among the infrastructures that support open science.'
+  related-to@research-repository: 'Institutions exchange records between their research information system and their repository.'
 body: |-
   Its core entities are people, organisations, projects and outputs, and the euroCRIS CERIF data model is the common reference. A CRIS mainly manages records about research activity rather than storing the outputs themselves.

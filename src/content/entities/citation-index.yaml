@@ -10,7 +10,10 @@ tags:
   - function:indexing
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: cris
+    note: 'Research information systems import publication records from citation indexes.'
 sources:
   - url: https://en.wikipedia.org/wiki/Citation_index
     accessed: 2026-11-12

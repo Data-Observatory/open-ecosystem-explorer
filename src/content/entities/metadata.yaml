@@ -13,6 +13,20 @@ relations:
   - predicate: related-to
     target: metadata-standard
     note: Standards agree how metadata is structured and named.
+  - predicate: related-to
+    target: research-data-management
+    note: 'Managing data well includes describing it with the metadata others need to find and reuse it.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, on persistent identifiers, metadata and data stewardship.'
+  - predicate: related-to
+    target: research-repository
+    note: 'Repositories describe each deposit with metadata that search services harvest.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Open-access_repository
+        accessed: 2026-11-13
+        note: 'Repositories expose metadata for harvesting (OAI-PMH).'
 sources:
   - url: https://en.wikipedia.org/wiki/Metadata
     accessed: 2026-11-12

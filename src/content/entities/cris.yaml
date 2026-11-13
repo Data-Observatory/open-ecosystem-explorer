@@ -12,7 +12,24 @@ identifiers:
 tags:
   - region:global
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: open-science
+    note: 'Research information systems are listed among the infrastructures that support open science.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, para. 9.'
+      - url: https://en.wikipedia.org/wiki/Current_research_information_system
+        accessed: 2026-11-13
+        note: 'Describes these systems as key components of open science implementation.'
+  - predicate: related-to
+    target: research-repository
+    note: 'Institutions exchange records between their research information system and their repository.'
+    sources:
+      - url: https://en.wikipedia.org/wiki/Current_research_information_system
+        accessed: 2026-11-13
+        note: 'Covers the information exchange workflows between the two kinds of system.'
 sources:
   - url: https://en.wikipedia.org/wiki/Current_research_information_system
     accessed: 2026-11-12

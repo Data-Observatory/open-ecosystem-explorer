@@ -14,6 +14,21 @@ relations:
   - predicate: related-to
     target: open-science
     note: 'A pillar of open science: free access to publications.'
+  - predicate: related-to
+    target: preprint
+    note: 'Preprints are usually free to read, but many carry no reuse licence, so they are not always open access in full.'
+    sources:
+      - url: https://asapbio.org/preprint-info/preprint-faq/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: research-repository
+    note: 'Depositing a copy in an open repository is the ''green'' route to open access.'
+    sources:
+      - url: https://www.budapestopenaccessinitiative.org/read/
+        accessed: 2026-11-13
+        note: 'Names self-archiving as one of its two strategies.'
+      - url: https://en.wikipedia.org/wiki/Open-access_repository
+        accessed: 2026-11-13
 sources:
   - url: https://www.budapestopenaccessinitiative.org/read/
     accessed: 2026-11-12

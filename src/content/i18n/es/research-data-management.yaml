@@ -4,5 +4,7 @@ name: Gestión de datos de investigación
 localNote: En Chile, la política de ANID exige un plan de gestión de datos a quien
   recibe su financiamiento y publicar los datos como máximo un año después del informe
   final.
+relationNotes:
+  related-to@research-repository: 'La gestión de datos suele terminar con el depósito de los datos en un repositorio institucional o disciplinario.'
 body: |-
   Su documento central es el plan de gestión de datos, que indica qué datos producirá un proyecto, cómo se describen y almacenan, y cuándo y dónde se comparten. Una buena gestión es lo que hace posible la reutilización posterior.

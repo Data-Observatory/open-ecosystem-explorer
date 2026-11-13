@@ -107,9 +107,21 @@ describe('describeFocusEntity — A9.1/A9.2/A9.3 (accessible table parity)', () 
     const full = realIndex();
     for (const id of full.entities.keys()) {
       const source = buildFocusDiagram(full, id, 'es');
-      const edgeLineCount = source.split('\n').filter((l) => /-->|==>|-\.->/.test(l)).length;
+      const edgeLines = source.split('\n').filter((l) => /-->|==>|-\.->/.test(l));
+      // A9.2: a cluster edge stands for every real edge it hides, and the
+      // table expands it back into one row per hidden edge.
+      let expected = 0;
+      for (const line of edgeLines) {
+        const cluster = /__cluster__([a-z_]+)/.exec(line);
+        if (!cluster) {
+          expected += 1;
+          continue;
+        }
+        const predicate = cluster[1]!.replace(/_/g, '-');
+        expected += (full.outgoing.get(id) ?? []).filter((e) => e.predicate === predicate).length;
+      }
       const { rows } = describeFocusEntity(full, id, 'es');
-      expect(rows.length, `entity '${id}'`).toBe(edgeLineCount);
+      expect(rows.length, `entity '${id}'`).toBe(expected);
     }
   });
 

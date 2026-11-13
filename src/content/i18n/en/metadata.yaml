@@ -2,5 +2,7 @@ summary: Metadata is data that describes other data (who, what, when, how) so th
   people and software can find, understand and reuse it.
 relationNotes:
   related-to@metadata-standard: Standards agree how metadata is structured and named.
+  related-to@research-data-management: 'Managing data well includes describing it with the metadata others need to find and reuse it.'
+  related-to@research-repository: 'Repositories describe each deposit with metadata that search services harvest.'
 body: |-
   Descriptive, administrative and technical metadata let search engines, indexes and repositories find, connect and reuse a record without opening it. Most of the FAIR principles depend on good metadata.
