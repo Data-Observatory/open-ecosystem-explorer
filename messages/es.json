@@ -40,7 +40,6 @@
 	"glossary_filter_label": "Filtrar el glosario",
 	"glossary_filter_placeholder": "Nombre, sigla o palabra",
 	"glossary_types_label": "Filtrar por tipo",
-	"glossary_all_types": "Todos los tipos",
 	"glossary_count": "{shown} de {total} entradas",
 	"glossary_empty": "Ninguna entrada coincide con el filtro.",
 	"glossary_clear": "Quitar filtros",
@@ -59,16 +58,12 @@
 	"story_steps": "{n} pasos",
 	"story_map_soon": "Pronto este recorrido se podrá seguir paso a paso en el mapa. Por ahora, los pasos se leen como una lista.",
 	"story_step": "Paso {n}",
+
 	"story_theme": "Tema: {theme}",
 
 	"col_name": "Nombre",
 	"col_type": "Tipo",
 	"col_governance": "Gobernanza",
-	"col_subject": "Sujeto",
-	"col_relationship": "Relación",
-	"col_object": "Objeto",
-	"col_since": "Desde",
-	"col_note": "Nota",
 	"col_predicate": "Relación",
 	"col_inverse": "Lectura inversa",
 	"col_family": "Familia",
@@ -79,7 +74,6 @@
 	"col_level": "Nivel",
 	"sources_heading": "Fuentes",
 
-	"entity_type_prefix": "Tipo: {type}",
 	"entity_relations_heading": "Cómo se relaciona",
 	"entity_no_relations": "Esta entrada aún no tiene relaciones registradas.",
 	"entity_links_heading": "Enlaces",

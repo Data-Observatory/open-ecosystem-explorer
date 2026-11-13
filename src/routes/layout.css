@@ -50,7 +50,11 @@ html:not(.js) [data-requires-js] {
 	display: none !important;
 }
 
-/* Long-form HTML rendered from repository Markdown and entity prose. */
+/* Long-form HTML rendered from repository Markdown and entity prose. Long paths and URLs in
+   the changelog must wrap on phones instead of widening the page. */
+.prose-content {
+	overflow-wrap: anywhere;
+}
 .prose-content p {
 	@apply my-3 leading-relaxed;
 }
