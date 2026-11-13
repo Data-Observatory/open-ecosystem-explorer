@@ -12,9 +12,6 @@ export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	{
 		ignores: [
-			// Legacy Astro map sources, kept only for the later map port (see MIGRATION.md).
-			'src/components/**',
-			'src/types/**',
 			// Pre-migration TypeScript, linted after the post-merge reformat (see MIGRATION.md).
 			'src/lib/{a11y,export,graph,i18n,invariants,map,markdown,mermaid,model,stories,views}/**',
 			'src/i18n/**',
