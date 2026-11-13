@@ -102,8 +102,8 @@ describe('computeTier against the real corpus', () => {
     }
   });
 
-  it('FAIR and OAI-PMH specifically land in different tiers (the exact user-reported pair)', () => {
-    const raw = parseYaml(readFileSync(join(ENTITIES_DIR, 'fair.yaml'), 'utf-8')) as { standardKind: string };
+  it('a principles standard (TRUST) and OAI-PMH land in different tiers (originally the FAIR/OAI-PMH pair; FAIR is now a concept)', () => {
+    const raw = parseYaml(readFileSync(join(ENTITIES_DIR, 'trust-principles.yaml'), 'utf-8')) as { standardKind: string };
     const oai = parseYaml(readFileSync(join(ENTITIES_DIR, 'oai-pmh.yaml'), 'utf-8')) as { standardKind: string };
     expect(computeTier('standard', raw.standardKind)).not.toBe(computeTier('standard', oai.standardKind));
   });
