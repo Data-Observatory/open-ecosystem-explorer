@@ -1,7 +1,9 @@
-// Loads the `views` + `i18nViews` collections into simple maps (specs.md
+// Loads the view facts (src/content/views) and their per-locale prose
+// (src/content/i18n/<locale>/views) into simple maps (specs.md
 // §5.6). Small enough not to warrant folding into site-index.ts's GraphIndex
 // — views are never nodes/edges, so they don't belong in the graph index.
-import { getCollection } from 'astro:content';
+import { loadYamlCollection } from './loaders.js';
+import { zView, zViewProseFile } from '../lib/model/schema.js';
 import type { Source, ViewQuery } from '../lib/model/types.js';
 import { locales, defaultLocale, type LocaleCode } from '../i18n/locales.js';
 
@@ -32,14 +34,23 @@ export function getViewsData(): Promise<ViewsData> {
 }
 
 async function build(): Promise<ViewsData> {
-  const entries = await getCollection('views');
+  const entries = loadYamlCollection({ base: 'src/content/views', schema: zView.omit({ id: true }) });
   const views = new Map<string, ViewFacts>();
   for (const e of entries) {
     const data = e.data as unknown as Omit<ViewFacts, 'id'>;
     views.set(e.id, { id: e.id, ...data });
   }
 
-  const proseEntries = await getCollection('i18nViews');
+  // View prose: src/content/i18n/<locale>/views/<id>.yaml.
+  const proseEntries = loadYamlCollection({
+    base: 'src/content/i18n',
+    schema: zViewProseFile,
+    match: (rel) => {
+      const parts = rel.split('/');
+      return parts.length === 3 && parts[1] === 'views';
+    },
+    localeAwareId: true,
+  });
   const prose = new Map<LocaleCode, Map<string, ViewProse>>();
   for (const { code } of locales) prose.set(code, new Map());
   for (const e of proseEntries) {
