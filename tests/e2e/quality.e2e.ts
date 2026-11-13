@@ -61,7 +61,18 @@ test.describe('no JavaScript', () => {
 	});
 });
 
-test('no request leaves the site', async ({ page }) => {
+// The one third-party request is Google Tag Manager, on by default and opt-out (see
+// consent.e2e.ts). With a stored "denied" choice nothing else leaves the site either.
+test('no request leaves the site once analytics are turned off', async ({ page }) => {
+	await page.addInitScript((key) => {
+		const date = new Date();
+		const iso = [
+			date.getFullYear(),
+			String(date.getMonth() + 1).padStart(2, '0'),
+			String(date.getDate()).padStart(2, '0')
+		].join('-');
+		window.localStorage.setItem(key, JSON.stringify({ v: 1, choice: 'denied', date: iso }));
+	}, 'oee-consent');
 	const external: string[] = [];
 	page.on('request', (request) => {
 		if (!request.url().startsWith('http://127.0.0.1')) external.push(request.url());

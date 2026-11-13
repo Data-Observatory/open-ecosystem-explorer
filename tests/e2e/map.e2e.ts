@@ -502,7 +502,10 @@ test.describe('no JavaScript', () => {
 test('the map makes no request outside the site', async ({ page }) => {
 	const external: string[] = [];
 	page.on('request', (request) => {
-		if (!request.url().startsWith('http://127.0.0.1')) external.push(request.url());
+		const url = request.url();
+		// The analytics container is the one allowed third party (on by default, opt-out).
+		if (url.startsWith('https://www.googletagmanager.com/gtm.js')) return;
+		if (!url.startsWith('http://127.0.0.1')) external.push(url);
 	});
 	await open(page, '/es/');
 	await node(page, 'doi').click();
