@@ -1,0 +1,7 @@
+summary: The Open Definition, a project of the Open Knowledge Foundation, sets out when knowledge, content or data count as open and which licences conform.
+relationNotes:
+  developed-by@open-knowledge-foundation: The Open Definition is a project of the Open Knowledge Foundation.
+  related-to@open-data: Defines what makes data open.
+  related-to@open-license: Maintains the list of licences that conform to it.
+body: |-
+  Version 2.1 says knowledge is open if anyone is free to access, use, modify and share it, subject at most to measures that preserve provenance and openness. Its list of conformant licences includes CC0, CC BY and CC BY-SA.

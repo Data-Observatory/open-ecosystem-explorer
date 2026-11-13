@@ -38,6 +38,13 @@ relations:
         accessed: 2026-11-13
         note: 'Section TRES (research data).'
   - predicate: related-to
+    target: data-management-plan
+    note: 'Requires grantees to submit a data management plan to guarantee public availability of the data.'
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+        note: 'Section TRES: grantees must submit a research data management plan whose purpose is to guarantee public availability of the data.'
+  - predicate: related-to
     target: research-repository
     note: 'Funded articles go to the agency''s repository; data to the agency''s, an institutional or a disciplinary repository.'
     sources:

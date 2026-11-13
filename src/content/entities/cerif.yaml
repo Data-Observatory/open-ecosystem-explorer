@@ -20,6 +20,15 @@ relations:
     target: eurocris
   - predicate: is-a
     target: metadata-standard
+  - predicate: developed-by
+    target: eurocris
+    note: 'CERIF is maintained and developed by a euroCRIS task group.'
+    verified:
+      date: 2026-11-13
+      url: https://eurocris.org/services/main-features-cerif/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q2986818#P170
+        accessed: 2026-11-13
 sources:
   - url: https://eurocris.org/services/main-features-cerif
     accessed: 2026-09-04

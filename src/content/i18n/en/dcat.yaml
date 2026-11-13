@@ -1,3 +1,5 @@
 summary: W3C vocabulary for data catalogues, used by dataset search engines.
+relationNotes:
+  governed-by@w3c: 'Published as a W3C Recommendation by the Dataset Exchange Working Group.'
 body: |-
   DCAT is the standard that lets data catalogues be described in an interoperable way, and underpins many data portals and dataset search engines.

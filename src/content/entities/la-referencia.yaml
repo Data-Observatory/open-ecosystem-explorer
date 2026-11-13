@@ -64,6 +64,15 @@ relations:
       - url: https://www.openaire.eu/la-referencia-openaire-and-coar-committed-to-a-shared-vision-of-a-global-network-of-repositories
         accessed: 2026-11-13
         note: 'Describes LA Referencia as one of the most advanced regional networks of repositories.'
+  - predicate: member-of
+    target: coar
+    note: 'Listed on COAR''s members page as a network with its own associated members.'
+    verified:
+      date: 2026-11-13
+      url: https://coar-repositories.org/members/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q65557864#P463
+        accessed: 2026-11-13
 sources:
   - url: https://infrafinder.investinopen.org/solutions/la-referencia
     accessed: 2026-11-12

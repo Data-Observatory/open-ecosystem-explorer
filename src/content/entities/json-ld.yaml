@@ -14,6 +14,15 @@ lastReviewed: 2026-09-04
 relations:
   - predicate: developed-by
     target: w3c
+  - predicate: governed-by
+    target: w3c
+    note: 'Published as a W3C Recommendation by the JSON-LD Working Group.'
+    verified:
+      date: 2026-11-13
+      url: https://www.w3.org/TR/json-ld11/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q6108942#P1462
+        accessed: 2026-11-13
 sources:
   - url: https://www.w3.org/TR/json-ld11/
     accessed: 2026-09-04

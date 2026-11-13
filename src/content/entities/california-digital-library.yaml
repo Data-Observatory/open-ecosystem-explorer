@@ -14,7 +14,16 @@ identifiers:
 tags:
   - region:north-america
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Member of DataCite that leads a consortium.'
+    sources:
+      - url: https://api.datacite.org/providers/cdlco
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType consortium.'
+      - url: https://www.wikidata.org/wiki/Q5020447#P463
+        accessed: 2026-11-13
 sources:
   - url: https://cdlib.org/about/
     accessed: 2026-09-04

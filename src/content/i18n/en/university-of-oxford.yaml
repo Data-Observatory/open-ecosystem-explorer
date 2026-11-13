@@ -1,3 +1,5 @@
 summary: British university whose Oxford e-Research Centre runs FAIRsharing.
+relationNotes:
+  member-of@w3c: 'Listed among W3C''s current members.'
 body: |-
   It hosts the Data Readiness Group of the Oxford e-Research Centre, which runs FAIRsharing.

@@ -1,4 +1,6 @@
 summary: PANGAEA is a repository that publishes earth and environmental science data,
   with CoreTrustSeal certification.
+relationNotes:
+  member-of@datacite: 'Direct member of DataCite.'
 body: |-
   PANGAEA is run jointly by AWI and MARUM. It holds CoreTrustSeal certification and is a regular member of the World Data System.

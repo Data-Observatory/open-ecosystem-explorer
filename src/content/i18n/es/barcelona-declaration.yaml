@@ -1,5 +1,11 @@
 summary: La Declaración de Barcelona es un compromiso conjunto de sus firmantes para
   que la información sobre investigación esté abierta por defecto.
 shortName: Declaración de Barcelona
+relationNotes:
+  endorsed-by@crossref: Figura como supporter (proveedor de infraestructura), no como firmante.
+  endorsed-by@datacite: Figura como supporter (proveedor de infraestructura), no como firmante.
+  endorsed-by@openaire: Figura como supporter en el sitio de la Declaración; la propia OpenAIRE se presenta como firmante.
+  endorsed-by@openalex: Figura como supporter (proveedor de infraestructura), no como firmante.
+  endorsed-by@opencitations: Figura como supporter (proveedor de infraestructura), no como firmante.
 body: |-
   Su grupo de trabajo cuatro se ocupa específicamente de reemplazar los sistemas cerrados de información de investigación por alternativas abiertas.

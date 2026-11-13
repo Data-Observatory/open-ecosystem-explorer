@@ -1,0 +1,33 @@
+type: concept
+name: Data management plan
+url: https://en.wikipedia.org/wiki/Data_management_plan
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q17085509
+tags:
+  - region:global
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: research-data-management
+    note: The central document of research data management.
+    sources:
+      - url: https://en.wikipedia.org/wiki/Data_management_plan
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-data
+    note: In a Chilean funder's policy the plan exists to guarantee public availability of data.
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-13
+sources:
+  - url: https://en.wikipedia.org/wiki/Data_management_plan
+    accessed: 2026-11-13
+    note: Definition; NSF two-page DMP; ESRC requirement.
+  - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+    accessed: 2026-11-13
+    note: "Section TRES: grantees must submit a research data management plan to guarantee public availability of the data."
+  - url: https://www.wikidata.org/wiki/Q17085509
+    accessed: 2026-11-13

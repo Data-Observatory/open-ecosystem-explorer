@@ -1,0 +1,8 @@
+summary: Un plan de gestión de datos es un documento que describe cómo se manejarán los datos de un proyecto, durante y después de la investigación.
+name: Plan de gestión de datos
+relationNotes:
+  related-to@research-data-management: El documento central de la gestión de datos de investigación.
+  related-to@open-data: En la política de una agencia financiadora chilena, el plan existe para garantizar la disponibilidad pública de los datos.
+body: |-
+  Los financiadores suelen exigirlo junto con la solicitud: la NSF de EE. UU. pide un plan de dos páginas como máximo, y el ESRC del Reino Unido lo pide en todos los proyectos que generan datos nuevos.
+localNote: En Chile, ANID exige a quien recibe su financiamiento un plan de gestión de datos cuyo propósito es garantizar la disponibilidad pública de los datos.

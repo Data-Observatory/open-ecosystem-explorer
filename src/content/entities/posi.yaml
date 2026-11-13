@@ -10,7 +10,14 @@ specVersion: "2.0"
 tags:
   - theme:vertical-integration
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: related-to
+    target: open-science-infrastructure
+    note: 'Principles for governing, sustaining and insuring the organisations that run this kind of infrastructure.'
+    sources:
+      - url: https://openscholarlyinfrastructure.org/
+        accessed: 2026-11-13
+        note: 'Governance, sustainability and insurance principles for scholarly infrastructure organisations.'
 sources:
   - url: https://openscholarlyinfrastructure.org/adopters/
     accessed: 2026-11-12

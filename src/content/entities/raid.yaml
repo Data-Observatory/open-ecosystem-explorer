@@ -26,6 +26,15 @@ relations:
       url: https://ardc.edu.au/article/ardc-and-datacite-announce-partnership-to-deliver-the-raid-service/
   - predicate: is-a
     target: persistent-identifier
+  - predicate: operated-by
+    target: ardc
+    note: 'ARDC is RAiD''s registration authority and lead developer, and offers the service in Australia, New Zealand and worldwide.'
+    verified:
+      date: 2026-11-13
+      url: https://www.raid.org/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q108378148#P137
+        accessed: 2026-11-13
 sources:
   - url: https://www.iso.org/standard/75931.html
     accessed: 2026-09-04

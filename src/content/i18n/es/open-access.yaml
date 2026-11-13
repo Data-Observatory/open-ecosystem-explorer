@@ -2,10 +2,10 @@ summary: El acceso abierto es una forma de publicar que permite a cualquier pers
   leer y reutilizar la investigación en internet sin pagar ni pedir permiso.
 name: Acceso abierto
 relationNotes:
-  related-to@open-science: 'Un pilar de la ciencia abierta: el acceso abierto a las
-    publicaciones.'
+  part-of@open-science: 'La ciencia abierta incluye el acceso abierto a las publicaciones científicas.'
   related-to@preprint: 'Los preprints suelen leerse gratis, pero muchos no tienen licencia de reutilización, así que no siempre son acceso abierto pleno.'
   related-to@research-repository: 'Depositar una copia en un repositorio abierto es la ruta ''verde'' al acceso abierto.'
   related-to@open-access-mandate: 'Un mandato es una política que exige que la investigación se publique en acceso abierto.'
+  related-to@open-license: 'La Iniciativa de Budapest por el Acceso Abierto recomienda CC BY o una licencia equivalente como la licencia óptima para el acceso abierto.'
 body: |-
   La Iniciativa de Budapest por el Acceso Abierto (2002) lo describe como disponibilidad gratuita en internet público, que permite a cualquiera leer, descargar, copiar y usar el texto sin barreras financieras, legales ni técnicas más allá del acceso a internet. La reutilización más allá de la lectura suele depender de una licencia abierta.

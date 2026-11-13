@@ -18,6 +18,15 @@ relations:
   - predicate: member-of
     target: la-referencia
     note: Chile participates in LA Referencia through ANID [M§6].
+  - predicate: member-of
+    target: coara
+    note: 'Listed among CoARA''s member organisations as the National Research and Development Agency (Chile).'
+    verified:
+      date: 2026-11-13
+      url: https://www.coara.org/coalition/membership/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q60169264#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.anid.cl/
     accessed: 2026-09-04

@@ -23,6 +23,15 @@ relations:
     verified:
       date: 2026-09-04
       url: https://openscholarlyinfrastructure.org/adopters/
+  - predicate: member-of
+    target: rda
+    note: 'Listed as an affiliate member of RDA.'
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/organisation/world-data-system-wds/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q17102557#P463
+        accessed: 2026-11-13
 sources:
   - url: https://worlddatasystem.org/about/
     accessed: 2026-09-04

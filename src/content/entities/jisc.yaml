@@ -11,7 +11,25 @@ identifiers:
 tags:
   - region:europe
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: member-of
+    target: coara
+    note: 'Listed among CoARA''s member organisations.'
+    verified:
+      date: 2026-11-13
+      url: https://www.coara.org/coalition/membership/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q6269240#P463
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: coar
+    note: 'Listed on COAR''s members page.'
+    verified:
+      date: 2026-11-13
+      url: https://coar-repositories.org/members/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q6269240#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.jisc.ac.uk/
     accessed: 2026-09-04

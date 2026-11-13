@@ -16,7 +16,16 @@ tags:
 lastReviewed: 2026-09-04
 note: Publicly listed (NYSE); no single corporate parent is publicly disclosed
   as of 2026-09-04.
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Member of DataCite (membership only).'
+    sources:
+      - url: https://api.datacite.org/providers/claana
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType member_only.'
+      - url: https://www.wikidata.org/wiki/Q27991358#P463
+        accessed: 2026-11-13
 sources:
   - url: https://clarivate.com/products/scientific-and-academic-research/research-funding-and-analytics/converis/
     accessed: 2026-09-04

@@ -1,0 +1,7 @@
+summary: Software Heritage is an open, non-profit infrastructure that collects, preserves and shares the source code of publicly available software.
+relationNotes:
+  developed-by@inria: Launched by Inria in 2016; the project home page lists Inria as its initiator.
+  related-to@persistent-identifier: Its SWHIDs are persistent identifiers derived from the content of source code.
+  related-to@research-software: Its mission includes preserving software so that research can be reproduced.
+body: |-
+  Inria launched it in 2016, in collaboration with UNESCO. SWHIDs (SoftWare Hash IDentifiers) are persistent, intrinsic identifiers for archived source code.

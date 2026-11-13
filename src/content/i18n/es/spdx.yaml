@@ -1,0 +1,8 @@
+summary: SPDX es un estándar abierto, la norma ISO/IEC 5962:2021, para describir componentes de software y sus licencias, con una lista de identificadores de licencia.
+relationNotes:
+  developed-by@linux-foundation: Proyecto de código abierto alojado en la Linux Foundation.
+  is-a@metadata-standard: Formatos compartidos para datos sobre origen y licencias del software.
+  related-to@open-license: Su lista da identificadores estándar a licencias abiertas y de otro tipo.
+  related-to@open-source-software: Su lista de licencias cubre software libre, abierto y colaborativo.
+body: |-
+  SPDX lo aloja la Linux Foundation. Su lista de licencias da a cada licencia común un identificador corto, como MIT o Apache-2.0, y abarca licencias de software, datos, hardware y documentación. Registra hechos y no hace interpretaciones legales.

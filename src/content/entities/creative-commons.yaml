@@ -1,0 +1,32 @@
+type: organization
+name: Creative Commons
+url: https://creativecommons.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+since: 2001-01
+prominence: detail
+identifiers:
+  ror: 02ed4cj64
+  wikidata: Q43449
+tags:
+  - region:global
+  - openness:open-content
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: open-license
+    note: Steward of the Creative Commons licence suite, the best-known family of open licences.
+    sources:
+      - url: https://creativecommons.org/about/
+        accessed: 2026-11-13
+sources:
+  - url: https://creativecommons.org/about/
+    accessed: 2026-11-13
+    note: Nonprofit "behind the world's most widely used open licenses"; public-domain tools.
+  - url: https://en.wikipedia.org/wiki/Creative_Commons
+    accessed: 2026-11-13
+    note: Founded 15 January 2001 by Lessig, Abelson and Eldred; CC0 is a public-domain dedication tool; six licence types.
+  - url: https://www.wikidata.org/wiki/Q43449
+    accessed: 2026-11-13

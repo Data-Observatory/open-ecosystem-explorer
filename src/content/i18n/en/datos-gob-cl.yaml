@@ -1,0 +1,6 @@
+summary: datos.gob.cl is the Chilean State's open data portal, where public institutions publish datasets that anyone can search and download.
+relationNotes:
+  is-a@open-data-portal: The State's national open data portal.
+  related-to@open-data: Publishes public-sector data for reuse in apps and research.
+body: |-
+  According to its site it belongs to the Ministerio de Hacienda and organises datasets by institution and category. It also offers reuse cases, guides, tutorials and training for public institutions.

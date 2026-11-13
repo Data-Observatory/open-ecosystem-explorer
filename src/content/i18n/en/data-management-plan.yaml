@@ -1,0 +1,7 @@
+summary: A data management plan is a formal document that describes how a project's data will be handled during the research and after it ends.
+relationNotes:
+  related-to@research-data-management: The central document of research data management.
+  related-to@open-data: In a Chilean funder's policy the plan exists to guarantee public availability of data.
+body: |-
+  Funders often require one with an application: the US NSF asks for a plan of at most two pages, and the UK ESRC for every award that creates new data.
+localNote: In Chile, ANID requires grantees to submit a research data management plan whose purpose is to guarantee public availability of the data.

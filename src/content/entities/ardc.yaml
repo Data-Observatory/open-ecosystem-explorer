@@ -14,7 +14,25 @@ identifiers:
 tags:
   - region:global
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Member of DataCite that leads a consortium.'
+    sources:
+      - url: https://api.datacite.org/providers/ardc
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType consortium.'
+      - url: https://www.wikidata.org/wiki/Q4824459#P463
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: rda
+    note: 'Listed as an organisational member of RDA.'
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/organisation/australian-research-data-commons-ardc/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q4824459#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.raid.org/
     accessed: 2026-09-04

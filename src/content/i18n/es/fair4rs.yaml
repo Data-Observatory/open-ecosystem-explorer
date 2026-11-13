@@ -1,0 +1,10 @@
+summary: Los principios FAIR4RS adaptan los principios FAIR al software de investigación, que es ejecutable, compuesto y cambia con el tiempo.
+name: Principios FAIR4RS
+relationNotes:
+  developed-by@rda: Grupo de trabajo convocado conjuntamente por RDA, FORCE11 y ReSA.
+  developed-by@force11: Coconvocante del grupo de trabajo.
+  developed-by@research-software-alliance: Coconvocante del grupo de trabajo.
+  profile-of@fair: Adapta los principios FAIR de los datos al software.
+  related-to@research-software: Define cómo debe ser encontrable y reutilizable el software de investigación.
+body: |-
+  La versión 1.0 se publicó el 24 de mayo de 2022 y proviene del grupo de trabajo FAIR4RS de la RDA, convocado conjuntamente por la RDA, FORCE11 y la Research Software Alliance. Sus autores señalan que muchos principios FAIR se mantienen, pero el software exigió revisiones.

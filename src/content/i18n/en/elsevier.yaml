@@ -1,6 +1,7 @@
 summary: Elsevier is a commercial scientific publisher that also provides software
   for universities, such as the Scopus index and the Pure research system.
 relationNotes:
+  member-of@rda: 'Listed as an organisational member of RDA.'
   owned-by@relx: Elsevier is a division of RELX.
 body: |-
   Elsevier is an example of vertical integration: it owns the index (Scopus), the CRIS (Pure) and the repository platforms (Interfolio, Digital Commons) that many institutions use to record and assess their own research.

@@ -1,6 +1,7 @@
 summary: Agencia de registro de DOI sin fines de lucro orientada a datasets, software, informes y plataformas de investigación.
 relationNotes:
-  member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
+  member-of@rda: 'Figura como miembro afiliado de RDA.'
+  member-of@international-doi-foundation: 'Miembro de la Fundación DOI como agencia de registro.'
   issues@doi: €2.000 de membresía más una cuota de infraestructura de €200-700 ajustada por contexto; sin cargo por DOI bajo 100.000/año.
   issues@igsn: El IGSN para muestras físicas se emite como un tipo de registro de DataCite.
 localNote: En Chile operan consorcios de DataCite liderados por Data Observatory y por el SISIB de la Universidad de Chile.

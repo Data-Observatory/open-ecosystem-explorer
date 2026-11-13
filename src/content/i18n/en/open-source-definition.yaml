@@ -1,0 +1,7 @@
+summary: The Open Source Definition lists ten criteria a software licence must meet to count as open source; the Open Source Initiative publishes it.
+relationNotes:
+  governed-by@open-source-initiative: Published and maintained by the Open Source Initiative.
+  related-to@open-source-software: The usual definition of open-source software.
+  related-to@open-license: OSI-approved licences are licences that comply with it.
+body: |-
+  Version 1.9 dates from 22 March 2007 and opens by saying open source does not just mean access to the source code. The Open Source Initiative approves licences that comply with it.

@@ -1,0 +1,46 @@
+type: standard
+name: Open Definition
+url: https://opendefinition.org/od/2.1/en/
+status: active
+governance: nonprofit
+standardKind: principles
+specVersion: "2.1"
+requiresOpenness: true
+prominence: extended
+identifiers:
+  wikidata: Q21605525
+tags:
+  - region:global
+  - openness:open-content
+lastReviewed: 2026-11-13
+relations:
+  - predicate: developed-by
+    target: open-knowledge-foundation
+    note: The Open Definition is a project of the Open Knowledge Foundation.
+    verified:
+      date: 2026-11-13
+      url: https://opendefinition.org/od/2.1/en/
+    sources:
+      - url: https://opendefinition.org/od/2.1/en/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-data
+    note: Defines what makes data open.
+    sources:
+      - url: https://opendefinition.org/od/2.1/en/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-license
+    note: Maintains the list of licences that conform to it.
+    sources:
+      - url: https://opendefinition.org/licenses/
+        accessed: 2026-11-13
+sources:
+  - url: https://opendefinition.org/od/2.1/en/
+    accessed: 2026-11-13
+    note: Version 2.1; the central definition sentence; "a project of Open Knowledge Foundation".
+  - url: https://opendefinition.org/licenses/
+    accessed: 2026-11-13
+    note: List of conformant licences.
+  - url: https://www.wikidata.org/wiki/Q21605525
+    accessed: 2026-11-13

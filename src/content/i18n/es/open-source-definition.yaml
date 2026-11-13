@@ -1,0 +1,8 @@
+summary: La Definición de código abierto son los diez criterios que una licencia de software debe cumplir para considerarse de código abierto; la publica la OSI.
+name: Definición de código abierto (OSD)
+relationNotes:
+  governed-by@open-source-initiative: Publicada y mantenida por la Open Source Initiative.
+  related-to@open-source-software: La definición habitual de software de código abierto.
+  related-to@open-license: Las licencias aprobadas por la OSI son las que la cumplen.
+body: |-
+  La versión 1.9 es del 22 de marzo de 2007 y empieza diciendo que código abierto no significa solo acceso al código fuente. La Open Source Initiative aprueba las licencias que la cumplen.

@@ -1,5 +1,11 @@
 summary: The Barcelona Declaration is a joint commitment by its signatories to make
   research information open by default.
 shortName: Barcelona Declaration
+relationNotes:
+  endorsed-by@crossref: Listed as a supporter (infrastructure provider), not as a signatory.
+  endorsed-by@datacite: Listed as a supporter (infrastructure provider), not as a signatory.
+  endorsed-by@openaire: Listed as a supporter on the Declaration's site; OpenAIRE's own post calls it a signatory.
+  endorsed-by@openalex: Listed as a supporter (infrastructure provider), not as a signatory.
+  endorsed-by@opencitations: Listed as a supporter (infrastructure provider), not as a signatory.
 body: |-
   Its working group four focuses specifically on replacing closed research information systems with open alternatives.

@@ -1,4 +1,6 @@
 summary: Universidad estadounidense que alojó y operó arXiv durante 25 años, hasta
   su independencia el 1 de julio de 2026.
+relationNotes:
+  member-of@datacite: 'Miembro directo de DataCite.'
 body: |-
   Cornell University, a través de su biblioteca universitaria y desde 2019 bajo supervisión administrativa de Cornell Tech, operó arXiv hasta que este pasó a ser una organización independiente. Sigue siendo miembro fundador de arXiv, Inc. junto con la Simons Foundation.

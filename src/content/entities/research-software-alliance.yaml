@@ -1,0 +1,31 @@
+type: community
+name: Research Software Alliance (ReSA)
+aka:
+  - ReSA
+url: https://www.researchsoft.org/
+status: active
+governance: community
+communityKind: technical-community
+prominence: detail
+identifiers:
+  ror: 007tfm130
+  wikidata: Q111283156
+tags:
+  - region:global
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: research-software
+    note: Its whole remit is recognising and supporting research software.
+    sources:
+      - url: https://www.researchsoft.org/about/
+        accessed: 2026-11-13
+sources:
+  - url: https://www.researchsoft.org/about/
+    accessed: 2026-11-13
+    note: '"a fiscally sponsored project of Code for Science & Society"; Steering Committee; vision; coordination aim.'
+  - url: https://zenodo.org/records/6623556
+    accessed: 2026-11-13
+    note: Co-convened the FAIR4RS WG.
+  - url: https://www.wikidata.org/wiki/Q111283156
+    accessed: 2026-11-13

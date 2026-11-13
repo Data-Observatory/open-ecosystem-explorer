@@ -1,0 +1,25 @@
+type: organization
+name: Inria
+url: https://www.inria.fr/en
+status: active
+governance: public-agency
+orgKind: research-institute
+country: FR
+since: "1967"
+prominence: detail
+identifiers:
+  ror: 02kvxyf05
+  wikidata: Q1146208
+tags:
+  - region:europe
+lastReviewed: 2026-11-13
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/French_Institute_for_Research_in_Computer_Science_and_Automation
+    accessed: 2026-11-13
+    note: Public Scientific and Technical Research Establishment; created 1967; double supervision of two ministries.
+  - url: https://web.archive.org/web/20260907041940/https://www.softwareheritage.org/faq/
+    accessed: 2026-11-13
+    note: "Software Heritage FAQ: launched in 2016 by Inria (Internet Archive copy)."
+  - url: https://www.wikidata.org/wiki/Q1146208
+    accessed: 2026-11-13

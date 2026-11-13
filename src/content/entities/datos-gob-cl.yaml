@@ -1,0 +1,40 @@
+type: repository
+name: datos.gob.cl
+aka:
+  - Portal de Datos Abiertos del Estado de Chile
+url: https://datos.gob.cl/
+status: active
+governance: public-agency
+repositoryKind: hosted-service
+accessModel: open
+prominence: extended
+identifiers:
+  wikidata: Q108381608
+tags:
+  - region:chile
+  - region:latam
+  - function:deposit
+geography:
+  - cl
+lastReviewed: 2026-11-13
+note: Run under Chile's Ministerio de Hacienda per the portal's own page; no entity exists for the ministry, so no operated-by edge is authored.
+relations:
+  - predicate: is-a
+    target: open-data-portal
+    note: The State's national open data portal.
+    sources:
+      - url: https://datos.gob.cl/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-data
+    note: Publishes public-sector data for reuse in apps and research.
+    sources:
+      - url: https://datos.gob.cl/
+        accessed: 2026-11-13
+sources:
+  - url: https://datos.gob.cl/
+    accessed: 2026-11-13
+    note: '"el portal de datos abiertos del Estado"; belongs to the Ministerio de Hacienda; reuse cases, guides, tutorials and training for institutions.'
+  - url: https://www.wikidata.org/wiki/Q108381608
+    accessed: 2026-11-13
+    note: "Label: Chile Open Data Portal; country Chile."

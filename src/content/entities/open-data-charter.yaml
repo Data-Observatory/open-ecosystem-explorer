@@ -1,0 +1,37 @@
+type: coalition
+name: Open Data Charter
+aka:
+  - ODC
+  - International Open Data Charter
+url: https://opendatacharter.org/
+status: active
+governance: unknown
+coalitionKind: network
+since: 2015-10
+prominence: extended
+identifiers:
+  wikidata: Q22905856
+tags:
+  - region:global
+geography:
+  - global
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: open-data
+    note: Principles for releasing government data openly.
+    sources:
+      - url: https://opendatacharter.org/
+        accessed: 2026-11-13
+sources:
+  - url: https://opendatacharter.org/
+    accessed: 2026-11-13
+    note: Helps governments adopt open data policies; six principles; over 29 national and 146 sub-national adopters; network of adopters, endorsers and IWG.
+  - url: https://opendatacharter.org/principles/
+    accessed: 2026-11-13
+    note: Six principles; developed in 2015.
+  - url: https://en.wikipedia.org/wiki/International_Open_Data_Charter
+    accessed: 2026-11-13
+    note: Adopted October 2015 at the OGP Global Summit in Mexico; original signatories included Chile.
+  - url: https://www.wikidata.org/wiki/Q22905856
+    accessed: 2026-11-13

@@ -1,0 +1,6 @@
+summary: El Citation File Format (CITATION.cff) es un archivo de texto con datos de citación de software o datos, legibles por personas y programas.
+relationNotes:
+  is-a@metadata-standard: Un formato de archivo para los datos de citación de software.
+  related-to@research-software: Permite citar correctamente el software de investigación.
+body: |-
+  GitHub muestra la cita y un fragmento BibTeX a partir del archivo, Zenodo lo usa para completar el registro de las versiones publicadas con su integración con GitHub, y el complemento de Zotero también lo lee. Su desarrollo cuenta con el apoyo del DLR Institute for Software Technology, el Netherlands eScience Center y el Software Sustainability Institute.

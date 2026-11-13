@@ -1,0 +1,9 @@
+summary: CKAN es software de código abierto para crear portales y catálogos de datos, usado por muchos gobiernos para publicar datos abiertos.
+relationNotes:
+  governed-by@open-knowledge-foundation: Custodia sus activos en fideicomiso; Datopian y Link Digital la coadministran.
+  implements@dcat: Mediante la extensión ckanext-dcat (perfiles DCAT-AP).
+  is-a@repository-software: Plataforma que las organizaciones instalan para operar su propio portal de datos.
+  related-to@open-data-portal: Impulsa cientos de portales de datos en el mundo.
+  related-to@open-data: Hecho para publicar, compartir y usar datos de forma abierta.
+body: |-
+  CKAN nació hacia 2005-2006 en la Open Knowledge Foundation y usa la licencia AGPL v3.0. La Open Knowledge Foundation custodia sus activos en fideicomiso, y Datopian y Link Digital son sus coadministradores. Su extensión ckanext-dcat añade exportación y cosecha DCAT.

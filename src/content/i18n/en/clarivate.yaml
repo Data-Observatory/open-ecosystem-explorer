@@ -1,4 +1,6 @@
 summary: Clarivate is a company that provides the Web of Science citation index and
   the research management systems Converis and Esploro.
+relationNotes:
+  member-of@datacite: 'Member of DataCite (membership only).'
 body: |-
   Clarivate got Esploro (a CRIS from Ex Libris) through its 2021 acquisition of ProQuest. There is no end-of-life announcement for Converis. Running two CRIS systems in the same portfolio is a matter of market comment, not a confirmed fact.

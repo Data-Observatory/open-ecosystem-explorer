@@ -2,6 +2,15 @@
 
 ## [Unreleased]
 
+### Scope expansion: open data, licences and research software (2026-11-13)
+
+- Scope is now "a map of open science, open data and good data practice, and of the open software and licences they depend on"; site name *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*. Docs only on this branch (`specs.md` title, section 1 scope line, non-goal N15 for open education, open hardware and open government, C7 criterion (d); `README.md`); the UI strings are updated separately.
+- 20 new entities (ES + EN prose each, 149 -> 169): licences and definitions (`creative-commons`, `creative-commons-licences`, `open-definition`, `open-source-definition`, `open-source-initiative`, `spdx`, `linux-foundation`, `open-source-software`), open data (`open-data-charter`, `ckan`, `open-data-portal`, `data-management-plan`, `datos-gob-cl`), research software (`research-software`, `fair4rs`, `research-software-alliance`, `codemeta`, `citation-file-format`, `software-heritage`, `inria`). 43 new edges (314 -> 357), each with a fetched source; governance edges carry `verified` records. No new entity types, predicates or tags.
+- Creative Commons licences are one `standard` that is `related-to` (not `is-a`) `open-license`, because only CC0, CC BY and CC BY-SA are on the Open Definition's conformant list. Open Data Charter has governance `unknown` (no page names a host). `datos-gob-cl` is the single Chile open-data portal; dataset counts are left out.
+- Software Heritage facts re-checked on Internet Archive copies of softwareheritage.org (the live site fails TLS verification) and swhid.org: non-profit infrastructure launched by Inria in 2016 in collaboration with UNESCO. Claims that rested only on Wikipedia (2015 start, UNESCO headquarters opening in 2018) were dropped. The Carpentries and ILDA were considered and left out.
+- `open-license` is the 15th default anchor ("Publish openly") and `prominence: core`; new edge `open-access` `related-to` `open-license` (BOAI10 recommendation 2.1 names CC BY). `anchors.ts`, the anchors unit test, the `map3` e2e spec and specs section 7 now say 15 anchors. `anid-open-access-policy` relates to `data-management-plan`. Layout regenerated.
+- `npm run validate`: 0 errors, 87 warnings (was 80): I33 on `codemeta`, `citation-file-format` and `datos-gob-cl` (no governing organisation in the sources), plus I34 prose-mention hits on existing notes that name SPDX (`core`, `gbif`, `openaire`, `zenodo`) or Creative Commons (`wikidata`); the I28 disconnected-graph warning is gone (the Open Knowledge Foundation and FORCE11 are now connected).
+
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
 
 ### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
@@ -9,6 +18,14 @@
 - Stack of the Data Observatory sister sites: SvelteKit 2, Svelte 5, Tailwind 4, adapter-static, Paraglide UI strings (`messages/{es,en}.json`), self-hosted Inter and Space Grotesk. Same URL shape (`/es/...`, `/en/...`, trailing slash) and the same data export URLs; `SITE_URL` makes sitemap, feed and canonical URLs absolute.
 - New information architecture with four nav items: Explorar (home with story chips and a map placeholder), Glosario (A-Z list with filter and type chips), Preguntas (stories as step lists plus the existing views), Acerca de (scope, reading guide, data model, downloads, contribute, changelog). Slim entity page with relations as sentences and a collapsed "Detalles". Old routes redirect.
 - The interactive map is not ported yet; see `MIGRATION.md`.
+
+### Wikidata cross-check follow-ups (2026-11-13)
+
+- Open access and open data are now `part-of` open science (was `related-to`), sourced to paras. 6 and 7(a)/(b) of the UNESCO Recommendation; the open-access story highlights the new edges.
+- New concept `open-science-infrastructure` (Wikidata Q108934881, extended, ES + EN): part of open science (UNESCO Recommendation paras. 6 and 9); DOAJ, Crossref, OpenCitations and Open Policy Finder are-a it (Wikidata P31 + para. 9); POSI relates to it. Layout regenerated.
+- Signatory convention: supporters of declarations are `endorsed-by` the declaration, not `member-of`; `member-of` stays for genuine memberships. The 5 Barcelona Declaration supporters (Crossref, DataCite, OpenAIRE, OpenAlex, OpenCitations) moved from `member-of` (authored on them) to `endorsed-by` (authored on the declaration); `endorsed-by` range widened to agency, aggregator, index, repository, publishing-platform and cris; documented in specs A.2 and guarded by a test. Beware: `endorsed-by` ranks the target higher in the map hierarchy (`target-higher`), unlike before.
+- `member-of` range widened to `agency` and `organization` (specs A.2, `predicates.yaml`, test). 16 memberships that were blocked, each verified on the organisation's own records: 12 DataCite members (Crossref, JaLC, arXiv, GBIF, COS, Clarivate, CERN, ARDC, Cornell, CDL, Lyrasis, PANGAEA; source: DataCite's provider API, plus the Wikidata statement) and 4 International DOI Foundation members (Crossref, DataCite, mEDRA, JaLC; source: doi.org membership and registration-agency pages).
+- 24 of the 36 'safe' Wikidata edges added after checking each on the organisation's own page: 10 CoARA members (coara.org membership list, 2 Nov 2026), 5 RDA members (rd-alliance.org organisation pages), 3 COAR members (coar-repositories.org/members), 2 W3C members (w3.org/membership/list), `raid` operated-by ARDC (raid.org), `cerif` developed-by euroCRIS, `dcat` and `json-ld` governed-by W3C. Wikidata statement URLs are kept as extra sources. 12 left out (not verifiable on first-party pages, stale on Wikidata, or blocked by I19 for non-company owners); decisions in the session log.
 
 ### Map data: connected anchors, themes, short names, stories (2026-11-13)
 

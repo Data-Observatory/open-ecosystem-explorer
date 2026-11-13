@@ -1,5 +1,6 @@
 summary: Identifica un proyecto o actividad de investigación, no su resultado; norma ISO 23527:2022 operada por ARDC.
 relationNotes:
+  operated-by@ardc: 'ARDC es la autoridad de registro y principal desarrolladora de RAiD, y ofrece el servicio en Australia, Nueva Zelanda y el resto del mundo.'
   governed-by@ardc: ARDC es la autoridad de registro designada por ISO para RAiD a nivel mundial.
   depends-on@datacite: ARDC y DataCite entregan RAiD conjuntamente; el registro ocurre a través de la infraestructura de Consorcio de DataCite.
 body: |-

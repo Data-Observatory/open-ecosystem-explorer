@@ -1,0 +1,38 @@
+type: organization
+name: Open Source Initiative
+aka:
+  - OSI
+url: https://opensource.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+since: "1998"
+prominence: detail
+identifiers:
+  wikidata: Q845918
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: related-to
+    target: open-source-software
+    note: Maintains the definition and the approved-licence list for open source.
+    sources:
+      - url: https://opensource.org/about
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-license
+    note: Approves licences that comply with the Open Source Definition.
+    sources:
+      - url: https://opensource.org/licenses
+        accessed: 2026-11-13
+sources:
+  - url: https://opensource.org/about
+    accessed: 2026-11-13
+    note: California public benefit corporation, 501(c)(3), founded 1998; maintains the OSD; runs the OSI Approved License programme.
+  - url: https://opensource.org/licenses
+    accessed: 2026-11-13
+  - url: https://www.wikidata.org/wiki/Q845918
+    accessed: 2026-11-13

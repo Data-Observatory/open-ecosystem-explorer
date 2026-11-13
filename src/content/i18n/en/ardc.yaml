@@ -1,4 +1,7 @@
 summary: ARDC is an Australian agency that runs RAiD, a persistent identifier for
   research activities, and co-founded the alliance that governs it.
+relationNotes:
+  member-of@rda: 'Listed as an organisational member of RDA.'
+  member-of@datacite: 'Member of DataCite that leads a consortium.'
 body: |-
   ARDC is the reason RAiD exists as an identifier that works at global scale: without a national CRIS, RAiD lets you identify research activity without building a full system.

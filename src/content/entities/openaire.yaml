@@ -39,13 +39,6 @@ relations:
       date: 2026-09-04
       url: https://openscholarlyinfrastructure.org/adopters/
   - predicate: member-of
-    target: barcelona-declaration
-    note: Listed as a supporter on the Declaration's site; OpenAIRE's own post
-      calls it a signatory.
-    verified:
-      date: 2026-11-12
-      url: https://barcelona-declaration.org/signatories/
-  - predicate: member-of
     target: coara
     note: Published an Action Plan supporting the CoARA commitments.
     verified:

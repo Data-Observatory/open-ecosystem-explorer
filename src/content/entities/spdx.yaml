@@ -1,0 +1,56 @@
+type: standard
+name: SPDX
+aka:
+  - Software Package Data Exchange
+url: https://spdx.dev/
+status: active
+governance: community
+standardKind: metadata-schema
+since: "2011"
+prominence: extended
+identifiers:
+  wikidata: Q2297620
+tags:
+  - region:global
+  - openness:open-source
+lastReviewed: 2026-11-13
+relations:
+  - predicate: developed-by
+    target: linux-foundation
+    note: An open source project hosted by the Linux Foundation.
+    verified:
+      date: 2026-11-13
+      url: https://spdx.dev/about/
+    sources:
+      - url: https://spdx.dev/about/
+        accessed: 2026-11-13
+  - predicate: is-a
+    target: metadata-standard
+    note: Shared formats for data about software origin and licensing.
+    sources:
+      - url: https://spdx.dev/about/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-license
+    note: Its License List gives open and other licences standard identifiers.
+    sources:
+      - url: https://spdx.org/licenses/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-source-software
+    note: Its licence list covers free, open and collaborative software.
+    sources:
+      - url: https://spdx.org/licenses/
+        accessed: 2026-11-13
+sources:
+  - url: https://spdx.dev/about/
+    accessed: 2026-11-13
+    note: ISO/IEC 5962:2021; hosted by the Linux Foundation; no legal interpretations.
+  - url: https://spdx.org/licenses/
+    accessed: 2026-11-13
+    note: "License List: standardized short identifiers for licences of software, data, hardware, documentation."
+  - url: https://en.wikipedia.org/wiki/Software_Package_Data_Exchange
+    accessed: 2026-11-13
+    note: First published August 2011; ISO/IEC 5962:2021 published August 2021.
+  - url: https://www.wikidata.org/wiki/Q2297620
+    accessed: 2026-11-13

@@ -5,7 +5,7 @@
 import type { EntityType, PredicateFamilyId } from '../model/types.js';
 
 /**
- * The 14 nodes of the default view: the 11 `prominence: core` concepts plus
+ * The 15 nodes of the default view: the 12 `prominence: core` concepts plus
  * the three identifiers a newcomer meets first. Sorted; every id must exist
  * in the corpus (tests/unit/map/anchors.test.ts).
  */
@@ -17,6 +17,7 @@ export const DEFAULT_ANCHOR_IDS: readonly string[] = [
   'metadata',
   'open-access',
   'open-data',
+  'open-license',
   'open-science',
   'orcid',
   'persistent-identifier',
@@ -63,6 +64,7 @@ export const ANCHOR_THEME: Readonly<Record<string, MapThemeId>> = {
   orcid: 'identify',
   ror: 'identify',
   'open-access': 'publish',
+  'open-license': 'publish',
   'diamond-open-access': 'publish',
   preprint: 'publish',
   'open-data': 'data',

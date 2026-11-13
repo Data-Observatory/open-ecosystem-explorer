@@ -43,14 +43,17 @@ relations:
     verified:
       date: 2026-09-04
       url: https://scoss.org/what-is-scoss/
-  - predicate: member-of
-    target: barcelona-declaration
-    note: Listed as a supporter (infrastructure provider), not as a signatory.
-    verified:
-      date: 2026-11-12
-      url: https://barcelona-declaration.org/signatories/
   - predicate: is-a
     target: citation-index
+  - predicate: is-a
+    target: open-science-infrastructure
+    sources:
+      - url: https://www.wikidata.org/wiki/Q29279836#P31
+        accessed: 2026-11-13
+        note: 'Wikidata: instance of open science infrastructure.'
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, para. 9: open science infrastructures include open publication platforms, repositories, research information systems and persistent identifier services.'
 sources:
   - url: https://opencitations.net/
     accessed: 2026-09-04

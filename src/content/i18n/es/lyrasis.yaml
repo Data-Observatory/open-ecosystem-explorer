@@ -1,3 +1,5 @@
 summary: Organización sin fines de lucro que administra DSpace, software de código abierto para repositorios.
+relationNotes:
+  member-of@datacite: 'Miembro de DataCite que lidera un consorcio.'
 body: |-
   LYRASIS es el hogar organizativo de DSpace, software de repositorio de código abierto que sostiene como infraestructura comunitaria con grupos de gobernanza y trabajo abiertos a sus miembros.

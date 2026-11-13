@@ -1,3 +1,5 @@
 summary: W3C linked data serialisation that underpins schema.org markup and RO-Crate.
+relationNotes:
+  governed-by@w3c: 'Published as a W3C Recommendation by the JSON-LD Working Group.'
 body: |-
   JSON-LD lets you express linked data in JSON. It is the technical basis on which schema.org and RO-Crate are built.

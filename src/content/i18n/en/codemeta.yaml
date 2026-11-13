@@ -1,0 +1,8 @@
+summary: CodeMeta is a shared metadata vocabulary for software, built on schema.org and JSON-LD, with crosswalks between repository and domain formats.
+relationNotes:
+  depends-on@schema-org: Builds on schema.org terms.
+  depends-on@json-ld: Expressed as JSON-LD.
+  is-a@metadata-standard: A shared vocabulary for describing software.
+  related-to@research-software: Helps research software be findable, reusable and citable.
+body: |-
+  A consortium of researchers founded it in 2016 to support discovery, citation and interoperability of research software. The CodeMeta community oversees the vocabulary, the crosswalk table and the generator.

@@ -18,6 +18,15 @@ relations:
   - predicate: owned-by
     target: relx
     note: Elsevier is a division of RELX.
+  - predicate: member-of
+    target: rda
+    note: 'Listed as an organisational member of RDA.'
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/organisation/elsevier/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q746413#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.elsevier.com/
     accessed: 2026-09-04

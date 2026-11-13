@@ -1,7 +1,6 @@
 summary: OpenAlex is a free, open catalogue of scientific publications and their citation
   links, which anyone can download in full.
 relationNotes:
-  member-of@barcelona-declaration: Listed as a supporter of the Declaration, not as a signatory.
   operated-by@ourresearch: Built and maintained by OurResearch, a nonprofit organisation.
   interoperates-with@opencitations: OpenAlex includes OpenCitations' open citation data as one of its sources.
   interoperates-with@wikidata: Cross-referenced via WikiCite; OpenAlex reconciles entities against Wikidata QIDs.

@@ -14,7 +14,16 @@ tags:
   - region:north-america
   - openness:open-governance
 lastReviewed: 2026-11-12
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Member of DataCite that leads a consortium.'
+    sources:
+      - url: https://api.datacite.org/providers/lyrasis
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType consortium.'
+      - url: https://www.wikidata.org/wiki/Q6709869#P463
+        accessed: 2026-11-13
 sources:
   - url: https://www.lyrasis.org/
     accessed: 2026-09-04

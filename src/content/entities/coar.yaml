@@ -24,6 +24,24 @@ relations:
       - url: https://coar-repositories.org/about-coar/
         accessed: 2026-11-13
         note: 'COAR describes itself as a global voice for the repository community.'
+  - predicate: member-of
+    target: coara
+    note: 'Listed among CoARA''s member organisations.'
+    verified:
+      date: 2026-11-13
+      url: https://www.coara.org/coalition/membership/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q48789578#P463
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: rda
+    note: 'Listed as an affiliate member of RDA.'
+    verified:
+      date: 2026-11-13
+      url: https://www.rd-alliance.org/organisation/confederation-of-open-access-repositories/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q48789578#P463
+        accessed: 2026-11-13
 sources:
   - url: https://coar-repositories.org/
     accessed: 2026-09-04

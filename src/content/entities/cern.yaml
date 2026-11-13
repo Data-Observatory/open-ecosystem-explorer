@@ -14,7 +14,34 @@ identifiers:
 tags:
   - region:europe
 lastReviewed: 2026-09-04
-relations: []
+relations:
+  - predicate: member-of
+    target: datacite
+    note: 'Direct member of DataCite.'
+    sources:
+      - url: https://api.datacite.org/providers/cern
+        accessed: 2026-11-13
+        note: 'DataCite''s own provider record: memberType direct_member.'
+      - url: https://www.wikidata.org/wiki/Q42944#P463
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: coara
+    note: 'Listed among CoARA''s member organisations.'
+    verified:
+      date: 2026-11-13
+      url: https://www.coara.org/coalition/membership/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q115682002#P1891
+        accessed: 2026-11-13
+  - predicate: member-of
+    target: w3c
+    note: 'Listed among W3C''s current members.'
+    verified:
+      date: 2026-11-13
+      url: https://www.w3.org/membership/list/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q42944#P463
+        accessed: 2026-11-13
 sources:
   - url: https://home.cern/about
     accessed: 2026-09-04

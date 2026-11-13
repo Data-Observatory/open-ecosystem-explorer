@@ -14,7 +14,16 @@ note: cOAlition S welcomed the Barcelona Declaration on Open Research
   member funding agencies (Wellcome, UKRI, ANR, NWO, etc.) are not modelled as
   separate entities in this corpus, so no schema-legal relation target currently
   exists.
-relations: []
+relations:
+  - predicate: member-of
+    target: coara
+    note: 'Listed among CoARA''s member organisations.'
+    verified:
+      date: 2026-11-13
+      url: https://www.coara.org/coalition/membership/
+    sources:
+      - url: https://www.wikidata.org/wiki/Q115682002#P1891
+        accessed: 2026-11-13
 sources:
   - url: https://www.coalition-s.org/
     accessed: 2026-11-12

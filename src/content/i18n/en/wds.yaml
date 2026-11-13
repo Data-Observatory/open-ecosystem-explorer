@@ -1,4 +1,6 @@
 summary: The World Data System is a programme of the International Science Council
   that certifies and coordinates trustworthy scientific data repositories.
+relationNotes:
+  member-of@rda: 'Listed as an affiliate member of RDA.'
 body: |-
   The World Data System certifies scientific data repositories as trustworthy and coordinates the federation of data centres inherited from the former World Data Centers.

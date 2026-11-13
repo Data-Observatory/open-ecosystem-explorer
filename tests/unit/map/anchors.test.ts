@@ -35,10 +35,10 @@ function contrast(a: string, b: string): number {
 describe('default anchors', () => {
   const entities = new Map(loadRealEntities().map((e) => [e.id, e]));
 
-  it('are 14, sorted and unique', () => {
-    expect(DEFAULT_ANCHOR_IDS).toHaveLength(14);
+  it('are 15, sorted and unique', () => {
+    expect(DEFAULT_ANCHOR_IDS).toHaveLength(15);
     expect([...DEFAULT_ANCHOR_IDS].sort()).toEqual([...DEFAULT_ANCHOR_IDS]);
-    expect(new Set(DEFAULT_ANCHOR_IDS).size).toBe(14);
+    expect(new Set(DEFAULT_ANCHOR_IDS).size).toBe(15);
   });
 
   it('all exist in the corpus and have at least one relation', () => {

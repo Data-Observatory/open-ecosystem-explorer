@@ -1,0 +1,3 @@
+summary: Research software is source code, algorithms, scripts, workflows and executables created during the research process or for a research purpose.
+body: |-
+  This is the definition used by the FAIR4RS principles, which adapt the FAIR principles to software. Metadata files such as CodeMeta and CITATION.cff exist so that software can be described and cited.

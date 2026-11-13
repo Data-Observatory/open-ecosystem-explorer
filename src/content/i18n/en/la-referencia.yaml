@@ -1,5 +1,6 @@
 summary: Federated network of eleven Latin American countries plus Spain, which aggregates articles and theses (not research data).
 relationNotes:
+  member-of@coar: 'Listed on COAR''s members page as a network with its own associated members.'
   interoperates-with@openaire: Harvests from national nodes under the OpenAIRE guidelines since 2016.
   indexes@scielo: LA Referencia indexes the national collections of SciELO.
   related-to@research-repository: 'A federated network that aggregates records from institutional repositories.'

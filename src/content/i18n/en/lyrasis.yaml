@@ -1,3 +1,5 @@
 summary: Non-profit organisation that runs DSpace, open source repository software.
+relationNotes:
+  member-of@datacite: 'Member of DataCite that leads a consortium.'
 body: |-
   LYRASIS is the organisational home of DSpace, open source repository software that it sustains as community infrastructure through governance and working groups open to its members.

@@ -1,0 +1,66 @@
+type: repository
+name: CKAN
+url: https://ckan.org/
+status: active
+governance: community
+repositoryKind: software-platform
+codebase: open-source
+prominence: extended
+identifiers:
+  wikidata: Q977484
+tags:
+  - region:global
+  - openness:open-source
+  - function:deposit
+lastReviewed: 2026-11-13
+note: Open source under the GNU Affero General Public License v3.0 per the ckan/ckan GitHub README; whether it is the -only or the -or-later variant was not verified, so no licence identifier is recorded.
+relations:
+  - predicate: governed-by
+    target: open-knowledge-foundation
+    note: Holds CKAN's assets in trust; Datopian and Link Digital co-steward it.
+    verified:
+      date: 2026-11-13
+      url: https://ckan.org/
+    sources:
+      - url: https://ckan.org/
+        accessed: 2026-11-13
+  - predicate: implements
+    target: dcat
+    confidence: reported
+    note: Through the ckanext-dcat extension (DCAT-AP profiles).
+    sources:
+      - url: https://github.com/ckan/ckanext-dcat
+        accessed: 2026-11-13
+  - predicate: is-a
+    target: repository-software
+    note: A platform that organisations install to run their own data portal.
+    sources:
+      - url: https://ckan.org/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-data-portal
+    note: Powers hundreds of data portals worldwide.
+    sources:
+      - url: https://ckan.org/
+        accessed: 2026-11-13
+  - predicate: related-to
+    target: open-data
+    note: Built to publish, share and use data openly.
+    sources:
+      - url: https://ckan.org/
+        accessed: 2026-11-13
+sources:
+  - url: https://ckan.org/
+    accessed: 2026-11-13
+    note: Open-source data management system for data hubs and portals; OKF holds assets in trust; Datopian and Link Digital co-stewards.
+  - url: https://en.wikipedia.org/wiki/CKAN
+    accessed: 2026-11-13
+    note: First version 2005-2006 (Rufus Pollock); original author OKF; AGPL; national portals such as data.gov and data.gov.uk.
+  - url: https://github.com/ckan/ckan
+    accessed: 2026-11-13
+    note: Licensed under AGPL v3.0.
+  - url: https://github.com/ckan/ckanext-dcat
+    accessed: 2026-11-13
+    note: "Extension: DCAT RDF serialisation and harvesting; DCAT-AP v1, v2, v3 profiles; an add-on rather than part of CKAN itself."
+  - url: https://www.wikidata.org/wiki/Q977484
+    accessed: 2026-11-13

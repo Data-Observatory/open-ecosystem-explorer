@@ -1,0 +1,56 @@
+type: repository
+name: Software Heritage
+url: https://www.softwareheritage.org/
+status: active
+governance: nonprofit
+repositoryKind: hosted-service
+since: "2016"
+prominence: extended
+identifiers:
+  ror: 02etvq888
+  wikidata: Q28127082
+tags:
+  - region:global
+  - function:preservation
+lastReviewed: 2026-11-13
+relations:
+  - predicate: developed-by
+    target: inria
+    note: Launched by Inria in 2016; the project home page lists Inria as its initiator.
+    verified:
+      date: 2026-11-13
+      url: https://web.archive.org/web/20260907041940/https://www.softwareheritage.org/faq/
+    sources:
+      - url: https://web.archive.org/web/20260907041940/https://www.softwareheritage.org/faq/
+        accessed: 2026-11-13
+        note: 'FAQ 1.1: "an open, non-profit infrastructure launched in 2016 by Inria". Read in an Internet Archive copy because the live site fails TLS verification.'
+      - url: https://web.archive.org/web/20261109061606/https://www.softwareheritage.org/
+        accessed: 2026-11-13
+        note: Home page lists Inria as "Initiator" (Internet Archive copy).
+  - predicate: related-to
+    target: persistent-identifier
+    note: Its SWHIDs are persistent identifiers derived from the content of source code.
+    sources:
+      - url: https://www.swhid.org/
+        accessed: 2026-11-13
+        note: SWHIDs are "persistent, intrinsic identifiers for software source code artifacts"; ISO/IEC 18670:2025.
+  - predicate: related-to
+    target: research-software
+    note: Its mission includes preserving software so that research can be reproduced.
+    sources:
+      - url: https://web.archive.org/web/20260101080003/https://www.softwareheritage.org/mission/
+        accessed: 2026-11-13
+        note: 'Mission, Science: "To guarantee scientific reproducibility we need to preserve it" (Internet Archive copy).'
+sources:
+  - url: https://web.archive.org/web/20260907041940/https://www.softwareheritage.org/faq/
+    accessed: 2026-11-13
+    note: "FAQ: open, non-profit infrastructure launched in 2016 by Inria, in collaboration with UNESCO; SWHID (Internet Archive copy of softwareheritage.org)."
+  - url: https://web.archive.org/web/20260101080003/https://www.softwareheritage.org/mission/
+    accessed: 2026-11-13
+    note: "Mission: collect, preserve and share all publicly available source code (Internet Archive copy)."
+  - url: https://www.swhid.org/
+    accessed: 2026-11-13
+    note: "SWHID.org: persistent, intrinsic identifiers; ISO/IEC 18670:2025."
+  - url: https://www.wikidata.org/wiki/Q28127082
+    accessed: 2026-11-13
+    note: Official website softwareheritage.org.

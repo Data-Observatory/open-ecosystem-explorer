@@ -1,7 +1,6 @@
 summary: OpenCitations es una infraestructura sin fines de lucro que publica datos
   de citas entre publicaciones, abiertos y descargables por cualquiera.
 relationNotes:
-  member-of@barcelona-declaration: Figura entre los supporters de la Declaración (no entre los firmantes).
   depends-on@doi: Los registros de citas se identifican mediante los DOI de los
     artículos citante y citado.
 body: |-

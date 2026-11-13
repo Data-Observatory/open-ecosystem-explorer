@@ -1,10 +1,15 @@
-# openscience-ecosystem
+# Open Ecosystem Explorer
 
-Static SvelteKit site mapping the open-science research-information ecosystem
-(identifiers, registration agencies, indices, institutional systems,
-standards, communities/coalitions) as a validated, navigable knowledge graph.
-See `specs.md` for the full spec and `MIGRATION.md` for the move from Astro
-(what changed, what is not ported yet).
+*Explorador del ecosistema abierto* (Spanish). A map of open science, open data
+and good data practice, and of the open software and licences they depend on.
+
+Static SvelteKit site that shows who issues, maintains and governs the
+identifiers, standards, repositories, licences and tools that open research
+and data rely on, and how they connect (identifiers, registration agencies,
+indices, institutional systems, standards, licences, open software,
+communities and coalitions), as a validated, navigable knowledge graph with an
+interactive map on the home page. See `specs.md` for the full spec and
+`MIGRATION.md` for the move from Astro and the design of the map.
 
 ## Running locally
 

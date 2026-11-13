@@ -1,0 +1,22 @@
+type: concept
+name: Open data portal
+url: https://en.wikipedia.org/wiki/Open_data_portal
+status: active
+governance: not-applicable
+prominence: extended
+identifiers:
+  wikidata: Q27031827
+tags:
+  - region:global
+  - openness:open-content
+lastReviewed: 2026-11-13
+relations: []
+sources:
+  - url: https://en.wikipedia.org/wiki/Open_data_portal
+    accessed: 2026-11-13
+    note: Definition; governments use portals for freedom-of-information; researchers share data; open standards and machine access.
+  - url: https://datos.gob.cl/
+    accessed: 2026-11-13
+    note: 'datos.gob.cl: "el portal de datos abiertos del Estado".'
+  - url: https://www.wikidata.org/wiki/Q27031827
+    accessed: 2026-11-13

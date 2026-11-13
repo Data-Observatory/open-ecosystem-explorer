@@ -1,6 +1,7 @@
 summary: ANID es la agencia chilena que financia y coordina investigación y desarrollo,
   y participa en redes regionales como LA Referencia.
 relationNotes:
+  member-of@coara: 'Figura entre las organizaciones miembro de CoARA como National Research and Development Agency (Chile).'
   member-of@la-referencia: Chile participa en LA Referencia a través de ANID.
 body: |-
   ANID es la agencia chilena que financia y coordina investigación, y el punto de participación de Chile en redes regionales como LA Referencia.
