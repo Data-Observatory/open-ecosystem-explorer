@@ -11,9 +11,13 @@ tags:
   - region:global
 lastReviewed: 2026-11-12
 relations:
-  - predicate: related-to
+  - predicate: part-of
     target: open-science
-    note: 'A pillar of open science: free access to research data.'
+    note: 'Open science includes open research data.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, paras. 6 and 7(b): open scientific knowledge, a pillar of open science, covers open research data.'
   - predicate: related-to
     target: research-data-management
     note: 'A data management plan sets out how and when research data will be made public.'

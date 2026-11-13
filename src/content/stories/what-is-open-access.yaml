@@ -17,11 +17,11 @@ steps:
   - focus: open-science
     reveal: [open-data]
     edges:
-      - { source: open-access, predicate: related-to, target: open-science }
-      - { source: open-data, predicate: related-to, target: open-science }
+      - { source: open-access, predicate: part-of, target: open-science }
+      - { source: open-data, predicate: part-of, target: open-science }
     text:
-      es: Es un pilar de la ciencia abierta, junto con los datos abiertos.
-      en: It is a pillar of open science, alongside open data.
+      es: Forma parte de la ciencia abierta, junto con los datos abiertos.
+      en: It is part of open science, alongside open data.
   - focus: research-repository
     edges:
       - { source: open-access, predicate: related-to, target: research-repository }

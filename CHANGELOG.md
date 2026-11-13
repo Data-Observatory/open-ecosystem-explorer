@@ -4,6 +4,10 @@
 
 - `related-to` cap raised from 3 to 5 (open access <-> mandate, open science <-> policy, COAR <-> research repository added); layout label separation now always converges (spiral fallback, robustness test); OSF and DSpace `persistentIdScheme`; `docs/known-issues.md` with issue drafts.
 
+### Wikidata cross-check follow-ups (2026-11-13)
+
+- Open access and open data are now `part-of` open science (was `related-to`), sourced to paras. 6 and 7(a)/(b) of the UNESCO Recommendation; the open-access story highlights the new edges.
+
 ### Map data: connected anchors, themes, short names, stories (2026-11-13)
 
 - 16 new sourced `related-to` edges (UNESCO Recommendation, ANID policy, doi.org, ASAPbio, BOAI, Wikipedia): the 14 default anchors now form one connected graph around open science. Layout regenerated. The A9.1 focus-table test now counts a collapsed cluster as the rows it expands to.

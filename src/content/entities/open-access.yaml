@@ -11,9 +11,13 @@ tags:
   - region:global
 lastReviewed: 2026-11-12
 relations:
-  - predicate: related-to
+  - predicate: part-of
     target: open-science
-    note: 'A pillar of open science: free access to publications.'
+    note: 'Open science includes open access to scientific publications.'
+    sources:
+      - url: https://www.unesco-floods.eu/wp-content/uploads/2022/04/379949eng.pdf
+        accessed: 2026-11-13
+        note: 'Recommendation text, paras. 6 and 7(a): open scientific knowledge, a pillar of open science, covers open access to scientific publications.'
   - predicate: related-to
     target: preprint
     note: 'Preprints are usually free to read, but many carry no reuse licence, so they are not always open access in full.'
