@@ -121,7 +121,7 @@ function focusScene(input: SceneInput): Scene {
 	const choice = chooseRing(index, id, ringCapacity(compact), input.expanded, locale);
 	const radius = ringRadius(
 		vp,
-		compact ? { x: 84, y: 34 } : { x: 150, y: 46 },
+		compact ? { x: 100, y: 34 } : { x: 150, y: 46 },
 		compact ? { min: 78, max: 120 } : { min: 130, max: 210 }
 	);
 	const slots = ringSlots(choice.shown.length, radius);

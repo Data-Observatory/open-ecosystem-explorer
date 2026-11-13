@@ -12,7 +12,15 @@
 import type { MapThemeId } from '../map/anchors.js';
 import type { LabelSide, Point } from './types.js';
 
-/** 1 = the centre, 2 = a theme hub, 3 = a member. Drives glyph size and label weight. */
+/**
+ * Glyph size and label weight: 1 = an entry point, 2 = a theme hub, 3 = a member.
+ *
+ * Size marks where a newcomer can start reading, NOT hierarchy. Open science, open data and
+ * open access share the top size on purpose: the graph says open data and open access are part
+ * of open science (UNESCO 2021 Recommendation), but open data is also broader than science, so
+ * no one of the three is drawn as "containing" the others. Open science keeps the centre and the
+ * "start here" tag only because it has the most connections to the other themes.
+ */
 export type Tier = 1 | 2 | 3;
 
 export interface ComposedNode extends Point {
@@ -35,7 +43,7 @@ const LANDSCAPE: Composition = {
 		orcid: { x: -385, y: 38, tier: 3, side: 'left' },
 		doi: { x: -245, y: 5, tier: 3, side: 'right' },
 		// Publish (north-east)
-		'open-access': { x: 285, y: -120, tier: 2, side: 'above' },
+		'open-access': { x: 285, y: -120, tier: 1, side: 'above' },
 		'diamond-open-access': { x: 470, y: -160, tier: 3, side: 'right' },
 		preprint: { x: 95, y: -165, tier: 3, side: 'above' },
 		'open-license': { x: 470, y: -62, tier: 3, side: 'right' },
@@ -43,7 +51,7 @@ const LANDSCAPE: Composition = {
 		'research-repository': { x: 175, y: 150, tier: 2, side: 'right' },
 		metadata: { x: -335, y: 172, tier: 3, side: 'left' },
 		'research-data-management': { x: -95, y: 205, tier: 3, side: 'below' },
-		'open-data': { x: -150, y: 95, tier: 3, side: 'left' },
+		'open-data': { x: -125, y: 118, tier: 1, side: 'left' },
 		// Measure and manage (east)
 		cris: { x: 405, y: 55, tier: 2, side: 'right' },
 		'citation-index': { x: 505, y: 160, tier: 3, side: 'below' }
@@ -63,14 +71,14 @@ const PORTRAIT: Composition = {
 		ror: { x: -150, y: -50, tier: 3, side: 'below' },
 		orcid: { x: -95, y: -22, tier: 3, side: 'below' },
 		doi: { x: -55, y: -72, tier: 3, side: 'right' },
-		'open-access': { x: 80, y: -108, tier: 2, side: 'above' },
-		'diamond-open-access': { x: 140, y: -34, tier: 3, side: 'below' },
-		'open-license': { x: 132, y: -80, tier: 3, side: 'above' },
-		preprint: { x: -10, y: -132, tier: 3, side: 'above' },
+		'open-access': { x: 62, y: -110, tier: 1, side: 'above' },
+		'diamond-open-access': { x: 140, y: -30, tier: 3, side: 'below' },
+		'open-license': { x: 138, y: -86, tier: 3, side: 'below' },
+		preprint: { x: -24, y: -128, tier: 3, side: 'above' },
 		'research-repository': { x: 35, y: 88, tier: 2, side: 'below' },
 		metadata: { x: -135, y: 78, tier: 3, side: 'below' },
-		'research-data-management': { x: -52, y: 112, tier: 3, side: 'below' },
-		'open-data': { x: -62, y: 45, tier: 3, side: 'left' },
+		'research-data-management': { x: -62, y: 116, tier: 3, side: 'below' },
+		'open-data': { x: -60, y: 46, tier: 1, side: 'below' },
 		cris: { x: 128, y: 42, tier: 2, side: 'below' },
 		'citation-index': { x: 132, y: 112, tier: 3, side: 'below' }
 	},
@@ -81,7 +89,7 @@ export function composition(portrait = false): Composition {
 	return portrait ? PORTRAIT : LANDSCAPE;
 }
 
-/** Tier of a node anywhere on the map: composed anchors keep theirs, everything else is a member. */
+/** Size tier of a node anywhere on the map: composed anchors keep theirs, the rest are members. */
 export function tierOf(id: string): Tier {
 	return LANDSCAPE.nodes[id]?.tier ?? 3;
 }
