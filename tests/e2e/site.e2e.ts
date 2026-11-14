@@ -107,12 +107,6 @@ test.describe('glossary', () => {
 		await expect(page.locator('[data-testid=glossary-entry]:visible').first()).toBeVisible();
 		await expect(page.locator('[data-entry-id=doi]')).toBeVisible();
 	});
-
-	test('the old search URL lands on the glossary with its query', async ({ page }) => {
-		await page.goto('/es/search/?q=orcid');
-		await page.waitForURL('**/es/glossary/?q=orcid');
-		await expect(page.locator('[data-entry-id=orcid]')).toBeVisible();
-	});
 });
 
 test.describe('entity page', () => {

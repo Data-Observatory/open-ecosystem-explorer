@@ -96,7 +96,10 @@ export function runValidation(input: ValidationInput): ValidationResult {
 		now: input.now ?? new Date()
 	};
 
-	const messages = runAllInvariants(ctx, { now: ctx.now, entityProseFields: input.entityProseFields });
+	const messages = runAllInvariants(ctx, {
+		now: ctx.now,
+		entityProseFields: input.entityProseFields
+	});
 	const errors = messages.filter((m) => m.level === 'ERROR');
 	const warnings = messages.filter((m) => m.level === 'WARN');
 
