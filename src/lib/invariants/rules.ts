@@ -1,4 +1,4 @@
-// I1-I31 (specs.md §5.5). Each rule is a pure function over a RunContext,
+// I1-I35 (specs.md §5.5). Each rule is a pure function over a RunContext,
 // returning InvariantMessage[]. Message shape is a requirement (§8.4b): file,
 // field path, offending value, rule ID, and a correction drawn from the same
 // vocabulary that produced the failure.
@@ -1205,18 +1205,21 @@ export function ruleI30(ctx: RunContext): InvariantMessage[] {
 	return out;
 }
 
-export function ruleI31(ctx: RunContext, entityBodies: Map<EntityId, string>): InvariantMessage[] {
+export function ruleI31(
+	ctx: RunContext,
+	entityProseFields: Map<EntityId, string[]>
+): InvariantMessage[] {
 	const out: InvariantMessage[] = [];
 	for (const { id, file } of ctx.entityFiles) {
-		const body = entityBodies.get(id) ?? '';
-		if (body.trim().length > 0) {
+		const fields = entityProseFields.get(id) ?? [];
+		if (fields.length > 0) {
 			out.push(
 				err(
 					'I31',
 					file,
-					'entity facts file has a non-empty Markdown body.',
-					'Move prose to src/content/i18n/<locale>/<id>.yaml; the facts file body must be empty.',
-					'body'
+					`entity facts file carries prose (${fields.map((f) => `'${f}'`).join(', ')}).`,
+					'Move prose to src/content/i18n/<locale>/<id>.yaml; a facts file carries no body, summary or description.',
+					fields[0]!
 				)
 			);
 		}
@@ -1372,15 +1375,14 @@ export function ruleI34(ctx: RunContext): InvariantMessage[] {
 
 export interface RuleRunner {
 	id: string;
-	/** Verbatim from specs.md §5.5's I1-I31 table — the /model page (Phase 6)
-	 *  renders this list FROM this array so published docs cannot drift from
-	 *  the enforced rules (specs.md §7's `/model` row). Keep in sync by hand
-	 *  when a rule's spec wording changes; there is no other copy. */
+	/** The About page renders its invariants list FROM this array, so the published
+	 *  rules cannot drift from the enforced ones. specs.md §5.5 carries the same
+	 *  wording: keep the two in sync by hand when a rule changes. */
 	level: 'ERROR' | 'WARN' | 'WARN / ERROR';
 	description: string;
 	run: (
 		ctx: RunContext,
-		extra: { now: Date; entityBodies: Map<EntityId, string> }
+		extra: { now: Date; entityProseFields: Map<EntityId, string[]> }
 	) => InvariantMessage[];
 }
 
@@ -1583,8 +1585,8 @@ export const RULES: RuleRunner[] = [
 		id: 'I31',
 		level: 'ERROR',
 		description:
-			'An entity facts file has an empty Markdown body, and carries no summary or description. Prose exists only in content/i18n/** (C10).',
-		run: (ctx, extra) => ruleI31(ctx, extra.entityBodies)
+			'An entity facts file carries prose (a body, summary or description field). Prose exists only in content/i18n/** (C10).',
+		run: (ctx, extra) => ruleI31(ctx, extra.entityProseFields)
 	},
 	{
 		id: 'I32',
@@ -1618,7 +1620,7 @@ export const RULES: RuleRunner[] = [
 
 export function runAllInvariants(
 	ctx: RunContext,
-	extra: { now: Date; entityBodies: Map<EntityId, string> }
+	extra: { now: Date; entityProseFields: Map<EntityId, string[]> }
 ): InvariantMessage[] {
 	return RULES.flatMap((rule) => rule.run(ctx, extra));
 }

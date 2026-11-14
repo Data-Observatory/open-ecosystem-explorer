@@ -1,4 +1,4 @@
-// Orchestrates buildIndex + all I1-I31 rules into one summary. Pure: takes
+// Orchestrates buildIndex + all I1-I35 rules into one summary. Pure: takes
 // already-parsed content, no file IO (rule A1). scripts/validate.ts does the
 // loading and printing.
 import { buildIndex } from '../graph/build-index.js';
@@ -22,7 +22,8 @@ import type {
 
 export interface ValidationInput {
 	entityFiles: EntityFileEntry[];
-	entityBodies: Map<EntityId, string>;
+	/** Prose fields found in each facts file (I31); empty or absent when the file is clean. */
+	entityProseFields: Map<EntityId, string[]>;
 	proseFiles: ProseFileEntry[];
 	viewFiles: ViewFileEntry[];
 	viewProseFiles: ViewProseFileEntry[];
@@ -95,7 +96,7 @@ export function runValidation(input: ValidationInput): ValidationResult {
 		now: input.now ?? new Date()
 	};
 
-	const messages = runAllInvariants(ctx, { now: ctx.now, entityBodies: input.entityBodies });
+	const messages = runAllInvariants(ctx, { now: ctx.now, entityProseFields: input.entityProseFields });
 	const errors = messages.filter((m) => m.level === 'ERROR');
 	const warnings = messages.filter((m) => m.level === 'WARN');
 

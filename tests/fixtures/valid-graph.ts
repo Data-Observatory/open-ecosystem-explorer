@@ -236,7 +236,7 @@ export const entityFiles: EntityFileEntry[] = entities.map((entity) => ({
 	entity
 }));
 
-export const entityBodies = new Map(entities.map((e) => [e.id, '']));
+export const entityProseFields = new Map<string, string[]>(entities.map((e) => [e.id, []]));
 
 function prose(summary: string): ProseFile {
 	return { summary, body: `Body prose for ${summary.slice(0, 20)}.` };
@@ -351,7 +351,7 @@ export function buildFixtureInput() {
 	}
 	return {
 		entityFiles,
-		entityBodies,
+		entityProseFields,
 		proseFiles,
 		viewFiles,
 		viewProseFiles,

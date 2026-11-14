@@ -937,15 +937,17 @@ describe('I30 — non-default-locale translation coverage and relationNotes', ()
 	});
 });
 
-describe('I31 — facts file body must be empty', () => {
-	it('flags a non-empty body', () => {
+describe('I31 — facts files carry no prose', () => {
+	it('flags a facts file that carries a body, summary or description', () => {
 		const input = freshInput();
-		input.entityBodies.set('fx-agency', 'Some prose that should not be here.');
+		input.entityProseFields.set('fx-agency', ['summary', 'body']);
 		const result = runValidation(input);
-		expect(hasError(result.messages, 'I31')).toBe(true);
+		const msg = result.messages.find((m) => m.ruleId === 'I31');
+		expect(msg?.level).toBe('ERROR');
+		expect(msg?.message).toContain("'summary', 'body'");
 	});
 
-	it('accepts an empty body', () => {
+	it('accepts a facts file without prose fields', () => {
 		const result = runValidation(freshInput());
 		expect(hasError(result.messages, 'I31')).toBe(false);
 	});

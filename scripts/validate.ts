@@ -1,6 +1,6 @@
 #!/usr/bin/env tsx
 // Standalone content validator (specs.md §8.4a). Runs the Zod schema and the
-// I1-I31 graph invariants against every entity/i18n/view/vocab file, without
+// I1-I35 graph invariants against every entity/i18n/view/vocab file, without
 // booting the site, so it stays fast enough for an LLM agent to call after every
 // edit.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
@@ -102,13 +102,13 @@ function zodIssuesToMessages(file: string, error: z.ZodError): InvariantMessage[
 
 function loadEntities(): {
 	entityFiles: EntityFileEntry[];
-	entityBodies: Map<EntityId, string>;
+	entityProseFields: Map<EntityId, string[]>;
 	schemaErrors: InvariantMessage[];
 } {
 	const dir = join(ROOT, 'src/content/entities');
 	const files = listFiles(dir, '.yaml');
 	const entityFiles: EntityFileEntry[] = [];
-	const entityBodies = new Map<EntityId, string>();
+	const entityProseFields = new Map<EntityId, string[]>();
 	const schemaErrors: InvariantMessage[] = [];
 
 	for (const full of files) {
@@ -126,9 +126,13 @@ function loadEntities(): {
 		}
 		const entity = result.data as unknown as Entity;
 		entityFiles.push({ id: entity.id, file, entity });
-		entityBodies.set(entity.id, '');
+		// Facts files carry no prose (C10, I31): record any prose field found in the raw YAML.
+		entityProseFields.set(
+			entity.id,
+			['body', 'summary', 'description'].filter((key) => key in data)
+		);
 	}
-	return { entityFiles, entityBodies, schemaErrors };
+	return { entityFiles, entityProseFields, schemaErrors };
 }
 
 function loadProse(): { proseFiles: ProseFileEntry[]; schemaErrors: InvariantMessage[] } {
@@ -255,7 +259,7 @@ function main(): void {
 	const fileArgIdx = args.indexOf('--file');
 	const fileFilter = fileArgIdx >= 0 ? args[fileArgIdx + 1] : undefined;
 
-	const { entityFiles, entityBodies, schemaErrors: entitySchemaErrors } = loadEntities();
+	const { entityFiles, entityProseFields, schemaErrors: entitySchemaErrors } = loadEntities();
 	const { proseFiles, schemaErrors: proseSchemaErrors } = loadProse();
 	const { viewFiles, viewProseFiles, schemaErrors: viewSchemaErrors } = loadViews();
 	const { storyFiles, schemaErrors: storySchemaErrors } = loadStories();
@@ -270,7 +274,7 @@ function main(): void {
 
 	const result = runValidation({
 		entityFiles,
-		entityBodies,
+		entityProseFields,
 		proseFiles,
 		viewFiles,
 		viewProseFiles,
