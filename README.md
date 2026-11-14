@@ -12,7 +12,7 @@ interactive map on the home page. It is bilingual (Spanish and English), with a
 focus on Chile and Latin America, and is meant first for newcomers, with an
 opt-in expert mode for practitioners.
 
-Status: in development. The target is `https://oee.dataobservatory.net` (AWS S3 and CloudFront, see `infra/README.md`). The CI and the deploy workflow are written, and nothing is published until the owner completes the setup in `infra/README.md`.
+Status: in development, live at https://oee.dataobservatory.net (AWS S3 and CloudFront, see `infra/README.md`). The CI runs on GitHub. Later deploys are by hand until the owner enables the deploy workflow (`infra/README.md`).
 Owner: Data Observatory (Chile).
 
 ## Running locally

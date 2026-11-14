@@ -8,7 +8,9 @@ This stack is copied from the sister site `fairness` (`Data-Observatory/fairness
 
 ## Status
 
-Written and tested locally (type-check, 100+ tests, `cdk synth` with dummy values, and the end-to-end suite run against a local server that applies the same URL rewrite and Content-Security-Policy). Nothing is provisioned: no AWS call has been made from this repository, the GitHub repository does not exist yet, and the site is not public. Steps for the owner are below, in order.
+Deployed by hand on 2026-11-14 (`cdk deploy` from the repository root build, `SITE_URL=https://oee.dataobservatory.net`). The stack `OeeSiteStack` exists in the app account (us-east-1), the ACM certificate is issued, the validation CNAME and the alias A record exist in the DNS account, and the site is public at `https://oee.dataobservatory.net`. Checked after the deploy: `/` and the locale pages return 200, `/es/about` redirects to `/es/about/`, a made-up path returns the 404 page with status 404, `sitemap.xml` and `robots.txt` use the public origin, the security headers are present, and a browser run over six pages (map, entity, glossary, questions, about) showed no console error and no Content-Security-Policy violation (Google hosts blocked for the test).
+
+Not done yet: the deploy workflow (`DEPLOY_ENABLED` is not set, so later deploys are by hand, as in "Deploying by hand"), and the GitHub side of "Deploy workflow: owner setup" (OIDC role, environments, variables, secret, branch protection). The sections below keep the steps for a redeploy and for those.
 
 ## Account topology (read this first)
 
@@ -153,14 +155,14 @@ The DNS records change accordingly, and so does the repository variable `SITE_DO
 
 Owner steps, none of which is done by the workflow or by an agent:
 
-1. Create the GitHub repository (the workflows assume the default branch is `main`) and push this one to it.
+1. The GitHub repository exists (`Data-Observatory/open-ecosystem-explorer`, default branch `main`, `main` pushed on 2026-11-14). Done.
 2. In the app account, create the GitHub OIDC identity provider (`token.actions.githubusercontent.com`, audience `sts.amazonaws.com`) if it does not exist. The `fairness` setup may already have created one: check before creating a second.
 3. In the app account, create an IAM role for this repository (or add this repository to the trust policy of the `fairness` role). Its trust policy allows `sts:AssumeRoleWithWebIdentity` from that provider only when the `sub` claim equals one of `repo:<org>/<repo>:environment:production` (job `deploy`) and `repo:<org>/<repo>:environment:production-diff` (job `diff`), and `aud` equals `sts.amazonaws.com`. Its permissions allow it to assume only the CDK bootstrap roles of the account and region (the deploy, file-publishing, image-publishing and lookup roles created by `cdk bootstrap`) and nothing else.
 4. In the GitHub repository settings, create the environment `production-diff` (no reviewers) and the environment `production` with required reviewers. The `deploy` job pauses at `production` until a reviewer approves, after the `diff` job has finished, which gates the `cdk deploy` step.
 5. Add the repository variables `DEPLOY_ENABLED` (`true` to activate), `AWS_REGION` (`us-east-1`), `SITE_DOMAIN` (`oee.dataobservatory.net`), and optionally `ACCESS_LOGS` (`true` or empty) and `ACCESS_LOG_RETENTION_DAYS` (a number, or empty for 90).
 6. Add the repository secret `AWS_DEPLOY_ROLE_ARN` with the ARN of the role from step 3.
 7. If `ACCESS_LOGS` is `true`, update the privacy statement first: the logs contain visitor IP addresses.
-8. Do the first deploy by hand (section above) and create the two DNS records. Set `DEPLOY_ENABLED` to `true` after that, so later pushes to `main` deploy through the workflow.
+8. The first deploy and the two DNS records are done (see Status). Set `DEPLOY_ENABLED` to `true` once steps 2 to 6 are in place, so later pushes to `main` deploy through the workflow.
 
 Turn on branch protection for `main` with the `CI` jobs `test` and `infra` as required checks, so a pull request cannot be merged red. The repository settings are the owner's.
 
