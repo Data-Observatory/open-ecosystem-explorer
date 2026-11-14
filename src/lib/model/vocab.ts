@@ -55,8 +55,7 @@ export function parsePredicatesVocab(raw: Record<string, unknown>): PredicatesVo
 			acyclic: Boolean(entry.acyclic),
 			sameTypeOnly: Boolean(entry.sameTypeOnly),
 			crossTypePairs: entry.crossTypePairs as PredicateDef['crossTypePairs'],
-			maxOutDegree: entry.maxOutDegree as number | undefined,
-			style: entry.style as PredicateDef['style']
+			maxOutDegree: entry.maxOutDegree as number | undefined
 		});
 	}
 	return map;

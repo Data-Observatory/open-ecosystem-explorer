@@ -1549,7 +1549,7 @@ export const RULES: RuleRunner[] = [
 	{
 		id: 'I26',
 		level: 'WARN',
-		description: 'lastReviewed older than 18 months (also badged in the UI).',
+		description: 'lastReviewed older than 18 months (the date itself is shown on the entity page).',
 		run: (ctx, extra) => ruleI26(ctx, extra.now)
 	},
 	{

@@ -9,9 +9,6 @@ declare global {
 		// interface Platform {}
 	}
 
-	/** Build date (YYYY-MM-DD), substituted at build time: see vite.config.ts `define`. */
-	const __BUILD_DATE__: string;
-
 	/** Public origin without trailing slash (SITE_URL env at build time), or '' when unset. */
 	const __SITE_URL__: string;
 }

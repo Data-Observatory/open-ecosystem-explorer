@@ -365,12 +365,7 @@ export const zPredicateVocabEntry = z.object({
 	acyclic: z.boolean(),
 	sameTypeOnly: z.boolean(),
 	crossTypePairs: z.array(z.tuple([z.string(), z.string()])).optional(),
-	maxOutDegree: z.number().positive().optional(),
-	style: z.object({
-		color: z.string(),
-		line: z.enum(['solid', 'dashed', 'thick']),
-		arrow: z.enum(['open', 'closed'])
-	})
+	maxOutDegree: z.number().positive().optional()
 });
 export const zPredicatesVocab = z.record(z.string(), zPredicateVocabEntry);
 

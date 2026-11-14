@@ -32,9 +32,7 @@ const perLocale = (paths: string[]): `/${string}`[] =>
 
 export default defineConfig({
 	define: {
-		// Baked in once at build time (not `new Date()` inside app code, which would re-run
-		// on client hydration and drift from the prerendered server output).
-		__BUILD_DATE__: JSON.stringify(new Date().toISOString().slice(0, 10)),
+		// Baked in once at build time, so the value cannot drift on client hydration.
 		__SITE_URL__: JSON.stringify(siteUrl)
 	},
 	plugins: [

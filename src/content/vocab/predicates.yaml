@@ -1,7 +1,7 @@
-# The 21 relation predicates (Appendix A.2: 19 original + `is-a` + `related-to`). Canonical direction is
+# The 21 relation predicates (specs.md Appendix A.2). Canonical direction is
 # subject -> object, subject being the entity described (C2). Inverses are
-# derived at build time, never authored (I7). Single source for I6-I10, the
-# /model erDiagram, and diagram edge styling. `family` (vocab/predicate-families.yaml)
+# derived at build time, never authored (I7). Single source for I6-I10 and the
+# predicate table on the About page. `family` (vocab/predicate-families.yaml)
 # is display metadata only. `pending: true` exempts a predicate from I12 (>=1 edge)
 # until its first edge is authored.
 # Labels are read as the sentence "<subject> <label> <object>" (inverseLabel:
@@ -18,7 +18,6 @@ issues:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#1f6feb', line: solid, arrow: closed }
 
 implements:
   family: builds-on
@@ -30,7 +29,6 @@ implements:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#1f6feb', line: solid, arrow: closed }
 
 complies-with:
   family: builds-on
@@ -42,7 +40,6 @@ complies-with:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#0e7070', line: solid, arrow: closed }
 
 depends-on:
   family: builds-on
@@ -54,7 +51,6 @@ depends-on:
   acyclic: true
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#57606a', line: solid, arrow: closed }
 
 interoperates-with:
   family: connects
@@ -75,7 +71,6 @@ interoperates-with:
   # otherwise unauthorable.
   crossTypePairs: [[cris, index], [index, publishing-platform]]
   maxOutDegree: 8
-  style: { color: '#57606a', line: dashed, arrow: open }
 
 owned-by:
   family: behind
@@ -87,7 +82,6 @@ owned-by:
   acyclic: true
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#bf8b00', line: thick, arrow: closed }
 
 governed-by:
   family: behind
@@ -105,7 +99,6 @@ governed-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#bf8b00', line: solid, arrow: closed }
 
 operated-by:
   family: behind
@@ -123,7 +116,6 @@ operated-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#8250df', line: solid, arrow: closed }
 
 developed-by:
   family: behind
@@ -142,7 +134,6 @@ developed-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#8250df', line: solid, arrow: closed }
 
 funded-by:
   family: behind
@@ -154,7 +145,6 @@ funded-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#1a7f37', line: solid, arrow: closed }
 
 member-of:
   family: connects
@@ -180,7 +170,6 @@ member-of:
   acyclic: true
   sameTypeOnly: false
   maxOutDegree: 8
-  style: { color: '#1a7f37', line: solid, arrow: closed }
 
 part-of:
   family: connects
@@ -192,7 +181,6 @@ part-of:
   acyclic: true
   sameTypeOnly: true
   maxOutDegree: 1
-  style: { color: '#57606a', line: solid, arrow: closed }
 
 supersedes:
   family: shapes
@@ -204,7 +192,6 @@ supersedes:
   acyclic: true
   sameTypeOnly: true
   maxOutDegree: 3
-  style: { color: '#57606a', line: dashed, arrow: closed }
 
 profile-of:
   family: builds-on
@@ -216,7 +203,6 @@ profile-of:
   acyclic: true
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#0e7070', line: solid, arrow: closed }
 
 indexes:
   family: connects
@@ -228,7 +214,6 @@ indexes:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 8
-  style: { color: '#1f6feb', line: solid, arrow: closed }
 
 certified-by:
   family: builds-on
@@ -240,7 +225,6 @@ certified-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#0e7070', line: solid, arrow: closed }
 
 endorsed-by:
   family: shapes
@@ -260,7 +244,6 @@ endorsed-by:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 8
-  style: { color: '#1a7f37', line: dashed, arrow: open }
 
 mandates:
   family: shapes
@@ -272,7 +255,6 @@ mandates:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#bf8b00', line: solid, arrow: closed }
 
 applies-to:
   family: shapes
@@ -284,7 +266,6 @@ applies-to:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 8
-  style: { color: '#bf8b00', line: solid, arrow: closed }
 
 is-a:
   family: kind
@@ -302,7 +283,6 @@ is-a:
   acyclic: true
   sameTypeOnly: false
   maxOutDegree: 3
-  style: { color: '#6e7781', line: solid, arrow: open }
 
 related-to:
   family: kind
@@ -323,4 +303,3 @@ related-to:
   acyclic: false
   sameTypeOnly: false
   maxOutDegree: 5
-  style: { color: '#8c959f', line: dashed, arrow: open }
