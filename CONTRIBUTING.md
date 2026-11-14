@@ -1,12 +1,43 @@
 # Contributing
 
-This project's content (entities, relations, translations) is authored as
-version-controlled YAML-frontmatter files, validated at build time against a
-Zod schema and a set of graph invariants — see `specs.md` §8 for the full
-content authoring format and workflow, and §5 for the data model.
+The content of this site (entities, relations, translations, stories) is plain YAML in `src/content/`, checked by a Zod schema and a set of graph invariants every time you run `npm run validate` and every time you build. A change is good when the validator passes and a person can tell from the diff that it is true, sourced and in scope.
 
-Detailed contribution instructions (file format walkthrough, the
-`prompts/add-entity.md` template for LLM-assisted edits, and the PR
-checklist) land in a later implementation phase, once the schema and
-`npm run validate` exist. For now, read `specs.md` in full before proposing
-content changes.
+## Before you start
+
+You need Node 22 or newer and npm. Run `npm install` once. Run `npx playwright install chromium` only if you also want to run the browser tests.
+
+Read the `specs.md` sections for the part you touch: §3 (curation policy), §5 (data model and invariants) and §8 (authoring format). `docs/known-issues.md` lists what is already known to be unverified, so you do not repeat it.
+
+## Add or change an entity
+
+- An entity is two or three small files, never one big one. Facts and outgoing relations go in `src/content/entities/<id>.yaml`. The filename is the id.
+- Prose goes in `src/content/i18n/es/<id>.yaml` and `src/content/i18n/en/<id>.yaml`: a one-sentence `summary` and a short `body`. Both languages are required, and a missing one is a validation error.
+- Copy two existing files of the same `type` as models. The closed vocabularies in `src/content/vocab/` (types, predicates, tags, disciplines, statuses) say which values are allowed. Do not invent terms; adding a vocabulary term is a separate change.
+- Author each relation once, in the canonical direction, in the file of the subject. The inverse is derived. If the target entity does not exist, add it in the same change or leave the relation out.
+- Every entity needs at least one entry in `sources` with a real URL and the date you read it. Cite the organisation's own page or an authoritative register, not a summary of it.
+- Descriptions are neutral and descriptive, not evaluative. Chile and Latin America specifics go in an optional `localNote` (30 words at most), never in the definition.
+- If in doubt, leave it out. A missing relation costs less than a wrong one.
+- Ideas such as open access, metadata or FAIR are entities of type `concept`. Link concrete things to them with `is-a` or `related-to` (with a short `note`), not with the other predicates.
+- `prominence` (`core`, `extended` or `detail`) controls what a newcomer sees first. Leave the default unless you have discussed it.
+
+`prompts/add-entity.md` is a ready-made prompt for an LLM agent doing the same job. An agent edits, the validator checks, a person reviews and merges.
+
+## The check loop
+
+Run these after every edit, from the repository root:
+
+- `npm run validate` must end with 0 errors. It takes a few seconds and prints the rule, the file, the field and the fix. Warnings are information; report them, do not hide them.
+- `npm run layout:generate` after you add, remove or change a relation or an entity, then commit `src/generated/graph-layout.json`. The build fails (`layout:check`) if it is stale.
+- `npm run check`, `npm run lint` and `npm test` before you open a pull request.
+- `npm run build` then `npm run test:e2e` when you touch pages or the map. The e2e tests run against the build. Set `PW_PORT` to a free port, and `PLAYWRIGHT_CHROME_PATH` to use a system Chrome.
+
+## Change the site or the UI text
+
+UI strings live in `messages/es.json` and `messages/en.json`. Every key must exist in both. Code under `src/lib/model`, `graph`, `i18n`, `invariants`, `views`, `stories` and `export` must stay free of Svelte and SvelteKit imports. `docs/architecture.md` explains the routes and the map.
+
+## Commits and reviews
+
+- Use conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `style:`) and small, incremental commits: one idea per commit.
+- Do not add co-author or tool attribution lines to commit messages.
+- The reviewer reads for what the validator cannot see: is the relation true, is the source the right one, is the summary neutral, is the entity in scope.
+- Analytics, hosting and deployment settings are decided by the project owner. Open an issue instead of changing them.
