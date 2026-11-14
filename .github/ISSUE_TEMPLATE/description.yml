@@ -1,0 +1,53 @@
+name: Description or facts of an entry / Descripción o datos de una entrada
+description: Something is wrong, outdated or missing in what an entry says, not in its connections. / Algo es incorrecto, está desactualizado o falta en lo que dice una entrada, no en sus conexiones.
+title: '[Description] '
+labels: ['description']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+  - type: input
+    id: entity
+    attributes:
+      label: Entry / Entrada
+      description: The entry id from its address (for example `doi`) or its name. / El id de la entrada en su dirección (por ejemplo `doi`) o su nombre.
+    validations:
+      required: true
+  - type: dropdown
+    id: part
+    attributes:
+      label: Which part? / ¿Qué parte?
+      options:
+        - The short description (the first sentence) / La descripción corta (la primera frase)
+        - The longer text / El texto largo
+        - The name or the acronym / El nombre o la sigla
+        - A fact in the table (date; country; website; status...) / Un dato de la tabla (fecha; país; sitio web; estado...)
+        - The note for Chile and Latin America / La nota para Chile y América Latina
+        - The translation (Spanish or English) / La traducción (español o inglés)
+        - A source or a link / Una fuente o un enlace
+        - Where it appears on the map (its kind; tags or prominence) / Dónde aparece en el mapa (su tipo; etiquetas o prominencia)
+        - Something else / Otra cosa
+    validations:
+      required: true
+  - type: textarea
+    id: current
+    attributes:
+      label: What does it say now? / ¿Qué dice ahora?
+      description: Copy the sentence or the value. / Copia la frase o el valor.
+    validations:
+      required: false
+  - type: textarea
+    id: proposed
+    attributes:
+      label: What should it say, and why? / ¿Qué debería decir y por qué?
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL / URL de la fuente
+      description: Where this can be checked. A change without a source may wait until one is found. / Dónde se puede comprobar. Un cambio sin fuente puede esperar hasta encontrarla.
+    validations:
+      required: false
