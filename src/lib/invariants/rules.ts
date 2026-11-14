@@ -1048,7 +1048,7 @@ export function ruleI28(ctx: RunContext): InvariantMessage[] {
 						'I28',
 						file,
 						`${count} '${predicate}' relations exceed maxOutDegree (${def.maxOutDegree}).`,
-						'Diagrams will collapse this into a cluster node; the accessible table still lists all of them.',
+						'The map shows the most relevant neighbours and "show more" for the rest; the entity page still lists all of them.',
 						'relations'
 					)
 				);
@@ -1562,7 +1562,7 @@ export const RULES: RuleRunner[] = [
 		id: 'I28',
 		level: 'WARN',
 		description:
-			"Any generated diagram exceeds its node/edge budget (§6.4) before overflow collapsing; or the graph has >1 weakly connected component (prints each component's size and members).",
+			'An entity authors more relations of one predicate than its maxOutDegree (the map shows the most relevant neighbours and "show more" for the rest; the page lists all); or the graph has >1 weakly connected component (prints each component\'s size and members).',
 		run: (ctx) => ruleI28(ctx)
 	},
 	{

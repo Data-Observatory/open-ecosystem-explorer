@@ -446,7 +446,7 @@ export interface PredicateDef {
 	// sameTypeOnly is true. Kept narrow and explicit per pair — not a general
 	// range override — so I8 still catches genuine typos.
 	crossTypePairs?: [EntityType, EntityType][];
-	maxOutDegree?: number; // soft cap; exceeded => diagram collapses to a cluster node
+	maxOutDegree?: number; // soft cap; exceeded => I28 warning (the map shows the most relevant neighbours)
 	style: { color: string; line: 'solid' | 'dashed' | 'thick'; arrow: 'open' | 'closed' };
 }
 
