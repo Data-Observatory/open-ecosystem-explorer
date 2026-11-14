@@ -342,7 +342,7 @@ export interface StandardEntity extends EntityBase {
 	specVersion?: string;
 	specUrl?: string;
 	machineReadable?: boolean;
-	requiresOpenness?: boolean; // false for FAIR — the memo's central political point
+	requiresOpenness?: boolean; // true when conformance requires openness (Open Definition); false when it does not (DataCite schema, CC licences)
 }
 
 export type CommunityKind =
@@ -510,7 +510,6 @@ export type ViewQuery =
 export interface View {
 	id: string;
 	query: ViewQuery;
-	render: 'diagram' | 'table' | 'both';
 	sources: Source[];
 	lastReviewed: string;
 }
@@ -524,7 +523,7 @@ export interface ProseFile {
 	aka?: string[];
 	relationNotes?: Record<string, string>; // "<predicate>@<target>" -> note (I30)
 	localNote?: string; // optional 'In Chile' callout, <=30 words
-	body: string; // Markdown body
+	body: string; // plain text (a YAML block scalar), rendered verbatim, not Markdown
 }
 
 export interface ViewProseFile {

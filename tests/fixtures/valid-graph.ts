@@ -301,7 +301,6 @@ export const viewFiles: ViewFileEntry[] = [
 		view: {
 			id: 'fx-view-entities',
 			query: { kind: 'entities', where: [{ governance: 'commercial' }] },
-			render: 'table',
 			sources: [SRC],
 			lastReviewed: '2026-09-01'
 		}
@@ -312,7 +311,6 @@ export const viewFiles: ViewFileEntry[] = [
 		view: {
 			id: 'fx-view-predicate',
 			query: { kind: 'predicate', predicate: 'owned-by', groupBy: 'target' },
-			render: 'diagram',
 			sources: [SRC],
 			lastReviewed: '2026-09-01'
 		}
@@ -323,7 +321,6 @@ export const viewFiles: ViewFileEntry[] = [
 		view: {
 			id: 'fx-view-explicit',
 			query: { kind: 'explicit', entities: ['fx-agency', 'fx-coalition'] },
-			render: 'both',
 			sources: [SRC],
 			lastReviewed: '2026-09-01'
 		}

@@ -2,7 +2,6 @@ query:
   kind: predicate
   predicate: owned-by
   groupBy: target
-render: both
 lastReviewed: 2026-09-04
 sources:
   - url: https://www.relx.com/our-business/our-businesses

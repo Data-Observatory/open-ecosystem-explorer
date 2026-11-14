@@ -1,7 +1,6 @@
 // Test-only helper (impure, filesystem — fine outside src/lib/**, rule A1
 // only constrains the library). Loads the real seed entities/prose so the
-// Phase 2 diagram tests exercise Appendix B's actual worked example rather
-// than a parallel synthetic copy. Mirrors scripts/validate.ts's loading
+// tests exercise the real seed content rather than a parallel synthetic copy. Mirrors scripts/validate.ts's loading
 // logic deliberately (not imported from there — that file is a CLI entry
 // point, not a library module).
 import { readFileSync, readdirSync, statSync } from 'node:fs';

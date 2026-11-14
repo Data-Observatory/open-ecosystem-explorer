@@ -10,7 +10,6 @@ import { locales, defaultLocale, type LocaleCode } from '../i18n/locales.js';
 export interface ViewFacts {
   id: string;
   query: ViewQuery;
-  render: 'diagram' | 'table' | 'both';
   sources: Source[];
   lastReviewed: string;
 }

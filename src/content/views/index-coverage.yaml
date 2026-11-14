@@ -5,7 +5,6 @@ query:
       indexKind:
         - bibliographic
         - citation
-render: table
 lastReviewed: 2026-09-04
 sources:
   - url: https://openalex.org/about

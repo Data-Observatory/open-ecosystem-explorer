@@ -328,7 +328,6 @@ export const zViewQuery = z.discriminatedUnion('kind', [
 export const zView = z.object({
 	id: z.string(),
 	query: zViewQuery,
-	render: z.enum(['diagram', 'table', 'both']),
 	sources: z.array(zSource),
 	lastReviewed: fullIsoDate
 });
