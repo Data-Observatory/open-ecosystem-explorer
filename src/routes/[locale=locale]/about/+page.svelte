@@ -5,6 +5,8 @@
 	import { fileHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
 	import ConsentChange from '$lib/components/ConsentChange.svelte';
+	import ExternalLink from '$lib/components/ExternalLink.svelte';
+	import { NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
 
 	let { data } = $props();
 	const about = $derived(data.about);
@@ -205,6 +207,14 @@
 
 	<section aria-labelledby="contribute" class="mt-12">
 		<h2 id="contribute" class={h2}>{m.about_contribute_heading()}</h2>
+		<p class="mt-3 leading-relaxed" data-testid="about-issues">
+			{m.about_contribute_issues()}
+			<ExternalLink
+				href={NEW_ISSUE_CHOOSER_URL}
+				class="text-blue-700 underline decoration-blue-700/40 underline-offset-2 hover:text-blue-900"
+				>{m.about_contribute_issues_link()}</ExternalLink
+			>
+		</p>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -- escaped by renderMarkdown, repository content -->
 		<div class="prose-content mt-3" lang="en">{@html about.contributeHtml}</div>
 		<details class="mt-4 rounded-xl ring-1 ring-zinc-200">
