@@ -1,19 +1,18 @@
-# Migration from Astro to SvelteKit
+# Site architecture
 
-Branch `feat/sveltekit`. The site now runs on the Data Observatory sister-site stack: SvelteKit 2,
-Svelte 5 (runes only), Tailwind 4, `@sveltejs/adapter-static`, Vite 8, Paraglide for UI strings,
-self-hosted Inter and Space Grotesk. The Astro site remains in git history (last Astro commit on
-`main` before the merge into this branch).
+SvelteKit 2, Svelte 5 (runes only), Tailwind 4, `@sveltejs/adapter-static`, Vite 8, Paraglide for UI
+strings, self-hosted Inter and Space Grotesk: the Data Observatory sister-site stack. The site is a
+static build (`build/`). Content is plain YAML in `src/content/`, validated before every build.
+The earlier Astro version of the site is only in git history.
 
-## What changed
+## Pages, routes and content loading
 
 - **Content loading.** `src/content/{loaders,site-index,views-index,stories-index}.ts` read the YAML
   with plain `fs` (sorted file order, same id injection, date normalisation and Zod validation).
-  `src/content.config.ts` and every `astro:content` import are gone. `src/lib/**` is unchanged apart
-  from the removed `src/lib/mermaid/render.ts` (build-time Mermaid rendering, Astro pages only).
+  `src/lib/**` is framework-free (specs rule A1).
 - **Routes.** Explicit `src/routes/[locale=locale]/...` segment (not the sisters' `reroute` hook),
-  `trailingSlash: 'always'`: URLs keep the Astro shape `/es/entity/doi/`. `/` is a meta-refresh
-  gateway to `/es/` (as before). Locale-free files keep their URLs: `/data/entities.csv`,
+  `trailingSlash: 'always'`: URLs look like `/es/entity/doi/`. `/` is a meta-refresh
+  gateway to `/es/`. Locale-free files keep their URLs: `/data/entities.csv`,
   `/data/relations.csv`, `/data/graph.json`, `/entity/<id>.json`, `/sitemap.xml`, `/robots.txt`,
   `/search-index-<locale>.json`, `/<locale>/feed.xml`.
 - **Information architecture** (review report §3.1): four nav items.
@@ -27,21 +26,20 @@ self-hosted Inter and Space Grotesk. The Astro site remains in git history (last
   - Entity page `/{loc}/entity/<id>/`: type, one-sentence definition, local note, relations as
     sentences grouped by predicate family, external links (official site, Wikipedia via the
     Wikidata QID, Wikidata, ROR), everything else in a collapsed "Detalles".
-- **Old routes** (`/entities`, `/entities/<type>`, `/layers`, `/taxonomy`, `/tags`, `/tags/<tag>`,
+- **Legacy routes** from the first release of the site (`/entities`, `/entities/<type>`, `/layers`, `/taxonomy`, `/tags`, `/tags/<tag>`,
   `/search`, `/relations`, `/relations/<predicate>`, `/model`, `/contribute`, `/map`, `/map2`,
-  `/map3`) are prerendered redirect pages (`src/lib/legacy-routes.ts`).
-- **UI strings.** `src/i18n/ui/{es,en}.json` moved to `messages/{es,en}.json` (Paraglide, flat
-  snake_case keys). `tests/unit/i18n/messages.test.ts`
+  `/map3`) are prerendered redirect pages (`src/lib/legacy-routes.ts`); they can go once nothing links to them.
+- **UI strings.** UI strings are in `messages/{es,en}.json` (Paraglide, flat snake_case keys). `tests/unit/i18n/messages.test.ts`
   checks ES/EN key and placeholder parity, that every key is used, and that Paraglide and
   `src/i18n/locales.ts` agree. Entity, view and story prose stays in YAML.
 - **Site URL** is configurable: `SITE_URL=https://... npm run build` makes sitemap, feed, robots
-  and canonical/hreflang URLs absolute. `BASE_PATH` sets a sub-path, as on the sisters.
+  and canonical/hreflang URLs absolute. `BASE_PATH` sets a sub-path.
 - **Light theme only**, like the sister sites (they do not ship a dark mode).
 
 ## The map
 
 The home page (`/{loc}/`) is the interactive map: `src/lib/explorer/`, Svelte-native SVG, no
-Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" report (v1 package).
+Cytoscape, no layout library, no new dependency.
 
 - **One renderer, four scenes** (`scene.ts`, pure): *start* (the anchors of `src/lib/map/anchors.ts`
   hand-composed around open science, `compose.ts`, landscape and portrait), *focus* (a selected
@@ -80,23 +78,19 @@ Cytoscape, no layout library, no new dependency. Design brief: the "map ideas" r
 - **Expert mode**: type and relation-family filters, list (table) view, drag to pan, Ctrl + wheel
   or the buttons to zoom (a plain wheel keeps scrolling the page), labels by zoom, off-canvas
   nodes culled.
-- **Removed**: `cytoscape`, `cytoscape-fcose`, `src/components/` (the Astro map sources),
-  `src/types/cytoscape-fcose.d.ts`, and the pre-migration map helpers nothing imported any more
-  (`src/lib/map/{hierarchy,curated,facets,graph-state,node-svg,palette-overrides,url-state,search-score}.ts`
-  with their unit tests). `src/lib/map/` keeps `anchors.ts`, `layout.ts` and `color-distance.ts`.
+- **`src/lib/map/`** keeps `anchors.ts`, `layout.ts` (build-time positions) and `color-distance.ts`.
 - **Not built** (by design or deferred): hover tooltip (idea 9), entrance animation (idea 10),
   copy-link/print (idea 12), touch pinch-zoom (buttons instead), autoplay of stories.
 
-## Not ported yet
+## Open work
 
-1. **Infra, deploy and domain** (`infra/`, CDK, DNS). Domain undecided (idea:
+1. **Infra, deploy and domain** (CDK, DNS): not started. Domain undecided (idea:
    `open-ecosystem.dataobservatory.net`); set `SITE_URL` at build time when decided.
-2. **Formatting of pre-migration TypeScript.** `src/lib/**` (except new files), `scripts/`,
-   `tests/unit`, `tests/fixtures` keep their 2-space style and are excluded from Prettier and ESLint
-   so the merge with content/schema work on `main` stays conflict-free. Reformat in one commit after
-   that work lands, then remove the exclusions.
-3. **Smaller gaps.** The 404 near-match suggestions of the Astro 404 page (static `404.html` now
-   links to both homes and glossaries); attribute keys in "Detalles" are raw field names.
+2. **Formatting of older TypeScript.** `src/lib/**` (except newer files), `scripts/`, `tests/unit`
+   and `tests/fixtures` keep their 2-space style and are excluded from Prettier and ESLint. Reformat
+   in one commit, then remove the exclusions.
+3. **Smaller gaps.** The static `404.html` has no near-match suggestions; attribute keys in
+   "Detalles" are raw field names.
 
 ## Commands
 

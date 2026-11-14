@@ -9,7 +9,7 @@ and data rely on, and how they connect (identifiers, registration agencies,
 indices, institutional systems, standards, licences, open software,
 communities and coalitions), as a validated, navigable knowledge graph with an
 interactive map on the home page. See `specs.md` for the full spec and
-`MIGRATION.md` for the move from Astro and the design of the map.
+`docs/architecture.md` for the site structure and the design of the map.
 
 ## Running locally
 

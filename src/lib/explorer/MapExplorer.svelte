@@ -19,7 +19,7 @@
 
 	/**
 	 * The map explorer: toolbar, canvas, card, story caption, list views and search palette
-	 * around one MapStore. See MIGRATION.md ("The map") for the design.
+	 * around one MapStore. See docs/architecture.md ("The map") for the design.
 	 */
 	let { graph, locale }: { graph: MapGraph; locale: Locale } = $props();
 

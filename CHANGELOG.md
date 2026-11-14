@@ -54,7 +54,7 @@
 - Search palette on `/` (entries and stories). Expert mode (`?modo=experto`, remembered): whole corpus, type and relation filters, list view, pan and zoom.
 - Phones: list first, with a 38vh map strip on top. Entity pages get a static 1-hop mini-graph (same renderer, no JavaScript needed).
 - Site renamed in the UI: *Open Ecosystem Explorer* / *Explorador del ecosistema abierto*, with the new one-line scope as intro and meta description.
-- Removed `cytoscape`, `cytoscape-fcose` and `src/components/`. New unit tests (`tests/unit/explorer/`) and e2e suite (`tests/e2e/map.e2e.ts`). Details in `MIGRATION.md`.
+- Removed `cytoscape`, `cytoscape-fcose` and `src/components/`. New unit tests (`tests/unit/explorer/`) and e2e suite (`tests/e2e/map.e2e.ts`). Details in `docs/architecture.md`.
 
 ### Site moved from Astro to SvelteKit (2026-11-13, branch feat/sveltekit)
 
