@@ -49,7 +49,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 | N10 | Temporal/animated graph playback | `since`/`until` are captured; no UI in v1. |
 | N11 | Automated graph analytics (centrality, community detection) | Build-time counts only. Note this excludes *computed* analytics, not the hand-written analyses of §5.6. |
 | N12 | Comments, annotations, discussion | Use the GitHub repository. |
-| N13 | Print/PDF report generation | Individual diagrams export as SVG/PNG (§6.7). |
+| N13 | Print/PDF report generation | The data downloads (CSV, JSON) are the reuse path; the map has no image export. |
 | N14 | Bulk import / ETL from any upstream register | Content is curated once and edited incrementally (§8.3). Confirmed by Q2. |
 | N15 | Open education, open hardware and open government (transparency, civic tech) | Outside the current scope (open science, open data, good data practice, and the open software and licences they depend on). Out of scope for now; revisit later. |
 
@@ -72,67 +72,71 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 
 ## 4. Tech Stack & Project Structure
 
-### 4.1 Recommendation: Astro 5 (static) + TypeScript strict + Zod + Mermaid 11
+### 4.1 Stack: SvelteKit (static) + TypeScript strict + Zod
 
 | Layer | Choice | Version |
 |---|---|---|
-| Site framework | Astro, `output: 'static'`, `i18n` routing | 5.x |
-| Language | TypeScript, `strict`, `noUncheckedIndexedAccess` | 5.x |
-| Content layer | Astro Content Collections (glob loader) | built-in |
-| Schema validation | Zod (via `astro:content`) + custom graph invariants | 3.x |
-| Diagrams | Mermaid, rendered **to static SVG at build time** | 11.x |
-| Interactive graph | Svelte-native SVG on the home page (`src/lib/explorer/`, §7.0); positions from a hand composition, a ring, and the build-time `graph-layout.json`. Cytoscape.js was removed with the SvelteKit migration. | — |
-| Styling | Plain CSS with custom properties, no framework | — |
-| Tests | Vitest (unit + invariants), Playwright + axe-core | — |
-| Runtime / hosting | Node 22 LTS, npm; GitHub Pages via Actions | — |
+| Site framework | SvelteKit with `@sveltejs/adapter-static`, every page prerendered; Svelte 5, runes only | 2.x / 5.x |
+| Language | TypeScript, `strict`, `noUncheckedIndexedAccess` | 6.x |
+| Content layer | Plain `fs` loaders over the YAML files (`src/content/*.ts`), at build time only | none |
+| Schema validation | Zod + custom graph invariants (`src/lib/invariants/`) | 3.x |
+| Map and graph pictures | Svelte-native SVG (`src/lib/explorer/`, §7.0); positions from a hand composition, a ring, and the build-time `src/generated/graph-layout.json` | none |
+| Styling | Tailwind CSS 4, self-hosted Inter and Space Grotesk | 4.x |
+| UI strings | Paraglide (`messages/<locale>.json`, URL strategy) | 2.x |
+| Tests | Vitest (unit and invariants), Playwright + axe-core (e2e and accessibility) | — |
+| Runtime | Node 22 LTS, npm; static output in `build/`; hosting undecided (Q7) | — |
 
-### 4.2 Why Astro, and why not the alternatives
+### 4.2 Why this stack
 
-"Simpler website" should mean **what ships to the browser**, not the absence of a build step: hand-maintaining 50+ cross-linked HTML pages is more complexity, not less, and it makes G3 impossible.
+"Simpler website" means **what ships to the browser**, not the absence of a build step: hand-maintaining hundreds of cross-linked pages would be more complexity and would make G3 impossible. The site is a prerendered static build whose pages work without JavaScript; JavaScript adds the map, filters, search and the analytics notice.
 
-- **Astro** ships zero client JS by default (an entity page ships no framework bytes); Content Collections are typed, schema-validated globs with build-time errors, which is exactly G2 + G3; file-based routing turns one `[locale]/entity/[id].astro` into every entity page in every language; islands confine interactivity to `/map`; a single plain-YAML document per file suits entities that need both fields and prose — prose is just a `body` field, not a second file format. Astro's built-in `i18n` routing gives G9 without a plugin.
-- **Not SvelteKit** (the reference project's choice, correct *there* because that app was ~90% derived reactive state): this project has none — only list filtering and canvas panning. A viable second choice carrying weight it does not need. **Not Eleventy / Hugo / Jekyll:** workable; Astro wins on TypeScript shared across content schema, graph logic and templates. **Not a graph database:** violates G6 and N6; a few hundred KB of JSON fits in memory.
-- **Not plain HTML + client-side Mermaid:** no build step means no validation, so a dangling reference reaches users instead of CI (fails G3); inverse relations must be hand-maintained in both directions (violates C1); client-side Mermaid costs ~500 KB of JS and a render flash.
+- **SvelteKit** shares the stack of the other Data Observatory sites (tooling, i18n, tests, deployment practice) and gives one reactive island, the map, the state it needs (selection, story step, mode, all in the URL) without a second framework. `adapter-static` prerenders every route, so there is no server (N6).
+- **Astro** was used for the first versions of the site and replaced in November 2026 for those two reasons. It remains in git history.
+- **Not a graph database or a client-side graph library:** a few hundred KB of JSON fits in memory (G6, N6); the map is plain SVG plus a pure scene function.
+- **Not plain HTML:** no build step means no validation, so a dangling reference would reach users instead of CI (fails G3), and inverse relations would have to be hand-maintained in both directions (violates C1).
 
 ### 4.3 Project structure
 
 ```
-├── specs.md  README.md  CHANGELOG.md  CONTRIBUTING.md  LICENSE  LICENSE-DATA
-├── astro.config.mjs  tsconfig.json  package.json
-├── .github/  workflows/{ci,deploy,linkcheck}.yml · ISSUE_TEMPLATE/{new-entity,correction}.yml
+├── specs.md  README.md  CHANGELOG.md  CONTRIBUTING.md  LICENSE  LICENSE-DATA  LICENSE-FONTS
+├── package.json  tsconfig.json  vite.config.ts  playwright.config.ts  vitest.config.ts
+├── docs/  architecture.md (routes, map design) · analytics.md · known-issues.md
 ├── prompts/  add-entity.md (the §8.4 template, kept next to the schema it references)
-├── scripts/  validate.ts (invariant runner) · new-entity.ts (scaffold) · export-graph.ts
+├── messages/  es.json en.json            # UI strings (Paraglide)
+├── schema/    generated JSON Schemas
+├── scripts/   validate.ts · generate-schema.ts · layout-graph.ts · review.ts · watch-validate.ts · postbuild.mjs
+├── static/    consent-loader.js · favicon.svg · 404.html
 ├── src/
-│   ├── content.config.ts        # collection definitions + Zod schemas
 │   ├── content/entities/        # ONE FACTS FILE PER ENTITY, flat, <id>.yaml — no prose body
-│   ├── content/i18n/<locale>/   # <id>.yaml translated prose (body is a field, not a body), + views/ (§5.7)
-│   ├── content/views/           # query + render + sources (§5.6), locale-independent
-│   ├── content/vocab/           # entity-types.yaml (incl. the type→layer map), predicates.yaml,
+│   ├── content/i18n/<locale>/   # <id>.yaml translated prose (body is a field), + views/ (§5.7)
+│   ├── content/views/ stories/  # saved queries (§5.6) and the guided stories
+│   ├── content/vocab/           # entity-types.yaml (incl. the type→layer map), predicates.yaml, predicate-families.yaml,
 │   │                            # tags.yaml, disciplines.yaml, statuses.yaml — per-locale labels
-│   ├── i18n/                    # locales.ts (the open locale list) · ui/<locale>.json
-│   ├── lib/                     # PURE TypeScript — rule A1
-│   │   ├── model/ types.ts schema.ts · graph/ build-index neighbours inverse traverse stats
-│   │   ├── i18n/resolve.ts      # entity + locale -> resolved prose, with fallback record
-│   │   ├── views/query.ts · mermaid/ ids flowchart mindmap er layers budget
-│   │   ├── a11y/describe.ts     # diagram -> accessible caption + table rows
-│   │   └── invariants/          # rules.ts (I1..I31), run.ts
-│   ├── components/              # .astro, presentation only; explorer/GraphCanvas.astro
-│   │                            # is the ONLY island
-│   └── layouts/  pages/  styles/
-└── tests/  unit/ · invariants/ · snapshots/ · a11y/
+│   ├── content/*.ts             # fs loaders and indexes (build time only)
+│   ├── i18n/locales.ts          # the open locale list
+│   ├── generated/               # graph-layout.json (committed, checked by layout:check)
+│   ├── routes/                  # SvelteKit routes, `[locale=locale]/…` plus the locale-free data files
+│   └── lib/
+│       ├── model/ graph/ i18n/ invariants/ views/ stories/ export/   # PURE TypeScript — rule A1
+│       ├── map/                 # anchors.ts · layout.ts (build-time positions) · color-distance.ts
+│       ├── explorer/            # the map: scene, geometry, compose, URL state, Svelte components
+│       ├── components/          # shared Svelte components (consent notice, chips, links)
+│       ├── consent/             # analytics consent logic (docs/analytics.md)
+│       └── server/              # build-time site/map/feed payloads (uses fs)
+└── tests/  unit/ · e2e/ · fixtures/
 ```
 
 ### 4.4 Non-negotiable architectural rules
 
-- **A1 — `src/lib/**` is pure.** No Astro imports, no DOM, no `fetch`, no filesystem, no `import.meta.env`. Consequence: the graph, view-query, i18n-resolution and Mermaid layers are unit-testable in plain Node, and `scripts/validate.ts` runs without Astro.
-- **A2 — Mermaid *source generation* is a pure string function.** `buildFocusDiagram(index, id, labels, opts): string`, where `labels` is the resolved locale bundle. Rendering to SVG is a separate impure step, so diagrams are snapshot-testable without a browser.
-- **A3 — Diagram generation is deterministic.** All iteration sorted by stable key (`id`, then predicate, then target `id`). Identical content and locale ⇒ byte-identical Mermaid source.
-- **A4 — Content is the single source of truth.** No entity name, count, label or relation appears as a literal in a component, page or stylesheet. No UI string is hardcoded either: chrome text comes from `src/i18n/ui/<locale>.json`, vocabulary labels from the vocab files.
+- **A1 — The model code is pure.** `src/lib/{model,graph,i18n,invariants,views,stories,export}` import no framework, no DOM, no `fetch`, no filesystem, no `import.meta.env`. Consequence: the graph, view-query, i18n-resolution and invariant layers are unit-testable in plain Node, and `scripts/validate.ts` runs without booting the site. File access lives in `src/content/` and `src/lib/server/`, both build-time only.
+- **A2 — Map scenes are pure functions.** `src/lib/explorer/scene.ts` and its helpers turn a graph payload, a selection and a mode into positioned nodes and edges; the Svelte components only draw them. Scenes are unit-tested without a browser.
+- **A3 — Layout is deterministic and built before the browser.** Positions of the full corpus come from `scripts/layout-graph.ts` (seeded, sorted by stable keys) into `src/generated/graph-layout.json`, checked by `npm run layout:check` in the build. The browser runs no force simulation. All iteration is sorted by a stable key (`id`, then predicate, then target `id`), so identical content gives identical output.
+- **A4 — Content is the single source of truth.** No entity name, count, label or relation appears as a literal in a component, page or stylesheet. No UI string is hardcoded either: chrome text comes from `messages/<locale>.json`, vocabulary labels from the vocab files. The exceptions are code, by design: the anchor set (`src/lib/map/anchors.ts`) and its hand composition (`src/lib/explorer/compose.ts`); a test fails if they disagree.
 - **A5 — The `GraphIndex` is built once and frozen**, then passed down. Components never recompute neighbours or re-derive inverses. The index is locale-independent; locale is applied at render time.
-- **A6 — Zero client JS is the default.** Budget: ≤50 KB gz on any route except `/map` (≤400 KB gz).
+- **A6 — Pages work without JavaScript.** Content, links, glossary, entity pages (with their static mini-graph), story step lists and the map as a picture of links all render server-side; JavaScript only adds the interactive map, filters, search and the analytics notice. No byte budget is enforced yet: measure before setting one.
 - **A7 — No third-party network at runtime, except opt-out analytics.** No CDN fonts, no browser API calls. The one exception is Google Tag Manager (container `GTM-M9NXQLBC`), loaded by `static/consent-loader.js`: on by default, announced in a notice, off for good once the visitor turns it off (stored choice `oee-consent`; see `docs/analytics.md`). With analytics off the site makes no third-party request.
-- **A8 — Validation runs first.** `npm run build` invokes `npm run validate`; failure exits non-zero and produces no output.
-- **A9 — Adding a locale touches no schema and no component.** It is one entry in `src/i18n/locales.ts`, one `ui/<code>.json`, one label per vocabulary term, and prose files. Anything that would need a code change to support a third language is a design defect (§5.7).
+- **A8 — Validation runs first.** `npm run build` invokes `npm run validate` and `npm run layout:check`; failure exits non-zero and produces no output.
+- **A9 — Adding a locale touches no schema and no component.** It is one entry in `src/i18n/locales.ts`, one `messages/<code>.json`, the Paraglide locale list in `project.inlang/settings.json`, one label per vocabulary term, and prose files. Anything that would need a code change to support a third language is a design defect (§5.7).
 
 ---
 
@@ -280,7 +284,7 @@ flowchart LR
   n_ds --> n_holtzbrinck{{"Holtzbrinck"}}
 ```
 
-Three parents, one edge type, and the concentration is visible without commentary — an index, a CRIS and a repository platform under each. It needs no new machinery: it is `/relations/owned-by`, a route already required for every predicate (§6.3). The claim is narrow — a picture of ownership, not an argument about it — but it is the clearest single thing the data model buys.
+Three parents, one edge type, and the concentration is visible without commentary — an index, a CRIS and a repository platform under each. It needs no new machinery: the `owned-by` sentences appear on every entity page and in the downloads. The claim is narrow — a picture of ownership, not an argument about it — but it is the clearest single thing the data model buys.
 
 ### 5.4 The derived index
 
@@ -344,7 +348,7 @@ Each rule is a pure predicate in `src/lib/invariants/rules.ts`, exercised agains
 | I25 | ERROR | A `View.query` resolving to zero entities is an error, not an empty page. |
 | I26 | WARN | `lastReviewed` older than 18 months (also badged in the UI). |
 | I27 | WARN | An `identifier` entity with no inbound `issues` edge. |
-| I28 | WARN | Any generated diagram exceeds its node/edge budget (§6.4) before overflow collapsing; or the graph has >1 weakly connected component (prints each component's size and members). |
+| I28 | WARN | An entity authors more relations of one predicate than its `maxOutDegree` (the map shows the most relevant neighbours and "show more" for the rest; the page lists all); or the graph has >1 weakly connected component (prints each component's size and members). |
 | I29 | ERROR | **Every entity and every view has a prose file in the default locale**, with a valid `summary`. A facts file without `content/i18n/<default>/<id>.yaml` fails the build (§5.7). |
 | I30 | WARN / ERROR | **WARN** per missing non-default-locale prose file, aggregated as one line per locale (`en: 12 of 78 entities untranslated`) — or, when the strict-i18n switch `REQUIRE_FULL_I18N` is on, **ERROR** per missing file, reported on the entity's own file (default: off; see the note below the table). **ERROR** if a locale file declares a field outside the translatable set, or if a `relationNotes` key does not resolve to a relation authored in the facts file. |
 | I31 | ERROR | An entity facts file carries a `body`, `summary` or `description` field. Prose exists only in `content/i18n/**` (C10). |
@@ -420,77 +424,44 @@ export type LocaleCode = typeof locales[number]['code'];
 
 **Fallback behaviour.** `resolveProse(id, locale)` returns `{ prose, localeUsed, fallback: boolean }`. When a non-default locale is requested and missing, the page renders default-locale prose inside a `lang="es"` wrapper, preceded by a non-dismissible notice ("Esta ficha aún no está traducida al inglés / This entry is not yet translated into English — showing the Spanish original"), with a link to the GitHub issue template for translations. **Everything locale-independent still renders in full:** the attribute table, the relation tables, the diagrams, the external identifiers, the sources. Those were never language-dependent, and withholding them because prose is missing would be the wrong trade.
 
-**Vocabulary, chrome and diagrams.** Each term in `vocab/*.yaml` carries `label: { es: …, en: … }` and an optional `definition` map, co-located with the term so a new vocabulary entry cannot ship label-less; UI chrome lives in `src/i18n/ui/<locale>.json`. Both are covered by a locale-completeness test (§11) rather than an invariant, because a missing UI string is a rendering defect, not a data defect. Diagrams are consequently per-locale: node labels come from `name` (locale-independent unless overridden) but edge labels and the legend do not, so `buildFocusDiagram` takes the resolved label bundle (A2) and the SVG cache key includes the locale. Cost is diagram count × locale count, which at ~90 entities and 2 locales sits well inside the §10 build budget.
+**Vocabulary, chrome and diagrams.** Each term in `vocab/*.yaml` carries `label: { es: …, en: … }` and an optional `definition` map, co-located with the term so a new vocabulary entry cannot ship label-less; UI chrome lives in `messages/<locale>.json`. Both are covered by a locale-completeness test (§11) rather than an invariant, because a missing UI string is a rendering defect, not a data defect. The map is consequently per-locale: node labels come from `name` or `shortName` (locale-independent unless overridden) but relation sentences and captions do not, so the scene takes the resolved labels for the page locale.
 
 ---
 
-## 6. Diagram Rendering & Interaction Model
+## 6. Graph presentation
+
+*Rewritten November 2026. The first versions drew build-time Mermaid diagrams and a Cytoscape.js map; both are gone. The interactive map and the entity mini-graph are described in §7.0; this section keeps the principles and the legibility rules.*
 
 ### 6.1 Principle
 
-**Mermaid is a build-time SVG compiler, not a client-side library.** Source is generated by pure functions (A2), rendered to inline SVG during the build, served as static markup. Consequences: no ~500 KB bundle, no render flash, no layout shift, works with JavaScript disabled, directly styleable and printable. Implementation: `rehype-mermaid` with `strategy: 'inline-svg'`, headless Chromium at build time, ~0.2–0.5 s per distinct diagram, content-hash cached with locale in the key (§5.7).
+**The graph is shown as a small picture plus sentences; the picture never carries information alone.** The map (home page) and the entity mini-graph are plain SVG drawn by one renderer (`src/lib/explorer/`) from pure scenes (A2). Every node is a link to its entity page, every relation is also written as a sentence (`DOI es un tipo de Identificador persistente`) on the entity page and in the map card, and the full edge set is in the downloads (§7). So the picture works without JavaScript, prints, and can be read by a screen reader.
 
-### 6.2 Scale: hybrid tier, confirmed
+### 6.2 Scale and modes
 
-Mermaid's dagre layout stays legible to roughly 60 nodes / 100 edges. **Scale confirmed (Q3): 50–300 entities.** The A.1b additions bring the seed set to roughly 90–100 entities, comfortably inside the band and inside the confirmed tier.
+The corpus is 169 entities and 357 edges at the time of writing (confirmed range 50–300, Q3). Showing it all at once is not readable, so:
 
-| Total entities | `/map` | Everywhere else | Extra dependency |
-|---|---|---|---|
-| ≤ 120 | Mermaid, per-layer subgraphs | Mermaid | none |
-| **120 – 600 ✅ confirmed** | **Cytoscape.js island, `/map` only** | Mermaid (focus, layer, type, taxonomy, predicate views — all bounded) | Cytoscape.js ~90 KB gz + fcose |
-| > 600 | Cytoscape.js with layout precomputed at build time | Mermaid restricted to 1-hop focus views; paged tables become the primary index | + build-time layout step |
+| Mode | What is drawn | Positions |
+|---|---|---|
+| **Start** (default) | the anchors of `src/lib/map/anchors.ts` (15), grouped in four themes | hand composition (`compose.ts`), landscape and portrait |
+| **Focus** (a node selected) | the node and its most relevant neighbours: 8 on a ring (6 on phones), the rest behind "show N more" | fixed-radius ring (`geometry.ts`) |
+| **Story** | the path of a guided story revealed step by step | radial tree (`story.ts`) |
+| **Expert** (`?modo=experto`) | the whole corpus, with filters and a table view | build-time layout (`graph-layout.json`) |
 
-Build the Mermaid tier first regardless: the pure-function boundary (A2) means adding the canvas later is one island reading the same `GraphIndex`, with no rework of the data model, pages or other diagrams.
+### 6.3 Legibility rules
 
-**Amendment, 2026-09-04 — interactivity overrides the entity-count gate.** The user directed that `/map` and every rendered diagram must be genuinely navigable (real pan/zoom/drag), not just click-navigate on a static SVG, and that `/map` become the site's primary entry point. This is decided, not open: `/map` now runs on Cytoscape.js + `cytoscape-fcose` (the "120–600" row's island) regardless of the 107-entity count sitting under the original 120-entity Mermaid-only threshold; `/entities` remains its accessible/no-JS equivalent per §9/A9.5, so `/map` degrades to an error notice + link there if JS fails, rather than needing no-JS parity itself. Every other diagram (focus, layer, type, taxonomy, predicate, model) keeps its build-time Mermaid SVG unchanged, but `Diagram.astro` now wraps it in `svg-pan-zoom` for real drag-pan/wheel-zoom, with explicit zoom-in/zoom-out/reset buttons and arrow-key/±/0 keyboard equivalents (WCAG 2.5.7) — click-to-navigate via Mermaid's `click` directive anchors is preserved underneath. The home page's primary call-to-action now leads directly into `/map`.
+- **Few things at once.** The default view has about 15 nodes and no legend; neighbours are capped per selection (above); the card lists all of them as sentences.
+- **Shape and colour encode the node family** (five families, `nodeFamilyOf`), never colour alone (WCAG 1.4.1). Three sizes mark where to start reading (entry point, theme hub, member), not hierarchy: open science, open data and open access share the largest.
+- **No edge labels on the canvas.** The card shows the sentence; hovering or focusing it highlights its edge.
+- **Inactive entities** (`status` ∈ {deprecated, superseded}) and `inferred` relations are drawn dashed or reduced, never by colour alone.
+- **I28** warns when an entity authors more relations of one predicate than `maxOutDegree`; the page still lists all of them.
 
-### 6.3 Diagram registry
+### 6.4 Interaction
 
-All routes below are locale-prefixed (§7.2); the prefix is omitted here for readability.
-
-| View | Route | Mermaid type | Content | Cap |
-|---|---|---|---|---|
-| **Focus** | `/entity/[id]` | `flowchart LR` | Entity + 1-hop neighbourhood, in and out, grouped by predicate. The default and most-used diagram. | 40 neighbours |
-| **Neighbourhood** | `/entity/[id]?depth=2` | `flowchart LR` | Prerendered 2-hop variant behind a disclosure control; no client JS. | 60 nodes |
-| **Layer stack** | `/layers` | `flowchart TB` with one `subgraph` per layer | The memo's four-layer model plus the regional layer, with the cross-cutting band alongside. The site's primary orientation diagram. | 60 nodes |
-| **Type map** | `/entities/[type]` | `flowchart TB`, `subgraph` per related type | All entities of one type and their immediate connections. | 60 nodes |
-| **Predicate map** | `/relations/[predicate]` | `flowchart LR` | Every edge of one predicate. `/relations/owned-by` is the vertical-integration picture (§5.3). | 60 nodes, else table-first |
-| **View** | `/views/[id]` | `flowchart LR` or table | A resolved fault-line query (§5.6). | 60 nodes |
-| **Taxonomy** | `/taxonomy` | `mindmap` | Layer → type → subtype → tag groups; drills into filtered indexes. | 5 levels |
-| **Data model** | `/model` | `erDiagram` | The schema itself, generated from `vocab/predicates.yaml`, so it cannot drift from the validation rules. | — |
-| **Lineage** | `/entity/[id]` (cond.) | `timeline` | `supersedes` chains and policy `effectiveDate` sequences; only when the chain has ≥2 members. | — |
-| **Containment** | `/entity/[id]` (cond.) | `flowchart TB` | `part-of` tree as nested subgraphs; only when depth ≥1. | depth 4 |
-| **Global map** | `/map` | §6.2 | Whole graph. | §6.2 |
-
-### 6.4 Legibility budget and encoding
-
-Hard caps enforced by `src/lib/mermaid/budget.ts`, checked by I28:
-
-- **60 nodes / 100 edges** maximum per rendered diagram.
-- **Neighbour collapsing:** more than `predicate.maxOutDegree` (default 5) neighbours via one predicate collapse into a cluster node (`12 standards ▸`) linking to the filtered list. The full set always remains in the accessible table (§9).
-- **Shape encodes `layer`; fill hue encodes `type`.** Seven shapes, one per layer: `([stadium])` identifier · `[[subroutine]]` agency · `[(cylinder)]` index · `[rect]` institutional-system · `[/parallelogram/]` regional · `{{hexagon}}` cross-cutting · `(rounded)` concept. Thirteen types cannot map to thirteen legible shapes, so type is carried by a colourblind-safe fill **plus** the legend **plus** the accessible table, which names every node's type in text — no information is distinguishable by colour alone (WCAG 1.4.1).
-- **Predicate** is encoded by line style (`-->` / `-.->` / `==>`) plus colour; `owned-by` is drawn thick, since it is the edge most often read on its own.
-- **Edge labels** are drawn only when the predicate is not already unambiguous from line style and endpoint shapes; otherwise the legend carries it.
-- **Inactive entities** (`status` ∈ {deprecated, superseded}) and expired relations (`until` past) render dashed and reduced-opacity, never by colour alone.
-- Over budget after collapsing ⇒ the build emits the table as primary and the diagram behind a "view diagram" disclosure, with a warning (I28).
-
-### 6.5 Node identifiers and click behaviour
-
-- `src/lib/mermaid/ids.ts` maps entity IDs to `n_` + `id.replace(/-/g, '_')`; labels are always quoted (`n_zenodo["Zenodo"]`). The mapping is injective and reversible.
-- Navigation uses `click <node> href "<locale-prefixed url>"`. Because diagrams are prerendered to inline SVG these become ordinary anchors — **keyboard-focusable, working without JavaScript, present in the tab order** — which client-side Mermaid click handlers are not. Focus order follows generation order (A3) and is therefore predictable. Links stay inside the current locale.
-- Mermaid runs with `securityLevel: 'loose'` (required for click directives). Acceptable **only** because 100% of diagram source is generated at build time by our own pure functions from validated content; there is no user-input path into Mermaid. Revisit if that changes.
-
-### 6.6 Interaction model (`/map` and index pages only)
-
-- **Filtering** by layer, type, predicate, governance, tag, discipline, geography, status — held in URL query state (`/es/map?layer=index&governance=commercial`) so every view is linkable and the no-JS prerendered fallback stays coherent.
-- **Search:** client-side fuzzy match over `name`, `aka`, `summary`, `tags` from a prebuilt index (≤80 KB), built **per locale** from that locale's resolved prose.
-- **Focus mode:** select a node → that node plus its 1-hop neighbourhood, everything else dimmed to 15%, with a 1/2/3-hop depth control.
-- **Pan/zoom** has button and keyboard equivalents (`+`/`-`/arrows/`0`) — WCAG 2.5.7. Drag is never the only way.
-- **Reduced motion:** `prefers-reduced-motion: reduce` disables layout animation; layouts snap to final position.
-
-### 6.7 Export
-
-Every diagram carries "download SVG" and "copy Mermaid source". The source is exactly what generated the picture, so a reader can paste it into their own slides. This is deliberate: the site is a source of reusable diagrams, not only a destination.
+- **State is the URL** (`?n=`, `?historia=&paso=`, `?modo=experto`), so every view is linkable; selections are history entries.
+- **Search:** `/` opens a palette over name, short name, aliases and summary of every entry, plus the stories, from a per-locale prebuilt index.
+- **Pan and zoom** (expert mode) have button equivalents; a plain wheel keeps scrolling the page. Drag is never the only way (WCAG 2.5.7).
+- **Reduced motion:** `prefers-reduced-motion: reduce` makes every change immediate.
+- **Export:** the data downloads (`/data/graph.json`, CSV) are the reuse path. The map has no image export (N13).
 
 ---
 
@@ -524,32 +495,30 @@ Every content route is locale-prefixed (§7.2). `{loc}` below stands for a code 
 | `/{loc}/stories/[id]/` | One story as an ordered list of steps with the entities each step brings in, and a "play on the map" link (hidden without JavaScript). The no-JavaScript and screen-reader form of a story. | works |
 | `/{loc}/about/` | **Acerca de.** Scope, how to read the map, the data model (types, predicate families, predicates, invariants generated from `rules.ts`), downloads, how to contribute (rendered `CONTRIBUTING.md` and the §8.4 prompt template), latest changelog headings. Anchors: `#scope`, `#reading`, `#model`, `#downloads`, `#contribute`, `#changelog`. | works |
 | `/{loc}/changelog/` | The full `CHANGELOG.md`. | works |
-| `/{loc}/[...legacy]/` | Redirect pages for the Astro routes folded into the pages above (`src/lib/legacy-routes.ts`): `entities`, `entities/<type>`, `layers`, `taxonomy`, `tags`, `tags/<tag>`, `search` (keeps `?q=`) go to the glossary; `relations`, `relations/<predicate>`, `model` to `about/#model`; `contribute` to `about/#contribute`; `map`, `map2`, `map3` to the home page. | meta refresh |
+| `/{loc}/[...legacy]/` | Redirect pages for the routes of the first site layout folded into the pages above (`src/lib/legacy-routes.ts`): `entities`, `entities/<type>`, `layers`, `taxonomy`, `tags`, `tags/<tag>`, `search` (keeps `?q=`) go to the glossary; `relations`, `relations/<predicate>`, `model` to `about/#model`; `contribute` to `about/#contribute`; `map`, `map2`, `map3` to the home page. | meta refresh |
 | `/data/graph.json`, `/data/entities.csv`, `/data/relations.csv`, `/entity/[id].json` | Exports, **locale-free**, carrying all locales' prose in a `prose: { es: …, en: … }` map. Stable, documented shape; per-entity JSON includes derived inverses. | — |
 | `/search-index-{loc}.json` | Per-locale search index (name, aliases, summary per entity), kept for external consumers. | — |
 | `/404.html`, `/sitemap.xml`, `/robots.txt`, `/{loc}/feed.xml` | Static not-found page linking to both homes and glossaries; sitemap listing every locale with `hreflang` alternates; one feed per locale carrying dataset changes. | — |
 
 Every page URL ends in a slash (`trailingSlash: 'always'`) and is prerendered (`@sveltejs/adapter-static`). The primary navigation has four items: Explorar, Glosario, Preguntas, Acerca de.
 
-**Global chrome:** skip-to-content link; header with search, nav (Layers / Map / Entities / Relations / Views / About) and the **language switcher**; breadcrumbs (`Inicio › Índices › OpenAlex`); footer with licence, build timestamp, dataset version, repository link.
+**Global chrome:** skip-to-content link; a pill header with the four nav items (Explorar, Glosario, Preguntas, Acerca de) and the **language switcher**; the analytics notice above the header on a first visit; footer with licence, the analytics settings control and repository link.
 
 ### 7.1 Progressive disclosure
 
-Confirmed (Q4): one page with adjustable depth, not audience-specific pages. Every entity page renders **all three levels server-side in the static HTML, always**; the level control only changes what is expanded by default. Nothing is fetched or injected by JS.
+Confirmed (Q4): one site for all audiences with adjustable depth, not audience-specific pages. Depth is shown in two places, always server-rendered:
 
-| Level | Default | Contains |
+| Level | Where | Contains |
 |---|---|---|
-| **Simple** | Expanded | Name, type and layer badges, one-line summary, `governance` badge, focus diagram, top 3–5 relations by predicate importance, plain-language "what this is". |
-| **Standard** | Collapsed | Full prose, all relations grouped by predicate with their accessible tables, tags, discipline/geography facets. |
-| **Technical** | Collapsed (nested) | Complete attribute table (§5.2), external identifiers, `sources[]` with accessed dates, per-relation `confidence`, `lastReviewed`, 2-hop diagram, raw JSON/embed links. |
+| **Simple** (default) | home map, entity page top | the anchors and story chips; on an entity page: name, type, one-sentence definition, local note, the mini-graph, relations as sentences grouped by predicate family, external links |
+| **Technical** (opt-in) | `?modo=experto` on the map; the collapsed "Details" on an entity page | the whole corpus with filters and a table view; aliases, description, the attribute table, tags, sources with accessed dates, last review, raw JSON link |
 
-- Implemented as nested `<details>`/`<summary>`; a ≤5 KB script reads `?detail=standard|technical` or a `localStorage` preference and pre-expands. With JS disabled everything is still in the DOM, one or two native disclosure clicks away.
+- "Details" is a native `<details>`, so with JavaScript disabled everything is in the DOM, one click away. Expert mode is remembered in `localStorage` (inside try/catch) and is also reachable by URL.
 - Levels are **strictly additive** — no fact appears at two levels.
-- The accessible table required by §9 ships at **the level where its diagram appears**, never deferred to Technical.
 
 ### 7.2 Locale routing and the language switcher
 
-**URL shape: path prefix for every locale, including the default.** `/es/entity/doi` and `/en/entity/doi`, configured as Astro `i18n: { defaultLocale: 'es', locales: [...], routing: { prefixDefaultLocale: true } }` with the list read from `src/i18n/locales.ts`.
+**URL shape: path prefix for every locale, including the default.** `/es/entity/doi` and `/en/entity/doi`, implemented as an explicit `[locale=locale]` route segment (a param matcher over `src/i18n/locales.ts`) and Paraglide's URL strategy, with `es` the base locale and every locale prefixed.
 
 Why not the alternatives. **A query parameter** (`/entity/doi?lang=en`) is not a distinct resource: static hosting serves one file per path, so a fully static build cannot vary on the query string, and search engines and caches treat the two languages as one page. **A subdomain** needs DNS and certificate work per language, which contradicts adding a language by adding files (A9), and is entangled with the still-open Q7. **An unprefixed default** (`/entity/doi` = Spanish, `/en/entity/doi` = English) saves five characters and costs URL stability: if the default locale ever changes, or a third language is added and the "neutral" root becomes ambiguous, every existing Spanish URL either breaks or lies about its language. Symmetric prefixes mean adding a locale never touches an existing URL.
 
@@ -581,7 +550,7 @@ Two consequences the rest of the spec depends on. First, the entity set is expec
 
 The expected author of a change is **an LLM coding agent given the schema and the vocabulary**, not a person hand-typing YAML. The workflow is designed around that, and three things have to hold for it to be reliable.
 
-**(a) Validation must be fast and must be run by the agent, not only by CI.** `npm run validate` is a thin Node entry point over `src/lib/invariants/run.ts`: it reads the content globs, parses YAML, runs the Zod schemas and I1–I31, and exits. It does **not** build the site, launch Chromium, render Mermaid or typecheck the components. Target: **under 3 seconds** on the full content set, so an agent can run it after every single edit and treat the exit code as ground truth. It is a hard requirement, not a performance aspiration: an agent that has to wait 45 s for a full build will batch its edits and lose the ability to attribute an error to the edit that caused it. `npm run validate -- --file src/content/entities/scielo.yaml` scopes graph-local checks to one file for the same reason. The instruction to the agent is therefore concrete: *edit one file, run validate, fix, repeat; do not open a PR with a non-zero exit code.*
+**(a) Validation must be fast and must be run by the agent, not only by CI.** `npm run validate` is a thin Node entry point over `src/lib/invariants/run.ts`: it reads the content globs, parses YAML, runs the Zod schemas and I1–I31, and exits. It does **not** build the site, launch a browser or typecheck the components. Target: **under 3 seconds** on the full content set, so an agent can run it after every single edit and treat the exit code as ground truth. It is a hard requirement, not a performance aspiration: an agent that has to wait 45 s for a full build will batch its edits and lose the ability to attribute an error to the edit that caused it. `npm run validate -- --file src/content/entities/scielo.yaml` scopes graph-local checks to one file for the same reason. The instruction to the agent is therefore concrete: *edit one file, run validate, fix, repeat; do not open a PR with a non-zero exit code.*
 
 **(b) Error messages are a machine-readable interface and are specified as such.** Every ERROR emits file path, field path (dotted, with array index), the offending value, the rule ID, and — this is the part that matters — **the correction**, drawn from the same vocabulary files that produced the failure. A raw Zod message is not acceptable output. Concretely:
 
@@ -616,48 +585,37 @@ Each names the rule, the fix, and the closed set of legal alternatives, which is
 
 **Target: WCAG 2.2 Level AA on every route, in every locale, verified in CI.**
 
-### 9.1 The diagram problem, and the hard requirement
+### 9.1 The map problem, and the hard requirement
 
-Mermaid output is a known accessibility weak point: even with `accTitle`/`accDescr`, an SVG flowchart presents a screen reader with an unordered pile of text nodes conveying no relationships, gives a keyboard user no traversal, and reflows badly under zoom.
+A node-and-edge picture is a known accessibility weak point: to a screen reader it is an unordered pile of shapes conveying no relationships, a keyboard user has no traversal, and it reflows badly under zoom.
 
-**Therefore: no information is diagram-only.** Every diagram is emitted by `Diagram.astro` as:
+**Therefore: no information is map-only.**
 
-```html
-<figure class="diagram">
-  <div class="diagram__svg" role="img" aria-labelledby="d1-t" aria-describedby="d1-d">
-    <!-- prerendered inline SVG, focusable anchors preserved --></div>
-  <figcaption id="d1-t">Ownership of Digital Science products</figcaption>
-  <p id="d1-d" class="visually-hidden">…generated by describe.ts…</p>
-  <details class="diagram__data"><summary>View as table (7 relationships)</summary>
-    <table><!-- subject | relationship | object | since | note --></table></details>
-</figure>
-```
-
-- **A9.1** — Every `Diagram.astro` instance renders an equivalent `<table>` or nested `<ul>` in the **server-rendered DOM**. Not injected by JS, not `display:none`, not `aria-hidden`. A Playwright test asserts every `<figure class="diagram">` has a sibling data representation whose row count equals the source diagram's edge count.
-- **A9.2** — The table is the *complete* edge set, including neighbours the diagram collapsed into a cluster node (§6.4). The accessible representation is never a lossy subset.
-- **A9.3** — Caption and description come from `src/lib/a11y/describe.ts`, a pure function over the same edge list and label bundle that produced the diagram, so they cannot drift and are translated with it.
-- **A9.4** — Where `part-of` is drawn as nested subgraphs, the equivalent is a **nested `<ul>`**: the tree structure is the information.
-- **A9.5** — On `/map` the canvas is `aria-hidden="true"` and out of the tab order; the equivalent is `/{loc}/entities` plus per-entity relation tables, linked prominently ("Browse this data as a table"), not buried. Filter controls operate on both representations.
-- **A9.6** — Because type is carried by colour (§6.4), every accessible table names each node's type and layer in text.
+- **A9.1** — Every node on the map and mini-graph is a real `<a>` to its entity page, in the server-rendered DOM. Without JavaScript the map is a static picture of links.
+- **A9.2** — Every relation is available as a sentence on the entity page and in the map card, and the complete set is in the downloads and the expert-mode table view. The picture is never the only representation, and never a lossy subset: neighbours hidden behind "show N more" are all in the card.
+- **A9.3** — The map canvas is one tab stop; arrow keys move between nodes, Enter selects, Escape steps back, `/` opens search; selections are announced in a live region.
+- **A9.4** — Guided stories exist as an ordered list of steps on `/{loc}/stories/<id>/`, the form for screen readers and no-JavaScript.
+- **A9.5** — On phones the page is list-first: the themes appear as rows, with the map as a strip above them.
+- **A9.6** — Because node family is carried by shape and colour (§6.3), the card and the lists name each entry's type in text.
 
 ### 9.2 General conformance
 
 | Criterion | Commitment |
 |---|---|
-| 1.4.3 / 1.4.11 Contrast | ≥4.5:1 text, ≥3:1 UI and graphical objects — including every diagram node fill/stroke pair and every edge against its background, light and dark. Palette validated in CI. |
-| 1.4.1 Use of Colour | Layer is shape + colour; type is colour + legend + text in the accessible table. Nothing is colour-alone (§6.4). |
-| 1.4.4 / 1.4.10 / 1.4.12 Resize, Reflow, Spacing | 200% zoom and 320 CSS px with no horizontal scroll; diagrams and tables scroll in their own `overflow-x: auto` container, the body never does; no fixed-height text containers. |
-| 2.1.1 / 2.1.2 Keyboard | Everything operable by keyboard, no traps. Diagram nodes are anchors, focusable by default. The language switcher is a list of links. |
+| 1.4.3 / 1.4.11 Contrast | ≥4.5:1 text, ≥3:1 UI and graphical objects — including every map node fill/stroke pair and every edge against its background. The site ships a light theme only. Contrast is checked by axe in the e2e suite. |
+| 1.4.1 Use of Colour | Node family is shape + colour, and the type is named in text in the card and lists. Nothing is colour-alone (§6.3). |
+| 1.4.4 / 1.4.10 / 1.4.12 Resize, Reflow, Spacing | 200% zoom and 320 CSS px with no horizontal scroll; tables scroll in their own `overflow-x: auto` container, the body never does; no fixed-height text containers. |
+| 2.1.1 / 2.1.2 Keyboard | Everything operable by keyboard, no traps. Map nodes are anchors, focusable by default. The language switcher is a list of links. |
 | 2.4.1 / 2.4.7 / 2.4.11 | Skip link on every page; visible 2 px focus ring at ≥3:1; sticky-header offset so focus is never obscured. |
-| 2.5.7 / 2.5.8 | Pan/zoom has button and keyboard equivalents; all targets ≥24×24 CSS px, including diagram node hit areas. |
+| 2.5.7 / 2.5.8 | Pan/zoom (expert mode) has button equivalents; all targets ≥24×24 CSS px, including map node hit areas. |
 | 3.1.1 / 3.1.2 Language | `<html lang>` and `dir` from the locale record (§5.7). `lang` on every passage in another language — which is now systematic, not incidental: fallback prose is wrapped in `lang="es"` inside an English page, and entity names in a third language (SciELO, Redalyc, LA Referencia, ANID) are marked wherever they appear. |
 | 3.2.3 / 3.2.4 / 4.1.2 / 4.1.3 | Identical nav order and component labels site-wide and across locales; semantic HTML first; `aria-live="polite"` for filter result counts. |
-| 2.3.3 Animation | `prefers-reduced-motion` honoured (§6.6). |
+| 2.3.3 Animation | `prefers-reduced-motion` honoured (§6.4). |
 | 3.2.5 On Request | The `/` gateway uses an immediate (0-second) meta refresh with visible language links as the manual alternative; no delayed refresh anywhere (F40/F41). |
 
 ### 9.3 Verification
 
-- `axe-core` via Playwright on `/`, and on `/{loc}/`, `/{loc}/layers`, `/{loc}/entities`, `/{loc}/entity/openalex`, `/{loc}/entities/index`, `/{loc}/relations/owned-by`, `/{loc}/views/vertical-integration`, `/{loc}/taxonomy`, `/{loc}/model`, `/{loc}/map` — **for every locale, zero violations is a blocking gate.** One untranslated-fallback page is included in the set, since it is the only page mixing two languages.
+- `axe-core` via Playwright (`tests/e2e/`) on the home page in each map state (start, card, story, expert, full screen, search), the glossary, an entity page, the questions page, a story page and About, **for every locale; zero violations is a blocking gate.** The 390 px layout is checked for horizontal overflow in the same suite.
 - Manual keyboard-only and screen-reader (NVDA or VoiceOver) pass before each release, recorded in `CHANGELOG.md`.
 - Automated check that every route renders usefully with JavaScript disabled, including the language switcher.
 
@@ -665,9 +623,9 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 
 ## 10. Deployment
 
-- **Target:** GitHub Pages, static output from a GitHub Actions artefact. No server, no functions, no database (N6, G6).
-- **Build:** `npm ci && npm run validate && npm run build` on Node 22. Target <60 s cold for ~200 entities × 2 locales excluding Mermaid rendering; <15 s incremental with content-hash diagram caching (locale in the key, §5.7).
-- **Config:** `astro.config.mjs` sets `site`, `base` and `i18n` (the last read from `src/i18n/locales.ts`); all internal links use Astro path helpers and are locale-aware, so a project-page base path, a custom domain and a new language all work unedited. 🟡 Custom domain is Q7.
+- **Target:** static output in `build/` (`@sveltejs/adapter-static`). Hosting is undecided (Q7): the sister sites deploy to AWS (S3 and CloudFront through CDK), which is the likely route. No server, no functions, no database (N6, G6).
+- **Build:** `npm ci && npm run validate && npm run build` on Node 22. `npm run build` validates the content and the layout first (A8), then prerenders roughly 460 pages (~170 entities × 2 locales plus lists and data files).
+- **Config:** `SITE_URL` (absolute URLs in sitemap, feeds, canonical and hreflang links) and `BASE_PATH` (sub-path hosting) are build-time environment variables, never hardcoded; the locale list is read from `src/i18n/locales.ts`, so a project-page base path, a custom domain and a new language all work unedited. 🟡 Custom domain is Q7.
 - **Trigger:** push to `main` deploys; PRs build and validate but do not deploy. 🟡 Per-PR previews recommended once external contributors arrive — a reviewer seeing the rendered page catches editorial problems a YAML diff hides, and this matters more now that the diff's author is usually an agent (§8.4d).
 - **Caching:** fingerprinted assets `immutable, max-age=31536000`; HTML `max-age=0, must-revalidate` so corrections propagate immediately. No runtime telemetry other than the opt-out analytics container (A7, `docs/analytics.md`).
 - **Failure mode:** a failing validate or a11y gate blocks deployment; the previous site stays live. Bad data cannot replace good data.
@@ -685,14 +643,14 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 | **i18n resolution** | Vitest | `resolveProse` returns the requested locale when present, the default with `fallback: true` when absent, and never falls back for locale-independent fields; `relationNotes` keys bind to real relations; adding a fictional locale to the fixture config requires no schema change. | Blocking |
 | **Locale completeness** | Vitest | Every vocabulary term and UI string has a label in every declared locale. | Blocking |
 | **View queries** | Vitest | Each `ViewQuery` form resolves to the expected entity set on a fixture graph; empty results error (I25). | Blocking |
-| **Mermaid snapshots** | Vitest | Generated source per diagram type (§6.3) per locale on a fixed fixture graph. Guards determinism (A3). | Blocking |
+| **Map scenes and layout** | Vitest | Pure scene, ring, camera, story and URL logic (`tests/unit/explorer/`); anchors and their composition; the committed build-time layout is current and deterministic. Guards A2 and A3. | Blocking |
 | **Schema tests** | Vitest + Zod | Each subtype accepts a valid minimal record and rejects each required-field omission and format violation with the expected message. | Blocking |
-| **Type checking** | `astro check` + `tsc --noEmit` | Strict, `noUncheckedIndexedAccess`. | Blocking |
-| **Rendering / e2e** | Playwright | Relation groups render; diagram SVG has an equal-length data table (A9.1); node click-through lands correctly and stays in-locale; the switcher round-trips between locales on the same entity; the fallback notice appears exactly when prose is missing; filters update count and URL; no-JS smoke pass. | Blocking |
+| **Type checking** | `svelte-check` | Strict, `noUncheckedIndexedAccess`. | Blocking |
+| **Rendering / e2e** | Playwright | Relation groups render; map nodes are links and click-through lands correctly and stays in-locale; the switcher round-trips between locales on the same entity; the fallback notice appears exactly when prose is missing; filters update count and URL; no-JS smoke pass. | Blocking |
 | **Accessibility** | Playwright + axe-core | §9.3 route set × locales, zero violations. | Blocking |
-| **Build** | Astro | Production build completes; no broken internal links in any locale. | Blocking |
+| **Build** | SvelteKit | Production build completes; no broken internal links in any locale. | Blocking |
 | **External link health** | `lychee`, weekly | All `url` and `Source.url` resolve; opens a single tracking issue. | **Non-blocking** — third-party outages must not break our builds. |
-| **Visual regression** | Playwright screenshots | Recommended once visual design settles; Mermaid version bumps silently change layout. | Non-blocking |
+| **Visual regression** | Playwright screenshots | Recommended once visual design settles. | Non-blocking |
 
 **Fixtures.** `tests/fixtures/` holds a synthetic graph covering all 12 populated entity types and 19 populated predicates (concept, `is-a` and `related-to` are exercised by `tests/unit/invariants/concept-and-modes.test.ts`), all 3 view-query forms and 3 locales (one of them deliberately incomplete), with invalid variants per invariant. Unit and snapshot tests use fixtures; invariant tests run against real content.
 
@@ -710,9 +668,9 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 
 **Q2 — Content pipeline. ✅ CONFIRMED: no import, LLM-agent-assisted incremental curation.** Specified in §8.3 and §8.4, with N14 added. The seed content is converted once by an agent from the frozen schema; thereafter the user directs an LLM agent to edit YAML directly, and the schema plus I1–I31 is the safety net. Entity files remain one-file-per-change and a human merges every PR.
 
-**Q3 — Scale. ✅ CONFIRMED: 50–300 entities**, locking the hybrid tier of §6.2. The A.1b additions put the seed set near 90–100. Edge density assumed moderate (~5–8 relations/entity); revisit the §6.4 budget once real entities exist.
+**Q3 — Scale. ✅ CONFIRMED: 50–300 entities**, (169 entities at the time of writing). The A.1b additions put the seed set near 90–100. Edge density assumed moderate (~5–8 relations/entity); the map caps (§6) are the knob if density grows.
 
-**Q4 — Audience. ✅ CONFIRMED: all audiences via progressive disclosure**, specified in §7.1. Public-facing, so C7 applies at full strength.
+**Q4 — Audience. ✅ CONFIRMED: all audiences via progressive disclosure**, specified in §7.1. Public-facing, so C7 applies at full strength. The shipped form is two reading modes (newcomer default, expert mode) plus the entity page's collapsed "Details" (§7).
 
 **Q10 — Languages. ✅ CONFIRMED: multi-locale from day one, open-ended list.** Architecture in §5.7 (shared facts file + one prose file per entity per locale; `locales.ts` as the single open list; `es` default with documented reasoning; I29 hard error / I30 warning; fallback renders default prose with a notice and keeps all facts and diagrams) and §7.2 (symmetric `/{locale}/…` prefixes, static `/` gateway, no negotiation, switcher as plain links). N8 rewritten.
 
@@ -722,7 +680,7 @@ Mermaid output is a known accessibility weak point: even with `accTitle`/`accDes
 
 **Q7 — Domain and hosting. ✅ CONFIRMED: local only, no deployment target for now.** Build and run via `npm run build && npm run preview`; no GitHub Pages/custom-domain decision needed yet. `paths.base` stays env-driven (§4) regardless, so a hosting decision later is a config change, not a rebuild.
 
-**Q8 — Visual identity. ✅ CONFIRMED (default): distinct minimal identity, not the reference project's branding.** System-font stack, no custom typography/logo work in v1, palette generated to satisfy §9.2 contrast and the 12-type/6-shape distinguishability requirement (§6.4) rather than a brand exercise. Revisit if/when a Data Observatory brand palette is supplied — it would need to be checked against those same two constraints before adoption, not applied as-is.
+**Q8 — Visual identity. ✅ CONFIRMED (default): distinct minimal identity, not the reference project's branding.** System-font stack, no custom typography/logo work in v1, palette generated to satisfy §9.2 contrast and the node-family distinguishability requirement (§6) rather than a brand exercise. (Superseded in part: the site now follows the Data Observatory sister-site look — white and zinc, one blue accent, Inter and Space Grotesk self-hosted.) Revisit if/when a Data Observatory brand palette is supplied — it would need to be checked against those same two constraints before adoption, not applied as-is.
 
 **Q9 — External identifier depth. ✅ CONFIRMED (default): link-out only in v1.** No runtime fetch of upstream metadata (would reopen N5). Matches the standing recommendation from the prior draft.
 
@@ -948,47 +906,19 @@ The remaining five files have the same shape; only their distinguishing fields a
 
 *(`holtzbrinck` and `handle-system` are referenced above and would be additional files. In the real repository their absence fails I3 — which is what that invariant is for.)*
 
-### B.2 Generated focus diagram — `/es/entity/figshare`
+### B.2 What the entity page shows — `/es/entity/figshare/`
 
-`buildFocusDiagram(index, 'figshare', labels.es, { depth: 1 })`. Shape encodes layer, fill encodes type (§6.4); solid arrows are authored, dotted arrows are derived inverses, `owned-by` is thick. The `/en/` render is identical but for the edge labels, which come from the locale bundle.
+Relations appear as sentences grouped by predicate family; each edge is authored once, in one file. For Figshare, among others:
 
-```mermaid
-flowchart LR
-  n_figshare["Figshare"]:::repository
-  n_digital_science{{"Digital Science"}}:::organization
-  n_datacite_metadata_schema{{"DataCite Metadata Schema"}}:::standard
-  n_dimensions[("Dimensions")]:::index
-  n_symplectic_elements["Symplectic Elements"]:::cris
+| Sentence | Authored in |
+|---|---|
+| Figshare es propiedad de Digital Science | `figshare.yaml` |
+| Figshare implementa DataCite Metadata Schema | `figshare.yaml` |
+| (on Digital Science's page) Dimensions, Symplectic Elements and Figshare son de su propiedad | `dimensions.yaml`, `symplectic-elements.yaml`, `figshare.yaml` |
 
-  n_figshare ==>|es propiedad de| n_digital_science
-  n_figshare -->|implementa| n_datacite_metadata_schema
-  n_dimensions -.->|es propiedad de| n_digital_science
-  n_symplectic_elements -.->|es propiedad de| n_digital_science
+Dimensions and Symplectic Elements appear on Figshare's page as siblings under the same parent, although each edge is authored once in its own file. That is C2 and I7 working: one authored edge, derived inverses, no hand-maintained duplicate. The mini-graph above the sentences draws the same 1-hop neighbourhood.
 
-  click n_figshare href "/es/entity/figshare"     %% …one `click` per node, all five emitted
-  classDef repository   fill:#1f6feb22,stroke:#1f6feb,stroke-width:2px;
-  classDef index        fill:#0e707022,stroke:#0e7070,stroke-width:2px;
-  classDef cris         fill:#1a7f3722,stroke:#1a7f37,stroke-width:2px;
-  classDef standard     fill:#8250df22,stroke:#8250df,stroke-width:2px;
-  classDef organization fill:#bf8b0022,stroke:#bf8b00,stroke-width:2px;
-```
-
-Dimensions and Symplectic Elements appear on Figshare's page as siblings under the same parent, although each edge is authored once in its own file. That is C2 and I7 working: one authored edge, several rendered views, no duplication, no drift — and one authored edge, two rendered languages.
-
-### B.3 Mandatory accessible equivalent (§9, A9.1)
-
-Server-rendered alongside the diagram, not injected by JavaScript. Type is named in text per A9.6.
-
-| Subject (type) | Relationship | Object (type) |
-|---|---|---|
-| Figshare (repository) | owned by | Digital Science (organization) |
-| Figshare (repository) | implements | DataCite Metadata Schema (standard) |
-| Dimensions (index) | owned by | Digital Science (organization) |
-| Symplectic Elements (CRIS) | owned by | Digital Science (organization) |
-
-Description from `describe.ts`: *"Figshare, a repository in the institutional-system layer, commercially governed, has 2 outgoing and 0 incoming relationships. Its owner, Digital Science, also owns Dimensions (index) and Symplectic Elements (CRIS)."*
-
-### B.4 View — `/es/views/open-content-closed-governance`
+### B.3 View — `/es/views/open-content-closed-governance`
 
 Fault line 1 [M§9], from the query table in §5.6. Query and provenance are locale-independent; title, question and body are not.
 
@@ -1009,10 +939,6 @@ body: |
 
 Against the seven entities above the result set is `[figshare]`, rendered as a table of name, type, layer, `outputLicence`, `governance` and the `owned-by` target.
 
-### B.5 Data-model diagram — `/{loc}/model`
-
-Generated from `vocab/predicates.yaml` as an `erDiagram`, one relationship line per predicate with domain and range as the entities and cardinality from `sameTypeOnly` / `maxOutDegree` — e.g. `AGENCY }o--o{ IDENTIFIER : "issues"`, `REPOSITORY }o--|| ORGANIZATION : "owned-by"`. Because it is generated from the same file that drives I6–I10, the published documentation cannot drift from the enforced rules.
-
 ---
 
-*End of specification. Nothing here is implemented. Sections marked 🟡 and every open question in §12 require confirmation before implementation begins.*
+*End of specification. The site described here is implemented (status: November 2026; see CHANGELOG.md). Sections marked 🟡 and the pending open questions in §12 still need a decision.*

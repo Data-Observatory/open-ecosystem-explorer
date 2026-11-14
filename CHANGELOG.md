@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Clean-up after the SvelteKit migration (2026-11-14)
+
+- Removed the unused Mermaid generators (`src/lib/mermaid/`), the diagram description helper (`src/lib/a11y/`), the unused subtype-label helper and their tests (the invariants test keeps everything not about diagrams).
+- `specs.md` rewritten where it still described Astro, Mermaid and Cytoscape: §4 stack and structure, §6 (now "Graph presentation"), §7.1, §9.1, §10, §11, Appendix B, and the I28 description. `MIGRATION.md` became `docs/architecture.md`.
+- Older TypeScript is formatted with Prettier and linted; the exclusions are gone. Outdated Astro wording removed from comments and the licence text.
+
 ### CARE, TRUST and POSI retyped from `standard` to `concept` (2026-11-13)
 
 - Same decision as FAIR: all three are principles or criteria, not specifications with conformance testing or certification. Sources fetched: GIDA (gida-global.org/careprinciples: "CARE Principles for Indigenous Data Governance", people- and purpose-oriented principles that complement FAIR, drafted at the Gaborone workshop of 8 November 2018) and the CARE/FAIR paper in *Scientific Data* 2021 (via Europe PMC: four principles, released by GIDA in September 2019, produced by the RDA International Indigenous Data Sovereignty Interest Group); Lin et al. 2020, *Scientific Data*, doi 10.1038/s41597-020-0486-7 (via Europe PMC: "a set of guiding principles to demonstrate digital repository trustworthiness", a common framework) and the RDA news item of 18 May 2020; openscholarlyinfrastructure.org (principles, v2.0 of October 2025, 20 principles in governance, sustainability and insurance) and its adopters page (adoption by publishing a self-audit). `care`, `trust-principles` and `posi` are now `type: concept`, `governance: not-applicable`; `standardKind`, `requiresOpenness` and `specVersion` are gone; ES/EN summary and body say plainly that each is a set of principles, not a standard or a certification. Unverified claims were dropped: CARE "US-based nonprofit network", "co-organised with RDA", "formally affiliated"; POSI "superseding v1's 16 commitments" and "for deciding whom to depend on".
