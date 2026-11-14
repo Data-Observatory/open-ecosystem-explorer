@@ -2,6 +2,13 @@
 
 ## [Unreleased]
 
+### Proposals through GitHub issues (2026-11-14)
+
+- Four bilingual issue forms in `.github/ISSUE_TEMPLATE/`: add an entry, change an entry or a relation, remove one, and the site itself (labels `add-entry`, `change-entry`, `remove-entry`, `site`). Blank issues are off; the chooser links to `CONTRIBUTING.md`.
+- Every entry page ends with "Suggest a change on GitHub", which opens the change form with the entry id and name filled in (`src/lib/repo.ts`). The footer links to the form chooser, and the About page says in both languages that no file editing is needed. The links are plain external links: nothing is sent to GitHub until someone clicks.
+- `CONTRIBUTING.md` and `README.md` describe the flow: a maintainer checks the source and makes the change as a pull request that closes the issue.
+- 10 new unit tests (forms, prefilled address) and 5 new end-to-end tests (footer, entry page, About, no request to GitHub on load). 390 unit and 155 end-to-end tests pass.
+
 ### CI and deployment infrastructure (2026-11-14)
 
 - `.github/workflows/ci.yml` runs on pull requests and pushes to `main`: check, lint, validate, layout check, unit tests with the coverage thresholds, build, Playwright end-to-end and accessibility tests, plus an `infra` job (type-check, tests, `cdk synth` with dummy values). No AWS credentials or OIDC token.

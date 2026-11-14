@@ -171,3 +171,43 @@ test.describe('about and data', () => {
 		});
 	}
 });
+
+test.describe('suggest a change (GitHub issues)', () => {
+	const repo = 'https://github.com/Data-Observatory/open-ecosystem-explorer';
+
+	for (const [locale, footer, entityLink] of [
+		['es', 'Sugerir un cambio', 'Sugerir un cambio en GitHub'],
+		['en', 'Suggest a change', 'Suggest a change on GitHub']
+	] as const) {
+		test(`/${locale}/: the footer and the entry page link to the issue forms`, async ({ page }) => {
+			await page.goto(`/${locale}/entity/doi/`);
+			const foot = page.getByTestId('footer-suggest');
+			await expect(foot).toContainText(footer);
+			await expect(foot).toHaveAttribute('href', `${repo}/issues/new/choose`);
+			await expect(foot).toHaveAttribute('target', '_blank');
+			await expect(foot).toHaveAttribute('rel', /noopener/);
+
+			const link = page.getByTestId('entity-suggest').getByRole('link');
+			await expect(link).toContainText(entityLink);
+			const url = new URL((await link.getAttribute('href')) ?? '');
+			expect(url.origin + url.pathname).toBe(`${repo}/issues/new`);
+			expect(url.searchParams.get('template')).toBe('change-entry.yml');
+			expect(url.searchParams.get('entity')).toBe('doi');
+			expect(url.searchParams.get('title')).toMatch(/^\[Change\] .*DOI/);
+		});
+
+		test(`/${locale}/about/: the contribute section offers the issue forms`, async ({ page }) => {
+			await page.goto(`/${locale}/about/`);
+			const link = page.getByTestId('about-issues').getByRole('link');
+			await expect(link).toHaveAttribute('href', `${repo}/issues/new/choose`);
+		});
+	}
+
+	test('following the link sends nothing to GitHub until it is clicked', async ({ page }) => {
+		const requests: string[] = [];
+		page.on('request', (r) => requests.push(r.url()));
+		await page.goto('/en/entity/doi/');
+		await page.waitForLoadState('networkidle');
+		expect(requests.filter((u) => u.includes('github.com'))).toEqual([]);
+	});
+});
