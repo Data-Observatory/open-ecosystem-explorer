@@ -176,17 +176,4 @@ test.describe('about and data', () => {
 			expect(response.headers()['content-type']).toContain(type);
 		});
 	}
-
-	for (const [legacy, target] of [
-		['/es/entities/', '/es/glossary/'],
-		['/es/entities/identifier/', '/es/glossary/?type=identifier'],
-		['/en/relations/owned-by/', '/en/about/#model'],
-		['/en/map2/', '/en/'],
-		['/es/contribute/', '/es/about/#contribute']
-	] as const) {
-		test(`${legacy} redirects to ${target}`, async ({ page }) => {
-			await page.goto(legacy);
-			await page.waitForURL((url) => `${url.pathname}${url.search}${url.hash}` === target);
-		});
-	}
 });

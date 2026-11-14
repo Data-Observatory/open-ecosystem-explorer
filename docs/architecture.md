@@ -26,9 +26,6 @@ The earlier Astro version of the site is only in git history.
   - Entity page `/{loc}/entity/<id>/`: type, one-sentence definition, local note, relations as
     sentences grouped by predicate family, external links (official site, Wikipedia via the
     Wikidata QID, Wikidata, ROR), everything else in a collapsed "Detalles".
-- **Legacy routes** from the first release of the site (`/entities`, `/entities/<type>`, `/layers`, `/taxonomy`, `/tags`, `/tags/<tag>`,
-  `/search`, `/relations`, `/relations/<predicate>`, `/model`, `/contribute`, `/map`, `/map2`,
-  `/map3`) are prerendered redirect pages (`src/lib/legacy-routes.ts`); they can go once nothing links to them.
 - **UI strings.** UI strings are in `messages/{es,en}.json` (Paraglide, flat snake_case keys). `tests/unit/i18n/messages.test.ts`
   checks ES/EN key and placeholder parity, that every key is used, and that Paraglide and
   `src/i18n/locales.ts` agree. Entity, view and story prose stays in YAML.

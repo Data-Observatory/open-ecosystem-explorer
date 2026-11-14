@@ -1,4 +1,4 @@
-// Minimal map (`/{loc}/map3`): which nodes a newcomer sees first, and the
+// The map's starting view: which nodes a newcomer sees first, and the
 // two five-way visual encodings (node family, predicate family). Pure data
 // + pure functions — defined in code, not in entity YAML, so the default
 // view can be tuned without touching curated content.

@@ -39,7 +39,7 @@ function esc(text: string): string {
 		.replace(/"/g, '&quot;');
 }
 
-/** Every real page below the locale (not the legacy redirects). */
+/** Every page below the locale. */
 async function pagePaths(): Promise<string[]> {
 	return [
 		'',

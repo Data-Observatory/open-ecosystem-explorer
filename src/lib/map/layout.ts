@@ -1,4 +1,4 @@
-// Build-time graph layout for the minimal map (`/{loc}/map3`). Pure and
+// Build-time graph layout for the expert-mode map (the whole corpus). Pure and
 // deterministic (specs.md A3): no Math.random, no Date, fixed iteration
 // order (ids sorted), integer output. Same nodes + edges => same positions,
 // so the committed `src/generated/graph-layout.json` only changes when the

@@ -124,8 +124,6 @@
 	"about_changelog_body": "Changes to the data and to the site are recorded in the changelog.",
 	"about_changelog_link": "See the full changelog",
 	"changelog_title": "Changelog",
-	"redirect_title": "This page has moved",
-	"redirect_body": "Its content is now at:",
 	"not_found_title": "Page not found",
 	"not_found_body": "This page does not exist, or the link is out of date.",
 	"not_found_back": "Back to the home page",

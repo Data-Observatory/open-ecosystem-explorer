@@ -5,7 +5,6 @@ import {
 	fold,
 	matchesFilter
 } from '../../../src/lib/glossary-filter.js';
-import { legacyPaths, legacyTarget } from '../../../src/lib/legacy-routes.js';
 import { pagePath, switchLocalePath, absoluteUrl } from '../../../src/lib/locale.js';
 import { buildUrlPatterns } from '../../../src/lib/url-patterns.js';
 import {
@@ -61,25 +60,6 @@ describe('locale paths', () => {
 		]);
 	});
 });
-
-describe('legacy routes', () => {
-	const vocab = { entityTypes: ['identifier'], tags: ['open'], predicates: ['owned-by'] };
-	it('maps every old route to a page of the new structure', () => {
-		expect(legacyTarget('entities', vocab)).toEqual({ path: 'glossary' });
-		expect(legacyTarget('entities/identifier', vocab)?.query).toBe('type=identifier');
-		expect(legacyTarget('relations/owned-by/', vocab)).toEqual({ path: 'about', hash: 'model' });
-		expect(legacyTarget('search', vocab)?.keepQuery).toBe(true);
-		expect(legacyTarget('map2', vocab)).toEqual({ path: '' });
-		expect(legacyTarget('entities/bogus', vocab)).toBeUndefined();
-		expect(legacyTarget('glossary', vocab)).toBeUndefined();
-	});
-	it('lists each legacy path once, sorted', () => {
-		const paths = legacyPaths(vocab);
-		expect(paths).toEqual([...new Set(paths)].sort());
-		expect(paths).toContain('tags/open');
-	});
-});
-
 describe('page view models (real content)', () => {
 	it('glossary is sorted A-Z with letters and type counts', async () => {
 		const data = await glossary('es');
