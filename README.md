@@ -41,7 +41,7 @@ sitemap, feeds, canonical links) and `BASE_PATH=/sub-path`.
 - `npm run layout:generate` / `npm run layout:check`: regenerate or check the committed map layout (`src/generated/graph-layout.json`); regenerate and commit it whenever entities or relations change
 - `npm run check`: svelte-check (TypeScript strict)
 - `npm run lint` / `npm run format`: Prettier + ESLint
-- `npm test`: unit tests (vitest)
+- `npm test`: unit tests (vitest); `npm run test:coverage` enforces 100% coverage of `src/lib/graph` and `src/lib/invariants`
 - `npm run test:e2e`: Playwright e2e and accessibility tests against the build. Run `npm run build` first, and `npx playwright install chromium` once, or set `PLAYWRIGHT_CHROME_PATH` to a system Chrome. `PW_PORT` sets the preview port.
 - `npm run schema:generate`: regenerate the JSON Schemas in `schema/` used for editor autocomplete
 - `npm run review -- <id>`, `npm run watch:validate`: print an entity's facts and both prose files side by side; re-run validate on save

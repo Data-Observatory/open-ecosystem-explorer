@@ -20,6 +20,7 @@
 		"format": "prettier --write .",
 		"test:unit": "vitest",
 		"test": "npm run test:unit -- --run",
+		"test:coverage": "vitest run --coverage --testTimeout=120000",
 		"test:e2e": "playwright test",
 		"validate": "tsx scripts/validate.ts",
 		"schema:generate": "tsx scripts/generate-schema.ts",

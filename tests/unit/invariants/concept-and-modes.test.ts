@@ -267,6 +267,23 @@ describe('predicate families (I35)', () => {
 		expect(msgs).toHaveLength(1);
 		expect(msgs[0]!.field).toBe('issues');
 	});
+
+	it('flags a predicate that declares no family at all', () => {
+		const input = freshInput();
+		input.predicatesVocab.set('issues', {
+			...input.predicatesVocab.get('issues')!,
+			family: undefined as never
+		});
+		const msgs = runValidation(input).errors.filter((m) => m.ruleId === 'I35');
+		expect(msgs).toHaveLength(1);
+		expect(msgs[0]!.message).toMatch(/no family/);
+	});
+
+	it('is skipped when no families vocabulary is supplied', () => {
+		const input = freshInput();
+		delete input.predicateFamiliesVocab;
+		expect(runValidation(input).messages.filter((m) => m.ruleId === 'I35')).toEqual([]);
+	});
 });
 
 describe('REQUIRE_FULL_I18N (strict i18n mode)', () => {

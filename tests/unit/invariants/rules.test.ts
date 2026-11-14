@@ -296,6 +296,19 @@ describe('I9 — symmetric predicates authored once, on the smaller id', () => {
 	});
 });
 
+describe('I9 with a dangling target', () => {
+	it('reports the dangling reference (I3) without crashing the symmetric-pair check', () => {
+		const input = withEntity(freshInput(), 'fx-repository-b', {
+			relations: [
+				...freshInput().entityFiles.find((e) => e.id === 'fx-repository-b')!.entity.relations,
+				{ predicate: 'interoperates-with', target: 'fx-ghost' }
+			]
+		});
+		const result = runValidation(input);
+		expect(hasError(result.messages, 'I3')).toBe(true);
+	});
+});
+
 describe('I10 — acyclic predicates form a DAG', () => {
 	it('flags a cycle and prints the path', () => {
 		// part-of: fx-repository-b -> fx-repository-a (fixture). Add the reverse to create a cycle.

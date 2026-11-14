@@ -1124,7 +1124,7 @@ export function ruleI30(ctx: RunContext): InvariantMessage[] {
 				out.push(
 					err(
 						'I30',
-						fileOf.get(id) ?? 'src/content/entities/',
+						fileOf.get(id)!,
 						`no '${locale}' prose file (REQUIRE_FULL_I18N is on: every locale must be complete).`,
 						`Create src/content/i18n/${locale}/${id}.yaml with a valid summary and body, or unset REQUIRE_FULL_I18N (src/lib/invariants/config.ts) to downgrade this to a WARN.`
 					)
