@@ -1,18 +1,18 @@
-name: Remove an entry or a relation / Quitar una entrada o una relación
-description: Something does not belong, is a duplicate or is not true. / Algo no corresponde, está duplicado o no es cierto.
+name: Remove an entry / Quitar una entrada
+description: An entry does not belong on the map, is a duplicate or is not true. For one connection, use the connection form. / Una entrada no corresponde al mapa, está duplicada o no es cierta. Para una sola conexión, usa el formulario de conexión.
 title: '[Remove] '
 labels: ['remove-entry']
 body:
   - type: markdown
     attributes:
       value: |
-        Issues are public. Write in English or Spanish. If in doubt, we leave it out: a missing relation costs less than a wrong one.
-        Las propuestas son públicas. Escribe en español o en inglés. Ante la duda, se deja fuera: una relación ausente cuesta menos que una incorrecta.
+        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
   - type: input
     id: entity
     attributes:
-      label: Entry or relation / Entrada o relación
-      description: The entry id from its address (for example `doi`), or "A relation B" for a relation. / El id de la entrada, o "A relación B" si es una relación.
+      label: Entry / Entrada
+      description: The entry id from its address (for example `doi`) or its name. / El id de la entrada en su dirección (por ejemplo `doi`) o su nombre.
     validations:
       required: true
   - type: dropdown
@@ -20,8 +20,8 @@ body:
     attributes:
       label: Why? / ¿Por qué?
       options:
-        - It is not true / No es cierto
-        - It is a duplicate / Está duplicado
+        - It is not true / No es cierta
+        - It is a duplicate of another entry / Está duplicada con otra entrada
         - It is out of scope / Está fuera del alcance
         - It no longer exists / Ya no existe
         - Something else / Otra razón
@@ -31,6 +31,6 @@ body:
     id: details
     attributes:
       label: Details and evidence / Detalle y evidencia
-      description: A link to evidence helps. / Un enlace a la evidencia ayuda.
+      description: A link to evidence helps. If in doubt we leave it out, but removing an entry also removes its connections, so we check first. / Un enlace a la evidencia ayuda. Quitar una entrada también quita sus conexiones, así que revisamos antes.
     validations:
       required: true

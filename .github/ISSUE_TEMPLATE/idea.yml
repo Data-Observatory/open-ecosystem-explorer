@@ -1,0 +1,41 @@
+name: Idea or feature / Idea o funcionalidad
+description: Something the site could do that it does not do now. / Algo que el sitio podría hacer y hoy no hace.
+title: '[Idea] '
+labels: ['idea']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public. For a mistake or a gap in the content of the map, use the content forms. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas. Para un error o un vacío en el contenido del mapa, usa los formularios de contenido. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+  - type: textarea
+    id: problem
+    attributes:
+      label: What are you trying to do, and what gets in the way? / ¿Qué intentas hacer y qué te lo impide?
+    validations:
+      required: true
+  - type: textarea
+    id: idea
+    attributes:
+      label: What would you like the site to do? / ¿Qué te gustaría que hiciera el sitio?
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Have you considered something else? / ¿Has pensado en otra alternativa?
+    validations:
+      required: false
+  - type: dropdown
+    id: audience
+    attributes:
+      label: Who is it for? / ¿Para quién es?
+      options:
+        - Newcomers to open science / Personas que empiezan en ciencia abierta
+        - Practitioners (librarians; data stewards; repository managers) / Profesionales (bibliotecarias; gestores de datos; de repositorios)
+        - Researchers / Investigadoras e investigadores
+        - Teaching or training / Docencia o formación
+        - Developers who reuse the data / Desarrolladores que reutilizan los datos
+        - Something else / Otros
+    validations:
+      required: false

@@ -1,0 +1,78 @@
+name: Connection between two entries / Conexión entre dos entradas
+description: 'Add, change or remove a line on the map: how one entry relates to another. / Agregar, cambiar o quitar una línea del mapa: cómo se relaciona una entrada con otra.'
+title: '[Connection] '
+labels: ['connection']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+  - type: dropdown
+    id: action
+    attributes:
+      label: What should happen to the connection? / ¿Qué debería pasar con la conexión?
+      options:
+        - Add a connection that is missing / Agregar una conexión que falta
+        - Change a connection (wrong kind; wrong direction or wrong entries) / Cambiar una conexión (tipo; dirección o entradas incorrectas)
+        - Remove a connection that is not true / Quitar una conexión que no es cierta
+    validations:
+      required: true
+  - type: input
+    id: entity_a
+    attributes:
+      label: Entry A / Entrada A
+      description: The entry the statement is about, as its id from the address (for example `figshare`) or its name. / La entrada de la que habla la frase, como su id en la dirección (por ejemplo `figshare`) o su nombre.
+    validations:
+      required: true
+  - type: dropdown
+    id: relation
+    attributes:
+      label: A ... B (the kind of connection) / A ... B (el tipo de conexión)
+      description: Read it as "A [this] B", for example "Figshare owned by Digital Science". Pick the closest one. / Léelo como «A [esto] B», por ejemplo «Figshare es propiedad de Digital Science». Elige el más cercano.
+      options:
+        - is part of / es parte de
+        - is a member of / es miembro de
+        - owned by / es propiedad de
+        - governed by / gobernado por
+        - operated by / operado por
+        - developed by / desarrollado por
+        - funded by / financiado por
+        - issues (an agency issues an identifier) / emite (una agencia emite un identificador)
+        - implements (a standard) / implementa (un estándar)
+        - complies with (a standard or policy) / cumple con (un estándar o política)
+        - depends on / depende de
+        - is a profile of (a standard) / es un perfil de (un estándar)
+        - interoperates with / interopera con
+        - indexes / indexa
+        - certified by / certificado por
+        - endorsed by (signed or supported by) / respaldado por (firmado o apoyado por)
+        - mandates (a policy requires) / exige (una política exige)
+        - applies to (a policy covers) / aplica a (una política cubre)
+        - supersedes (replaces) / reemplaza a
+        - is a kind of (concept) / es un tipo de (concepto)
+        - relates to (concept) / se relaciona con (concepto)
+        - Not sure which / No sé cuál
+    validations:
+      required: true
+  - type: input
+    id: entity_b
+    attributes:
+      label: Entry B / Entrada B
+      description: 'The other entry. If it is not on the map yet, say so: it may need a new entry first. / La otra entrada. Si aún no está en el mapa, dilo: puede necesitar una entrada nueva primero.'
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details / Detalle
+      description: For a change or a removal, what does the map show now and what should it show? / En un cambio o una eliminación, ¿qué muestra hoy el mapa y qué debería mostrar?
+    validations:
+      required: false
+  - type: input
+    id: source
+    attributes:
+      label: Source URL / URL de la fuente
+      description: Where this can be checked. A connection without a source may wait until one is found. / Dónde se puede comprobar. Una conexión sin fuente puede esperar hasta encontrarla.
+    validations:
+      required: false

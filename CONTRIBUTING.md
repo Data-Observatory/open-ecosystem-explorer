@@ -4,12 +4,22 @@ The content of this site (entities, relations, translations, stories) is plain Y
 
 ## Suggest a change without editing files
 
-Open an issue at https://github.com/Data-Observatory/open-ecosystem-explorer/issues/new/choose. There is a form to add an entry, to change an entry or a relation, to remove one, and one for the site itself. Every entry page has a "Suggest a change on GitHub" link that opens the change form with that entry filled in, and the footer links to the same page. The forms are in English and Spanish.
+Open an issue at https://github.com/Data-Observatory/open-ecosystem-explorer/issues/new/choose and pick the form that fits. The forms are in English and Spanish.
+
+- **New entry on the map**: an institution, standard, identifier, infrastructure or concept that is missing.
+- **Connection between two entries**: add, change or remove one line on the map (how entry A relates to entry B, from the list of 21 kinds of connection).
+- **Description or facts of an entry**: the short description, the longer text, the name, a fact in the table, the note for Chile and Latin America, a translation, a source or link, or where it appears on the map.
+- **Remove an entry**: it does not belong, is a duplicate, is not true or no longer exists.
+- **Bug or accessibility problem** and **Idea or feature**: about the site itself, not the content of the map.
+
+Every entry page has two links ("Suggest a change to the description or facts" and "Suggest a change to its connections") that open the matching form with that entry filled in, and the footer links to the chooser.
+
+No GitHub account? Write to contacto@dataobservatory.net with the same information; a maintainer opens the issue for you.
 
 - A maintainer reads the issue, checks the source, and makes the change as a pull request that closes the issue, or answers why not. If in doubt, the change is left out.
 - Give a source for what you propose: the organisation's own page or an authoritative register. A proposal without one may wait until one is found.
 - Issues are public. Do not include personal data.
-- Issues are labelled `add-entry`, `change-entry`, `remove-entry` and `site`.
+- Issues are labelled `new-entry`, `connection`, `description`, `remove-entry`, `bug` and `idea`.
 
 Everything below is for people who prefer to make the change themselves, in a pull request.
 

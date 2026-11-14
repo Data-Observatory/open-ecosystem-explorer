@@ -1,0 +1,53 @@
+name: Bug or accessibility problem / Error o problema de accesibilidad
+description: Something on the site does not work, looks wrong or is hard to use. / Algo del sitio no funciona, se ve mal o es difícil de usar.
+title: '[Bug] '
+labels: ['bug']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: do not include personal data or screenshots of your own accounts. For a mistake in the content of the map, use the content forms. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas: no incluyas datos personales. Para un error en el contenido del mapa, usa los formularios de contenido. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened? / ¿Qué pasó?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How can we see it? / ¿Cómo podemos verlo?
+      description: The steps, starting from the address of the page. / Los pasos, empezando por la dirección de la página.
+      placeholder: |
+        1. Open https://oee.dataobservatory.net/es/
+        2. ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What did you expect? / ¿Qué esperabas?
+    validations:
+      required: false
+  - type: input
+    id: environment
+    attributes:
+      label: Browser, device and language / Navegador, dispositivo e idioma
+      placeholder: Firefox 130 on a phone, Spanish / Firefox 130 en un teléfono, español
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Where? / ¿Dónde?
+      options:
+        - The map / El mapa
+        - An entry page / Una página de entrada
+        - Search / La búsqueda
+        - Glossary or questions / Glosario o preguntas
+        - Stories / Historias
+        - Screen reader; keyboard or contrast / Lector de pantalla; teclado o contraste
+        - Something else / Otra cosa
+    validations:
+      required: false

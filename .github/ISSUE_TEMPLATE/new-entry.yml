@@ -1,0 +1,73 @@
+name: New entry on the map / Nueva entrada en el mapa
+description: 'Something missing: an institution, standard, identifier, infrastructure or concept. / Falta algo: una institución, estándar, identificador, infraestructura o concepto.'
+title: '[New] '
+labels: ['new-entry']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file. No GitHub account? Write to contacto@dataobservatory.net.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+  - type: input
+    id: name
+    attributes:
+      label: Name / Nombre
+      description: The official name and, if there is one, the acronym. / El nombre oficial y, si existe, la sigla.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What kind of thing is it? / ¿Qué tipo de cosa es?
+      options:
+        - Organization (company; NGO; university; funder) / Organización (empresa; ONG; universidad; financiador)
+        - Standard or specification / Estándar o especificación
+        - Identifier (DOI; ORCID; ROR...) / Identificador (DOI; ORCID; ROR...)
+        - Registration agency / Agencia de registro
+        - Repository / Repositorio
+        - Index or database of research output / Índice o base de datos de resultados de investigación
+        - CRIS (research information system) / CRIS (sistema de información de investigación)
+        - Aggregator / Agregador
+        - Publishing platform / Plataforma editorial
+        - Community / Comunidad
+        - Coalition / Coalición
+        - Policy or mandate / Política o mandato
+        - Concept or idea (open access; FAIR...) / Concepto o idea (acceso abierto; FAIR...)
+        - Not sure / No sé
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL / URL de la fuente
+      description: The organisation's own page or an authoritative register, not a summary of it. / La página propia de la organización o un registro autorizado, no un resumen.
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What is it, in one or two sentences? / ¿Qué es, en una o dos frases?
+      description: Neutral and descriptive, not evaluative. / Neutral y descriptivo, no evaluativo.
+    validations:
+      required: true
+  - type: textarea
+    id: connections
+    attributes:
+      label: Which entries already on the map is it connected to, and how? / ¿Con qué entradas del mapa se conecta y cómo?
+      description: For example "part of Crossref", "implements DOI", "member of COAR". Say if you are not sure. / Por ejemplo «es parte de Crossref», «implementa DOI», «miembro de COAR». Di si no estás seguro.
+    validations:
+      required: false
+  - type: input
+    id: place
+    attributes:
+      label: Country or region / País o región
+      description: Chile and Latin America get a local note on the entry. / Chile y América Latina tienen una nota local en la entrada.
+    validations:
+      required: false
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does it belong on the map? / ¿Por qué corresponde al mapa?
+      description: Who would look for it, and what would they need to understand? / ¿Quién lo buscaría y qué necesitaría entender?
+    validations:
+      required: false

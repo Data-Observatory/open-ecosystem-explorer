@@ -59,8 +59,10 @@ sitemap, feeds, canonical links) and `BASE_PATH=/sub-path`.
 
 ## Contributing content
 
-Anyone can propose an addition, a change or a removal as a GitHub issue (forms in English and
-Spanish, linked from the footer, the About page and every entry page); no file editing needed.
+Anyone can propose an addition, a change or a removal as a GitHub issue (six forms in English and
+Spanish: new entry, connection, description, removal, bug, idea), linked from the footer, the About
+page and every entry page; no file editing needed. Without a GitHub account, write to
+contacto@dataobservatory.net.
 Content is plain YAML, checked by `npm run validate`. `CONTRIBUTING.md` has the
 workflow (add an entity, check loop, commit conventions) and `prompts/add-entity.md`
 is a prompt for an LLM agent to do the same. The rules in short: one source per
