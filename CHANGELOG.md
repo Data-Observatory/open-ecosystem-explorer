@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+### Contributor documentation (2026-11-14)
+
+- `README.md` now lists prerequisites (Node 22), scripts, the repository layout, the contribution entry points and the documentation. `CONTRIBUTING.md` is the real workflow (add an entity, the validate and layout check loop, commit conventions) instead of a placeholder. `prompts/add-entity.md` matches the current rules (both languages required, `related-to` cap 5, principles are concepts, regenerate the layout). `.nvmrc` and `engines.node >=22` added.
+
 ### Clean-up after the SvelteKit migration (2026-11-14)
 
 - Removed the unused Mermaid generators (`src/lib/mermaid/`), the diagram description helper (`src/lib/a11y/`), the unused subtype-label helper and their tests (the invariants test keeps everything not about diagrams).
