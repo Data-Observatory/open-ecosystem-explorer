@@ -82,8 +82,8 @@ Cytoscape, no layout library, no new dependency.
 ## Open work
 
 1. **Infra, deploy and domain** (CDK, DNS): live at `oee.dataobservatory.net` since 2026-11-14
-   (`infra/`). Deploys are by hand until the deploy workflow is enabled (`infra/README.md`); build
-   with `SITE_URL=https://oee.dataobservatory.net`.
+   (`infra/`). Every green change on `main` is deployed by the deploy workflow (`infra/README.md`); a
+   by-hand deploy is the fallback and builds with `SITE_URL=https://oee.dataobservatory.net`.
 2. **Formatting of older TypeScript.** `src/lib/**` (except newer files), `scripts/`, `tests/unit`
    and `tests/fixtures` keep their 2-space style and are excluded from Prettier and ESLint. Reformat
    in one commit, then remove the exclusions.

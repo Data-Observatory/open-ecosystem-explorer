@@ -1,11 +1,14 @@
 name: Deploy
 
-# Inert until the repository variable DEPLOY_ENABLED is set to 'true'. The owner setup is in
-# infra/README.md ("Deploy workflow: owner setup"). No account id or ARN is stored here:
+# Runs after every green CI run on main, and only while the repository variable DEPLOY_ENABLED is
+# 'true' (set it to anything else to pause deploys). The setup is in infra/README.md
+# ("Deploy workflow: setup"). No account id or ARN is stored here:
 # the role comes from a secret, the region, the domain and the logging options from variables.
 # Two jobs: "diff" runs the checks, builds the site and writes the cdk diff to the job summary
-# (environment production-diff, no reviewers); "deploy" waits for the approval of the environment
-# production, so the approver reads the diff first, and deploys the build artifact made by "diff".
+# (environment production-diff); "deploy" (environment production) publishes the build artifact
+# made by "diff". Neither environment has required reviewers: main is protected (a pull request
+# and the CI checks are needed), so a deploy follows a merged, green pull request. Both
+# environments accept runs from main only.
 # Third-party actions are pinned by commit SHA (checked against each action's repository):
 #   actions/checkout v4.3.1, actions/setup-node v4.4.0, actions/upload-artifact v4.6.2,
 #   actions/download-artifact v4.3.0, aws-actions/configure-aws-credentials v6.3.0
