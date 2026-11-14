@@ -1,5 +1,5 @@
 // The open locale list — the single declaration referenced by the Zod locale
-// enum, Astro's i18n routing config, the language switcher, hreflang
+// enum, the i18n routing, the language switcher, hreflang
 // alternates, and the sitemap (specs.md §5.7, rule A9). Adding a language is
 // one more entry here plus prose files — never a schema change.
 export const locales = [

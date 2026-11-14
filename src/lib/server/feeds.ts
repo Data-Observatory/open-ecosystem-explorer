@@ -1,7 +1,7 @@
 /**
  * Locale-free exports and machine-readable files: data dumps, per-entity JSON, sitemap,
- * per-locale RSS feed and search index. Same output as the Astro endpoints, except that URLs
- * become absolute when SITE_URL is set at build time.
+ * per-locale RSS feed and search index. URLs become absolute when SITE_URL is set at build
+ * time.
  */
 import { getSiteIndex } from '../../content/site-index.js';
 import {

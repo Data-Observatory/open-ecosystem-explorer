@@ -2,7 +2,7 @@
  * The Paraglide `urlPatterns` option for a SvelteKit `paths.base` (`''` or e.g. `'/ecosystem'`).
  *
  * Copied from the sister sites (Data-Observatory/fairness). Every locale is prefixed,
- * including the base one (es): `/es/...` and `/en/...`, the URL shape the Astro site used.
+ * including the base one (es): `/es/...` and `/en/...`, the URL shape of the site since its first release.
  * Unlike the sisters, routes here carry an explicit `[locale=locale]` segment instead of a
  * `reroute` hook, so Paraglide only *reads* the locale from the URL (see hooks.server.ts).
  * A path without a locale prefix (the root gateway, data exports, sitemap) resolves to the

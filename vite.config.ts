@@ -13,7 +13,7 @@ const LOCALES = ['es', 'en'] as const;
 const base = (process.env.BASE_PATH ?? '') as '' | `/${string}`;
 
 // Public origin used for absolute URLs (sitemap, feeds, canonical links). Undecided domain:
-// configurable, never hardcoded. Empty means "emit root-relative URLs" (the Astro behaviour).
+// configurable, never hardcoded. Empty means "emit root-relative URLs".
 const siteUrl = (process.env.SITE_URL ?? '').replace(/\/+$/, '');
 
 // One prerender entry per entity and per view, for every locale: explicit, not
@@ -79,7 +79,7 @@ export default defineConfig({
 		})
 	],
 	server: {
-		// Reach the dev server through a Tailscale hostname, as the Astro config allowed.
+		// Reach the dev server through a Tailscale hostname.
 		allowedHosts: ['.ts.net']
 	}
 });

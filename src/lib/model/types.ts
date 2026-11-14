@@ -1,4 +1,4 @@
-// Pure content-model types (specs.md §5.1-5.6). No Astro/DOM/fs imports (rule A1).
+// Pure content-model types (specs.md §5.1-5.6). No framework/DOM/fs imports (rule A1).
 
 import type { LocaleCode } from '../../i18n/locales.js';
 

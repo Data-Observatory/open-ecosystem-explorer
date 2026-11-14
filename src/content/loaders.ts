@@ -1,9 +1,8 @@
-// Plain filesystem YAML loader for the content collections (replaces the
-// Astro content-layer loader of the pre-SvelteKit site; no `astro:content`).
+// Plain filesystem YAML loader for the content collections.
 // Runs only at build time, inside server `load` functions and prerendered
 // endpoints, so nothing here ships to the browser.
 //
-// Same two transforms the Astro loader applied before schema validation:
+// Two transforms applied before schema validation:
 //   1. Entity and view facts files don't repeat `id` in the file: it's
 //      derived from the filename (I1) and injected here.
 //   2. `normalizeDates` is defensive insurance against a parser change that

@@ -1,7 +1,7 @@
 // Builds the locale-free export payload (specs.md §7 `/data/*` row): "carrying
 // all locales' prose in a prose: { es: …, en: … } map. Stable, documented
 // shape; per-entity JSON includes derived inverses." PURE over an
-// already-built GraphIndex (rule A1) — the Astro endpoint files do the
+// already-built GraphIndex (rule A1) — the endpoint files do the
 // serialization (JSON/CSV), this module only shapes the data.
 import type { Entity, EntityId, GraphIndex } from '../model/types.js';
 import { locales } from '../../i18n/locales.js';

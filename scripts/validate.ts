@@ -1,7 +1,7 @@
 #!/usr/bin/env tsx
 // Standalone content validator (specs.md §8.4a). Runs the Zod schema and the
 // I1-I31 graph invariants against every entity/i18n/view/vocab file, without
-// booting Astro, so it stays fast enough for an LLM agent to call after every
+// booting the site, so it stays fast enough for an LLM agent to call after every
 // edit.
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';

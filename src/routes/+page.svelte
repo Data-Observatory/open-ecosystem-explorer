@@ -4,7 +4,7 @@
 	import { localeHref } from '$lib/paths';
 	import * as m from '$lib/paraglide/messages';
 
-	// The language gateway, as on the Astro site: `/` is never a content page. A 0-second meta
+	// The language gateway: `/` is never a content page. A 0-second meta
 	// refresh sends every visitor to the default locale (es); the links cover browsers that
 	// ignore the refresh. No JavaScript needed.
 	const target = pagePath(base, DEFAULT_LOCALE);
