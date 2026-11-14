@@ -11,7 +11,13 @@ const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	{
-		ignores: ['src/lib/paraglide/**', 'src/generated/**']
+		ignores: [
+			'src/lib/paraglide/**',
+			'src/generated/**',
+			// CloudFront Function source (a bare `handler`, not a module) and CDK synth output.
+			'infra/cloudfront-fn/**',
+			'infra/cdk.out/**'
+		]
 	},
 	js.configs.recommended,
 	ts.configs.recommended,

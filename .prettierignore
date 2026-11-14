@@ -22,3 +22,6 @@ bun.lockb
 /src/content/
 *.md
 /.vscode/
+
+# CDK synth output
+/infra/cdk.out
