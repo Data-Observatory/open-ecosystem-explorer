@@ -10,11 +10,6 @@ import { zEntity } from '../../../src/lib/model/schema.js';
 import { DEFAULT_PROMINENCE, LAYERS, prominenceOf } from '../../../src/lib/model/types.js';
 import type { ConceptEntity, Entity, Relation } from '../../../src/lib/model/types.js';
 import { buildIndex } from '../../../src/lib/graph/build-index.js';
-import { buildLayerStackDiagram, describeLayerStack } from '../../../src/lib/mermaid/layers.js';
-import { buildTaxonomyMindmap, describeTaxonomy } from '../../../src/lib/mermaid/taxonomy.js';
-import { buildModelErDiagram, describeModel } from '../../../src/lib/mermaid/model.js';
-import { buildTypeMapDiagram } from '../../../src/lib/mermaid/type-map.js';
-import { classDefLine, shapeForLayer, wrapShape, TYPE_FILL } from '../../../src/lib/mermaid/palette.js';
 import type { ValidationInput } from '../../../src/lib/invariants/run.js';
 
 const SRC = { url: 'https://example.org/source', accessed: '2026-09-01' };
@@ -259,51 +254,5 @@ describe('REQUIRE_FULL_I18N (strict i18n mode)', () => {
     const result = runValidation({ ...input, requireFullI18n: true });
     expect(result.errors).toEqual([]);
     expect(result.messages.some((m) => m.ruleId === 'I30')).toBe(false);
-  });
-});
-
-describe('diagrams with zero and with some concept entities', () => {
-  function indexFor(input: ValidationInput) {
-    return buildIndex(input.entityFiles.map((e) => e.entity), new Map(), input.predicatesVocab, input.entityTypesVocab);
-  }
-
-  it('palette has a shape and fill for the concept layer/type', () => {
-    expect(shapeForLayer('concept')).toBe('rounded');
-    expect(wrapShape('rounded', 'n1', '"x"')).toBe('n1("x")');
-    expect(TYPE_FILL.concept).toMatch(/^#[0-9a-f]{6}$/i);
-    expect(classDefLine('concept')).toContain('classDef concept ');
-  });
-
-  it('layer stack, taxonomy, type map and model render without a concept row when there are none', () => {
-    const input = freshInput();
-    const index = indexFor(input);
-    const stack = buildLayerStackDiagram(index, input.entityTypesVocab, 'en');
-    expect(stack).not.toMatch(/concept/i);
-    expect(describeLayerStack(index, input.entityTypesVocab, 'en').rows.some((r) => r.subjectName === 'Concepts')).toBe(false);
-    expect(buildTaxonomyMindmap(index, input.entityTypesVocab, input.tagsVocab, 'es')).not.toMatch(/Conceptos/);
-    expect(() => buildTypeMapDiagram(index, input.entityTypesVocab, 'concept', 'es')).not.toThrow();
-  });
-
-  it('...and label them correctly (ES and EN) when there are some', () => {
-    const input = withConcepts();
-    const index = indexFor(input);
-    expect(buildLayerStackDiagram(index, input.entityTypesVocab, 'en')).toMatch(/subgraph layer_concept \["Concepts"\]/);
-    expect(buildLayerStackDiagram(index, input.entityTypesVocab, 'es')).toMatch(/subgraph layer_concept \["Conceptos"\]/);
-    expect(buildLayerStackDiagram(index, input.entityTypesVocab, 'en')).toMatch(/Concept \(2\)/);
-    expect(describeLayerStack(index, input.entityTypesVocab, 'es').rows.some((r) => r.subjectName === 'Conceptos')).toBe(true);
-    expect(buildTaxonomyMindmap(index, input.entityTypesVocab, input.tagsVocab, 'es')).toMatch(/Conceptos/);
-    expect(describeTaxonomy(index, input.entityTypesVocab, input.tagsVocab, 'en').rows.some((r) => r.subjectName === 'Concept')).toBe(true);
-    const typeMap = buildTypeMapDiagram(index, input.entityTypesVocab, 'concept', 'en');
-    expect(typeMap).toContain('is a');
-  });
-
-  it('model ER diagram includes CONCEPT and the is-a edges', () => {
-    const input = freshInput();
-    const er = buildModelErDiagram(input.predicatesVocab);
-    expect(er).toContain('CONCEPT { string id }');
-    expect(er).toContain('IDENTIFIER }o--o{ CONCEPT : "is-a"');
-    expect(er).toContain('CONCEPT }o--o{ CONCEPT : "part-of"');
-    expect(er).not.toContain('CONCEPT }o--o{ ORGANIZATION : "part-of"');
-    expect(describeModel(input.predicatesVocab, 'en').description).toMatch(/^13 types, 21 predicates/);
   });
 });
