@@ -202,9 +202,9 @@ To do: add a Ministerio de Hacienda organisation if it is in scope; reword the S
 
 Labels: `deferred`
 
-Decided 2026-11-12 (`specs.md` section 12, Q12, status pending): the critical views `vertical-integration`, `cost-of-exit`, `open-content-closed-governance` and `index-coverage` stay in the repository as data and prose but are out of the newcomer path (no primary navigation entry, no home-page prompt, not linked from the default map). To be revisited once the concept layer and glossary exist, as an expert-mode section.
+Decided 2026-11-12 (`specs.md` section 12, Q12, partly open): the critical views `vertical-integration`, `cost-of-exit`, `open-content-closed-governance` and `index-coverage` stay out of the newcomer path: they are not linked from the home page or the map, only from the Preguntas page (`/{loc}/views/`), under the guided stories. To be revisited once the concept layer and glossary have been in use, as an expert-mode section of the map.
 
-To do: decide where the section lives in the new map, add the navigation entry and an expert-mode link, and re-check the views' queries against the current graph.
+To do: decide whether the views also get an expert-mode link on the map, and re-check the views' queries against the current graph.
 
 ---
 

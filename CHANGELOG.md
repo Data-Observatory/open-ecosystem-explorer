@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### Spec brought in line with the code (2026-11-14)
+
+- `specs.md` checked section by section against the code and content: status and goals, the data model (types, predicate fields, `GraphIndex`), the invariants table (I1–I35), strict i18n (now on), the route table (the redirect pages are gone), deployment (nothing is deployed; the pipeline is a proposal), testing, open questions (Q7 hosting is open, Q12 as built), Appendix A (examples, predicates, vocabularies) and Appendix B (now the real `figshare` files and the real view). The seed-set list in A.1b is replaced by a short note, since the entity files carry the record.
+- Code and content removed because nothing used them: the view `render` field, the predicate `style` field, the unused subtype helper, the build-date define, the redirect pages for the first site layout (`/entities`, `/map2`, `/contribute` and the like) with their strings and tests, and two stale comments.
+- I31 now fires: a facts file with a `body`, `summary` or `description` key is an error. The rule existed but never saw the raw file, so it never fired.
+- `npm run test:coverage` enforces the 100% coverage of `src/lib/graph` and `src/lib/invariants` that the spec promises; four uncovered branches got tests or lost a dead fallback.
+- I26's description no longer claims a UI badge that does not exist (the entity page shows the date). The spec no longer claims a per-entity "suggest a correction" link or a repository link in the footer; both need a public repository.
+
 ### Contributor documentation (2026-11-14)
 
 - `README.md` now lists prerequisites (Node 22), scripts, the repository layout, the contribution entry points and the documentation. `CONTRIBUTING.md` is the real workflow (add an entity, the validate and layout check loop, commit conventions) instead of a placeholder. `prompts/add-entity.md` matches the current rules (both languages required, `related-to` cap 5, principles are concepts, regenerate the layout). `.nvmrc` and `engines.node >=22` added.
