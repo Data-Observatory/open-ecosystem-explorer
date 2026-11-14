@@ -2,7 +2,7 @@
 // deterministic (specs.md A3): no Math.random, no Date, fixed iteration
 // order (ids sorted), integer output. Same nodes + edges => same positions,
 // so the committed `src/generated/graph-layout.json` only changes when the
-// graph does, and the browser never runs a simulation (Cytoscape `preset`).
+// graph does, and the browser never runs a simulation.
 //
 // Two stages:
 //  1. The anchors (the default view) are placed on their own by stress

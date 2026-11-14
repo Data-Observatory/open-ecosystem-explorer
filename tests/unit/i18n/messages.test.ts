@@ -7,7 +7,7 @@ import inlang from '../../../project.inlang/settings.json' with { type: 'json' }
 import { locales, defaultLocale } from '../../../src/i18n/locales.js';
 
 // UI chrome strings live in messages/{es,en}.json (Paraglide). Entity, view and story prose stays
-// in the YAML content. This replaces the Astro-era src/i18n/ui.test.ts locale-completeness check.
+// in the YAML content. It is the locale-completeness check for the UI strings.
 
 const ROOT = join(import.meta.dirname, '../../..');
 const keysOf = (messages: Record<string, unknown>) =>

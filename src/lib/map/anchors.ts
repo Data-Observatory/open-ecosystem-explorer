@@ -117,7 +117,7 @@ export function nodeFamilyOf(type: EntityType): NodeFamily {
 }
 
 export interface NodeFamilyStyle {
-	/** Cytoscape node shape — repeats the colour coding (WCAG 1.4.1). */
+	/** Node shape (names follow the old Cytoscape vocabulary; NodeGlyph draws them) — repeats the colour coding (WCAG 1.4.1). */
 	shape: 'round-rectangle' | 'diamond' | 'ellipse' | 'hexagon' | 'rectangle';
 	/** Fill on the light / dark canvas; each >= 3:1 against its background. */
 	light: string;
