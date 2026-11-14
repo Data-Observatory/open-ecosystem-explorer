@@ -17,6 +17,8 @@
 	import { consentState, initConsent } from '$lib/consent/state.svelte';
 	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
 	import ConsentChange from '$lib/components/ConsentChange.svelte';
+	import ExternalLink from '$lib/components/ExternalLink.svelte';
+	import { NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
 
 	let { children, data } = $props();
 
@@ -181,6 +183,11 @@
 				<li>
 					<a href={`${href('about')}#contribute` as ResolvedPathname} class={linkClass}
 						>{m.footer_contribute()}</a
+					>
+				</li>
+				<li>
+					<ExternalLink href={NEW_ISSUE_CHOOSER_URL} class={linkClass} data-testid="footer-suggest"
+						>{m.footer_suggest()}</ExternalLink
 					>
 				</li>
 				<li>

@@ -2,6 +2,17 @@
 
 The content of this site (entities, relations, translations, stories) is plain YAML in `src/content/`, checked by a Zod schema and a set of graph invariants every time you run `npm run validate` and every time you build. A change is good when the validator passes and a person can tell from the diff that it is true, sourced and in scope.
 
+## Suggest a change without editing files
+
+Open an issue at https://github.com/Data-Observatory/open-ecosystem-explorer/issues/new/choose. There is a form to add an entry, to change an entry or a relation, to remove one, and one for the site itself. Every entry page has a "Suggest a change on GitHub" link that opens the change form with that entry filled in, and the footer links to the same page. The forms are in English and Spanish.
+
+- A maintainer reads the issue, checks the source, and makes the change as a pull request that closes the issue, or answers why not. If in doubt, the change is left out.
+- Give a source for what you propose: the organisation's own page or an authoritative register. A proposal without one may wait until one is found.
+- Issues are public. Do not include personal data.
+- Issues are labelled `add-entry`, `change-entry`, `remove-entry` and `site`.
+
+Everything below is for people who prefer to make the change themselves, in a pull request.
+
 ## Before you start
 
 You need Node 22 or newer and npm. Run `npm install` once. Run `npx playwright install chromium` only if you also want to run the browser tests.

@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: How entries are written / Cómo se escriben las entradas
+    url: https://github.com/Data-Observatory/open-ecosystem-explorer/blob/main/CONTRIBUTING.md
+    about: The curation rules in short, before you open an issue. / Las reglas de curaduría, antes de abrir una propuesta.

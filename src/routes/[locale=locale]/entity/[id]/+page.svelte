@@ -5,6 +5,7 @@
 	import MiniGraph from '$lib/explorer/MiniGraph.svelte';
 	import { pagePath } from '$lib/locale';
 	import { fileHref } from '$lib/paths';
+	import { changeEntryIssueUrl } from '$lib/repo';
 	import * as m from '$lib/paraglide/messages';
 
 	let { data } = $props();
@@ -216,4 +217,11 @@
 			</p>
 		</div>
 	</details>
+
+	<p class="mt-6 text-sm text-zinc-700" data-testid="entity-suggest">
+		{m.entity_suggest_prompt()}
+		<ExternalLink href={changeEntryIssueUrl(entity.id, entity.name)} class={linkClass}
+			>{m.entity_suggest_link()}</ExternalLink
+		>
+	</p>
 </article>
