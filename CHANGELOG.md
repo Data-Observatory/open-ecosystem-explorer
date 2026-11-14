@@ -4,10 +4,10 @@
 
 ### Proposals through GitHub issues (2026-11-14)
 
-- Four bilingual issue forms in `.github/ISSUE_TEMPLATE/`: add an entry, change an entry or a relation, remove one, and the site itself (labels `add-entry`, `change-entry`, `remove-entry`, `site`). Blank issues are off; the chooser links to `CONTRIBUTING.md`.
-- Every entry page ends with "Suggest a change on GitHub", which opens the change form with the entry id and name filled in (`src/lib/repo.ts`). The footer links to the form chooser, and the About page says in both languages that no file editing is needed. The links are plain external links: nothing is sent to GitHub until someone clicks.
+- Six bilingual issue forms in `.github/ISSUE_TEMPLATE/`, organised by what changes on the map: new entry (13 kinds of entry, source required), connection between two entries (add, change or remove; the 21 kinds of connection in plain words), description or facts of an entry (short description, longer text, name, a fact, the note for Chile and Latin America, translation, source, where it appears), removal of an entry, bug or accessibility problem, and idea or feature. Labels: `new-entry`, `connection`, `description`, `remove-entry`, `bug`, `idea`. Blank issues are off.
+- Every entry page ends with two links, to the description form and to the connection form, with the entry id and name filled in (`src/lib/repo.ts`). The footer links to the form chooser. The About page says in both languages that no file editing is needed and gives `contacto@dataobservatory.net` for people without a GitHub account; the forms and `CONTRIBUTING.md` say the same. The links are plain external links: nothing is sent to GitHub until someone clicks.
 - `CONTRIBUTING.md` and `README.md` describe the flow: a maintainer checks the source and makes the change as a pull request that closes the issue.
-- 10 new unit tests (forms, prefilled address) and 5 new end-to-end tests (footer, entry page, About, no request to GitHub on load). 390 unit and 155 end-to-end tests pass.
+- Tests check that the connection form offers every predicate and the new entry form every entry type of the vocabularies in both languages, that every form carries the email and the "public" notice, and that the prefilled address names a field of its form. 155 end-to-end tests pass.
 
 ### CI and deployment infrastructure (2026-11-14)
 

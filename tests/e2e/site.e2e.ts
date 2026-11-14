@@ -175,9 +175,21 @@ test.describe('about and data', () => {
 test.describe('suggest a change (GitHub issues)', () => {
 	const repo = 'https://github.com/Data-Observatory/open-ecosystem-explorer';
 
-	for (const [locale, footer, entityLink] of [
-		['es', 'Sugerir un cambio', 'Sugerir un cambio en GitHub'],
-		['en', 'Suggest a change', 'Suggest a change on GitHub']
+	for (const [locale, footer, description, connection, email] of [
+		[
+			'es',
+			'Sugerir un cambio',
+			'Sugerir un cambio en la descripción o los datos',
+			'Sugerir un cambio en sus conexiones',
+			'¿No tienes cuenta de GitHub?'
+		],
+		[
+			'en',
+			'Suggest a change',
+			'Suggest a change to the description or facts',
+			'Suggest a change to its connections',
+			'No GitHub account?'
+		]
 	] as const) {
 		test(`/${locale}/: the footer and the entry page link to the issue forms`, async ({ page }) => {
 			await page.goto(`/${locale}/entity/doi/`);
@@ -187,23 +199,39 @@ test.describe('suggest a change (GitHub issues)', () => {
 			await expect(foot).toHaveAttribute('target', '_blank');
 			await expect(foot).toHaveAttribute('rel', /noopener/);
 
-			const link = page.getByTestId('entity-suggest').getByRole('link');
-			await expect(link).toContainText(entityLink);
-			const url = new URL((await link.getAttribute('href')) ?? '');
-			expect(url.origin + url.pathname).toBe(`${repo}/issues/new`);
-			expect(url.searchParams.get('template')).toBe('change-entry.yml');
-			expect(url.searchParams.get('entity')).toBe('doi');
-			expect(url.searchParams.get('title')).toMatch(/^\[Change\] .*DOI/);
+			for (const [testId, label, template, field, prefix] of [
+				['entity-suggest-description', description, 'description.yml', 'entity', '[Description]'],
+				['entity-suggest-connection', connection, 'connection.yml', 'entity_a', '[Connection]']
+			] as const) {
+				const link = page.getByTestId(testId);
+				await expect(link).toContainText(label);
+				const url = new URL((await link.getAttribute('href')) ?? '');
+				expect(url.origin + url.pathname).toBe(`${repo}/issues/new`);
+				expect(url.searchParams.get('template')).toBe(template);
+				expect(url.searchParams.get(field)).toBe('doi');
+				expect(url.searchParams.get('title')?.startsWith(`${prefix} `)).toBe(true);
+				expect(url.searchParams.get('title')).toContain('DOI');
+			}
 		});
 
-		test(`/${locale}/about/: the contribute section offers the issue forms`, async ({ page }) => {
+		test(`/${locale}/about/: the contribute section offers the issue forms and the email`, async ({
+			page
+		}) => {
 			await page.goto(`/${locale}/about/`);
-			const link = page.getByTestId('about-issues').getByRole('link');
-			await expect(link).toHaveAttribute('href', `${repo}/issues/new/choose`);
+			await expect(page.getByTestId('about-issues').getByRole('link')).toHaveAttribute(
+				'href',
+				`${repo}/issues/new/choose`
+			);
+			const mail = page.getByTestId('about-email');
+			await expect(mail).toContainText(email);
+			await expect(mail.getByRole('link')).toHaveAttribute(
+				'href',
+				'mailto:contacto@dataobservatory.net'
+			);
 		});
 	}
 
-	test('following the link sends nothing to GitHub until it is clicked', async ({ page }) => {
+	test('opening a page sends nothing to GitHub', async ({ page }) => {
 		const requests: string[] = [];
 		page.on('request', (r) => requests.push(r.url()));
 		await page.goto('/en/entity/doi/');
