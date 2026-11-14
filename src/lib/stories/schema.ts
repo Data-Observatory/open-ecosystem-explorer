@@ -18,59 +18,62 @@ export const STORY_MIN_STEPS = 3;
 export const STORY_MAX_STEPS = 12;
 
 const storyId = z
-  .string()
-  .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id must be lowercase kebab-case')
-  .min(2)
-  .max(64);
+	.string()
+	.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'id must be lowercase kebab-case')
+	.min(2)
+	.max(64);
 const entityRef = storyId;
 
 /** One non-empty string per configured locale, and nothing else (ES/EN parity by construction). */
 function localeText(max?: number) {
-  const text = max ? z.string().trim().min(1).max(max) : z.string().trim().min(1);
-  const shape = Object.fromEntries(locales.map((l) => [l.code, text])) as Record<LocaleCode, typeof text>;
-  return z.object(shape).strict();
+	const text = max ? z.string().trim().min(1).max(max) : z.string().trim().min(1);
+	const shape = Object.fromEntries(locales.map((l) => [l.code, text])) as Record<
+		LocaleCode,
+		typeof text
+	>;
+	return z.object(shape).strict();
 }
 
 export const zStoryEdgeRef = z
-  .object({
-    source: entityRef,
-    predicate: zPredicateId,
-    target: entityRef,
-  })
-  .strict();
+	.object({
+		source: entityRef,
+		predicate: zPredicateId,
+		target: entityRef
+	})
+	.strict();
 
 export const zStoryStep = z
-  .object({
-    /** The entity the camera centres on in this step. */
-    focus: entityRef,
-    /** Further entities that appear in this step (they stay visible afterwards). */
-    reveal: z.array(entityRef).default([]),
-    /** Edges to highlight; each must exist in the graph. */
-    edges: z.array(zStoryEdgeRef).optional(),
-    /** Caption, at most STORY_STEP_MAX_WORDS words per locale (checked in check.ts). */
-    text: localeText(),
-  })
-  .strict();
+	.object({
+		/** The entity the camera centres on in this step. */
+		focus: entityRef,
+		/** Further entities that appear in this step (they stay visible afterwards). */
+		reveal: z.array(entityRef).default([]),
+		/** Edges to highlight; each must exist in the graph. */
+		edges: z.array(zStoryEdgeRef).optional(),
+		/** Caption, at most STORY_STEP_MAX_WORDS words per locale (checked in check.ts). */
+		text: localeText()
+	})
+	.strict();
 
 export const zStory = z
-  .object({
-    id: storyId,
-    title: localeText(120),
-    /** The chip text: the question the story answers. */
-    question: localeText(STORY_QUESTION_MAX_CHARS),
-    /** Optional map theme (src/lib/map/anchors.ts MAP_THEMES) the story belongs to. */
-    theme: z.string().optional(),
-    steps: z.array(zStoryStep).min(STORY_MIN_STEPS).max(STORY_MAX_STEPS),
-  })
-  .strict();
+	.object({
+		id: storyId,
+		title: localeText(120),
+		/** The chip text: the question the story answers. */
+		question: localeText(STORY_QUESTION_MAX_CHARS),
+		/** Optional map theme (src/lib/map/anchors.ts MAP_THEMES) the story belongs to. */
+		theme: z.string().optional(),
+		steps: z.array(zStoryStep).min(STORY_MIN_STEPS).max(STORY_MAX_STEPS)
+	})
+	.strict();
 
 export type StoryEdgeRef = z.infer<typeof zStoryEdgeRef>;
 export type StoryStep = z.infer<typeof zStoryStep>;
 export type Story = z.infer<typeof zStory>;
 
 export interface StoryFileEntry {
-  /** Filename stem; must equal `story.id`. */
-  id: string;
-  file: string;
-  story: Story;
+	/** Filename stem; must equal `story.id`. */
+	id: string;
+	file: string;
+	story: Story;
 }

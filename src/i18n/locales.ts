@@ -3,8 +3,8 @@
 // alternates, and the sitemap (specs.md §5.7, rule A9). Adding a language is
 // one more entry here plus prose files — never a schema change.
 export const locales = [
-  { code: 'es', label: 'Español', dir: 'ltr', default: true },
-  { code: 'en', label: 'English', dir: 'ltr' },
+	{ code: 'es', label: 'Español', dir: 'ltr', default: true },
+	{ code: 'en', label: 'English', dir: 'ltr' }
 ] as const;
 
 export type LocaleCode = (typeof locales)[number]['code'];

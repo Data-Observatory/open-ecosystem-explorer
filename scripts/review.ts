@@ -10,33 +10,33 @@ import { locales } from '../src/i18n/locales.js';
 const ROOT = join(import.meta.dirname, '..');
 
 function section(title: string, path: string): void {
-  const bar = '─'.repeat(Math.max(8, title.length));
-  console.log(`\n┌─ ${title} ${bar}`);
-  if (!existsSync(path)) {
-    console.log(`  (missing: ${path.replace(ROOT + '/', '')})`);
-    return;
-  }
-  console.log(readFileSync(path, 'utf-8').trimEnd());
+	const bar = '─'.repeat(Math.max(8, title.length));
+	console.log(`\n┌─ ${title} ${bar}`);
+	if (!existsSync(path)) {
+		console.log(`  (missing: ${path.replace(ROOT + '/', '')})`);
+		return;
+	}
+	console.log(readFileSync(path, 'utf-8').trimEnd());
 }
 
 function main(): void {
-  const id = process.argv[2];
-  if (!id) {
-    console.error('Usage: npm run review -- <entity-id>');
-    process.exit(1);
-  }
+	const id = process.argv[2];
+	if (!id) {
+		console.error('Usage: npm run review -- <entity-id>');
+		process.exit(1);
+	}
 
-  const entityPath = join(ROOT, 'src/content/entities', `${id}.yaml`);
-  if (!existsSync(entityPath)) {
-    console.error(`No entity file at src/content/entities/${id}.yaml`);
-    process.exit(1);
-  }
+	const entityPath = join(ROOT, 'src/content/entities', `${id}.yaml`);
+	if (!existsSync(entityPath)) {
+		console.error(`No entity file at src/content/entities/${id}.yaml`);
+		process.exit(1);
+	}
 
-  section(`entities/${id}.yaml`, entityPath);
-  for (const { code } of locales) {
-    section(`i18n/${code}/${id}.yaml`, join(ROOT, 'src/content/i18n', code, `${id}.yaml`));
-  }
-  console.log();
+	section(`entities/${id}.yaml`, entityPath);
+	for (const { code } of locales) {
+		section(`i18n/${code}/${id}.yaml`, join(ROOT, 'src/content/i18n', code, `${id}.yaml`));
+	}
+	console.log();
 }
 
 main();

@@ -89,7 +89,9 @@ describe('ring placement', () => {
 		const slots = ringSlots(FULL_RING_MAX, 190);
 		for (let i = 0; i < slots.length; i++)
 			for (let j = i + 1; j < slots.length; j++)
-				expect(Math.hypot(slots[i]!.x - slots[j]!.x, slots[i]!.y - slots[j]!.y)).toBeGreaterThan(100);
+				expect(Math.hypot(slots[i]!.x - slots[j]!.x, slots[i]!.y - slots[j]!.y)).toBeGreaterThan(
+					100
+				);
 	});
 
 	it('puts labels outside the ring: sideways on the sides, above and below at the poles', () => {
@@ -113,7 +115,8 @@ describe('ring placement', () => {
 				.filter((s) => s.side === side)
 				.map((s) => s.y)
 				.sort((a, b) => a - b);
-			for (let i = 1; i < ys.length; i++) expect(ys[i]! - ys[i - 1]!).toBeGreaterThanOrEqual(38 - 1e-6);
+			for (let i = 1; i < ys.length; i++)
+				expect(ys[i]! - ys[i - 1]!).toBeGreaterThanOrEqual(38 - 1e-6);
 		}
 		const radii = slots.map((s) => Math.hypot(s.x, s.y));
 		expect(Math.max(...radii) - Math.min(...radii)).toBeLessThan(1e-6);

@@ -14,7 +14,7 @@
 export const REQUIRE_FULL_I18N = true;
 
 export function resolveRequireFullI18n(env: Record<string, string | undefined> = {}): boolean {
-  const raw = env.REQUIRE_FULL_I18N?.trim().toLowerCase();
-  if (raw === undefined || raw === '') return REQUIRE_FULL_I18N;
-  return raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on';
+	const raw = env.REQUIRE_FULL_I18N?.trim().toLowerCase();
+	if (raw === undefined || raw === '') return REQUIRE_FULL_I18N;
+	return raw === '1' || raw === 'true' || raw === 'yes' || raw === 'on';
 }

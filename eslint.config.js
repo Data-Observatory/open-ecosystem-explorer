@@ -11,16 +11,7 @@ const gitignorePath = path.resolve(import.meta.dirname, '.gitignore');
 export default defineConfig(
 	includeIgnoreFile(gitignorePath),
 	{
-		ignores: [
-			// Pre-migration TypeScript, linted after the post-merge reformat (see MIGRATION.md).
-			'src/lib/{a11y,export,graph,i18n,invariants,map,markdown,mermaid,model,stories,views}/**',
-			'src/i18n/**',
-			'scripts/**',
-			'tests/unit/**',
-			'tests/fixtures/**',
-			'src/lib/paraglide/**',
-			'src/generated/**'
-		]
+		ignores: ['src/lib/paraglide/**', 'src/generated/**']
 	},
 	js.configs.recommended,
 	ts.configs.recommended,

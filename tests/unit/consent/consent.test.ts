@@ -201,26 +201,26 @@ describe('writeConsent', () => {
 });
 
 describe('date helpers', () => {
-  it('localIsoDate writes the local calendar date', () => {
-    expect(localIsoDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05');
-  });
+	it('localIsoDate writes the local calendar date', () => {
+		expect(localIsoDate(new Date(2026, 0, 5, 23, 59))).toBe('2026-01-05');
+	});
 
-  it('isIsoDate accepts real dates only', () => {
-    expect(isIsoDate('2024-02-29')).toBe(true);
-    expect(isIsoDate('2026-02-29')).toBe(false);
-    expect(isIsoDate('2026-13-01')).toBe(false);
-    expect(isIsoDate('2026-1-1')).toBe(false);
-    expect(isIsoDate('')).toBe(false);
-  });
+	it('isIsoDate accepts real dates only', () => {
+		expect(isIsoDate('2024-02-29')).toBe(true);
+		expect(isIsoDate('2026-02-29')).toBe(false);
+		expect(isIsoDate('2026-13-01')).toBe(false);
+		expect(isIsoDate('2026-1-1')).toBe(false);
+		expect(isIsoDate('')).toBe(false);
+	});
 
-  it('daysSince counts calendar days, across months and years', () => {
-    expect(daysSince('2026-11-02', TODAY)).toBe(0);
-    expect(daysSince('2026-11-01', TODAY)).toBe(1);
-    expect(daysSince('2025-11-02', TODAY)).toBe(365);
-    expect(daysSince('2026-11-03', TODAY)).toBe(-1);
-  });
+	it('daysSince counts calendar days, across months and years', () => {
+		expect(daysSince('2026-11-02', TODAY)).toBe(0);
+		expect(daysSince('2026-11-01', TODAY)).toBe(1);
+		expect(daysSince('2025-11-02', TODAY)).toBe(365);
+		expect(daysSince('2026-11-03', TODAY)).toBe(-1);
+	});
 
-  it('keeps 365 days as the default maximum age', () => {
-    expect(CONSENT_MAX_AGE_DAYS).toBe(365);
-  });
+	it('keeps 365 days as the default maximum age', () => {
+		expect(CONSENT_MAX_AGE_DAYS).toBe(365);
+	});
 });

@@ -1,7 +1,14 @@
 import { describe, expect, it } from 'vitest';
 import { composition } from '../../../src/lib/explorer/compose.js';
 import { project } from '../../../src/lib/explorer/geometry.js';
-import { chooseRing, groupSentences, indexGraph, searchScore, sentencesOf, fold } from '../../../src/lib/explorer/graph.js';
+import {
+	chooseRing,
+	groupSentences,
+	indexGraph,
+	searchScore,
+	sentencesOf,
+	fold
+} from '../../../src/lib/explorer/graph.js';
 import { FAMILY_COLOR } from '../../../src/lib/explorer/palette.js';
 import {
 	buildScene,
@@ -13,7 +20,11 @@ import {
 } from '../../../src/lib/explorer/scene.js';
 import { clampStep, layoutStory, storyFrame } from '../../../src/lib/explorer/story.js';
 import type { Viewport } from '../../../src/lib/explorer/types.js';
-import { CENTRE_ANCHOR_ID, DEFAULT_ANCHOR_IDS, NODE_FAMILIES } from '../../../src/lib/map/anchors.js';
+import {
+	CENTRE_ANCHOR_ID,
+	DEFAULT_ANCHOR_IDS,
+	NODE_FAMILIES
+} from '../../../src/lib/map/anchors.js';
 import { hexToRgb } from '../../../src/lib/map/color-distance.js';
 import { mapGraph, miniGraph } from '../../../src/lib/server/map.js';
 
@@ -69,7 +80,9 @@ describe('composition (starting view)', () => {
 			const min = portrait ? 40 : 90;
 			for (let i = 0; i < nodes.length; i++)
 				for (let j = i + 1; j < nodes.length; j++)
-					expect(Math.hypot(nodes[i]!.x - nodes[j]!.x, nodes[i]!.y - nodes[j]!.y)).toBeGreaterThan(min);
+					expect(Math.hypot(nodes[i]!.x - nodes[j]!.x, nodes[i]!.y - nodes[j]!.y)).toBeGreaterThan(
+						min
+					);
 		});
 	}
 
@@ -113,7 +126,9 @@ describe('focus scene (ring)', () => {
 		expect(groups[0]?.group).toBe('kind');
 		// `related-to` is its own last group, not part of "what it is".
 		expect(groups.at(-1)).toMatchObject({ group: 'related', label: 'Relacionado con' });
-		expect(groups[0]?.sentences.every((s) => s.verb !== groups.at(-1)?.sentences[0]?.verb)).toBe(true);
+		expect(groups[0]?.sentences.every((s) => s.verb !== groups.at(-1)?.sentences[0]?.verb)).toBe(
+			true
+		);
 	});
 
 	it('puts the neighbours at one radius around the focus and the focus clear of the card', () => {
@@ -133,7 +148,9 @@ describe('focus scene (ring)', () => {
 	});
 
 	it('zooms out, never in, when an expanded ring outgrows the free area', () => {
-		const scene = buildScene(input({ selected: 'research-repository', expanded: true, vp: withCard }));
+		const scene = buildScene(
+			input({ selected: 'research-repository', expanded: true, vp: withCard })
+		);
 		expect(scene.hidden).toBe(0);
 		expect(scene.cam.k).toBeLessThanOrEqual(1);
 		expect(scene.nodes.length).toBe(index.neighbours.get('research-repository')!.length + 1);
@@ -171,10 +188,17 @@ describe('stories', () => {
 	it('steps reveal cumulatively and highlight only the current edges', () => {
 		const story = graph.stories.find((s) => s.id === 'what-is-a-doi')!;
 		const first = storyFrame(story, 0);
-		expect(first).toMatchObject({ focus: 'doi', visible: ['doi'], currentPairs: [], pastPairs: [] });
+		expect(first).toMatchObject({
+			focus: 'doi',
+			visible: ['doi'],
+			currentPairs: [],
+			pastPairs: []
+		});
 		const second = storyFrame(story, 1);
 		expect(second.focus).toBe('persistent-identifier');
-		expect(second.visible).toEqual(expect.arrayContaining(['doi', 'persistent-identifier', 'orcid', 'ror']));
+		expect(second.visible).toEqual(
+			expect.arrayContaining(['doi', 'persistent-identifier', 'orcid', 'ror'])
+		);
 		expect(second.currentPairs).toHaveLength(3);
 		const third = storyFrame(story, 2);
 		expect(third.pastPairs).toEqual(expect.arrayContaining(second.currentPairs));
@@ -218,7 +242,8 @@ describe('expert scene', () => {
 		expect(typed.nodes.every((n) => index.byId.get(n.id)!.type === 'identifier')).toBe(true);
 		const behind = buildScene(input({ expert: true, family: 'behind' }));
 		expect(behind.edges.length).toBe(
-			new Set(graph.edges.filter((e) => e.f === 'behind').map((e) => [e.s, e.t].sort().join('|'))).size
+			new Set(graph.edges.filter((e) => e.f === 'behind').map((e) => [e.s, e.t].sort().join('|')))
+				.size
 		);
 		expect(behind.nodes.length).toBeLessThan(graph.nodes.length);
 	});
@@ -228,7 +253,12 @@ describe('expert scene', () => {
 		expect(labelDegreeAt(2)).toBe(0);
 		const far = buildScene(input({ expert: true, userCam: { x: 0, y: 0, k: 0.4 } }));
 		const near = buildScene(input({ expert: true, userCam: { x: 0, y: 0, k: 1.6 } }));
-		expect(far.nodes.filter((n) => n.label).map((n) => n.id).sort()).toEqual([...DEFAULT_ANCHOR_IDS].sort());
+		expect(
+			far.nodes
+				.filter((n) => n.label)
+				.map((n) => n.id)
+				.sort()
+		).toEqual([...DEFAULT_ANCHOR_IDS].sort());
 		expect(near.nodes.every((n) => n.label)).toBe(true);
 	});
 
@@ -244,8 +274,16 @@ describe('expert scene', () => {
 });
 
 describe('transitions', () => {
-	const a = { cam: { x: 0, y: 0, k: 1 }, origin: { x: 0, y: 0 }, nodes: { stay: [0, 0, 1], leave: [50, 50, 1] } as Record<string, [number, number, number]> };
-	const b = { cam: { x: 100, y: 0, k: 0.25 }, origin: { x: 10, y: 10 }, nodes: { stay: [100, 0, 1], enter: [200, 200, 1] } as Record<string, [number, number, number]> };
+	const a = {
+		cam: { x: 0, y: 0, k: 1 },
+		origin: { x: 0, y: 0 },
+		nodes: { stay: [0, 0, 1], leave: [50, 50, 1] } as Record<string, [number, number, number]>
+	};
+	const b = {
+		cam: { x: 100, y: 0, k: 0.25 },
+		origin: { x: 10, y: 10 },
+		nodes: { stay: [100, 0, 1], enter: [200, 200, 1] } as Record<string, [number, number, number]>
+	};
 	const at = interpolateGeometry(a, b);
 
 	it('starts at a, ends exactly at b', () => {
@@ -282,7 +320,8 @@ describe('search and palette', () => {
 	it('family colours all reach 3:1 on white and are distinct', () => {
 		const luminance = (hex: string) => {
 			const { r, g, b } = hexToRgb(hex);
-			const lin = (v: number) => (v / 255 <= 0.03928 ? v / 255 / 12.92 : ((v / 255 + 0.055) / 1.055) ** 2.4);
+			const lin = (v: number) =>
+				v / 255 <= 0.03928 ? v / 255 / 12.92 : ((v / 255 + 0.055) / 1.055) ** 2.4;
 			return 0.2126 * lin(r) + 0.7152 * lin(g) + 0.0722 * lin(b);
 		};
 		for (const family of NODE_FAMILIES)
@@ -299,7 +338,8 @@ describe('mini-graph (entity page)', () => {
 		expect(mini.narrow.nodes.length).toBeLessThanOrEqual(7);
 		expect(mini.wide.edges).toHaveLength(mini.wide.nodes.length - 1);
 		const drawn = new Set(mini.nodes.map((n) => n.id));
-		for (const node of [...mini.wide.nodes, ...mini.narrow.nodes]) expect(drawn.has(node.id)).toBe(true);
+		for (const node of [...mini.wide.nodes, ...mini.narrow.nodes])
+			expect(drawn.has(node.id)).toBe(true);
 		expect(await miniGraph('no-such-entity', 'es')).toBeUndefined();
 	});
 });

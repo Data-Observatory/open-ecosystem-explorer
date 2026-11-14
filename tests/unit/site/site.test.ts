@@ -1,5 +1,10 @@
 import { describe, expect, it } from 'vitest';
-import { filterFromQuery, filterToQuery, fold, matchesFilter } from '../../../src/lib/glossary-filter.js';
+import {
+	filterFromQuery,
+	filterToQuery,
+	fold,
+	matchesFilter
+} from '../../../src/lib/glossary-filter.js';
 import { legacyPaths, legacyTarget } from '../../../src/lib/legacy-routes.js';
 import { pagePath, switchLocalePath, absoluteUrl } from '../../../src/lib/locale.js';
 import { buildUrlPatterns } from '../../../src/lib/url-patterns.js';
@@ -79,7 +84,9 @@ describe('page view models (real content)', () => {
 	it('glossary is sorted A-Z with letters and type counts', async () => {
 		const data = await glossary('es');
 		const names = data.entries.map((e) => e.name);
-		expect(names).toEqual([...names].sort(new Intl.Collator('es', { sensitivity: 'base', numeric: true }).compare));
+		expect(names).toEqual(
+			[...names].sort(new Intl.Collator('es', { sensitivity: 'base', numeric: true }).compare)
+		);
 		expect(data.types.reduce((sum, t) => sum + t.count, 0)).toBe(data.entries.length);
 		expect(indexLetter('Índice')).toBe('I');
 		expect(indexLetter('3D')).toBe('#');

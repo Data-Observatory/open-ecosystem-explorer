@@ -21,24 +21,4 @@ bun.lockb
 # Content and long-form docs keep their own formatting (YAML is validated by npm run validate).
 /src/content/
 *.md
-
-# Pre-migration TypeScript (2-space style). Reformatted in one separate commit after the
-# content/schema work on main is merged, to keep that merge free of whitespace conflicts
-# (see MIGRATION.md).
-/src/lib/a11y/
-/src/lib/export/
-/src/lib/graph/
-/src/lib/i18n/
-/src/lib/invariants/
-/src/lib/map/
-/src/lib/markdown/
-/src/lib/mermaid/
-/src/lib/model/
-/src/lib/views/
-/src/lib/stories/
 /.vscode/
-/src/i18n/
-/scripts/
-/tests/unit/
-/tests/fixtures/
-/vitest.config.ts
