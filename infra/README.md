@@ -10,7 +10,7 @@ This stack is copied from the sister site `fairness` (`Data-Observatory/fairness
 
 Deployed by hand on 2026-11-14 (`cdk deploy` from the repository root build, `SITE_URL=https://oee.dataobservatory.net`). The stack `OeeSiteStack` exists in the app account (us-east-1), the ACM certificate is issued, the validation CNAME and the alias A record exist in the DNS account, and the site is public at `https://oee.dataobservatory.net`. Checked after the deploy: `/` and the locale pages return 200, `/es/about` redirects to `/es/about/`, a made-up path returns the 404 page with status 404, `sitemap.xml` and `robots.txt` use the public origin, the security headers are present, and a browser run over six pages (map, entity, glossary, questions, about) showed no console error and no Content-Security-Policy violation (Google hosts blocked for the test).
 
-Not done yet: the deploy workflow (`DEPLOY_ENABLED` is not set, so later deploys are by hand, as in "Deploying by hand"), and the GitHub side of "Deploy workflow: owner setup" (OIDC role, environments, variables, secret, branch protection). The sections below keep the steps for a redeploy and for those.
+Since 2026-11-14 the repository is public, `main` is protected (a pull request and the checks `test` and `infra` are needed) and the deploy workflow deploys every green change on `main` (see "Deploy workflow: setup"). "Deploying by hand" stays as the fallback.
 
 ## Account topology (read this first)
 
@@ -145,26 +145,26 @@ cd infra && ./node_modules/.bin/cdk deploy --profile <app-profile> -c domainName
 
 The DNS records change accordingly, and so does the repository variable `SITE_DOMAIN` below.
 
-## Deploy workflow: owner setup
+## Deploy workflow: setup
 
-`.github/workflows/deploy.yml` runs the checks, builds the site, and runs `cdk diff` and `cdk deploy` through GitHub OIDC, in two jobs. It is inert until the owner completes the steps below: both jobs run only when the repository variable `DEPLOY_ENABLED` is `true`. It starts after a successful `CI` run on `main` (for the commit that passed, `workflow_run`) or by hand (`workflow_dispatch`, default ref), never on `push`. Runs do not overlap and a run in progress is not cancelled. No account id, ARN or profile name is stored in the repository.
+`.github/workflows/deploy.yml` runs the checks, builds the site, and runs `cdk diff` and `cdk deploy` through GitHub OIDC, in two jobs. It deploys every green change on `main`, while the repository variable `DEPLOY_ENABLED` is `true` (set it to anything else to pause deploys). It starts after a successful `CI` run on `main` (for the commit that passed, `workflow_run`) or by hand (`workflow_dispatch`, default ref), never on `push`. Runs do not overlap and a run in progress is not cancelled. No account id, ARN or profile name is stored in the repository.
 
-- Job `diff` (environment `production-diff`, no reviewers): runs `check`, `lint`, `validate`, `layout:check`, the unit tests, `build` (with `SITE_URL` from `SITE_DOMAIN`) and the infra type-check and tests, then `cdk diff`. The diff is written to the job summary and the build is uploaded as the artifact `site-build`.
-- Job `deploy` (environment `production`, `needs: diff`): pauses until a reviewer approves, so the approver reads the diff first, then downloads `site-build` and runs `cdk deploy`. The reviewed build is the build that is published.
+- Job `diff` (environment `production-diff`): runs `check`, `lint`, `validate`, `layout:check`, the unit tests, `build` (with `SITE_URL` from `SITE_DOMAIN`) and the infra type-check and tests, then `cdk diff`. The diff is written to the job summary and the build is uploaded as the artifact `site-build`.
+- Job `deploy` (environment `production`, `needs: diff`): downloads `site-build` and runs `cdk deploy`. The build that `diff` made and tested is the build that is published. There is no approval step: the pull request and the required checks are the gate, and both environments accept runs from `main` only. To add a human approval, add required reviewers to the environment `production`.
 - The infra packages are installed before the AWS credentials exist, so install scripts never see them.
 
-Owner steps, none of which is done by the workflow or by an agent:
+Setup, as done on 2026-11-14 (the workflow itself provisions none of it):
 
-1. The GitHub repository exists (`Data-Observatory/open-ecosystem-explorer`, default branch `main`, `main` pushed on 2026-11-14). Done.
-2. In the app account, create the GitHub OIDC identity provider (`token.actions.githubusercontent.com`, audience `sts.amazonaws.com`) if it does not exist. The `fairness` setup may already have created one: check before creating a second.
-3. In the app account, create an IAM role for this repository (or add this repository to the trust policy of the `fairness` role). Its trust policy allows `sts:AssumeRoleWithWebIdentity` from that provider only when the `sub` claim equals one of `repo:<org>/<repo>:environment:production` (job `deploy`) and `repo:<org>/<repo>:environment:production-diff` (job `diff`), and `aud` equals `sts.amazonaws.com`. Its permissions allow it to assume only the CDK bootstrap roles of the account and region (the deploy, file-publishing, image-publishing and lookup roles created by `cdk bootstrap`) and nothing else.
-4. In the GitHub repository settings, create the environment `production-diff` (no reviewers) and the environment `production` with required reviewers. The `deploy` job pauses at `production` until a reviewer approves, after the `diff` job has finished, which gates the `cdk deploy` step.
+1. The GitHub repository `Data-Observatory/open-ecosystem-explorer` (public, default branch `main`).
+2. In the app account, create the GitHub OIDC identity provider (`token.actions.githubusercontent.com`, audience `sts.amazonaws.com`) if it does not exist. The app account already had one (created for another site): it is reused.
+3. In the app account, the IAM role `github-actions-deploy-oee` (one role for this repository only). Its trust policy allows `sts:AssumeRoleWithWebIdentity` from that provider only when the `sub` claim equals one of `repo:<org>/<repo>:environment:production` (job `deploy`) and `repo:<org>/<repo>:environment:production-diff` (job `diff`), and `aud` equals `sts.amazonaws.com`. Its permissions allow it to assume only the CDK bootstrap roles of the account and region (the deploy, file-publishing, image-publishing and lookup roles created by `cdk bootstrap`) and nothing else.
+4. In the GitHub repository settings, the environments `production-diff` and `production`, both without reviewers and both limited to the branch `main`.
 5. Add the repository variables `DEPLOY_ENABLED` (`true` to activate), `AWS_REGION` (`us-east-1`), `SITE_DOMAIN` (`oee.dataobservatory.net`), and optionally `ACCESS_LOGS` (`true` or empty) and `ACCESS_LOG_RETENTION_DAYS` (a number, or empty for 90).
 6. Add the repository secret `AWS_DEPLOY_ROLE_ARN` with the ARN of the role from step 3.
 7. If `ACCESS_LOGS` is `true`, update the privacy statement first: the logs contain visitor IP addresses.
-8. The first deploy and the two DNS records are done (see Status). Set `DEPLOY_ENABLED` to `true` once steps 2 to 6 are in place, so later pushes to `main` deploy through the workflow.
+8. The first deploy and the two DNS records were done by hand (see Status). `DEPLOY_ENABLED` is `true`, so every green change on `main` deploys through the workflow.
 
-Turn on branch protection for `main` with the `CI` jobs `test` and `infra` as required checks, so a pull request cannot be merged red. The repository settings are the owner's.
+Branch protection on `main`: a pull request is required (no approvals needed, so a sole maintainer can merge), the `CI` jobs `test` and `infra` must pass and the branch must be up to date, conversations must be resolved, history is linear, and force pushes and deletion are off. The rules apply to administrators too. Pull requests are squash-merged or rebase-merged, and the head branch is deleted after the merge.
 
 Third-party actions in the workflows are pinned by commit SHA, checked against each action's repository when the file was written (`fairness` pins the same commits): `actions/checkout` v4.3.1, `actions/setup-node` v4.4.0, `actions/upload-artifact` v4.6.2, `actions/download-artifact` v4.3.0, `aws-actions/configure-aws-credentials` v6.3.0. Update the SHAs deliberately.
 

@@ -40,5 +40,7 @@ UI strings live in `messages/es.json` and `messages/en.json`. Every key must exi
 - Use conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `style:`) and small, incremental commits: one idea per commit.
 - Do not add co-author or tool attribution lines to commit messages.
 - The reviewer reads for what the validator cannot see: is the relation true, is the source the right one, is the summary neutral, is the entity in scope.
-- CI (`.github/workflows/ci.yml`) runs the check loop above on every pull request and on every push to `main`, and a pull request is merged only when it is green.
+- `main` is protected: work on a branch and open a pull request. It can be merged only when the CI jobs `test` and `infra` are green and the branch is up to date with `main`; direct pushes are refused, for administrators too. Merging is squash or rebase, so keep the pull request title a conventional commit.
+- CI (`.github/workflows/ci.yml`) runs the check loop above on every pull request and on every push to `main`.
+- Every change merged to `main` is deployed to https://oee.dataobservatory.net by `.github/workflows/deploy.yml` after CI passes on `main`, with no further approval. Merge only what you are ready to publish.
 - Analytics, hosting and deployment settings (`static/consent-loader.js`, `infra/`, `.github/workflows/deploy.yml`) are decided by the project owner. Open an issue instead of changing them.
