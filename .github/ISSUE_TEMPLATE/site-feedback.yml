@@ -1,0 +1,17 @@
+name: The site itself / El sitio
+description: A bug, an accessibility problem or an idea about how the site works. / Un error, un problema de accesibilidad o una idea sobre el sitio.
+title: '[Site] '
+labels: ['site']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public: do not include personal data. Write in English or Spanish.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés.
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened, or what do you suggest? / ¿Qué pasó o qué sugieres?
+      description: The page address, your browser and device help for a bug. / La dirección de la página, tu navegador y dispositivo ayudan si es un error.
+    validations:
+      required: true

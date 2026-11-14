@@ -1,0 +1,44 @@
+name: Add an entry / Agregar una entrada
+description: Propose an institution, standard, identifier, infrastructure or concept that is missing. / Proponer algo que falta.
+title: '[Add] '
+labels: ['add-entry']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public. Write in English or Spanish. A maintainer turns an accepted proposal into a reviewed change; you do not need to edit any file.
+        Las propuestas son públicas. Escribe en español o en inglés. Una persona del equipo convierte la propuesta aceptada en un cambio revisado; no necesitas editar archivos.
+  - type: input
+    id: name
+    attributes:
+      label: Name / Nombre
+      description: The official name and, if any, the acronym. / El nombre oficial y, si existe, la sigla.
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: What is it? / ¿Qué es?
+      options:
+        - Institution or organisation / Institución u organización
+        - Standard or specification / Estándar o especificación
+        - Identifier or registry / Identificador o registro
+        - Infrastructure, platform or tool / Infraestructura, plataforma o herramienta
+        - Concept or practice / Concepto o práctica
+        - Not sure / No sé
+    validations:
+      required: true
+  - type: input
+    id: source
+    attributes:
+      label: Source URL / URL de la fuente
+      description: The organisation's own page or an authoritative register, not a summary of it. / La página propia de la organización o un registro autorizado.
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why does it belong, and how does it relate to what is already here? / ¿Por qué corresponde y cómo se relaciona con lo que ya hay?
+      description: Name the entries it connects to (for example "part of Crossref", "implements DOI"). If in doubt, say so. / Nombra las entradas con las que se conecta. Si dudas, dilo.
+    validations:
+      required: true

@@ -1,0 +1,36 @@
+name: Remove an entry or a relation / Quitar una entrada o una relación
+description: Something does not belong, is a duplicate or is not true. / Algo no corresponde, está duplicado o no es cierto.
+title: '[Remove] '
+labels: ['remove-entry']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Issues are public. Write in English or Spanish. If in doubt, we leave it out: a missing relation costs less than a wrong one.
+        Las propuestas son públicas. Escribe en español o en inglés. Ante la duda, se deja fuera: una relación ausente cuesta menos que una incorrecta.
+  - type: input
+    id: entity
+    attributes:
+      label: Entry or relation / Entrada o relación
+      description: The entry id from its address (for example `doi`), or "A relation B" for a relation. / El id de la entrada, o "A relación B" si es una relación.
+    validations:
+      required: true
+  - type: dropdown
+    id: reason
+    attributes:
+      label: Why? / ¿Por qué?
+      options:
+        - It is not true / No es cierto
+        - It is a duplicate / Está duplicado
+        - It is out of scope / Está fuera del alcance
+        - It no longer exists / Ya no existe
+        - Something else / Otra razón
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details and evidence / Detalle y evidencia
+      description: A link to evidence helps. / Un enlace a la evidencia ayuda.
+    validations:
+      required: true
