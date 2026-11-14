@@ -218,7 +218,7 @@ Labels: `unverified`, `content`, `deferred`
 - **CERIF status.** `cerif.yaml` note: CERIF-Core "has not been approved as the official standard yet" as of 2026-11-12; earlier wording that classic CERIF is no longer developed "could not be verified and was removed". Re-check on euroCRIS.
 - **Converis end of life.** specs.md A.4: no announcement was found, so none is recorded; commentary on a Converis/Esploro merger is not modelled.
 - **OpenDOAR operator.** `opendoar.yaml` note: operator relationship "recorded as historical/current best-known, may need revisiting" (see 1.1).
-- **Deployment target and custom domain.** specs.md Q7: local only, no deployment target for now; custom domain and per-PR previews are marked as requiring confirmation.
+- **Deployment.** specs.md Q7: domain `oee.dataobservatory.net` on AWS, written but not provisioned (needs the repository, the AWS role and the DNS records, `infra/README.md`). Per-PR previews and the weekly link check are not built.
 - **Discipline vocabulary.** specs.md A.3: `vocab/disciplines.yaml` (OECD FORD level 2) is marked as requiring confirmation.
 - **`REQUIRE_FULL_I18N`.** Off by default (`src/lib/invariants/config.ts`); a missing locale prose file is one aggregated warning rather than an error.
 - **Layout generation.** The committed `src/generated/graph-layout.json` must be regenerated (`npm run layout:generate`) after any edge or entity change; `npm run layout:check` fails when it is stale. As of the "label separation always converges" fix the overlap guarantee no longer depends on the particular edge set.

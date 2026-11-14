@@ -81,8 +81,9 @@ Cytoscape, no layout library, no new dependency.
 
 ## Open work
 
-1. **Infra, deploy and domain** (CDK, DNS): not started. Domain undecided (idea:
-   `open-ecosystem.dataobservatory.net`); set `SITE_URL` at build time when decided.
+1. **Infra, deploy and domain** (CDK, DNS): written (`infra/`, `.github/workflows/`), domain
+   `oee.dataobservatory.net`, not provisioned. The owner steps are in `infra/README.md`; build with
+   `SITE_URL=https://oee.dataobservatory.net`.
 2. **Formatting of older TypeScript.** `src/lib/**` (except newer files), `scripts/`, `tests/unit`
    and `tests/fixtures` keep their 2-space style and are excluded from Prettier and ESLint. Reformat
    in one commit, then remove the exclusions.

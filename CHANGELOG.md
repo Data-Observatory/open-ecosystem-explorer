@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+### CI and deployment infrastructure (2026-11-14)
+
+- `.github/workflows/ci.yml` runs on pull requests and pushes to `main`: check, lint, validate, layout check, unit tests with the coverage thresholds, build, Playwright end-to-end and accessibility tests, plus an `infra` job (type-check, tests, `cdk synth` with dummy values). No AWS credentials or OIDC token.
+- `.github/workflows/deploy.yml` (inert until the repository variable `DEPLOY_ENABLED` is `true`): after a green CI run on `main`, a `diff` job repeats the checks, builds with `SITE_URL=https://<SITE_DOMAIN>` and writes `cdk diff` to the job summary; a `deploy` job waits for a reviewer to approve the `production` environment and publishes the build the `diff` job made. GitHub OIDC, no account id or ARN in the repository, actions pinned by commit SHA.
+- `infra/`: AWS CDK stack `OeeSiteStack` for `oee.dataobservatory.net` (private S3 bucket, CloudFront with origin access control, ACM certificate, security headers and a Content-Security-Policy limited to the site and the Google Tag Manager and Analytics hosts, immutable and revalidated cache split, optional access logs). Copied from the sister site `fairness`. The CloudFront function differs: this build has one directory per page (`es/about/index.html`), so it serves `index.html` for a trailing slash and redirects `/es/about` to `/es/about/` with a 301.
+- 107 infra tests (stack, URL rewrite, workflows, no account ids). The end-to-end suite (150 tests) was also run against a local server that applies the same rewrite function and the same Content-Security-Policy with violation reporting: 150 passed, 0 violations.
+- Nothing is provisioned. Owner steps (GitHub repository, AWS role and environments, first deploy, two DNS records) are in `infra/README.md`. `specs.md` §4, §8.4, §10, §11 and Q7, `README.md`, `CONTRIBUTING.md`, `docs/architecture.md` and `docs/known-issues.md` say so.
+
 ### Spec brought in line with the code (2026-11-14)
 
 - `specs.md` checked section by section against the code and content: status and goals, the data model (types, predicate fields, `GraphIndex`), the invariants table (I1–I35), strict i18n (now on), the route table (the redirect pages are gone), deployment (nothing is deployed; the pipeline is a proposal), testing, open questions (Q7 hosting is open, Q12 as built), Appendix A (examples, predicates, vocabularies) and Appendix B (now the real `figshare` files and the real view). The seed-set list in A.1b is replaced by a short note, since the entity files carry the record.

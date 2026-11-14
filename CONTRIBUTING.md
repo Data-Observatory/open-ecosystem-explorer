@@ -40,4 +40,5 @@ UI strings live in `messages/es.json` and `messages/en.json`. Every key must exi
 - Use conventional commits (`feat:`, `fix:`, `docs:`, `chore:`, `refactor:`, `test:`, `style:`) and small, incremental commits: one idea per commit.
 - Do not add co-author or tool attribution lines to commit messages.
 - The reviewer reads for what the validator cannot see: is the relation true, is the source the right one, is the summary neutral, is the entity in scope.
-- Analytics, hosting and deployment settings are decided by the project owner. Open an issue instead of changing them.
+- CI (`.github/workflows/ci.yml`) runs the check loop above on every pull request and on every push to `main`, and a pull request is merged only when it is green.
+- Analytics, hosting and deployment settings (`static/consent-loader.js`, `infra/`, `.github/workflows/deploy.yml`) are decided by the project owner. Open an issue instead of changing them.
