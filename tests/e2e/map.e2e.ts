@@ -27,6 +27,30 @@ const positions = (page: Page) =>
 		return out;
 	});
 
+/**
+ * Position of one node once it stops moving: the same value on two reads in a row, 100 ms apart.
+ * Camera moves (zoom, centring, a resize after the first paint) land a frame or two after the
+ * click that causes them, and CI machines are slower than ours, so a single read can catch one
+ * mid-way.
+ */
+async function settled(page: Page, id: string) {
+	let last = '';
+	let at = { x: 0, y: 0 };
+	await expect
+		.poll(
+			async () => {
+				at = (await positions(page))[id]!;
+				const now = `${at.x.toFixed(1)},${at.y.toFixed(1)}`;
+				const same = now === last;
+				last = now;
+				return same;
+			},
+			{ intervals: [100], timeout: 10_000 }
+		)
+		.toBe(true);
+	return at;
+}
+
 test.describe('starting view', () => {
 	test('shows the anchors as one connected picture around open science', async ({ page }) => {
 		await open(page, '/es/');
@@ -377,13 +401,13 @@ test.describe('expert mode', () => {
 		await expect(page.getByTestId('map-card')).toBeVisible();
 		await page.getByRole('button', { name: 'Zoom out' }).click();
 		await page.getByRole('button', { name: 'Zoom in' }).click();
-		const before = (await positions(page)).crossref!;
+		const before = await settled(page, 'crossref');
 		const stage = (await page.getByTestId('map-stage').boundingBox())!;
 		await page.mouse.move(stage.x + 200, stage.y + 300);
 		await page.mouse.down();
 		await page.mouse.move(stage.x + 260, stage.y + 340, { steps: 4 });
 		await page.mouse.up();
-		const after = (await positions(page)).crossref!;
+		const after = await settled(page, 'crossref');
 		expect(after.x - before.x).toBeGreaterThan(40);
 		expect(after.y - before.y).toBeGreaterThan(20);
 		// The drag did not select anything else.
