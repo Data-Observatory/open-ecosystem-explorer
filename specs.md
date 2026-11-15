@@ -102,7 +102,7 @@ The memo's practical rule [M§1] — *"cuando alguien mencione un nombre nuevo, 
 ├── package.json  tsconfig.json  vite.config.ts  playwright.config.ts  vitest.config.ts
 ├── docs/  architecture.md (routes, map design) · analytics.md · known-issues.md
 ├── prompts/  add-entity.md (the §8.4 template, kept next to the schema it references)
-├── .nvmrc  .vscode/settings.json (JSON Schemas for the YAML content)
+├── .nvmrc
 ├── messages/  es.json en.json            # UI strings (Paraglide)
 ├── schema/    generated JSON Schemas
 ├── scripts/   validate.ts · generate-schema.ts · layout-graph.ts · review.ts · watch-validate.ts · postbuild.mjs

@@ -8,6 +8,7 @@ playwright-report/
 coverage/
 .vitest/
 .claude/
+.vscode/
 
 # SvelteKit
 /.svelte-kit

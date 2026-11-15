@@ -29,6 +29,8 @@ Read the `specs.md` sections for the part you touch: §3 (curation policy), §5 
 
 ## Add or change an entity
 
+- For autocomplete and validation while you type, map `schema/entity.schema.json` to `src/content/entities/*.yaml` and `schema/prose.schema.json` to `src/content/i18n/*/*.yaml` in your editor's YAML settings (for example the `yaml.schemas` setting of the `redhat.vscode-yaml` extension). Personal editor settings are not committed (`.vscode/` is ignored).
+
 - An entity is two or three small files, never one big one. Facts and outgoing relations go in `src/content/entities/<id>.yaml`. The filename is the id.
 - Prose goes in `src/content/i18n/es/<id>.yaml` and `src/content/i18n/en/<id>.yaml`: a one-sentence `summary` and a short `body`. Both languages are required, and a missing one is a validation error.
 - Copy two existing files of the same `type` as models. The closed vocabularies in `src/content/vocab/` (types, predicates, tags, disciplines, statuses) say which values are allowed. Do not invent terms; adding a vocabulary term is a separate change.
