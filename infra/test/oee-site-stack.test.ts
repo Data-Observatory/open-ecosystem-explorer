@@ -289,8 +289,18 @@ describe('site deployment', () => {
 	}
 
 	function immutableDeployment() {
-		const found = deployments().filter((d) => cacheControl(d) === IMMUTABLE_CACHE);
-		expect(found, 'expected exactly one immutable-cache deployment').toHaveLength(1);
+		const found = deployments().filter(
+			(d) => cacheControl(d) === IMMUTABLE_CACHE && d.Prune === false
+		);
+		expect(found, 'expected exactly one immutable-cache deployment without prune').toHaveLength(1);
+		return found[0];
+	}
+
+	function pruneDeployment() {
+		const found = deployments().filter(
+			(d) => cacheControl(d) === IMMUTABLE_CACHE && d.Prune === true
+		);
+		expect(found, 'expected exactly one immutable-cache deployment with prune').toHaveLength(1);
 		return found[0];
 	}
 
@@ -300,10 +310,11 @@ describe('site deployment', () => {
 		return found[0];
 	}
 
-	it('has exactly two deployments, split by Cache-Control', () => {
-		template.resourceCountIs('Custom::CDKBucketDeployment', 2);
+	it('has exactly three deployments: new chunks, pages, removal of old chunks', () => {
+		template.resourceCountIs('Custom::CDKBucketDeployment', 3);
 		immutableDeployment();
 		revalidateDeployment();
+		pruneDeployment();
 	});
 
 	it('serves fingerprinted assets under _app/immutable with a one-year immutable Cache-Control', () => {
@@ -312,8 +323,26 @@ describe('site deployment', () => {
 		expect(d.Include).toEqual(['_app/immutable/*']);
 	});
 
-	it('never prunes the immutable deployment (a cached page may still import an older chunk)', () => {
+	it('does not prune in the first deployment (the live pages still import the previous chunks)', () => {
 		expect(immutableDeployment().Prune).toBe(false);
+	});
+
+	it('prunes only inside _app/immutable, with the same filters and Cache-Control as the first', () => {
+		const first = immutableDeployment();
+		const last = pruneDeployment();
+		expect(last.Exclude).toEqual(['*']);
+		expect(last.Include).toEqual(['_app/immutable/*']);
+		expect(last.Exclude).toEqual(first.Exclude);
+		expect(last.Include).toEqual(first.Include);
+		expect(cacheControl(last)).toBe(cacheControl(first));
+		expect(last.DestinationBucketName).toEqual(first.DestinationBucketName);
+		expect(last.DestinationBucketKeyPrefix).toBeUndefined();
+	});
+
+	it('does not invalidate from the pruning deployment', () => {
+		const d = pruneDeployment();
+		expect(d.DistributionId).toBeUndefined();
+		expect(d.DistributionPaths).toBeUndefined();
 	});
 
 	it('does not invalidate from the immutable deployment', () => {
@@ -335,22 +364,32 @@ describe('site deployment', () => {
 		expect(d.DistributionPaths).toEqual(['/*']);
 	});
 
-	it('writes both deployments to the same bucket', () => {
+	it('writes all deployments to the same bucket', () => {
 		const a = immutableDeployment().DestinationBucketName;
 		const b = revalidateDeployment().DestinationBucketName;
+		const c = pruneDeployment().DestinationBucketName;
 		expect(a).toBeDefined();
 		expect(a).toEqual(b);
+		expect(a).toEqual(c);
 	});
 
-	it('runs the invalidating deployment after the immutable one', () => {
+	it('orders them: new chunks, then pages and invalidation, then removal of old chunks', () => {
 		const all = template.findResources('Custom::CDKBucketDeployment');
-		const idOf = (cc: string) =>
-			Object.keys(all).find((k) => all[k].Properties.SystemMetadata?.['cache-control'] === cc)!;
-		const dependsOn: string[] = all[idOf(REVALIDATE_CACHE)].DependsOn ?? [];
-		expect(dependsOn).toContain(idOf(IMMUTABLE_CACHE));
+		const idOf = (cc: string, prune: boolean) =>
+			Object.keys(all).find(
+				(k) =>
+					all[k].Properties.SystemMetadata?.['cache-control'] === cc &&
+					all[k].Properties.Prune === prune
+			)!;
+		const upload = idOf(IMMUTABLE_CACHE, false);
+		const pages = idOf(REVALIDATE_CACHE, true);
+		const prune = idOf(IMMUTABLE_CACHE, true);
+		expect(all[pages].DependsOn ?? []).toContain(upload);
+		// Nothing is deleted until the new pages are live: the prune waits for the pages.
+		expect(all[prune].DependsOn ?? []).toContain(pages);
 	});
 
-	it('takes its source from ../build (the SvelteKit static output), for both deployments', () => {
+	it('takes its source from ../build (the SvelteKit static output), for all deployments', () => {
 		const manifest = JSON.parse(
 			fs.readFileSync(path.join(outdir, 'OeeSiteStack.assets.json'), 'utf8')
 		) as { files: Record<string, { source: { path: string } }> };
@@ -365,7 +404,7 @@ describe('site deployment', () => {
 		for (const file of ['index.html', 'en/index.html', '404.html', 'es/about/index.html']) {
 			expect(fs.existsSync(path.join(siteAsset!, file)), file).toBe(true);
 		}
-		// Both deployments reference the same source asset (same content hash).
+		// All deployments reference the same source asset (same content hash).
 		const sources = Object.values(template.findResources('Custom::CDKBucketDeployment')).map(
 			(r) =>
 				JSON.stringify(r.Properties.SourceBucketNames) +
@@ -505,7 +544,7 @@ describe('access logging', () => {
 			expect(config.SecurityHeadersConfig.ContentSecurityPolicy.ContentSecurityPolicy).toBe(
 				EXPECTED_CSP
 			);
-			t.resourceCountIs('Custom::CDKBucketDeployment', 2);
+			t.resourceCountIs('Custom::CDKBucketDeployment', 3);
 		});
 	});
 
