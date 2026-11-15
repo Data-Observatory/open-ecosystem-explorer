@@ -112,6 +112,7 @@ npm run check          # svelte-check
 npm run lint           # prettier --check + eslint
 npm test               # vitest (unit)
 npm run validate       # content schema and invariants
+npm run links          # request every URL in src/content; report in link-report.md (weekly workflow: links.yml)
 npm run build          # validate + layout:check, then static build into build/
 npm run preview        # serves build/
 PW_PORT=4993 PLAYWRIGHT_CHROME_PATH=/usr/bin/google-chrome npm run test:e2e
