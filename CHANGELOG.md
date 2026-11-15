@@ -4,6 +4,8 @@
 
 ### Repository housekeeping (2026-11-15)
 
+- CI fixes. The flaky map test (issue #32) started its drag below the 720 px test viewport, where mouse events are lost; it now drags inside the stage and waits for the node to stop moving. Two accessibility findings of the newer axe-core are fixed: map node names now contain the text drawn on the node (WCAG 2.5.3: short forms such as `PID` and `CRIS` lead the name, wrapped label lines are separated by a space, and the "Start here" tag sits beside the link), and the count on the selected glossary type chip no longer fades (contrast).
+- Dependabot: the weekly pull requests for GitHub Actions (checkout 7, setup-node 7, upload-artifact 7, download-artifact 8; each SHA checked against the upstream tag), the infra packages and the root minor and patch group are merged. Five major upgrades that cannot land as a plain bump (SvelteKit 3 with adapter-static 4, TypeScript 7, zod 4, `@types/node` 26) are tracked in issue #46 and skipped by `.github/dependabot.yml` until someone takes them on.
 - Rebase merge is the only merge method (squash and merge commits are off), so the incremental conventional commits of a pull request are kept on `main`.
 - The 25 items of `docs/known-issues.md` that are tasks are GitHub issues #6 to #30 (labels `sources`, `content`, `unverified`, `modelling`, `i18n`, `deferred`); the file now points to them.
 - Dependabot alerts and security updates, secret scanning with push protection and private vulnerability reporting are enabled. `.github/dependabot.yml` opens weekly update pull requests for the root and `infra/` npm packages and for the GitHub Actions (grouped, conventional commit prefixes).
