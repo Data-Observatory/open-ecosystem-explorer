@@ -1,168 +1,163 @@
 {
-  "$ref": "#/definitions/Story",
-  "definitions": {
-    "Story": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 64,
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "title": {
       "type": "object",
       "properties": {
-        "id": {
+        "es": {
           "type": "string",
-          "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-          "minLength": 2,
-          "maxLength": 64
+          "minLength": 1,
+          "maxLength": 120
         },
-        "title": {
-          "type": "object",
-          "properties": {
-            "es": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 120
-            },
-            "en": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 120
-            }
-          },
-          "required": [
-            "es",
-            "en"
-          ],
-          "additionalProperties": false
-        },
-        "question": {
-          "type": "object",
-          "properties": {
-            "es": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 80
-            },
-            "en": {
-              "type": "string",
-              "minLength": 1,
-              "maxLength": 80
-            }
-          },
-          "required": [
-            "es",
-            "en"
-          ],
-          "additionalProperties": false
-        },
-        "theme": {
-          "type": "string"
-        },
-        "steps": {
-          "type": "array",
-          "items": {
-            "type": "object",
-            "properties": {
-              "focus": {
-                "type": "string",
-                "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                "minLength": 2,
-                "maxLength": 64
-              },
-              "reveal": {
-                "type": "array",
-                "items": {
-                  "type": "string",
-                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                  "minLength": 2,
-                  "maxLength": 64
-                },
-                "default": []
-              },
-              "edges": {
-                "type": "array",
-                "items": {
-                  "type": "object",
-                  "properties": {
-                    "source": {
-                      "type": "string",
-                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                      "minLength": 2,
-                      "maxLength": 64
-                    },
-                    "predicate": {
-                      "type": "string",
-                      "enum": [
-                        "issues",
-                        "implements",
-                        "complies-with",
-                        "depends-on",
-                        "interoperates-with",
-                        "owned-by",
-                        "governed-by",
-                        "operated-by",
-                        "developed-by",
-                        "funded-by",
-                        "member-of",
-                        "part-of",
-                        "supersedes",
-                        "profile-of",
-                        "indexes",
-                        "certified-by",
-                        "endorsed-by",
-                        "mandates",
-                        "applies-to",
-                        "is-a",
-                        "related-to"
-                      ]
-                    },
-                    "target": {
-                      "type": "string",
-                      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$",
-                      "minLength": 2,
-                      "maxLength": 64
-                    }
-                  },
-                  "required": [
-                    "source",
-                    "predicate",
-                    "target"
-                  ],
-                  "additionalProperties": false
-                }
-              },
-              "text": {
-                "type": "object",
-                "properties": {
-                  "es": {
-                    "type": "string",
-                    "minLength": 1
-                  },
-                  "en": {
-                    "type": "string",
-                    "minLength": 1
-                  }
-                },
-                "required": [
-                  "es",
-                  "en"
-                ],
-                "additionalProperties": false
-              }
-            },
-            "required": [
-              "focus",
-              "text"
-            ],
-            "additionalProperties": false
-          },
-          "minItems": 3,
-          "maxItems": 12
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 120
         }
       },
       "required": [
-        "id",
-        "title",
-        "question",
-        "steps"
+        "es",
+        "en"
       ],
       "additionalProperties": false
+    },
+    "question": {
+      "type": "object",
+      "properties": {
+        "es": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        },
+        "en": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 80
+        }
+      },
+      "required": [
+        "es",
+        "en"
+      ],
+      "additionalProperties": false
+    },
+    "theme": {
+      "type": "string"
+    },
+    "steps": {
+      "minItems": 3,
+      "maxItems": 12,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "focus": {
+            "type": "string",
+            "minLength": 2,
+            "maxLength": 64,
+            "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+          },
+          "reveal": {
+            "default": [],
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 64,
+              "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+            }
+          },
+          "edges": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "source": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 64,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                },
+                "predicate": {
+                  "type": "string",
+                  "enum": [
+                    "issues",
+                    "implements",
+                    "complies-with",
+                    "depends-on",
+                    "interoperates-with",
+                    "owned-by",
+                    "governed-by",
+                    "operated-by",
+                    "developed-by",
+                    "funded-by",
+                    "member-of",
+                    "part-of",
+                    "supersedes",
+                    "profile-of",
+                    "indexes",
+                    "certified-by",
+                    "endorsed-by",
+                    "mandates",
+                    "applies-to",
+                    "is-a",
+                    "related-to"
+                  ]
+                },
+                "target": {
+                  "type": "string",
+                  "minLength": 2,
+                  "maxLength": 64,
+                  "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+                }
+              },
+              "required": [
+                "source",
+                "predicate",
+                "target"
+              ],
+              "additionalProperties": false
+            }
+          },
+          "text": {
+            "type": "object",
+            "properties": {
+              "es": {
+                "type": "string",
+                "minLength": 1
+              },
+              "en": {
+                "type": "string",
+                "minLength": 1
+              }
+            },
+            "required": [
+              "es",
+              "en"
+            ],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "focus",
+          "text"
+        ],
+        "additionalProperties": false
+      }
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "required": [
+    "id",
+    "title",
+    "question",
+    "steps"
+  ],
+  "additionalProperties": false
 }

@@ -9,7 +9,7 @@
 // migration to plain YAML and is kept in the generated schema.
 import { writeFileSync, mkdirSync } from 'node:fs';
 import { join } from 'node:path';
-import { zodToJsonSchema } from 'zod-to-json-schema';
+import { toJSONSchema, type ZodType } from 'zod';
 
 import { zEntity, zProseFile } from '../src/lib/model/schema.js';
 import { zStory } from '../src/lib/stories/schema.js';
@@ -33,18 +33,39 @@ function stripProperty(node: unknown, key: string): void {
 	}
 }
 
+/**
+ * JSON Schema (draft-07, which the editors' YAML language servers support) of what the file holds:
+ * the input side of the Zod schema, every shared definition written out where it is used.
+ */
+function jsonSchemaOf(schema: ZodType): Record<string, unknown> {
+	const out = toJSONSchema(schema, { target: 'draft-7', io: 'input', reused: 'inline' });
+	dropFormat(out, 'starts_with');
+	return out;
+}
+
+/** Zod writes `startsWith` as a non-standard `format` next to the equivalent `pattern`; editors warn about unknown formats. */
+function dropFormat(node: unknown, format: string): void {
+	if (!node || typeof node !== 'object') return;
+	const obj = node as Record<string, unknown>;
+	if (obj.format === format) delete obj.format;
+	for (const v of Object.values(obj)) {
+		if (Array.isArray(v)) v.forEach((item) => dropFormat(item, format));
+		else dropFormat(v, format);
+	}
+}
+
 function main(): void {
 	mkdirSync(OUT_DIR, { recursive: true });
 
-	const entitySchema = zodToJsonSchema(zEntity, { name: 'Entity', $refStrategy: 'none' });
+	const entitySchema = jsonSchemaOf(zEntity);
 	stripProperty(entitySchema, 'id');
 	writeFileSync(join(OUT_DIR, 'entity.schema.json'), JSON.stringify(entitySchema, null, 2) + '\n');
 
-	const proseSchema = zodToJsonSchema(zProseFile, { name: 'Prose', $refStrategy: 'none' });
+	const proseSchema = jsonSchemaOf(zProseFile);
 	writeFileSync(join(OUT_DIR, 'prose.schema.json'), JSON.stringify(proseSchema, null, 2) + '\n');
 
 	// Stories carry their own id (checked against the filename, ST1), so nothing is stripped.
-	const storySchema = zodToJsonSchema(zStory, { name: 'Story', $refStrategy: 'none' });
+	const storySchema = jsonSchemaOf(zStory);
 	writeFileSync(join(OUT_DIR, 'story.schema.json'), JSON.stringify(storySchema, null, 2) + '\n');
 
 	console.log(
