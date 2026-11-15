@@ -51,6 +51,7 @@ Run these after every edit, from the repository root:
 - `npm run layout:generate` after you add, remove or change a relation or an entity, then commit `src/generated/graph-layout.json`. The build fails (`layout:check`) if it is stale.
 - `npm run check`, `npm run lint` and `npm test` before you open a pull request.
 - `npm run build` then `npm run test:e2e` when you touch pages or the map. The e2e tests run against the build. Set `PW_PORT` to a free port, and `PLAYWRIGHT_CHROME_PATH` to use a system Chrome.
+- `npm run links` (about three minutes, it makes network requests) checks every URL in `src/content`: pass `-- --only <entity-id>` for one entity. A workflow runs it every Monday and keeps one open issue, labelled `link-check`, with the report. Pages that refuse scripts (403, 429) are listed apart as "blocked": open them in a browser, they are not counted as broken.
 
 ## Change the site or the UI text
 
