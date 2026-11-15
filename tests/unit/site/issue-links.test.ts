@@ -2,12 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { describe, expect, it } from 'vitest';
 import { parse } from 'yaml';
-import {
-	CONTACT_EMAIL,
-	NEW_ISSUE_CHOOSER_URL,
-	REPO_URL,
-	entryIssueUrl
-} from '../../../src/lib/repo.js';
+import { NEW_ISSUE_CHOOSER_URL, REPO_URL, entryIssueUrl } from '../../../src/lib/repo.js';
 
 const templates = join(__dirname, '../../../.github/ISSUE_TEMPLATE');
 const forms = readdirSync(templates).filter((f) => f !== 'config.yml');
@@ -24,10 +19,9 @@ const load = (f: string) => parse(readFileSync(join(templates, f), 'utf8'));
 const fields = (f: string) => (load(f).body as Field[]).filter((b) => b.type !== 'markdown');
 
 describe('issue links', () => {
-	it('points to the public repository and the contact address', () => {
+	it('points to the public repository', () => {
 		expect(REPO_URL).toBe('https://github.com/Data-Observatory/open-ecosystem-explorer');
 		expect(NEW_ISSUE_CHOOSER_URL).toBe(`${REPO_URL}/issues/new/choose`);
-		expect(CONTACT_EMAIL).toBe('contacto@dataobservatory.net');
 	});
 
 	it.each([
@@ -68,7 +62,6 @@ describe('issue forms', () => {
 		]);
 		const config = load('config.yml');
 		expect(config.blank_issues_enabled).toBe(false);
-		expect(JSON.stringify(config)).toContain(CONTACT_EMAIL);
 	});
 
 	it.each(forms)(
@@ -85,12 +78,11 @@ describe('issue forms', () => {
 		}
 	);
 
-	it.each(forms)('%s tells people about the email fallback and that issues are public', (f) => {
+	it.each(forms)('%s tells people that issues are public', (f) => {
 		const markdown = (load(f).body as { type: string; attributes: { value: string } }[])
 			.filter((b) => b.type === 'markdown')
 			.map((b) => b.attributes.value)
 			.join('\n');
-		expect(markdown).toContain(CONTACT_EMAIL);
 		expect(markdown).toMatch(/public/);
 		expect(markdown).toMatch(/públicas/);
 	});
@@ -129,6 +121,25 @@ describe('issue forms', () => {
 		for (const [id, t] of Object.entries(entityTypes)) {
 			expect(options, id).toContain(t.label.en.toLowerCase().split(' ')[0]);
 			expect(options, id).toContain(t.label.es.toLowerCase().split(' ')[0]);
+		}
+	});
+});
+
+describe('no contact email', () => {
+	it('is not published in the forms, the pages or the docs', () => {
+		const root = join(__dirname, '../../..');
+		const files = [
+			...forms.map((f) => join(templates, f)),
+			join(templates, 'config.yml'),
+			join(root, 'src/lib/repo.ts'),
+			join(root, 'messages/en.json'),
+			join(root, 'messages/es.json'),
+			join(root, 'src/routes/[locale=locale]/about/+page.svelte'),
+			join(root, 'README.md'),
+			join(root, 'CONTRIBUTING.md')
+		];
+		for (const f of files) {
+			expect(readFileSync(f, 'utf8'), f).not.toMatch(/@dataobservatory|mailto:/i);
 		}
 	});
 });

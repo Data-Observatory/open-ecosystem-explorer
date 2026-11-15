@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Issues are public: do not include personal data or screenshots of your own accounts. For a mistake in the content of the map, use the content forms. No GitHub account? Write to contacto@dataobservatory.net.
-        Las propuestas son públicas: no incluyas datos personales. Para un error en el contenido del mapa, usa los formularios de contenido. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+        Issues are public: do not include personal data or screenshots of your own accounts. For a mistake in the content of the map, use the content forms.
+        Las propuestas son públicas: no incluyas datos personales. Para un error en el contenido del mapa, usa los formularios de contenido.
   - type: textarea
     id: what
     attributes:

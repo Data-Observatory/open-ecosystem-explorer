@@ -6,7 +6,7 @@
 	import * as m from '$lib/paraglide/messages';
 	import ConsentChange from '$lib/components/ConsentChange.svelte';
 	import ExternalLink from '$lib/components/ExternalLink.svelte';
-	import { CONTACT_EMAIL, NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
+	import { NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
 
 	let { data } = $props();
 	const about = $derived(data.about);
@@ -214,15 +214,6 @@
 				class="text-blue-700 underline decoration-blue-700/40 underline-offset-2 hover:text-blue-900"
 				>{m.about_contribute_issues_link()}</ExternalLink
 			>
-		</p>
-		<p class="mt-2 leading-relaxed" data-testid="about-email">
-			{m.about_contribute_email()}
-			<a
-				href={`mailto:${CONTACT_EMAIL}`}
-				class="text-blue-700 underline decoration-blue-700/40 underline-offset-2 hover:text-blue-900"
-				>{CONTACT_EMAIL}</a
-			>
-			{m.about_contribute_email_note()}
 		</p>
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -- escaped by renderMarkdown, repository content -->
 		<div class="prose-content mt-3" lang="en">{@html about.contributeHtml}</div>

@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Issues are public. For a mistake or a gap in the content of the map, use the content forms. No GitHub account? Write to contacto@dataobservatory.net.
-        Las propuestas son públicas. Para un error o un vacío en el contenido del mapa, usa los formularios de contenido. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+        Issues are public. For a mistake or a gap in the content of the map, use the content forms.
+        Las propuestas son públicas. Para un error o un vacío en el contenido del mapa, usa los formularios de contenido.
   - type: textarea
     id: problem
     attributes:

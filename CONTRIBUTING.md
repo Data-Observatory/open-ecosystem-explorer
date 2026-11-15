@@ -14,8 +14,6 @@ Open an issue at https://github.com/Data-Observatory/open-ecosystem-explorer/iss
 
 Every entry page has two links ("Suggest a change to the description or facts" and "Suggest a change to its connections") that open the matching form with that entry filled in, and the footer links to the chooser.
 
-No GitHub account? Write to contacto@dataobservatory.net with the same information; a maintainer opens the issue for you.
-
 - A maintainer reads the issue, checks the source, and makes the change as a pull request that closes the issue, or answers why not. If in doubt, the change is left out.
 - Give a source for what you propose: the organisation's own page or an authoritative register. A proposal without one may wait until one is found.
 - Issues are public. Do not include personal data.
@@ -30,6 +28,8 @@ You need Node 22 or newer and npm. Run `npm install` once. Run `npx playwright i
 Read the `specs.md` sections for the part you touch: §3 (curation policy), §5 (data model and invariants) and §8 (authoring format). `docs/known-issues.md` lists what is already known to be unverified, so you do not repeat it.
 
 ## Add or change an entity
+
+- For autocomplete and validation while you type, map `schema/entity.schema.json` to `src/content/entities/*.yaml` and `schema/prose.schema.json` to `src/content/i18n/*/*.yaml` in your editor's YAML settings (for example the `yaml.schemas` setting of the `redhat.vscode-yaml` extension). Personal editor settings are not committed (`.vscode/` is ignored).
 
 - An entity is two or three small files, never one big one. Facts and outgoing relations go in `src/content/entities/<id>.yaml`. The filename is the id.
 - Prose goes in `src/content/i18n/es/<id>.yaml` and `src/content/i18n/en/<id>.yaml`: a one-sentence `summary` and a short `body`. Both languages are required, and a missing one is a validation error.

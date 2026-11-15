@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file. No GitHub account? Write to contacto@dataobservatory.net.
-        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos. ¿Sin cuenta de GitHub? Escribe a contacto@dataobservatory.net.
+        Issues are public: do not include personal data. Write in English or Spanish. A maintainer checks the source and makes the change; you do not need to edit any file.
+        Las propuestas son públicas: no incluyas datos personales. Escribe en español o en inglés. Una persona del equipo revisa la fuente y hace el cambio; no necesitas editar archivos.
   - type: input
     id: entity
     attributes:
