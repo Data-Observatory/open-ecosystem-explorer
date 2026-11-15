@@ -60,7 +60,7 @@ The DNS zone for dataobservatory.net lives in a different account, so the stack 
 - A CloudFront Function (`cloudfront-fn/rewrite-uri.js`, viewer-request): `/es/about/` is served from `es/about/index.html`, and `/es/about` gets a 301 to `/es/about/` (query string kept). Anything with a file extension passes through (`/es/__data.json`, `/data/graph.json`, `/sitemap.xml`).
 - Custom error responses: 403 and 404 serve `/404.html` with status 404 (a missing key behind Origin Access Control comes back as 403).
 - A response headers policy: HSTS (one year, includeSubdomains, no preload), nosniff, frame deny, referrer policy `strict-origin-when-cross-origin`, a Content-Security-Policy limited to same-origin sources plus the Google Tag Manager and Google Analytics hosts (`googletagmanager.com`, `google-analytics.com`, `analytics.google.com`), and `Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()`.
-- Two `BucketDeployment`s of `../build` (see Caching).
+- Three `BucketDeployment`s of `../build` (see Caching).
 - Optional access logging, off by default (see Access logging).
 
 Outputs: `DistributionDomainName`, `DistributionId`, `BucketName`, `CertificateArn`, `SiteUrl`.
@@ -71,16 +71,19 @@ The policy allows the site's own scripts (one inline bootstrap script that Svelt
 
 ## Caching
 
-The build is uploaded by two `BucketDeployment`s with the same `../build` source. Include and exclude filters make each file belong to exactly one of them.
+The build is uploaded by three `BucketDeployment`s with the same `../build` source, one after the other. Include and exclude filters make each file belong to one upload; the third only deletes.
 
-| Deployment              | Files                                                                                         | Cache-Control                         | Prune | Invalidation |
-| ----------------------- | --------------------------------------------------------------------------------------------- | ------------------------------------- | ----- | ------------ |
-| `DeployImmutableAssets` | `_app/immutable/**` (content-hashed names)                                                    | `public, max-age=31536000, immutable` | no    | none         |
-| `DeploySite`            | everything else (html, `__data.json`, `data/*`, search indexes, sitemap, `robots.txt`, `404.html`) | `public, max-age=0, must-revalidate`  | yes   | `/*`         |
+| Deployment              | Files                                                                                              | Cache-Control                         | Prune | Invalidation | Order |
+| ----------------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------- | ----- | ------------ | ----- |
+| `DeployImmutableAssets` | `_app/immutable/**` (content-hashed names)                                                         | `public, max-age=31536000, immutable` | no    | none         | 1     |
+| `DeploySite`            | everything else (html, `__data.json`, `data/*`, search indexes, sitemap, `robots.txt`, `404.html`) | `public, max-age=0, must-revalidate`  | yes   | `/*`         | 2     |
+| `PruneImmutableAssets`  | `_app/immutable/**`, same filters as the first                                                     | `public, max-age=31536000, immutable` | yes   | none         | 3     |
 
-Prune is off for the immutable deployment on purpose: a page cached by a browser or by CloudFront can still import a chunk from a previous build, so old chunks must stay in the bucket after a new deploy. The second deployment excludes `_app/immutable/*`, so its prune never deletes them. It also depends on the first, so new chunks are uploaded before the pages that reference them. Invalidation is only needed for the files whose names do not change, so only the second deployment invalidates.
+Order matters. New chunks are uploaded first, so the new pages never point at a file that is not there yet. The pages are switched second (and the CDN is invalidated). Only then does the third deployment delete the chunks that no build refers to, so the bucket always holds exactly the current build and old files do not pile up. No live page points at a deleted file at any moment.
 
-Old chunks accumulate. Remove them manually (or with an S3 lifecycle rule) if storage grows.
+A browser tab that was opened before a deploy still runs the old build. If it navigates, it asks for a chunk that is now gone, gets a 404, and SvelteKit answers a failed chunk import with a full page load of the destination, which the current build serves. The visitor sees one extra reload, nothing breaks. This was checked with two real builds and a tab left open on the first (glossary, about and entry pages, in both languages). The first deployment keeps no old chunks on purpose: its prune is off only so that the previous pages, which are live until the second step, keep working while the new chunks arrive.
+
+The prune is `aws s3 sync --delete` with `--exclude '*' --include '_app/immutable/*'`; the filters apply to deletions too, so pages, data and `404.html` are never touched by it. A dry run of that command against the bucket lists only keys under `_app/immutable/`.
 
 ## Access logging
 
