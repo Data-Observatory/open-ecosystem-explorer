@@ -122,6 +122,21 @@ describe('classifying answers', () => {
 		).toBe('ok');
 	});
 
+	it('calls a redirect to a sign-in page that names the page blocked, not moved', () => {
+		const from = 'https://www.nature.com/articles/s41597-020-0486-7';
+		const wall =
+			'https://idp.nature.com/transit?redirect_uri=' + encodeURIComponent(from) + '&code=abc';
+		expect(classify(from, { status: 200, url: wall, redirected: true }).status).toBe('blocked');
+		// A real move to another host that only shares the path is still a move.
+		expect(
+			classify(from, {
+				status: 200,
+				url: 'https://other.org/new?ref=1',
+				redirected: true
+			}).status
+		).toBe('moved');
+	});
+
 	it('treats www and the bare host as one site', () => {
 		const moved = (from: string, to: string) =>
 			classify(from, { status: 200, url: to, redirected: true }).status;
