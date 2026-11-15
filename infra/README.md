@@ -166,7 +166,7 @@ Setup, as done on 2026-11-14 (the workflow itself provisions none of it):
 
 Branch protection on `main`: a pull request is required (no approvals needed, so a sole maintainer can merge), the `CI` jobs `test` and `infra` must pass and the branch must be up to date, conversations must be resolved, history is linear, and force pushes and deletion are off. The rules apply to administrators too. Pull requests are rebase-merged only (squash and merge commits are off, so the incremental commits of a pull request are kept), and the head branch is deleted after the merge. Dependabot opens weekly update pull requests (`.github/dependabot.yml`); Dependabot alerts, secret scanning with push protection and private vulnerability reporting are on.
 
-Third-party actions in the workflows are pinned by commit SHA, checked against each action's repository when the file was written (`fairness` pins the same commits): `actions/checkout` v4.3.1, `actions/setup-node` v4.4.0, `actions/upload-artifact` v4.6.2, `actions/download-artifact` v4.3.0, `aws-actions/configure-aws-credentials` v6.3.0. Update the SHAs deliberately.
+Third-party actions in the workflows are pinned by commit SHA, with the version in a comment on each line (`fairness` pins the same actions). Dependabot proposes updates weekly; before merging one, check that each new SHA is the commit of that tag in the action's own repository (`gh api repos/<owner>/<repo>/git/ref/tags/<tag>`, and `git/tags/<sha>` when the tag is annotated). The deploy job runs with AWS credentials, so an action is never taken on a version number alone.
 
 ## Credentials with SSO profiles
 

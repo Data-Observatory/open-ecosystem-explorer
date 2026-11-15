@@ -9,9 +9,9 @@ name: Deploy
 # made by "diff". Neither environment has required reviewers: main is protected (a pull request
 # and the CI checks are needed), so a deploy follows a merged, green pull request. Both
 # environments accept runs from main only.
-# Third-party actions are pinned by commit SHA (checked against each action's repository):
-#   actions/checkout v4.3.1, actions/setup-node v4.4.0, actions/upload-artifact v4.6.2,
-#   actions/download-artifact v4.3.0, aws-actions/configure-aws-credentials v6.3.0
+# Third-party actions are pinned by commit SHA; the version is in the comment on each line.
+# Dependabot proposes the updates (weekly); before merging one, check that the SHA is the commit
+# of that tag in the action's own repository.
 
 on:
   workflow_run:
