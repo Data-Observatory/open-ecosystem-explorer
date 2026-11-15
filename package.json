@@ -60,6 +60,6 @@
 	"dependencies": {
 		"spdx-license-ids": "^3.0.23",
 		"yaml": "^2.9.0",
-		"zod": "^3.25.76"
+		"zod": "^4.6.7"
 	}
 }
