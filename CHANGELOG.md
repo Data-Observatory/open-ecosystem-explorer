@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+### Repository housekeeping (2026-11-15)
+
+- Rebase merge is the only merge method (squash and merge commits are off), so the incremental conventional commits of a pull request are kept on `main`.
+- The 25 items of `docs/known-issues.md` that are tasks are GitHub issues #6 to #30 (labels `sources`, `content`, `unverified`, `modelling`, `i18n`, `deferred`); the file now points to them.
+- Dependabot alerts and security updates, secret scanning with push protection and private vulnerability reporting are enabled. `.github/dependabot.yml` opens weekly update pull requests for the root and `infra/` npm packages and for the GitHub Actions (grouped, conventional commit prefixes).
+
 ### Proposals through GitHub issues (2026-11-14)
 
 - Six bilingual issue forms in `.github/ISSUE_TEMPLATE/`, organised by what changes on the map: new entry (13 kinds of entry, source required), connection between two entries (add, change or remove; the 21 kinds of connection in plain words), description or facts of an entry (short description, longer text, name, a fact, the note for Chile and Latin America, translation, source, where it appears), removal of an entry, bug or accessibility problem, and idea or feature. Labels: `new-entry`, `connection`, `description`, `remove-entry`, `bug`, `idea`. Blank issues are off.
