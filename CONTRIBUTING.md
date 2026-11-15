@@ -23,7 +23,7 @@ Everything below is for people who prefer to make the change themselves, in a pu
 
 ## Before you start
 
-You need Node 22 or newer and npm. Run `npm install` once. Run `npx playwright install chromium` only if you also want to run the browser tests.
+You need Node 22.17 or newer (SvelteKit 3 requires it) and npm. Run `npm install` once. Run `npx playwright install chromium` only if you also want to run the browser tests.
 
 Read the `specs.md` sections for the part you touch: §3 (curation policy), §5 (data model and invariants) and §8 (authoring format). `docs/known-issues.md` lists what is already known to be unverified, so you do not repeat it.
 
