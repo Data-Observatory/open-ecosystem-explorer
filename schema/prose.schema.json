@@ -1,53 +1,50 @@
 {
-  "$ref": "#/definitions/Prose",
-  "definitions": {
-    "Prose": {
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "summary": {
+      "type": "string",
+      "minLength": 40,
+      "maxLength": 200
+    },
+    "name": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 80
+    },
+    "shortName": {
+      "type": "string",
+      "minLength": 2,
+      "maxLength": 24
+    },
+    "aka": {
+      "maxItems": 8,
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "relationNotes": {
       "type": "object",
-      "properties": {
-        "summary": {
-          "type": "string",
-          "minLength": 40,
-          "maxLength": 200
-        },
-        "name": {
-          "type": "string",
-          "minLength": 2,
-          "maxLength": 80
-        },
-        "shortName": {
-          "type": "string",
-          "minLength": 2,
-          "maxLength": 24
-        },
-        "aka": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "maxItems": 8
-        },
-        "relationNotes": {
-          "type": "object",
-          "additionalProperties": {
-            "type": "string",
-            "maxLength": 280
-          }
-        },
-        "localNote": {
-          "type": "string",
-          "minLength": 20,
-          "maxLength": 260
-        },
-        "body": {
-          "type": "string"
-        }
+      "propertyNames": {
+        "type": "string"
       },
-      "required": [
-        "summary",
-        "body"
-      ],
-      "additionalProperties": false
+      "additionalProperties": {
+        "type": "string",
+        "maxLength": 280
+      }
+    },
+    "localNote": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 260
+    },
+    "body": {
+      "type": "string"
     }
   },
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "required": [
+    "summary",
+    "body"
+  ]
 }
