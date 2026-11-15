@@ -17,15 +17,30 @@ identifiers:
 tags:
   - function:indexing
 lastReviewed: 2026-09-04
+note: Operated by Cambia until 2026-06. Cambia announced on 2026-06-01 that it
+  sold The Lens business and assets to The Lens Limited, a newly established
+  non-profit based in Australia; The Lens is now a wholly owned subsidiary of
+  SPIE (the international society for optics and photonics). The operated-by edge
+  to Cambia is dated `until` the sale. SPIE is not an entry yet.
 relations:
   - predicate: operated-by
     target: cambia
+    until: 2026-06
+    note: Operated by Cambia until the sale to a non-profit owned by SPIE, announced 1 June 2026.
+    verified:
+      date: 2026-11-15
+      url: https://about.lens.org/the-lens-relaunched-through-partnership-with-spie/
+    sources:
+      - url: https://about.lens.org/the-lens-relaunched-through-partnership-with-spie/
+        accessed: 2026-11-15
+        note: The Lens's own news item of 26 June 2026 on the sale.
   - predicate: depends-on
     target: crossref
     note: Lens scholarly records are built on Crossref metadata, supplemented with
       DataCite DOIs and ORCID iDs.
 sources:
-  - url: https://www.lens.org/lens/about
-    accessed: 2026-09-04
+  - url: https://about.lens.org/the-lens-relaunched-through-partnership-with-spie/
+    accessed: 2026-11-15
+    note: Cambia sold The Lens to The Lens Limited, a non-profit in Australia, which is a wholly owned subsidiary of SPIE.
   - url: https://about.lens.org/what/
     accessed: 2026-09-04
