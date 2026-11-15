@@ -125,8 +125,6 @@
 	"about_contribute_heading": "Contribuir",
 	"about_contribute_issues": "No necesitas editar ningún archivo. Para agregar, cambiar o quitar algo, abre una propuesta (issue): elige un formulario, cuenta qué está mal o qué falta y dónde se puede comprobar. Una persona del equipo revisa la fuente y hace el cambio. Las propuestas son públicas.",
 	"about_contribute_issues_link": "Abrir una propuesta en GitHub",
-	"about_contribute_email": "¿No tienes cuenta de GitHub? Escribe a",
-	"about_contribute_email_note": "y una persona del equipo abrirá la propuesta por ti.",
 	"about_contribute_template": "Plantilla para agregar una entrada",
 	"about_changelog_heading": "Historial de cambios",
 	"about_changelog_body": "Los cambios de los datos y del sitio se registran en el historial.",

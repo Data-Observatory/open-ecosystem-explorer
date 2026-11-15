@@ -175,20 +175,18 @@ test.describe('about and data', () => {
 test.describe('suggest a change (GitHub issues)', () => {
 	const repo = 'https://github.com/Data-Observatory/open-ecosystem-explorer';
 
-	for (const [locale, footer, description, connection, email] of [
+	for (const [locale, footer, description, connection] of [
 		[
 			'es',
 			'Sugerir un cambio',
 			'Sugerir un cambio en la descripción o los datos',
-			'Sugerir un cambio en sus conexiones',
-			'¿No tienes cuenta de GitHub?'
+			'Sugerir un cambio en sus conexiones'
 		],
 		[
 			'en',
 			'Suggest a change',
 			'Suggest a change to the description or facts',
-			'Suggest a change to its connections',
-			'No GitHub account?'
+			'Suggest a change to its connections'
 		]
 	] as const) {
 		test(`/${locale}/: the footer and the entry page link to the issue forms`, async ({ page }) => {
@@ -214,7 +212,7 @@ test.describe('suggest a change (GitHub issues)', () => {
 			}
 		});
 
-		test(`/${locale}/about/: the contribute section offers the issue forms and the email`, async ({
+		test(`/${locale}/about/: the contribute section offers the issue forms and no email`, async ({
 			page
 		}) => {
 			await page.goto(`/${locale}/about/`);
@@ -222,12 +220,7 @@ test.describe('suggest a change (GitHub issues)', () => {
 				'href',
 				`${repo}/issues/new/choose`
 			);
-			const mail = page.getByTestId('about-email');
-			await expect(mail).toContainText(email);
-			await expect(mail.getByRole('link')).toHaveAttribute(
-				'href',
-				'mailto:contacto@dataobservatory.net'
-			);
+			await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0);
 		});
 	}
 

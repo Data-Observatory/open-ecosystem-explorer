@@ -125,8 +125,6 @@
 	"about_contribute_heading": "Contribute",
 	"about_contribute_issues": "You do not need to edit any file. To add, change or remove something, open an issue: pick a form, say what is wrong or missing and where it can be checked. A maintainer checks the source and makes the change. Issues are public.",
 	"about_contribute_issues_link": "Open an issue on GitHub",
-	"about_contribute_email": "No GitHub account? Write to",
-	"about_contribute_email_note": "and a maintainer will open the issue for you.",
 	"about_contribute_template": "Template for adding an entry",
 	"about_changelog_heading": "Changelog",
 	"about_changelog_body": "Changes to the data and to the site are recorded in the changelog.",

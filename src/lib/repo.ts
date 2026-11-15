@@ -4,9 +4,6 @@ export const REPO_URL = 'https://github.com/Data-Observatory/open-ecosystem-expl
 /** The page that lists the issue forms (`.github/ISSUE_TEMPLATE/`). */
 export const NEW_ISSUE_CHOOSER_URL = `${REPO_URL}/issues/new/choose`;
 
-/** The address for people without a GitHub account; a maintainer opens the issue for them. */
-export const CONTACT_EMAIL = 'contacto@dataobservatory.net';
-
 type EntryForm = 'description' | 'connection';
 
 // Form file, title prefix and the id of the form field that names the entry.

@@ -14,8 +14,6 @@ Open an issue at https://github.com/Data-Observatory/open-ecosystem-explorer/iss
 
 Every entry page has two links ("Suggest a change to the description or facts" and "Suggest a change to its connections") that open the matching form with that entry filled in, and the footer links to the chooser.
 
-No GitHub account? Write to contacto@dataobservatory.net with the same information; a maintainer opens the issue for you.
-
 - A maintainer reads the issue, checks the source, and makes the change as a pull request that closes the issue, or answers why not. If in doubt, the change is left out.
 - Give a source for what you propose: the organisation's own page or an authoritative register. A proposal without one may wait until one is found.
 - Issues are public. Do not include personal data.
