@@ -7,7 +7,7 @@ export type UrlEntry = { url: string; usages: UrlUsage[] };
 
 /**
  * ok: answered 2xx.
- * moved: answered 2xx, but after a redirect to another host.
+ * moved: answered 2xx, but after a redirect to another host (not to a sign-in page: that is blocked).
  * broken: the page is gone (404, 410) or the domain does not resolve.
  * blocked: the site refuses automated requests or rate-limits them (401, 403, 429, 999). Usually
  *   the page works in a browser; check by hand, do not count as broken.
@@ -125,6 +125,23 @@ const REDIRECTING_HOSTS = new Set([
 	'purl.org'
 ]);
 
+/**
+ * A redirect to a sign-in or consent page names the page you asked for in its own address
+ * (`?redirect_uri=<the url>`). That is a wall for scripts, not a move of the page.
+ */
+function isWall(url: string, finalUrl: string): boolean {
+	try {
+		const target = new URL(url);
+		const wanted = [target.href, target.origin + target.pathname];
+		for (const value of new URL(finalUrl).searchParams.values()) {
+			if (wanted.some((w) => value.includes(w))) return true;
+		}
+	} catch {
+		// not a parsable url: not a wall
+	}
+	return false;
+}
+
 // ---------------------------------------------------------------------------------------------
 // checkUrl
 
@@ -165,6 +182,7 @@ export function classify(
 			!REDIRECTING_HOSTS.has(hostOf(url)) &&
 			hostOf(response.url) !== hostOf(url)
 		) {
+			if (isWall(url, response.url)) return { url, status: 'blocked', httpStatus };
 			return { url, status: 'moved', httpStatus, finalUrl: response.url };
 		}
 		return { url, status: 'ok', httpStatus };
@@ -378,7 +396,7 @@ export function formatLinkReport(input: LinkReportInput): {
 		lines.push(
 			`## Blocked to automated requests (${blocked.length})`,
 			'',
-			'These sites refuse or rate-limit scripts (401, 403, 429). They are not counted as findings. Open a few by hand now and then.',
+			'These sites refuse or rate-limit scripts (401, 403, 429) or send them to a sign-in page. They are not counted as findings. Open a few by hand now and then.',
 			'',
 			'<details><summary>List</summary>',
 			''
