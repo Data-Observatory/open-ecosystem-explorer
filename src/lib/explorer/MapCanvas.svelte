@@ -1,5 +1,6 @@
 <script lang="ts">
 	import type { ResolvedPathname } from '$app/types';
+	import { nodeAccessibleName } from '$lib/map/accessible-name';
 	import NodeGlyph from './NodeGlyph.svelte';
 	import { nearestInDirection, project, wrapLabel, type Direction } from './geometry';
 	import type { Geometry, SceneEdge, SceneNode } from './scene';
@@ -210,7 +211,7 @@
 				class={['node', `tier-${node.spec.tier}`, node.spec.tone]}
 				data-node-id={node.id}
 				data-tone={node.spec.tone}
-				aria-label="{node.meta.name} ({node.meta.typeLabel})"
+				aria-label={nodeAccessibleName(node.meta)}
 				aria-current={node.spec.tone === 'focus' ? 'true' : undefined}
 				tabindex={node.live && node.id === tabStop ? 0 : -1}
 				onclick={(event) => onclick(event, node.id)}
@@ -248,24 +249,27 @@
 						font-size={fontOf(node.spec.tier)}
 					>
 						{#each text.lines as line, i (i)}
-							<tspan x={text.x} dy={i === 0 ? 0 : text.lh}>{line}</tspan>
+							<tspan x={text.x} dy={i === 0 ? 0 : text.lh}
+								>{line}{i < text.lines.length - 1 ? ' ' : ''}</tspan
+							>
 						{/each}
 					</text>
 				{/if}
-				{#if startTag && startTag.id === node.id}
-					<g class="start-tag" transform="translate(0 {-(size / 2 + 11)})">
-						<path d="M-5 -1 L0 5 L5 -1 Z" />
-						<rect
-							x={-startTag.text.length * 3.4 - 10}
-							y="-22"
-							width={startTag.text.length * 6.8 + 20}
-							height="22"
-							rx="11"
-						/>
-						<text y="-7" text-anchor="middle">{startTag.text}</text>
-					</g>
-				{/if}
 			</a>
+			<!-- Beside the link, not inside it: the link's name is the node's name. -->
+			{#if startTag && startTag.id === node.id}
+				<g class="start-tag" transform="translate(0 {-(size / 2 + 11)})">
+					<path d="M-5 -1 L0 5 L5 -1 Z" />
+					<rect
+						x={-startTag.text.length * 3.4 - 10}
+						y="-22"
+						width={startTag.text.length * 6.8 + 20}
+						height="22"
+						rx="11"
+					/>
+					<text y="-7" text-anchor="middle">{startTag.text}</text>
+				</g>
+			{/if}
 		</g>
 	{/each}
 </svg>
@@ -354,6 +358,9 @@
 	.start-tag path,
 	.start-tag rect {
 		fill: var(--color-blue-600);
+	}
+	.start-tag {
+		pointer-events: none;
 	}
 	.start-tag text {
 		font-family: var(--font-sans);

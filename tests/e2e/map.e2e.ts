@@ -67,7 +67,7 @@ test.describe('starting view', () => {
 		const xs = Object.values(at).map((p) => p.x);
 		expect(at['open-science']!.x).toBeGreaterThan(Math.min(...xs) + 200);
 		expect(at['open-science']!.x).toBeLessThan(Math.max(...xs) - 200);
-		await expect(node(page, 'open-science')).toContainText('Empieza aquí');
+		await expect(page.locator('.start-tag')).toHaveText('Empieza aquí');
 		await expect(page.locator('.caption')).toHaveCount(4);
 		// Labels use the short name; the accessible name is the full one.
 		await expect(node(page, 'cris').locator('.label')).toHaveText('CRIS');
@@ -94,7 +94,7 @@ test.describe('starting view', () => {
 		}
 		// Open science keeps the centre and the tag.
 		await expect(page.locator('.start-tag')).toHaveCount(1);
-		await expect(node(page, 'open-science')).toContainText('Start here');
+		await expect(page.locator('.start-tag')).toHaveText('Start here');
 		// No two labels overlap.
 		const boxes = await page
 			.locator('[data-node-id] .label')
