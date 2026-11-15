@@ -1,0 +1,23 @@
+type: organization
+name: SPIE
+aka:
+  - International Society for Optics and Photonics
+url: https://spie.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: US
+prominence: detail
+tags:
+  - region:global
+lastReviewed: 2026-11-15
+note: Facts read from search excerpts of spie.org, because the site refuses scripted
+  requests; open the pages in a browser to confirm.
+relations: []
+sources:
+  - url: https://about.lens.org/the-lens-relaunched-through-partnership-with-spie/
+    accessed: 2026-11-15
+    note: The Lens states it is a wholly owned subsidiary of SPIE.
+  - url: https://spie.org/about-spie/about-the-society
+    accessed: 2026-11-15
+    note: Society's own page. Described as a not-for-profit with headquarters in Bellingham, Washington, USA. The page refuses scripted requests; this was read through a search excerpt.
