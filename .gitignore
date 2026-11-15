@@ -24,3 +24,5 @@ coverage/
 # Vite
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
+link-report.md
+link-report-issue.md
