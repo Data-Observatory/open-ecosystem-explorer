@@ -79,6 +79,19 @@ Cytoscape, no layout library, no new dependency.
 - **Not built** (by design or deferred): hover tooltip (idea 9), entrance animation (idea 10),
   copy-link/print (idea 12), touch pinch-zoom (buttons instead), autoplay of stories.
 
+## Build-time code from a CDN
+
+The translation compiler (Paraglide, through the inlang SDK) downloads its two plugins from
+jsdelivr each time it compiles and runs them; the SDK fetches modules by URL, so they cannot be
+vendored as local files. They are pinned instead: `project.inlang/settings.json` names each at an
+exact version (npm versions are immutable) and `inlang-modules.lock.json` holds the SHA-256 of each
+file, which matches the file in the package on npm. `npm run paraglide:compile` runs
+`scripts/verify-inlang-modules.mjs` first, so `npm ci`, CI and the deploy stop before the compiler
+runs a file that is not the one in the lock. The check runs before any AWS credential exists in the
+deploy workflow. To change a plugin: edit the version in `settings.json`, run
+`node scripts/verify-inlang-modules.mjs --update`, and read the diff of the lock.
+`tests/unit/build/inlang-modules.test.ts` checks, offline, that every module is pinned and locked.
+
 ## Open work
 
 1. **Infra, deploy and domain** (CDK, DNS): live at `oee.dataobservatory.net` since 2026-11-14
