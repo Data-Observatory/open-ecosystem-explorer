@@ -1,7 +1,9 @@
 summary: The Lens is a search tool that brings scientific literature and patents together
   in one place, useful for analysing innovation and technology transfer.
 relationNotes:
-  operated-by@cambia: Operated by the Cambia foundation.
+  operated-by@cambia: Operated by Cambia until June 2026, when it sold The Lens to a non-profit in Australia that is owned by SPIE.
   depends-on@crossref: Lens records are built on Crossref metadata, supplemented by DataCite DOIs and ORCID iDs.
 body: |-
   The Lens combines scientific literature and patent data in a single index, which makes it particularly useful for innovation and technology transfer analysis.
+
+  Cambia, the non-profit that had run it, announced on 1 June 2026 the sale of The Lens business and assets to The Lens Limited, a newly established non-profit based in Australia. The Lens is now a wholly owned subsidiary of SPIE, the international society for optics and photonics.

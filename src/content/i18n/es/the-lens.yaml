@@ -1,8 +1,10 @@
 summary: The Lens es un buscador que reúne literatura científica y patentes en un
   mismo lugar, útil para analizar innovación y transferencia tecnológica.
 relationNotes:
-  operated-by@cambia: Operado por la fundación Cambia.
+  operated-by@cambia: Operado por Cambia hasta junio de 2026, cuando vendió The Lens a una organización sin fines de lucro con sede en Australia que pertenece a SPIE.
   depends-on@crossref: Los registros de Lens se construyen sobre metadatos de
     Crossref, complementados con DOI de DataCite e iD de ORCID.
 body: |-
   The Lens combina literatura científica y datos de patentes en un mismo índice, lo que lo hace particularmente útil para análisis de innovación y transferencia tecnológica.
+
+  Cambia, la organización sin fines de lucro que lo había gestionado, anunció el 1 de junio de 2026 la venta del negocio y los activos de The Lens a The Lens Limited, una organización sin fines de lucro de reciente creación con sede en Australia. The Lens es ahora una filial de propiedad total de SPIE, la sociedad internacional de óptica y fotónica.
