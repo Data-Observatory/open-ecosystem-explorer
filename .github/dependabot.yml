@@ -12,10 +12,6 @@ updates:
       prefix-development: 'chore(deps-dev)'
     ignore:
       # Major upgrades that need a decision of their own (see issue #46).
-      - dependency-name: '@sveltejs/kit'
-        update-types: ['version-update:semver-major']
-      - dependency-name: '@sveltejs/adapter-static'
-        update-types: ['version-update:semver-major']
       - dependency-name: typescript
         update-types: ['version-update:semver-major']
       - dependency-name: '@types/node'

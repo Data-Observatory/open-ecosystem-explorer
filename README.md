@@ -17,7 +17,7 @@ Owner: Data Observatory (Chile).
 
 ## Running locally
 
-You need Node 22 or newer (`.nvmrc`) and npm.
+You need Node 22.17 or newer (`.nvmrc` says 22; CI takes the latest 22) and npm.
 
 ```bash
 npm install
