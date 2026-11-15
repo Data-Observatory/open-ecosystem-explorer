@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { localeHref } from '$lib/paths';
-	import type { Locale } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import { localeHref } from '#lib/paths.ts';
+	import type { Locale } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
 	import NodeGlyph from './NodeGlyph.svelte';
 	import type { MapStore } from './store.svelte';
 

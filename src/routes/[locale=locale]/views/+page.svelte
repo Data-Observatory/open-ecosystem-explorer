@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
-	import QuestionChips from '$lib/components/QuestionChips.svelte';
-	import { pagePath } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import QuestionChips from '#lib/components/QuestionChips.svelte';
+	import { pagePath } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import { basePath } from '#lib/paths.ts';
 
 	let { data } = $props();
-	const href = (path = '') => pagePath(base, data.locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), data.locale, path) as ResolvedPathname;
 </script>
 
 <svelte:head>

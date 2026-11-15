@@ -1,5 +1,5 @@
-import { searchIndexJson } from '$lib/server/feeds';
-import { LOCALES, type Locale } from '$lib/locale';
+import { searchIndexJson } from '#lib/server/feeds.ts';
+import { LOCALES, type Locale } from '#lib/locale.ts';
 import type { EntryGenerator } from './$types';
 
 export const prerender = true;

@@ -2,9 +2,8 @@
 	import { onMount } from 'svelte';
 	import { afterNavigate } from '$app/navigation';
 	import { page } from '$app/state';
-	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
-	import { fileHref } from '$lib/paths';
+	import { fileHref, basePath } from '#lib/paths.ts';
 	import {
 		LOCALES,
 		LOCALE_NAMES,
@@ -12,13 +11,13 @@
 		pagePath,
 		switchLocalePath,
 		type Locale
-	} from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
-	import { consentState, initConsent } from '$lib/consent/state.svelte';
-	import ConsentBanner from '$lib/components/ConsentBanner.svelte';
-	import ConsentChange from '$lib/components/ConsentChange.svelte';
-	import ExternalLink from '$lib/components/ExternalLink.svelte';
-	import { NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
+	} from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import { consentState, initConsent } from '#lib/consent/state.svelte.ts';
+	import ConsentBanner from '#lib/components/ConsentBanner.svelte';
+	import ConsentChange from '#lib/components/ConsentChange.svelte';
+	import ExternalLink from '#lib/components/ExternalLink.svelte';
+	import { NEW_ISSUE_CHOOSER_URL } from '#lib/repo.ts';
 
 	let { children, data } = $props();
 
@@ -26,12 +25,17 @@
 	onMount(initConsent);
 
 	const locale = $derived(data.locale);
-	const href = (path = '') => pagePath(base, locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), locale, path) as ResolvedPathname;
 
 	// Each nav item owns a set of route ids: entity pages belong to the glossary, the changelog
 	// to "About".
 	const navLinks = $derived([
-		{ href: href(), label: m.nav_explore(), routes: ['/[locale=locale]'] },
+		{
+			href: href(),
+			label: m.nav_explore(),
+			routes: ['/[locale=locale]']
+		},
+
 		{
 			href: href('glossary'),
 			label: m.nav_glossary(),
@@ -58,20 +62,27 @@
 	// The query string is only known in the browser (prerendering has none), so the locale links
 	// gain it after mount and on every navigation (the glossary keeps its filter in the URL).
 	let search = $state('');
-	onMount(() => (search = window.location.search));
-	afterNavigate(() => (search = window.location.search));
-	const localeHref = (target: Locale) =>
-		(switchLocalePath(base, page.url.pathname, target) + search) as ResolvedPathname;
 
-	// Canonical and hreflang alternates for every real page (not the error page).
+	onMount(() => (search = window.location.search));
+
+	afterNavigate(({ shallow, type }) => {
+		if (shallow && type === 'goto') return;
+
+		return (search = window.location.search);
+	});
+
+	const localeHref = (target: Locale) =>
+		(switchLocalePath(basePath(), page.url.pathname, target) + search) as ResolvedPathname;
+
 	const alternates = $derived(
 		page.status < 400
 			? LOCALES.map((code) => ({
 					hreflang: code,
-					href: absoluteUrl(__SITE_URL__, switchLocalePath(base, page.url.pathname, code))
+					href: absoluteUrl(__SITE_URL__, switchLocalePath(basePath(), page.url.pathname, code))
 				}))
 			: []
 	);
+
 	const canonical = $derived(
 		page.status < 400 ? absoluteUrl(__SITE_URL__, page.url.pathname) : undefined
 	);

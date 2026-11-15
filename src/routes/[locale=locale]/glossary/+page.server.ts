@@ -1,4 +1,4 @@
-import { glossary } from '$lib/server/site';
-import type { Locale } from '$lib/locale';
+import { glossary } from '#lib/server/site.ts';
+import type { Locale } from '#lib/locale.ts';
 
 export const load = async ({ params }) => glossary(params.locale as Locale);

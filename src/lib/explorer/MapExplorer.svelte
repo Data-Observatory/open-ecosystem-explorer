@@ -3,10 +3,10 @@
 	import { cubicOut } from 'svelte/easing';
 	import { Tween, prefersReducedMotion } from 'svelte/motion';
 	import { afterNavigate } from '$app/navigation';
-	import { CENTRE_ANCHOR_ID } from '$lib/map/anchors';
-	import { localeHref } from '$lib/paths';
-	import type { Locale } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import { CENTRE_ANCHOR_ID } from '#lib/map/anchors.ts';
+	import { localeHref } from '#lib/paths.ts';
+	import type { Locale } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
 	import MapCanvas from './MapCanvas.svelte';
 	import MapCard from './MapCard.svelte';
 	import MapList from './MapList.svelte';
@@ -66,6 +66,8 @@
 	const trail = $derived(store.trail.flatMap((id) => store.index.byId.get(id) ?? []));
 
 	afterNavigate((navigation) => {
+		if (navigation.shallow && navigation.type === 'goto') return;
+
 		const before = store.url.story;
 		store.sync(window.location.search);
 		// A question chip (or a "play on the map" link) started a story: bring the map and its
@@ -214,7 +216,7 @@
 </script>
 
 <svelte:window {onkeydown} />
-<svelte:document {onfullscreenchange} />
+<svelte:document {onfullscreenchange}></svelte:document>
 
 <section
 	bind:this={section}
@@ -239,8 +241,10 @@
 					data-testid="map-search"
 				>
 					<svg viewBox="0 0 20 20" class="h-4 w-4 text-zinc-500" aria-hidden="true" fill="none">
-						<circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.75" />
-						<path d="m14 14 4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" />
+						<circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="1.75"></circle>
+
+						<path d="m14 14 4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"
+						></path>
 					</svg>
 					{m.map_search_button()}
 					<kbd
@@ -344,7 +348,7 @@
 								stroke-width="1.75"
 								stroke-linecap="round"
 								stroke-linejoin="round"
-							/>
+							></path>
 						{:else}
 							<path
 								d="M3 7V3h4M17 7V3h-4M3 13v4h4M17 13v4h-4"
@@ -352,7 +356,7 @@
 								stroke-width="1.75"
 								stroke-linecap="round"
 								stroke-linejoin="round"
-							/>
+							></path>
 						{/if}
 					</svg>
 					<span class="sr-only @3xl:not-sr-only"

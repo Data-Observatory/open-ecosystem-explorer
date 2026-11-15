@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { ResolvedPathname } from '$app/types';
-	import { nodeAccessibleName } from '$lib/map/accessible-name';
+	import { nodeAccessibleName } from '#lib/map/accessible-name.ts';
 	import NodeGlyph from './NodeGlyph.svelte';
 	import { nearestInDirection, project, wrapLabel, type Direction } from './geometry';
 	import type { Geometry, SceneEdge, SceneNode } from './scene';

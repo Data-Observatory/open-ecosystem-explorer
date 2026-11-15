@@ -1,6 +1,6 @@
 import { error } from '@sveltejs/kit';
-import { entityJson } from '$lib/server/feeds';
-import { entityIds } from '$lib/server/site';
+import { entityJson } from '#lib/server/feeds.ts';
+import { entityIds } from '#lib/server/site.ts';
 import type { EntryGenerator } from './$types';
 
 // Per-entity record including derived inverse relations, locale-free.

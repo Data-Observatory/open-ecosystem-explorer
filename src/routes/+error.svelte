@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import { page } from '$app/state';
 	import type { ResolvedPathname } from '$app/types';
-	import { DEFAULT_LOCALE, isLocale, pagePath } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import { DEFAULT_LOCALE, isLocale, pagePath } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import { basePath } from '#lib/paths.ts';
 
 	const locale = $derived(
 		isLocale(page.params.locale ?? '') ? page.params.locale! : DEFAULT_LOCALE
@@ -23,7 +23,7 @@
 	{/if}
 	<p class="mt-6">
 		<a
-			href={pagePath(base, locale as 'es' | 'en') as ResolvedPathname}
+			href={pagePath(basePath(), locale as 'es' | 'en') as ResolvedPathname}
 			class="inline-flex rounded-full bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
 		>
 			{m.not_found_back()}

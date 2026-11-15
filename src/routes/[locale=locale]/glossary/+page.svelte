@@ -1,22 +1,22 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
-	import { base } from '$app/paths';
 	import { page } from '$app/state';
-	import { replaceState } from '$app/navigation';
+	import { goto } from '$app/navigation';
 	import type { ResolvedPathname } from '$app/types';
-	import { pagePath } from '$lib/locale';
+	import { pagePath } from '#lib/locale.ts';
 	import {
 		filterFromQuery,
 		filterToQuery,
 		isFilterActive,
 		matchesFilter,
 		type GlossaryFilter
-	} from '$lib/glossary-filter';
-	import * as m from '$lib/paraglide/messages';
+	} from '#lib/glossary-filter.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import { basePath } from '#lib/paths.ts';
 
 	let { data } = $props();
-	const href = (path = '') => pagePath(base, data.locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), data.locale, path) as ResolvedPathname;
 
 	// Progressive enhancement: the prerendered page lists every entry. The filter is read from
 	// the query string after mount (prerendering has none) and written back with replaceState.
@@ -31,6 +31,7 @@
 	const groups = $derived.by(() => {
 		const byLetter: Record<string, typeof data.entries> = {};
 		for (const entry of data.entries) (byLetter[entry.letter] ??= []).push(entry);
+
 		return Object.entries(byLetter)
 			.sort(([a], [b]) => (a === '#' ? 1 : b === '#' ? -1 : a.localeCompare(b)))
 			.map(([letter, entries]) => ({ letter, entries }));
@@ -49,7 +50,11 @@
 	function syncUrl() {
 		const params = filterToQuery(filter).toString();
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- same page, only the query changes
-		replaceState(`${page.url.pathname}${params ? `?${params}` : ''}${page.url.hash}`, page.state);
+		goto(`${page.url.pathname}${params ? `?${params}` : ''}${page.url.hash}`, {
+			shallow: true,
+			replace: true,
+			state: page.state
+		});
 	}
 
 	function toggleType(type: string) {

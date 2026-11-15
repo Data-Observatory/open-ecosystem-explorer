@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import { changeChoice, consentState } from '$lib/consent/state.svelte';
-	import * as m from '$lib/paraglide/messages';
+	import { changeChoice, consentState } from '#lib/consent/state.svelte.ts';
+	import * as m from '#lib/paraglide/messages.js';
 
 	let { class: className = '' }: { class?: string } = $props();
 

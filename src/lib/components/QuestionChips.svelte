@@ -2,8 +2,8 @@
 	import type { ClassValue } from 'svelte/elements';
 	import { goto } from '$app/navigation';
 	import type { ResolvedPathname } from '$app/types';
-	import { localeHref } from '$lib/paths';
-	import type { Locale } from '$lib/locale';
+	import { localeHref } from '#lib/paths.ts';
+	import type { Locale } from '#lib/locale.ts';
 
 	// Question chips for the guided stories. Progressive enhancement: the link goes to the
 	// story's step list (/{locale}/stories/{id}/), which works without JavaScript; with
@@ -28,7 +28,7 @@
 		if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey)
 			return;
 		event.preventDefault();
-		void goto(play(id), { noScroll: true });
+		void goto(play(id), { reset: false });
 	}
 </script>
 

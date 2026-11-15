@@ -1,4 +1,4 @@
-import { entitiesCsv } from '$lib/server/feeds';
+import { entitiesCsv } from '#lib/server/feeds.ts';
 
 export const prerender = true;
 
