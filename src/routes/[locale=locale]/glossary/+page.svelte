@@ -114,7 +114,7 @@
 							: 'bg-white text-zinc-800 ring-1 ring-zinc-300 hover:bg-zinc-100'
 					]}
 				>
-					{type.label} <span class="tabular-nums opacity-80">({type.count})</span>
+					{type.label} <span class="tabular-nums">({type.count})</span>
 				</button>
 			{/each}
 		</div>
