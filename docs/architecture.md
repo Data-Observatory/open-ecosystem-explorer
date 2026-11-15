@@ -1,6 +1,6 @@
 # Site architecture
 
-SvelteKit 2, Svelte 5 (runes only), Tailwind 4, `@sveltejs/adapter-static`, Vite 8, Paraglide for UI
+SvelteKit 3, Svelte 5 (runes only), Tailwind 4, `@sveltejs/adapter-static`, Vite 8, Paraglide for UI
 strings, self-hosted Inter and Space Grotesk: the Data Observatory sister-site stack. The site is a
 static build (`build/`). Content is plain YAML in `src/content/`, validated before every build.
 The earlier Astro version of the site is only in git history.
