@@ -15,7 +15,7 @@
 import { readFileSync, readdirSync, statSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import { parse as parseYaml } from 'yaml';
-import type { ZodType, ZodTypeDef } from 'zod';
+import type { ZodType } from 'zod';
 
 /** Repository root. Builds and tests run from it (`npm run ...`). */
 export const ROOT = process.cwd();
@@ -51,7 +51,7 @@ export interface YamlCollectionOptions<T> {
   /** Base directory, relative to the project root. */
   base: string;
   /** Zod schema every file must satisfy (after id injection and date normalisation). */
-  schema: ZodType<T, ZodTypeDef, unknown>;
+  schema: ZodType<T>;
   /** Called with the file's path relative to `base` (posix separators); return false to skip it. */
   match?: (relPath: string) => boolean;
   /** Inject `id` (derived from the filename stem) into the data before validation. */
