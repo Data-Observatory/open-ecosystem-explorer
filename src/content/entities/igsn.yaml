@@ -2,7 +2,7 @@ type: identifier
 name: IGSN
 aka:
   - International Generic Sample Number
-url: https://igsn.org
+url: https://ev.igsn.org/
 status: active
 governance: nonprofit
 identifies: sample
@@ -16,5 +16,5 @@ relations:
   - predicate: is-a
     target: persistent-identifier
 sources:
-  - url: https://igsn.org/
-    accessed: 2026-09-04
+  - url: https://ev.igsn.org/
+    accessed: 2026-11-15

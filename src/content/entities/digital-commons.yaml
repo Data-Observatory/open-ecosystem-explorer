@@ -3,7 +3,7 @@ name: Digital Commons
 aka:
   - bepress
   - Berkeley Electronic Press
-url: https://www.bepress.com/products/digital-commons/
+url: https://www.elsevier.com/products/digital-commons
 status: active
 governance: commercial
 codebase: proprietary
@@ -34,6 +34,6 @@ relations:
 sources:
   - url: https://en.wikipedia.org/wiki/Digital_Commons_(Elsevier)
     accessed: 2026-09-04
-  - url: https://www.bepress.com
-    accessed: 2026-09-04
-    note: bepress, the company that builds and operates Digital Commons.
+  - url: https://www.elsevier.com/products/digital-commons
+    accessed: 2026-11-15
+    note: Elsevier's own page for Digital Commons; bepress.com now redirects here.

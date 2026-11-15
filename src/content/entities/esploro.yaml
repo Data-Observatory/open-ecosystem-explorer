@@ -2,7 +2,7 @@ type: cris
 name: Esploro
 aka:
   - Esploro (Ex Libris)
-url: https://exlibrisgroup.com/products/esploro-research-services/
+url: https://clarivate.com/products/scientific-and-academic-research/research-funding-and-analytics/esploro/
 status: active
 governance: commercial
 codebase: proprietary
@@ -21,5 +21,6 @@ relations:
   - predicate: is-a
     target: cris
 sources:
-  - url: https://exlibrisgroup.com/products/esploro-research-services/
-    accessed: 2026-09-04
+  - url: https://clarivate.com/products/scientific-and-academic-research/research-funding-and-analytics/esploro/
+    accessed: 2026-11-15
+    note: The page that exlibrisgroup.com links to for Esploro. It refuses scripts, so its text was not re-read; the earlier Ex Libris page is gone.
