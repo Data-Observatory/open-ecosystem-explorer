@@ -4,12 +4,12 @@ query:
   groupBy: target
 lastReviewed: 2026-09-04
 sources:
-  - url: https://www.relx.com/our-business/our-businesses
-    title: RELX — our businesses
-    accessed: 2026-09-04
+  - url: https://www.relx.com/our-business/market-segments/scientific-technical-and-medical
+    title: RELX — Scientific, Technical & Medical
+    accessed: 2026-11-15
   - url: https://clarivate.com/products/
     title: Clarivate — products
     accessed: 2026-09-04
-  - url: https://www.digital-science.com/portfolio/
-    title: Digital Science — portfolio
-    accessed: 2026-09-04
+  - url: https://www.digital-science.com/products/
+    title: Digital Science — products
+    accessed: 2026-11-15

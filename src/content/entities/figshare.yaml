@@ -23,12 +23,12 @@ relations:
     target: digital-science
     note: Operated directly by Digital Science as one of its portfolio brands.
     verified:
-      date: 2026-09-04
-      url: https://www.digital-science.com/portfolio/
+      date: 2026-11-15
+      url: https://www.digital-science.com/products/
   - predicate: implements
     target: datacite-metadata-schema
   - predicate: is-a
     target: research-repository
 sources:
-  - url: https://knowledge.figshare.com/
-    accessed: 2026-09-03
+  - url: https://info.figshare.com/
+    accessed: 2026-11-15
