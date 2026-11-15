@@ -48,9 +48,9 @@ const PERMISSIONS_POLICY = 'camera=(), microphone=(), geolocation=(), payment=()
  * Static hosting for the Open Ecosystem Explorer: a private S3 bucket (read only through
  * CloudFront Origin Access Control), a CloudFront distribution with a viewer-request
  * function that maps page URLs onto the per-page index.html files of the static build,
- * security response headers, and two BucketDeployments that upload ../build (immutable
- * assets with a one-year Cache-Control, everything else revalidated) and invalidate the
- * distribution.
+ * security response headers, and three BucketDeployments that upload ../build (immutable
+ * assets with a one-year Cache-Control, everything else revalidated), invalidate the
+ * distribution and then remove the immutable assets of earlier builds.
  *
  * DNS is deliberately not managed here: the DNS zone for dataobservatory.net lives in a
  * different account, so the stack manages no Route 53 records. The certificate
@@ -160,22 +160,24 @@ export class OeeSiteStack extends Stack {
 			]
 		});
 
-		// Two deployments of the same ../build source; each file is uploaded by exactly one.
+		// Three deployments of the same ../build source, in order: new chunks, pages (with the CDN
+		// invalidation), then the removal of the chunks of earlier builds.
 		const buildSource = s3deploy.Source.asset(path.join(__dirname, '../../build'));
 
-		// Fingerprinted assets: content-hashed file names, safe to cache for a year. Not pruned:
-		// a page cached by a browser or by CloudFront can still import a chunk from a previous
-		// build, so old chunks must stay in the bucket. No invalidation is needed for new names.
+		// Fingerprinted assets: content-hashed file names, safe to cache for a year. Not pruned
+		// here: the pages of the previous build are still live while this runs, and they import
+		// the previous chunks. No invalidation is needed for new names.
+		const immutableCacheControl = [
+			s3deploy.CacheControl.setPublic(),
+			s3deploy.CacheControl.maxAge(Duration.days(365)),
+			s3deploy.CacheControl.immutable()
+		];
 		const immutableDeployment = new s3deploy.BucketDeployment(this, 'DeployImmutableAssets', {
 			sources: [buildSource],
 			destinationBucket: bucket,
 			exclude: ['*'],
 			include: [`${IMMUTABLE_PREFIX}/*`],
-			cacheControl: [
-				s3deploy.CacheControl.setPublic(),
-				s3deploy.CacheControl.maxAge(Duration.days(365)),
-				s3deploy.CacheControl.immutable()
-			],
+			cacheControl: immutableCacheControl,
 			prune: false
 		});
 
@@ -197,6 +199,22 @@ export class OeeSiteStack extends Stack {
 		});
 		// New chunks land before pages that reference them.
 		pagesDeployment.node.addDependency(immutableDeployment);
+
+		// Last, once the new pages are live: delete the chunks that no build refers to any more,
+		// so the bucket always holds exactly the current build. Nothing live points at a deleted
+		// file. A browser tab opened on an older build that imports a deleted chunk gets a 404,
+		// and SvelteKit answers a failed chunk import with a full page load of the destination,
+		// which is served by the current build. Same filters and Cache-Control as the first
+		// deployment, so files it finds already uploaded are left as they are.
+		const pruneImmutableDeployment = new s3deploy.BucketDeployment(this, 'PruneImmutableAssets', {
+			sources: [buildSource],
+			destinationBucket: bucket,
+			exclude: ['*'],
+			include: [`${IMMUTABLE_PREFIX}/*`],
+			cacheControl: immutableCacheControl,
+			prune: true
+		});
+		pruneImmutableDeployment.node.addDependency(pagesDeployment);
 
 		new CfnOutput(this, 'DistributionDomainName', { value: distribution.distributionDomainName });
 		new CfnOutput(this, 'DistributionId', { value: distribution.distributionId });
