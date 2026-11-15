@@ -401,11 +401,17 @@ test.describe('expert mode', () => {
 		await expect(page.getByTestId('map-card')).toBeVisible();
 		await page.getByRole('button', { name: 'Zoom out' }).click();
 		await page.getByRole('button', { name: 'Zoom in' }).click();
+		// The map starts below the fold of a 720 px viewport: a drag that starts outside the
+		// viewport loses part of its movement. Bring the stage into view and start inside it.
+		await page.getByTestId('map-stage').evaluate((el) => el.scrollIntoView({ block: 'center' }));
 		const before = await settled(page, 'crossref');
 		const stage = (await page.getByTestId('map-stage').boundingBox())!;
-		await page.mouse.move(stage.x + 200, stage.y + 300);
+		const view = page.viewportSize()!;
+		expect(stage.y).toBeGreaterThanOrEqual(0);
+		expect(stage.y + stage.height).toBeLessThanOrEqual(view.height);
+		await page.mouse.move(stage.x + 200, stage.y + stage.height / 2);
 		await page.mouse.down();
-		await page.mouse.move(stage.x + 260, stage.y + 340, { steps: 4 });
+		await page.mouse.move(stage.x + 260, stage.y + stage.height / 2 + 40, { steps: 4 });
 		await page.mouse.up();
 		const after = await settled(page, 'crossref');
 		expect(after.x - before.x).toBeGreaterThan(40);
