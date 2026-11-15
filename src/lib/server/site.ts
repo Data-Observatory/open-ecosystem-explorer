@@ -1,5 +1,5 @@
 /**
- * Build-time view models for the pages. Server-only ($lib/server): reads the YAML content
+ * Build-time view models for the pages. Server-only (#lib/server): reads the YAML content
  * through src/content/*.ts and returns small, plain, serialisable objects, so the prerendered
  * pages ship only what they display (never the YAML parser, the schemas or the full graph).
  *

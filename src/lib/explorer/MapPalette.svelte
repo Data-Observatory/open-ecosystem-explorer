@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { tick } from 'svelte';
-	import * as m from '$lib/paraglide/messages';
+	import * as m from '#lib/paraglide/messages.js';
 	import NodeGlyph from './NodeGlyph.svelte';
 	import { fold, searchScore } from './graph';
 	import type { MapStore } from './store.svelte';

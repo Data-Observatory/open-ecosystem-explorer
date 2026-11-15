@@ -1,9 +1,9 @@
 <script lang="ts">
 	import type { ResolvedPathname } from '$app/types';
-	import { localeHref } from '$lib/paths';
-	import type { Locale } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
-	import type { MiniGraphData, MiniGraphVariant } from '$lib/server/map';
+	import { localeHref } from '#lib/paths.ts';
+	import type { Locale } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import type { MiniGraphData, MiniGraphVariant } from '#lib/server/map.ts';
 	import MapCanvas from './MapCanvas.svelte';
 	import { geometryOf } from './scene';
 

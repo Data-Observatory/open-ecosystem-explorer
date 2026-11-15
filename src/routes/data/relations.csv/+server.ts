@@ -1,4 +1,4 @@
-import { relationsCsv } from '$lib/server/feeds';
+import { relationsCsv } from '#lib/server/feeds.ts';
 
 export const prerender = true;
 

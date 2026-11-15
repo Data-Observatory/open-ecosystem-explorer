@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { choose, consentState } from '$lib/consent/state.svelte';
-	import type { ConsentChoice } from '$lib/consent/core';
-	import * as m from '$lib/paraglide/messages';
+	import { choose, consentState } from '#lib/consent/state.svelte.ts';
+	import type { ConsentChoice } from '#lib/consent/core.ts';
+	import * as m from '#lib/paraglide/messages.js';
 
 	let banner: HTMLElement | undefined = $state();
 

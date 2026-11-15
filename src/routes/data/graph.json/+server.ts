@@ -1,4 +1,4 @@
-import { graphJson } from '$lib/server/feeds';
+import { graphJson } from '#lib/server/feeds.ts';
 
 // Full dump, locale-free, all locales' prose in a `prose: { es, en }` map (buildGraphExport).
 export const prerender = true;

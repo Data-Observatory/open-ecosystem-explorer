@@ -189,7 +189,7 @@ export class MapStore {
 		if (typeof window === 'undefined') return;
 		if (target === window.location.pathname + window.location.search) return;
 		// eslint-disable-next-line svelte/no-navigation-without-resolve -- `path` already includes the base path
-		void goto(target, { replaceState: replace, noScroll: true, keepFocus: true });
+		void goto(target, { replace, reset: false });
 	}
 
 	/** Query string for the same view in the other locale's URL (used by links). */

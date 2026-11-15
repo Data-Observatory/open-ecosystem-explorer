@@ -1,8 +1,8 @@
 <script lang="ts">
-	import ExternalLink from '$lib/components/ExternalLink.svelte';
-	import { localeHref } from '$lib/paths';
-	import type { Locale } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import ExternalLink from '#lib/components/ExternalLink.svelte';
+	import { localeHref } from '#lib/paths.ts';
+	import type { Locale } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
 	import NodeGlyph from './NodeGlyph.svelte';
 	import type { MapStore } from './store.svelte';
 

@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
-	import { pagePath } from '$lib/locale';
-	import { fileHref } from '$lib/paths';
-	import * as m from '$lib/paraglide/messages';
-	import ConsentChange from '$lib/components/ConsentChange.svelte';
-	import ExternalLink from '$lib/components/ExternalLink.svelte';
-	import { NEW_ISSUE_CHOOSER_URL } from '$lib/repo';
+	import { pagePath } from '#lib/locale.ts';
+	import { fileHref, basePath } from '#lib/paths.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import ConsentChange from '#lib/components/ConsentChange.svelte';
+	import ExternalLink from '#lib/components/ExternalLink.svelte';
+	import { NEW_ISSUE_CHOOSER_URL } from '#lib/repo.ts';
 
 	let { data } = $props();
 	const about = $derived(data.about);
-	const href = (path = '') => pagePath(base, data.locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), data.locale, path) as ResolvedPathname;
 
 	const sections = [
 		{ id: 'scope', label: m.about_scope_heading },

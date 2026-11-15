@@ -1,16 +1,15 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
-	import ExternalLink from '$lib/components/ExternalLink.svelte';
-	import MiniGraph from '$lib/explorer/MiniGraph.svelte';
-	import { pagePath } from '$lib/locale';
-	import { fileHref } from '$lib/paths';
-	import { entryIssueUrl } from '$lib/repo';
-	import * as m from '$lib/paraglide/messages';
+	import ExternalLink from '#lib/components/ExternalLink.svelte';
+	import MiniGraph from '#lib/explorer/MiniGraph.svelte';
+	import { pagePath } from '#lib/locale.ts';
+	import { fileHref, basePath } from '#lib/paths.ts';
+	import { entryIssueUrl } from '#lib/repo.ts';
+	import * as m from '#lib/paraglide/messages.js';
 
 	let { data } = $props();
 	const entity = $derived(data.entity);
-	const href = (path = '') => pagePath(base, data.locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), data.locale, path) as ResolvedPathname;
 	// Fallback prose is shown in its own language (lang attribute) under a notice.
 	const proseLang = $derived(entity.fallback ? entity.proseLocale : undefined);
 

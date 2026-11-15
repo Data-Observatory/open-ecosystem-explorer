@@ -1,4 +1,4 @@
-import * as m from '$lib/paraglide/messages';
+import * as m from '#lib/paraglide/messages.js';
 
 const GOVERNANCE: Record<string, () => string> = {
 	commercial: m.governance_commercial,

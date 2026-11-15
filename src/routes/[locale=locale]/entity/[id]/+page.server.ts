@@ -1,9 +1,9 @@
 import { error } from '@sveltejs/kit';
-import { miniGraph } from '$lib/server/map';
-import { entityPage } from '$lib/server/site';
-import { governanceLabel } from '$lib/labels';
-import type { Locale } from '$lib/locale';
-import * as m from '$lib/paraglide/messages';
+import { miniGraph } from '#lib/server/map.ts';
+import { entityPage } from '#lib/server/site.ts';
+import { governanceLabel } from '#lib/labels.ts';
+import type { Locale } from '#lib/locale.ts';
+import * as m from '#lib/paraglide/messages.js';
 
 export const load = async ({ params }) => {
 	const entity = await entityPage(params.id, params.locale as Locale, {

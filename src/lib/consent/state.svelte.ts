@@ -1,4 +1,4 @@
-import { needsPrompt, readConsent, writeConsent, type ConsentChoice } from '$lib/consent/core';
+import { needsPrompt, readConsent, writeConsent, type ConsentChoice } from '#lib/consent/core.ts';
 
 /** What static/consent-loader.js exposes on window. Missing when that script did not run. */
 type ConsentLoader = { grant(): void; deny(): void; isLoaded(): boolean };

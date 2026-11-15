@@ -1,8 +1,8 @@
 <script lang="ts">
-	import QuestionChips from '$lib/components/QuestionChips.svelte';
-	import MapExplorer from '$lib/explorer/MapExplorer.svelte';
-	import { localeHref } from '$lib/paths';
-	import * as m from '$lib/paraglide/messages';
+	import QuestionChips from '#lib/components/QuestionChips.svelte';
+	import MapExplorer from '#lib/explorer/MapExplorer.svelte';
+	import { localeHref } from '#lib/paths.ts';
+	import * as m from '#lib/paraglide/messages.js';
 
 	let { data } = $props();
 	const linkClass =

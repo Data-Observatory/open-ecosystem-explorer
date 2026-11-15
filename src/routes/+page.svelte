@@ -1,13 +1,12 @@
 <script lang="ts">
-	import { base } from '$app/paths';
-	import { DEFAULT_LOCALE, LOCALES, LOCALE_NAMES, pagePath } from '$lib/locale';
-	import { localeHref } from '$lib/paths';
-	import * as m from '$lib/paraglide/messages';
+	import { DEFAULT_LOCALE, LOCALES, LOCALE_NAMES, pagePath } from '#lib/locale.ts';
+	import { localeHref, basePath } from '#lib/paths.ts';
+	import * as m from '#lib/paraglide/messages.js';
 
 	// The language gateway: `/` is never a content page. A 0-second meta
 	// refresh sends every visitor to the default locale (es); the links cover browsers that
 	// ignore the refresh. No JavaScript needed.
-	const target = pagePath(base, DEFAULT_LOCALE);
+	const target = pagePath(basePath(), DEFAULT_LOCALE);
 </script>
 
 <svelte:head>
@@ -15,7 +14,7 @@
 	<meta http-equiv="refresh" content={`0; url=${target}`} />
 	<meta name="robots" content="noindex" />
 	{#each LOCALES as locale (locale)}
-		<link rel="alternate" hreflang={locale} href={pagePath(base, locale)} />
+		<link rel="alternate" hreflang={locale} href={pagePath(basePath(), locale)} />
 	{/each}
 	<link rel="alternate" hreflang="x-default" href={target} />
 </svelte:head>

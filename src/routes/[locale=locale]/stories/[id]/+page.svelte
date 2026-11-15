@@ -1,12 +1,12 @@
 <script lang="ts">
-	import { base } from '$app/paths';
 	import type { ResolvedPathname } from '$app/types';
-	import { pagePath } from '$lib/locale';
-	import * as m from '$lib/paraglide/messages';
+	import { pagePath } from '#lib/locale.ts';
+	import * as m from '#lib/paraglide/messages.js';
+	import { basePath } from '#lib/paths.ts';
 
 	let { data } = $props();
 	const story = $derived(data.story);
-	const href = (path = '') => pagePath(base, data.locale, path) as ResolvedPathname;
+	const href = (path = '') => pagePath(basePath(), data.locale, path) as ResolvedPathname;
 	const linkClass =
 		'text-blue-700 underline decoration-blue-700/40 underline-offset-2 hover:text-blue-900';
 </script>

@@ -1,3 +1,3 @@
-import { changelogHtml } from '$lib/server/site';
+import { changelogHtml } from '#lib/server/site.ts';
 
 export const load = () => ({ html: changelogHtml() });
