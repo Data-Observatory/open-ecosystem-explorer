@@ -1,0 +1,66 @@
+type: policy
+name: Law 21.838 on technology and knowledge transfer
+aka:
+- Ley 21.838
+- Ley sobre transferencia de tecnología y conocimiento
+url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+status: active
+governance: public-agency
+policyKind: law
+jurisdiction:
+- cl
+bindingness: binding
+effectiveDate: 2027-03-01
+prominence: extended
+tags:
+- openness:open-content
+- region:chile
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: is-a
+  target: open-access-mandate
+  note: 'Art. 6: publicly funded researchers deposit the accepted manuscript and their data in an institutional
+    or the ANID repository.'
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+- predicate: applies-to
+  target: anid
+  note: Art. 6 creates the national repository of scientific and technological knowledge and puts ANID
+    in charge of it.
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+- predicate: applies-to
+  target: ministerio-de-ciencia
+  note: 'Art. 7: with the Ministry of Education, it promotes open access to publications, data and code.'
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+- predicate: related-to
+  target: open-science
+  note: Art. 2 defines open science and art. 7 asks the State and universities to promote it.
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+- predicate: related-to
+  target: open-access
+  note: 'Art. 7: promotes open access to scientific publications, data and code linked to research.'
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+- predicate: related-to
+  target: research-repository
+  note: 'Art. 6: the national repository must interoperate with the research repositories of higher education
+    institutions.'
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=1228258
+  accessed: *id001
+  note: Ley 21.838, published 17 September 2026 (Diario Oficial 44.553); text read through LeyChile. Arts.
+    2, 6 and 7 on open science and the national repository; first transitional article on entry into force.
+- url: https://www.diariooficial.interior.gob.cl/publicaciones/2026/09/17/44553/01/2873510.pdf
+  accessed: *id001
+  note: Diario Oficial of 17 September 2026 with the published law.

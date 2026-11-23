@@ -1,0 +1,22 @@
+type: organization
+name: Ministry of Science, Technology, Knowledge and Innovation
+aka:
+- MinCiencia
+- Ministerio de Ciencia, Tecnología, Conocimiento e Innovación
+url: https://minctci.gob.cl/
+status: active
+governance: public-agency
+orgKind: government-agency
+country: CL
+prominence: extended
+tags:
+- region:chile
+lastReviewed: &id001 2026-11-23
+relations: []
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=1121682
+  accessed: *id001
+  note: Ley 21.105 creates the ministry; ANID relates to the President through it (art. 11).
+- url: https://minctci.gob.cl/
+  accessed: *id001
+  note: The ministry's own site (home page opened; www.minciencia.gob.cl redirects to it).

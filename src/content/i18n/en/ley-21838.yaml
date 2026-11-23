@@ -1,0 +1,24 @@
+summary: Chilean law of September 2026 that creates a national repository run by ANID and requires publicly
+  funded researchers to deposit their work and data.
+shortName: Law 21.838
+relationNotes:
+  is-a@open-access-mandate: 'Art. 6: publicly funded researchers deposit the accepted manuscript and their
+    data in an institutional or the ANID repository.'
+  applies-to@anid: Art. 6 creates the national repository of scientific and technological knowledge and
+    puts ANID in charge of it.
+  applies-to@ministerio-de-ciencia: 'Art. 7: with the Ministry of Education, it promotes open access to
+    publications, data and code.'
+  related-to@open-science: Art. 2 defines open science and art. 7 asks the State and universities to promote
+    it.
+  related-to@open-access: 'Art. 7: promotes open access to scientific publications, data and code linked
+    to research.'
+  related-to@research-repository: 'Art. 6: the national repository must interoperate with the research
+    repositories of higher education institutions.'
+body: Law 21.838 was published on 17 September 2026 and enters into force on 1 March 2027, the first day
+  of the sixth month after publication. It is mostly about technology and knowledge transfer and lets
+  higher education institutions create science-based companies. For open science, article 6 creates the
+  Repositorio Nacional de Conocimiento e Información Científica y Tecnológica, public and free, in the
+  charge of ANID. It also requires staff and researchers on publicly funded research to deposit the accepted
+  version of their papers and their research data in their institution's repository or in ANID's. Article
+  7 asks the State and higher education institutions to promote open science. The Ministry of Science
+  issues the regulations, due within six months of the law entering into force.
