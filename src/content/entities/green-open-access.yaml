@@ -1,0 +1,34 @@
+type: concept
+name: Green open access
+aka:
+- Green OA
+- Acceso abierto verde
+url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- openness:open-content
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: is-a
+  target: open-access
+- predicate: related-to
+  target: preprint
+  note: The archived copy may be the published version or a preprint.
+  verified:
+    date: *id001
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+- predicate: related-to
+  target: institutional-repository
+  note: Green articles are self-archived in a disciplinary or an institutional repository.
+  verified:
+    date: *id001
+    url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+sources:
+- url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+  accessed: *id001
+  note: 'Piwowar et al. 2018, PeerJ 6:e4375: Green OA articles are published in a toll-access journal
+    but self-archived in an OA archive, either a disciplinary repository such as arXiv or an institutional
+    repository; the archived version may be the published one or a preprint.'

@@ -1,0 +1,22 @@
+type: concept
+name: Bronze open access
+aka:
+- Bronze OA
+- Acceso abierto bronce
+url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+status: active
+governance: not-applicable
+prominence: detail
+tags:
+- openness:open-content
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: is-a
+  target: open-access
+sources:
+- url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+  accessed: *id001
+  note: 'Piwowar et al. 2018, PeerJ 6:e4375: Bronze articles are made free to read on the publisher website
+    without an explicit open licence; unlike gold they are not in journals counted as OA in the DOAJ,
+    and unlike hybrid they carry no licence information.'

@@ -4,5 +4,6 @@ shortName: APC
 relationNotes:
   related-to@open-access: A fee-based way to fund open access publishing.
   related-to@diamond-open-access: 'Diamond open access journals charge no APC to authors or readers.'
+  related-to@hybrid-open-access: Hybrid open access pays an APC to open one article in a subscription journal.
 body: |-
   APCs are the best-known way to pay for open access in full open access and hybrid journals. Diamond journals, by contrast, charge neither readers nor authors.

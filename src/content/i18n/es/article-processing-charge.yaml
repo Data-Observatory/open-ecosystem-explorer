@@ -8,5 +8,6 @@ relationNotes:
   related-to@open-access: Una forma de financiar la publicación en acceso abierto
     mediante una tarifa.
   related-to@diamond-open-access: 'Las revistas de acceso abierto diamante no cobran APC ni a autores ni a lectores.'
+  related-to@hybrid-open-access: El acceso abierto híbrido paga un APC para abrir un artículo de una revista de suscripción.
 body: |-
   Los APC son la forma más conocida de pagar el acceso abierto en revistas completamente abiertas e híbridas. Las revistas diamante, en cambio, no cobran ni a lectores ni a autores.

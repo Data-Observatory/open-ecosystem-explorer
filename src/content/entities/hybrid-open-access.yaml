@@ -1,0 +1,22 @@
+type: concept
+name: Hybrid open access
+aka:
+- Hybrid OA
+- Acceso abierto híbrido
+url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- openness:open-content
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: is-a
+  target: open-access
+sources:
+- url: https://pmc.ncbi.nlm.nih.gov/articles/PMC5815332/
+  accessed: *id001
+  note: 'Piwowar et al. 2018, PeerJ 6:e4375: Hybrid OA articles are published in a subscription journal
+    but are immediately free to read under an open licence, in exchange for an article processing charge
+    paid by authors.'
