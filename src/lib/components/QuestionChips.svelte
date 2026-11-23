@@ -43,7 +43,7 @@
 	data-testid="question-chips"
 >
 	{#each stories as story (story.id)}
-		<li class="shrink-0 sm:shrink">
+		<li class={scroll ? 'shrink-0 sm:shrink' : 'max-w-full'}>
 			<a
 				href={localeHref(locale, `stories/${story.id}`)}
 				data-story-id={story.id}
