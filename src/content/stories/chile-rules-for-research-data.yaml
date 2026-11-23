@@ -1,0 +1,110 @@
+# Story: which Chilean rules apply to research data. Every fact is an edge, note or
+# summary already in the graph (anid-open-access-policy, ley-21838, ley-21719,
+# ...), each read in the law or policy text.
+id: chile-rules-for-research-data
+theme: publish
+title:
+  es: Qué reglas rigen los datos de investigación en Chile
+  en: Which rules in Chile apply to research data
+question:
+  es: ¿Qué reglas rigen los datos de investigación en Chile?
+  en: Which rules in Chile apply to research data?
+steps:
+- focus: anid-open-access-policy
+  reveal:
+  - anid
+  edges:
+  - source: anid-open-access-policy
+    predicate: governed-by
+    target: anid
+  text:
+    es: Desde 2022, la política de acceso abierto de ANID pide a los proyectos que financia depositar
+      artículos y datos y presentar un plan de gestión de datos.
+    en: Since 2022, ANID's open access policy asks the projects it funds to deposit articles and data
+      and to submit a data management plan.
+- focus: data-management-plan
+  edges:
+  - source: anid-open-access-policy
+    predicate: related-to
+    target: data-management-plan
+  text:
+    es: El plan debe mostrar cómo los datos quedarán disponibles al público, de modo que la pregunta se
+      resuelve al inicio del proyecto.
+    en: The plan must show how the data will be made publicly available, so the question is settled at
+      the start of the project.
+- focus: fair
+  edges:
+  - source: anid-open-access-policy
+    predicate: related-to
+    target: fair
+  text:
+    es: 'Para los datos de investigación, la política se basa en los principios FAIR: encontrables, accesibles,
+      interoperables y reutilizables.'
+    en: 'For research data the policy rests on the FAIR principles: findable, accessible, interoperable
+      and reusable.'
+- focus: doi
+  edges:
+  - source: anid-open-access-policy
+    predicate: mandates
+    target: doi
+  text:
+    es: Quienes publican deben además informar a ANID el DOI de cada artículo, para identificarlo y recuperarlo.
+    en: Authors must also give ANID the DOI of each published article, so that it can be identified and
+      retrieved.
+- focus: ley-21838
+  reveal:
+  - ministerio-de-ciencia
+  - open-access-mandate
+  edges:
+  - source: ley-21838
+    predicate: is-a
+    target: open-access-mandate
+  - source: ley-21838
+    predicate: applies-to
+    target: anid
+  text:
+    es: La Ley 21.838, vigente desde el 1 de marzo de 2027, obliga por ley a depositar la investigación
+      con fondos públicos y crea un repositorio nacional a cargo de ANID.
+    en: Law 21.838, in force from 1 March 2027, puts a deposit duty for publicly funded research into
+      law and creates a national repository run by ANID.
+- focus: research-repository
+  edges:
+  - source: ley-21838
+    predicate: related-to
+    target: research-repository
+  text:
+    es: El repositorio nacional debe interoperar con los repositorios de investigación que ya tienen las
+      universidades y otras instituciones de educación superior.
+    en: The national repository must interoperate with the research repositories that universities and
+      other higher education institutions already run.
+- focus: research-data-management
+  reveal:
+  - ley-21719
+  - personal-data
+  edges:
+  - source: ley-21719
+    predicate: related-to
+    target: research-data-management
+  - source: ley-21719
+    predicate: related-to
+    target: personal-data
+  text:
+    es: Los datos de investigación sobre personas también se rigen por la Ley 21.719. Define dato personal,
+      y su derecho de oposición no rige para investigación que requiera una función pública.
+    en: Research data about people also fall under Law 21.719. It defines personal data, and its right
+      to object does not apply to research a public function needs.
+- focus: anonymisation
+  reveal:
+  - pseudonymisation
+  edges:
+  - source: ley-21719
+    predicate: related-to
+    target: anonymisation
+  - source: ley-21719
+    predicate: related-to
+    target: pseudonymisation
+  text:
+    es: La ley distingue la anonimización, que es irreversible y deja de ser dato personal, de la seudonimización,
+      que la información adicional puede revertir.
+    en: The law separates anonymisation, which is irreversible and ends personal data status, from pseudonymisation,
+      which extra information can undo.
