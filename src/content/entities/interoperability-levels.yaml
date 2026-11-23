@@ -1,0 +1,27 @@
+type: concept
+name: Interoperability levels (EIF)
+aka:
+- European Interoperability Framework
+- Marco Europeo de Interoperabilidad
+url: https://ec.europa.eu/isa2/eif_en/
+status: active
+governance: not-applicable
+prominence: detail
+tags:
+- region:europe
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: related-to
+  target: metadata-standard
+  note: Semantic interoperability depends on shared vocabularies and schemata that describe the data exchanged.
+  verified:
+    date: *id001
+    url: https://ec.europa.eu/isa2/sites/isa/files/eif_brochure_final.pdf
+sources:
+- url: https://ec.europa.eu/isa2/sites/isa/files/eif_brochure_final.pdf
+  accessed: *id001
+  note: 'New European Interoperability Framework (European Commission, 2017), chapter 3: interoperability
+    governance, then legal, organisational, semantic and technical interoperability.'
+- url: https://ec.europa.eu/isa2/eif_en/
+  accessed: *id001
+  note: Page of the European Commission ISA² programme on the framework.

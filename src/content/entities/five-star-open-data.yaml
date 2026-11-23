@@ -1,0 +1,26 @@
+type: concept
+name: 5-star open data
+aka:
+- Five-star open data
+- Datos abiertos de cinco estrellas
+url: https://5stardata.info/en/
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: related-to
+  target: open-data
+  note: A five-step scheme for publishing open data, from any format on the web to data linked to other
+    data.
+  verified:
+    date: *id001
+    url: https://5stardata.info/en/
+sources:
+- url: https://5stardata.info/en/
+  accessed: *id001
+  note: '5stardata.info, "5-star Open Data": Tim Berners-Lee suggested a 5-star deployment scheme for
+    open data. Stars: on the web under an open licence; structured; non-proprietary format; URIs to denote
+    things; linked to other data.'
