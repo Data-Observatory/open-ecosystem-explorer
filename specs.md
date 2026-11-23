@@ -1,6 +1,6 @@
 # Open Ecosystem Explorer — Technical Specification
 
-**Status:** Draft v0.6 — implemented, and checked against the code and content in November 2026 (169 entities, 357 edges, 21 predicates; validation, typecheck, unit, e2e and accessibility suites pass). Deployed on 2026-11-14 at `https://oee.dataobservatory.net` (CDK stack in `infra/`, S3 and CloudFront). CI is on GitHub, `main` takes pull requests only, and every green change on `main` is deployed by the deploy workflow (§10, §12 Q7).
+**Status:** Draft v0.6 — implemented, and checked against the code and content in November 2026 (189 entities, 389 edges, 21 predicates; validation, typecheck, unit, e2e and accessibility suites pass). Deployed on 2026-11-14 at `https://oee.dataobservatory.net` (CDK stack in `infra/`, S3 and CloudFront). CI is on GitHub, `main` takes pull requests only, and every green change on `main` is deployed by the deploy workflow (§10, §12 Q7).
 **Format reference:** [`Data-Observatory/repository-crisis-scorecards-assesment`](https://github.com/Data-Observatory/repository-crisis-scorecards-assesment) `specs.md` — structure and rigour only. None of its content, scoring engine, or question bank carries over.
 **Content source of truth:** *Manual breve del ecosistema de información de investigación*, Rodrigo Roa López de Heredia, Data Observatory, September 2026 (internal memo, Spanish). Appendix A is derived from it; memo sections are cited as **[M§n]**. Every factual claim taken from the memo has been checked against a primary source; corrections and their sources are logged in **A.4**, and the corrected value is what the spec states.
 **Sections marked 🟡 are still open for the owner's decision.** All are enumerated in §12.
@@ -362,7 +362,7 @@ Each rule is a pure predicate in `src/lib/invariants/rules.ts`, exercised agains
 
 `npm run validate` prints `N entities, M edges, X errors, Y warnings, translation coverage per locale` and groups errors by file. Exit codes: `0` clean, `1` errors, `2` runner crash.
 
-**Strict i18n (`REQUIRE_FULL_I18N`).** The owner's target is 100% prose in every locale, and it has been reached (169 entities in `es` and `en`), so strict mode is on: the constant `REQUIRE_FULL_I18N` in `src/lib/invariants/config.ts` is `true`, and each missing prose file is an ERROR on the entity's facts file (`no 'en' prose file …`) that fails `npm run build`. The environment variable of the same name overrides the constant per run (`REQUIRE_FULL_I18N=0 npm run validate` downgrades the gap to one aggregated WARN per locale, for example while adding a third language). `tests/unit/invariants/concept-and-modes.test.ts` covers both modes.
+**Strict i18n (`REQUIRE_FULL_I18N`).** The owner's target is 100% prose in every locale, and it has been reached (189 entities in `es` and `en`), so strict mode is on: the constant `REQUIRE_FULL_I18N` in `src/lib/invariants/config.ts` is `true`, and each missing prose file is an ERROR on the entity's facts file (`no 'en' prose file …`) that fails `npm run build`. The environment variable of the same name overrides the constant per run (`REQUIRE_FULL_I18N=0 npm run validate` downgrades the gap to one aggregated WARN per locale, for example while adding a third language). `tests/unit/invariants/concept-and-modes.test.ts` covers both modes.
 
 ### 5.6 Views: the memo's five fault lines as saved queries — CONFIRMED for v1
 
@@ -441,7 +441,7 @@ export type LocaleCode = typeof locales[number]['code'];
 
 ### 6.2 Scale and modes
 
-The corpus is 169 entities and 357 edges at the time of writing (confirmed range 50–300, Q3). Showing it all at once is not readable, so:
+The corpus is 189 entities and 389 edges at the time of writing (confirmed range 50–300, Q3). Showing it all at once is not readable, so:
 
 | Mode | What is drawn | Positions |
 |---|---|---|
