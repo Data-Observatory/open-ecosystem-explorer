@@ -1,0 +1,10 @@
+summary: La anonimización corta de forma irreversible el vínculo entre los datos y una persona; según
+  la ley chilena, el dato deja de ser personal.
+relationNotes:
+  related-to@personal-data: El dato anonimizado deja de ser un dato personal.
+  related-to@pseudonymisation: Es irreversible, a diferencia de la seudonimización, donde la información
+    adicional puede restablecer el vínculo con la persona.
+body: La anonimización es un procedimiento irreversible tras el cual los datos ya no pueden vincularse
+  a una persona ni permitir su identificación, porque se destruyó el nexo con la información que identifica.
+  Según la Ley 21.719 de Chile, el dato anonimizado deja de ser un dato personal. Se diferencia de la
+  seudonimización, que puede revertirse con información adicional.
