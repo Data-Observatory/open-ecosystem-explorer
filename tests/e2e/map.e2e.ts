@@ -332,7 +332,7 @@ test.describe('search palette', () => {
 		const palette = page.getByTestId('map-palette');
 		await expect(palette).toBeVisible();
 		await expect(page.getByTestId('map-palette-input')).toBeFocused();
-		await expect(palette.locator('[data-option-kind=story]')).toHaveCount(5);
+		await expect(palette.locator('[data-option-kind=story]')).toHaveCount(8);
 
 		await page.keyboard.type('orcid');
 		await expect(palette.locator('[data-option-kind=entry]').first()).toContainText('ORCID');
