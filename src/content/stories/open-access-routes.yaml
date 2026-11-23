@@ -1,0 +1,86 @@
+# Story: the colours of open access. Definitions follow Piwowar et al. (2018) for green,
+# gold, hybrid and bronze; diamond is already in the graph.
+id: open-access-routes
+theme: publish
+title:
+  es: Los colores del acceso abierto
+  en: The colours of open access
+question:
+  es: ¿Cuáles son los colores del acceso abierto?
+  en: What are the colours of open access?
+steps:
+- focus: open-access
+  reveal:
+  - green-open-access
+  edges:
+  - source: green-open-access
+    predicate: is-a
+    target: open-access
+  text:
+    es: El acceso abierto tiene varias rutas, que suelen nombrarse por colores. Se distinguen por quién
+      paga y por dónde está la copia abierta.
+    en: Open access has several routes, often named by colour. They differ in who pays and in where the
+      open copy lives.
+- focus: green-open-access
+  reveal:
+  - institutional-repository
+  - preprint
+  edges:
+  - source: green-open-access
+    predicate: related-to
+    target: institutional-repository
+  - source: green-open-access
+    predicate: related-to
+    target: preprint
+  text:
+    es: 'Verde: el artículo sale en una revista de suscripción y además se deposita en un repositorio,
+      a menudo institucional.'
+    en: 'Green: the article appears in a subscription journal and is also deposited in a repository, often
+      an institutional one.'
+- focus: gold-open-access
+  edges:
+  - source: gold-open-access
+    predicate: is-a
+    target: open-access
+  text:
+    es: 'Dorado: el artículo sale en una revista cuyos artículos están todos abiertos en el sitio de la
+      propia revista.'
+    en: 'Gold: the article appears in a journal where every article is open on the journal''s own website.'
+- focus: hybrid-open-access
+  reveal:
+  - article-processing-charge
+  edges:
+  - source: article-processing-charge
+    predicate: related-to
+    target: hybrid-open-access
+  - source: hybrid-open-access
+    predicate: is-a
+    target: open-access
+  text:
+    es: 'Híbrido: un artículo de una revista de suscripción se abre de inmediato, con licencia abierta,
+      a cambio de un cargo por procesamiento.'
+    en: 'Hybrid: one article in a subscription journal is opened at once, under an open licence, for an
+      article processing charge.'
+- focus: bronze-open-access
+  edges:
+  - source: bronze-open-access
+    predicate: is-a
+    target: open-access
+  text:
+    es: 'Bronce: el artículo es gratuito en el sitio de la editorial, pero sin una licencia abierta que
+      permita reutilizarlo.'
+    en: 'Bronze: the article is free to read on the publisher''s site, but without an open licence that
+      allows reuse.'
+- focus: diamond-open-access
+  edges:
+  - source: diamond-open-access
+    predicate: is-a
+    target: open-access
+  - source: article-processing-charge
+    predicate: related-to
+    target: diamond-open-access
+  text:
+    es: 'Diamante: una revista abierta que no cobra ni a autores ni a lectores, financiada por instituciones,
+      consorcios o fondos públicos.'
+    en: 'Diamond: an open journal that charges neither authors nor readers, paid for by institutions,
+      consortia or public money.'
