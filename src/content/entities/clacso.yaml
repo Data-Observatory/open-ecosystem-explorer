@@ -1,0 +1,22 @@
+type: organization
+name: CLACSO
+aka:
+- Latin American Council of Social Sciences, Arts and Humanities
+- Consejo Latinoamericano de Ciencias Sociales, Artes y Humanidades
+url: https://www.clacso.org/
+status: active
+governance: nonprofit
+orgKind: nonprofit
+country: AR
+since: '1967'
+prominence: extended
+tags:
+- region:latam
+lastReviewed: &id001 2026-11-23
+relations: []
+sources:
+- url: https://www.clacso.org/en/what-is-clacso/
+  accessed: *id001
+  note: Describes CLACSO as an international non-governmental institution with associative status in UNESCO,
+    created in 1967, that brings together research and postgraduate centres in social sciences and humanities.
+    Executive Secretariat in Buenos Aires.
