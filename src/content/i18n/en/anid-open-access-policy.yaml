@@ -10,5 +10,7 @@ relationNotes:
   related-to@data-management-plan: 'Requires grantees to submit a data management plan to guarantee public availability of the data.'
   related-to@research-repository: 'Funded articles go to the agency''s repository; data to the agency''s, an institutional or a disciplinary repository.'
   related-to@open-access: 'The policy''s subject: open access to publicly funded scientific information and research data.'
+  mandates@doi: Authors must give ANID the DOI of each published article so it can be identified and retrieved.
+  related-to@fair: For research data the policy is based on the FAIR principles.
 body: |-
   Approved by ANID in 2022, it requires beneficiaries to deposit the final version of their funded publications in the ANID repository within six months of publication, to submit a data management plan, and to publish research data openly.

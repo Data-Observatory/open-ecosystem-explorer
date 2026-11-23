@@ -58,6 +58,20 @@ relations:
       - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
         accessed: 2026-11-13
         note: 'Title and opening section: open access policy for scientific information and research data funded with public money.'
+  - predicate: mandates
+    target: doi
+    note: Authors must give ANID the DOI of each published article so it can be identified and retrieved.
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-23
+        note: 'Section on articles: the author must provide ANID the DOI of the article, and report it in writing within 30 working days of publication.'
+  - predicate: related-to
+    target: fair
+    note: For research data the policy is based on the FAIR principles.
+    sources:
+      - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/Politica_acceso_a_informacion_cientifica_2022.pdf
+        accessed: 2026-11-23
+        note: 'Section on data: the policy in general rests on the FAIR principles, which it lists.'
 sources:
   - url: https://s3.amazonaws.com/documentos.anid.cl/estudios/RESEX3906_02-05-2022_APRUEBA_POLITICA_DE_ACCESO_ABIERTO.pdf
     accessed: 2026-11-12
