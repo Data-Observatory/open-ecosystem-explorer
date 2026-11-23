@@ -7,7 +7,7 @@ test.describe('home', () => {
 		await expect(page.locator('html')).toHaveAttribute('lang', 'es');
 		await expect(page.locator('h1')).toHaveText('Explorador del ecosistema abierto');
 		await expect(page.getByTestId('home-stats')).toContainText('entradas');
-		await expect(page.getByTestId('question-chips').locator('a')).toHaveCount(5);
+		await expect(page.getByTestId('question-chips').locator('a')).toHaveCount(8);
 		await expect(page.getByTestId('map-canvas')).toBeVisible();
 	});
 
