@@ -1,0 +1,10 @@
+summary: Un esquema de Tim Berners-Lee que clasifica los datos abiertos en cinco pasos, desde cualquier
+  formato en la web hasta datos enlazados.
+relationNotes:
+  related-to@open-data: Un esquema de cinco pasos para publicar datos abiertos, desde cualquier formato
+    en la web hasta datos enlazados.
+body: 'El esquema de datos abiertos de cinco estrellas fue propuesto por Tim Berners-Lee. Una estrella:
+  datos en la web, en cualquier formato, con licencia abierta. Dos: datos estructurados, por ejemplo una
+  planilla en vez de una imagen escaneada. Tres: un formato no propietario, como CSV. Cuatro: las cosas
+  se identifican con URI para que otros puedan apuntar a ellas. Cinco: datos enlazados con otros datos
+  para dar contexto. Es un esquema sugerido, no un estándar formal.'

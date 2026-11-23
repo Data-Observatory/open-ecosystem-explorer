@@ -1,0 +1,12 @@
+summary: 'Las Cinco Seguridades son un marco para dar a los investigadores acceso seguro a datos confidenciales:
+  proyectos, personas, entornos, datos y resultados.'
+relationNotes:
+  related-to@personal-data: Se usa para dar a los investigadores acceso seguro a datos confidenciales,
+    incluidos datos sobre personas.
+body: 'El marco de las Cinco Seguridades (Five Safes) es un conjunto de principios que permite a los servicios
+  de datos dar acceso seguro a los datos para investigar. Plantea cinco preguntas: si el proyecto es apropiado
+  (proyectos seguros), si quienes investigan están capacitados y autorizados (personas seguras), si el
+  acceso ocurre en un entorno controlado (entornos seguros), si los datos fueron tratados para proteger
+  la confidencialidad (datos seguros) y si los resultados se revisan para no exponer a nadie (resultados
+  seguros). Nació en la oficina de estadísticas del Reino Unido (ONS) y lo desarrollaron ella y otros
+  proveedores de datos en la década de 2010.'

@@ -1,0 +1,25 @@
+type: concept
+name: Data Spectrum
+aka:
+- ODI Data Spectrum
+- Espectro de los datos
+url: https://theodi.org/insights/tools/the-data-spectrum/
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: related-to
+  target: open-data
+  note: Places open data at one end of a range that runs from closed through shared to open.
+  verified:
+    date: *id001
+    url: https://theodi.org/insights/tools/the-data-spectrum/
+sources:
+- url: https://theodi.org/insights/tools/the-data-spectrum/
+  accessed: *id001
+  note: The Open Data Institute's Data Spectrum, a tool to understand the language of data from closed
+    to shared to open data; its graphics are CC-BY. The page shows the spectrum as graphics, so the intermediate
+    steps were not read as text.

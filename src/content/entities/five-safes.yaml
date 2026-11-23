@@ -1,0 +1,25 @@
+type: concept
+name: Five Safes
+aka:
+- Five Safes framework
+- Cinco Seguridades
+url: https://ukdataservice.ac.uk/help/secure-lab/what-is-the-five-safes-framework/
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: related-to
+  target: personal-data
+  note: Used to give researchers safe access to confidential data, including data about people.
+  verified:
+    date: *id001
+    url: https://ukdataservice.ac.uk/help/secure-lab/what-is-the-five-safes-framework/
+sources:
+- url: https://ukdataservice.ac.uk/help/secure-lab/what-is-the-five-safes-framework/
+  accessed: *id001
+  note: 'UK Data Service: a set of principles that let data services provide safe research access to data;
+    it originated at the UK Office for National Statistics in the 2010s. Names the five: safe data, projects,
+    people, settings and outputs.'

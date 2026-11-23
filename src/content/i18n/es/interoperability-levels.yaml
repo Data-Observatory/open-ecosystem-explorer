@@ -1,0 +1,12 @@
+summary: 'El Marco Europeo de Interoperabilidad describe la interoperabilidad en cuatro niveles: legal,
+  organizacional, semántico y técnico.'
+relationNotes:
+  related-to@metadata-standard: La interoperabilidad semántica depende de vocabularios y esquemas compartidos
+    que describen los datos intercambiados.
+body: El Marco Europeo de Interoperabilidad, publicado por la Comisión Europea en 2017 para los servicios
+  públicos, trata la interoperabilidad como algo más que conectar sistemas. La interoperabilidad legal
+  significa que organizaciones sujetas a marcos jurídicos distintos pueden trabajar juntas. La organizacional
+  alinea procesos, responsabilidades y expectativas. La semántica asegura que se entiendan el significado
+  y el formato de los datos intercambiados. La técnica abarca las aplicaciones, interfaces y protocolos
+  que conectan los sistemas. El marco trata además la gobernanza de la interoperabilidad como una capa
+  transversal.

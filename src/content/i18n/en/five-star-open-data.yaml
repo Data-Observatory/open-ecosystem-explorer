@@ -1,0 +1,9 @@
+summary: A scheme by Tim Berners-Lee that rates open data in five steps, from any format on the web to
+  data linked to other data.
+relationNotes:
+  related-to@open-data: A five-step scheme for publishing open data, from any format on the web to data
+    linked to other data.
+body: 'The 5-star open data scheme was suggested by Tim Berners-Lee. One star: data on the web, in any
+  format, under an open licence. Two: structured data, for example a spreadsheet instead of a scan. Three:
+  a non-proprietary format such as CSV. Four: things identified with URIs so others can point at them.
+  Five: data linked to other data for context. It is a suggested scheme, not a formal standard.'

@@ -1,0 +1,11 @@
+summary: 'The European Interoperability Framework describes interoperability at four levels: legal, organisational,
+  semantic and technical.'
+relationNotes:
+  related-to@metadata-standard: Semantic interoperability depends on shared vocabularies and schemata
+    that describe the data exchanged.
+body: The European Interoperability Framework, published by the European Commission in 2017 for public
+  services, treats interoperability as more than connecting systems. Legal interoperability means organisations
+  under different legal frameworks can work together. Organisational interoperability aligns business
+  processes, responsibilities and expectations. Semantic interoperability keeps the meaning and format
+  of exchanged data understood. Technical interoperability covers the applications, interfaces and protocols
+  that link systems. The framework also treats interoperability governance as a cross-cutting layer.
