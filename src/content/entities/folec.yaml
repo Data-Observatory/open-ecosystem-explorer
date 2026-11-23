@@ -1,0 +1,34 @@
+type: coalition
+name: FOLEC
+aka:
+- Latin American Forum on Research Assessment
+- FOLEC-CLACSO
+url: https://www.clacso.org/folec/
+status: active
+governance: nonprofit
+coalitionKind: network
+since: 2019-11
+prominence: extended
+tags:
+- function:evaluation
+- region:latam
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: governed-by
+  target: clacso
+  note: A CLACSO forum; its formal start was in Mexico City in November 2019.
+  verified:
+    date: *id001
+    url: https://www.clacso.org/folec/
+- predicate: related-to
+  target: research-assessment
+  note: Debates the meaning, policies and practices of research assessment in Latin America.
+  verified:
+    date: *id001
+    url: https://www.clacso.org/folec/
+sources:
+- url: https://www.clacso.org/folec/
+  accessed: *id001
+  note: Describes FOLEC-CLACSO as a space for debate on the meanings, policies and practices of research
+    assessment in the region, with a formal start in November 2019 in Mexico City; a second forum took
+    place in 2021 with CONICET (Argentina).
