@@ -56,3 +56,13 @@ steps:
     es: En Chile, la Ley 21.719 fija estas definiciones y los derechos de las personas a quienes se refieren
       los datos.
     en: In Chile, Law 21.719 sets these definitions and the rights of the people the data are about.
+- focus: research-data-management
+  edges:
+  - source: ley-21719
+    predicate: related-to
+    target: research-data-management
+  text:
+    es: La misma ley dispone que el derecho de oposición no rige para tratamientos de investigación que
+      requiera una función pública o una actividad de interés público.
+    en: The same law says the right to object does not apply to research processing that a public function
+      or public-interest activity needs.
