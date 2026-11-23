@@ -1,0 +1,10 @@
+summary: Anonymisation irreversibly cuts the link between data and a person, so the data are no longer
+  personal data under Chilean law.
+relationNotes:
+  related-to@personal-data: Anonymised data stops being personal data.
+  related-to@pseudonymisation: Irreversible, unlike pseudonymisation, where extra information can restore
+    the link to a person.
+body: Anonymisation is an irreversible procedure after which data can no longer be linked to a person
+  or used to identify them, because the link to the identifying information was destroyed. Under Chile's
+  Law 21.719 anonymised data stops being personal data. It differs from pseudonymisation, which can be
+  reversed with additional information.

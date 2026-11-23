@@ -1,0 +1,24 @@
+type: concept
+name: Personal data
+aka:
+- Datos personales
+url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- region:global
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: related-to
+  target: pseudonymisation
+  note: Personal data that can no longer be attributed to a person without separately kept extra information.
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+  accessed: *id001
+  note: 'Ley 21.719, article 2: personal data is any information linked or referring to an identified
+    or identifiable natural person, identifiable directly or indirectly through identifiers such as a
+    name or an identity card number.'

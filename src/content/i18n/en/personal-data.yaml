@@ -1,0 +1,9 @@
+summary: Personal data is any information about an identified or identifiable natural person; in Chile,
+  Law 21.719 gives the legal definition.
+relationNotes:
+  related-to@pseudonymisation: Personal data that can no longer be attributed to a person without separately
+    kept extra information.
+body: Personal data is information linked to or referring to a natural person who is identified or can
+  be identified, directly or indirectly, for example through a name or an identity number. Whether a research
+  dataset holds personal data decides which rules apply to sharing it. Chile's Law 21.719 gives the legal
+  definition used here.

@@ -1,0 +1,6 @@
+summary: La seudonimización trata los datos personales de modo que no puedan atribuirse a una persona
+  sin información adicional guardada aparte.
+body: La seudonimización reemplaza identificadores directos para que los datos no puedan atribuirse a
+  una persona sin información adicional, que debe guardarse por separado con medidas técnicas y organizativas.
+  Esa información adicional puede restablecer el vínculo, y en eso se diferencia de la anonimización.
+  La Ley 21.719 de Chile la define y la incluye entre las medidas de seguridad de los datos personales.

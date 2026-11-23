@@ -1,0 +1,18 @@
+type: concept
+name: Pseudonymisation
+aka:
+- Seudonimización
+url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+status: active
+governance: not-applicable
+prominence: extended
+tags:
+- region:global
+lastReviewed: &id001 2026-11-23
+relations: []
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=1209272
+  accessed: *id001
+  note: 'Ley 21.719, article 2: pseudonymisation is processing of personal data so that it can no longer
+    be attributed to a data subject without additional information, which is kept separately and protected
+    by technical and organisational measures. Article on security lists it among the measures.'
