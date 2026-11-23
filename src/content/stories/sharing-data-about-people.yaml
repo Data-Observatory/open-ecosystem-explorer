@@ -1,0 +1,58 @@
+# Story: how data about people can be shared. Facts come from the graph (personal-data,
+# five-safes, pseudonymisation, anonymisation, ley-21719).
+id: sharing-data-about-people
+theme: data
+title:
+  es: Cómo compartir datos sobre personas
+  en: How data about people can be shared
+question:
+  es: ¿Cómo se pueden compartir datos sobre personas?
+  en: How can data about people be shared?
+steps:
+- focus: personal-data
+  text:
+    es: Dato personal es información sobre una persona identificada o identificable. Que un conjunto de
+      datos tenga alguno decide qué reglas se aplican.
+    en: Personal data is information about an identified or identifiable person. Whether a dataset holds
+      any decides which rules apply.
+- focus: five-safes
+  edges:
+  - source: five-safes
+    predicate: related-to
+    target: personal-data
+  text:
+    es: El marco de las Cinco Seguridades da a los investigadores acceso seguro a datos confidenciales,
+      revisando proyectos, personas, entornos, datos y resultados.
+    en: The Five Safes framework gives researchers safe access to confidential data by checking projects,
+      people, settings, data and outputs.
+- focus: pseudonymisation
+  edges:
+  - source: personal-data
+    predicate: related-to
+    target: pseudonymisation
+  text:
+    es: Los datos seudonimizados no pueden atribuirse a una persona sin información adicional guardada
+      aparte. Con esa información se puede restablecer el vínculo.
+    en: Pseudonymised data cannot be attributed to a person without extra information kept apart. With
+      that information the link can be restored.
+- focus: anonymisation
+  edges:
+  - source: anonymisation
+    predicate: related-to
+    target: personal-data
+  - source: anonymisation
+    predicate: related-to
+    target: pseudonymisation
+  text:
+    es: 'La anonimización es irreversible: según la ley chilena, el dato anonimizado deja de ser un dato
+      personal.'
+    en: 'Anonymisation is irreversible: under Chilean law, anonymised data stops being personal data.'
+- focus: ley-21719
+  edges:
+  - source: ley-21719
+    predicate: related-to
+    target: anonymisation
+  text:
+    es: En Chile, la Ley 21.719 fija estas definiciones y los derechos de las personas a quienes se refieren
+      los datos.
+    en: In Chile, Law 21.719 sets these definitions and the rights of the people the data are about.
