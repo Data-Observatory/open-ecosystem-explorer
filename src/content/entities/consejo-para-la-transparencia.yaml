@@ -1,0 +1,22 @@
+type: organization
+name: Consejo para la Transparencia
+aka:
+- Transparency Council (Chile)
+url: https://www.consejotransparencia.cl/
+status: active
+governance: public-agency
+orgKind: government-agency
+country: CL
+prominence: detail
+tags:
+- region:chile
+lastReviewed: &id001 2026-11-23
+relations: []
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=276363
+  accessed: *id001
+  note: 'Ley 20.285, art. 31: created as an autonomous public-law corporation with its own legal personality;
+    art. 32 sets its purpose.'
+- url: https://www.consejotransparencia.cl/
+  accessed: *id001
+  note: The council's own site (home page opened).

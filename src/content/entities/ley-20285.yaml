@@ -1,0 +1,29 @@
+type: policy
+name: Law 20.285 on access to public information
+aka:
+- Ley 20.285
+- Ley de Transparencia
+url: https://www.bcn.cl/leychile/navegar?idNorma=276363
+status: active
+governance: public-agency
+policyKind: law
+jurisdiction:
+- cl
+bindingness: binding
+prominence: extended
+tags:
+- region:chile
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: governed-by
+  target: consejo-para-la-transparencia
+  note: Its Consejo para la Transparencia oversees compliance and decides complaints about denied access
+    (arts. 31-33).
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=276363
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=276363
+  accessed: *id001
+  note: Ley 20.285, published 20 August 2008; text read through LeyChile. Art. 5 on public information
+    and arts. 31 to 33 on the Consejo para la Transparencia.

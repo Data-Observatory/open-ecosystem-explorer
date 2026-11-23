@@ -1,0 +1,33 @@
+type: policy
+name: Law 21.105 creating the Ministry of Science
+aka:
+- Ley 21.105
+url: https://www.bcn.cl/leychile/navegar?idNorma=1121682
+status: active
+governance: public-agency
+policyKind: law
+jurisdiction:
+- cl
+bindingness: binding
+prominence: detail
+tags:
+- region:chile
+lastReviewed: &id001 2026-11-23
+relations:
+- predicate: applies-to
+  target: ministerio-de-ciencia
+  note: Creates the Ministry of Science, Technology, Knowledge and Innovation.
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1121682
+- predicate: applies-to
+  target: anid
+  note: Art. 11 creates ANID as a decentralised public service linked to the President through the Ministry.
+  verified:
+    date: *id001
+    url: https://www.bcn.cl/leychile/navegar?idNorma=1121682
+sources:
+- url: https://www.bcn.cl/leychile/navegar?idNorma=1121682
+  accessed: *id001
+  note: Ley 21.105, published 13 August 2018; text read through LeyChile. Art. 11 creates the Agencia
+    Nacional de Investigación y Desarrollo.
